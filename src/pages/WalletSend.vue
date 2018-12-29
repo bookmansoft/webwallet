@@ -62,6 +62,7 @@ export default {
             let resultStr = res.resultStr
             this.address = resultStr
             console.log('code', resultStr)
+            this.GLOBAL.myAlert(this.$vux.alert, resultStr);
           },
           fail: function(res) {
             console.log('fail', res)
