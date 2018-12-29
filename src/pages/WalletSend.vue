@@ -59,12 +59,14 @@ export default {
           needResult: 1,
           scanType: ["qrCode", "barCode"],
           success: function(res) {
+            console.log(res)
             let resultStr = res.resultStr
             this.address = resultStr
             console.log('code', resultStr)
             this.GLOBAL.myAlert(this.$vux.alert, resultStr);
           },
           fail: function(res) {
+            console.log(res)
             this.GLOBAL.myAlert(this.$vux.alert, 'scan fail');
           }
         });
