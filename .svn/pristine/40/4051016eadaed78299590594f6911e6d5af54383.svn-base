@@ -1,0 +1,41 @@
+<template>
+  <div>
+    <tabbar v-model="tabIndex">
+      <tabbar-item :link="item.link" :badge="item.badge" :show-dot="item.showDot" v-for="(item,index) in items" :key="index">
+        <img slot="icon" :src="item.icon">
+        <img slot="icon-active" :src="item.iconActive">
+        <span slot="label">{{item.label}}</span>
+      </tabbar-item>
+    </tabbar>
+  </div>
+</template>
+
+<script>
+import { Tabbar, TabbarItem} from 'vux'
+import { create } from 'domain';
+const tabItems = () => [
+    { icon:'static/images/icon3/home1.png', iconActive: 'static/images/icon3/home2.png', label:'首页', showDot: false, link:'/Home', badge:''},
+    { icon:'static/images/icon3/market1.png', iconActive: 'static/images/icon3/market2.png', label:'集市', showDot: false, link:'/Market', badge:''},
+    { icon:'static/images/icon3/ranking1.png', iconActive: 'static/images/icon3/ranking2.png', label:'排行榜', showDot: false, link:'/Ranking', badge:''},
+    { icon:'static/images/icon3/mine1.png', iconActive: 'static/images/icon3/mine2.png', label:'我的', showDot: false, link:'/Mine', badge:''}
+]
+export default {
+  data() {
+    return {
+      items: tabItems(),
+      tabIndex: 0
+    }
+  },
+  components: {
+    Tabbar,
+    TabbarItem,
+  },
+  created() {
+    this.items.forEach( (item, index) => {
+      if(item.link == this.$route.path) {
+        this.tabIndex = index 
+      }
+    });
+  }
+}
+</script>

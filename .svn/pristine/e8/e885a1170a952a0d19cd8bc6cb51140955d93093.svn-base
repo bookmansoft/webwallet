@@ -1,0 +1,24 @@
+<template>
+  <div>
+    <span v-text="msg"></span>
+    <Navs></Navs>
+  </div>
+</template>
+<script>
+//import { XHeader, Group, Cell } from 'vux'
+import Navs from '@/components/Navs.vue'
+
+export default {
+  components: {
+    Navs
+  },
+  data () {
+    return {
+      msg: '我的'
+    }
+  },
+  methods: {
+
+  }
+}
+</script>

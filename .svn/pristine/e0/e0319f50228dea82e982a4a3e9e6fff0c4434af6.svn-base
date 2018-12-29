@@ -1,0 +1,39 @@
+<template>
+  <div>
+    <tab bar-active-color="#FFCC52"	active-color="#FFCC52" :line-width="3" custom-bar-width="60px" v-model="tabIndex">
+      <tab-item>推荐</tab-item>
+      <tab-item @on-item-click="onItemClick">游戏</tab-item>
+    </tab>
+    <swiper v-model="tabIndex" height="100px" :show-dots="false">
+        <swiper-item v-for="(item, index) in list2" :key="index">
+          <div class="tab-swiper vux-center">{{item}} Container</div>
+        </swiper-item>
+    </swiper>
+  </div>
+</template>
+<script>
+import { Tab, TabItem, Swiper, SwiperItem } from 'vux'
+
+export default {
+  components: {
+    Tab,
+    TabItem, 
+    Swiper, 
+    SwiperItem
+  },
+  data () {
+    return {
+      msg: '',
+      list2: [
+          '推荐', '游戏'
+      ],
+      tabIndex: 0
+    }
+  },
+  methods: {
+      onItemClick() {
+          console.log('游戏')
+      }
+  }
+}
+</script>
