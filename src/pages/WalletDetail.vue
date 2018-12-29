@@ -59,10 +59,10 @@ export default {
                       item.title = this.GLOBAL.formatDateStr(new Date(item.time*1000), 'MM-dd HH:mm:ss');
                       if(item.category=='receive') {
                         item.img = 'static/images/icon1/1.png'
-                        item.desc = '接收 ' + item.amount
+                        item.desc = '接收 ' + this.GLOBAL.formatGameGold(item.amount * 10000 * 10000) + '千克'
                       } else {
                         item.img = 'static/images/icon1/7.png'
-                        item.desc = '发送 ' + item.amount
+                        item.desc = '发送 ' + this.GLOBAL.formatGameGold(item.amount * 10000 * 10000) + '千克'
                       }
                       this.items.push(item);
                   }
