@@ -60,6 +60,7 @@ export default {
           scanType: ["qrCode", "barCode"],
           success: function(res) {
             let resultStr = res.resultStr
+            this.address = resultStr
             console.log('code', resultStr)
           },
           fail: function(res) {
