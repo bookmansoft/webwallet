@@ -10,11 +10,11 @@
         </group>
         <group title="接收地址">
             <div style="text-align:center;padding: 20px 0px 20px 0px">
-                <p><span>{{address}}</span></p>
+                <p><span class="tag-read">{{address}}</span></p>
             </div>
         </group>
         <group label-width="3.5em" label-margin-right="2em" label-align="right">
-            <x-button type="primary">复制地址</x-button>
+            <x-button type="primary" @click.native="copyAddr(address, $event)">复制地址</x-button>
         </group>
     </box>
   </div>
@@ -23,6 +23,7 @@
 <script>
 import Balance from '@/components/Balance.vue'
 import { XHeader, Group, XButton, Box, Qrcode } from 'vux'
+import Clipboard from 'clipboard'
 
 export default {
   components: {
@@ -40,6 +41,23 @@ export default {
       onBack() {
         this.$router.push('/wallet')
       },
+      copyAddr(text, event){
+        const clipboard = new Clipboard(event.target, {
+          text: () => text
+        })
+        clipboard.on('success', e => {  
+            // 释放内存  
+          this.$vux.toast.show({text: '已复制到剪贴板'})
+          clipboard.destroy()  
+        })  
+        clipboard.on('error', e => {  
+          // 不支持复制  
+          // 释放内存  
+          this.$vux.toast.show({text: '浏览器不支持复制'})
+          clipboard.destroy()  
+        })  
+      },
+
   },
   created() {
     console.log('this.GLOBAL.userProfile', this.GLOBAL.userProfile)
