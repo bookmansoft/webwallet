@@ -65,7 +65,7 @@ export default {
             this.GLOBAL.myAlert(this.$vux.alert, resultStr);
           },
           fail: function(res) {
-            console.log('fail', res)
+            this.GLOBAL.myAlert(this.$vux.alert, 'scan fail');
           }
         });
       },
