@@ -4,7 +4,8 @@
     <balance ref="balance"></balance>
     <box gap="8px 8px">
       <group label-width="4em" label-margin-right="1.5em" label-align="right" title="接收地址">
-        <x-input type="text" name="address" ref="address" placeholder="输入地址" v-model="address" required ></x-input>
+        <!--<x-input type="text" name="address" ref="address" placeholder="输入地址" v-model="address" required ></x-input>-->
+        <x-textarea :rows="2" name="address" ref="address" placeholder="输入地址" v-model="address" required></x-textarea>
       </group>
       <group label-width="3.5em" label-margin-right="2em" label-align="right">
         <x-button @click.native="wxScanCode">扫描二维码</x-button>
@@ -23,12 +24,12 @@
 
 <script>
 import Balance from '@/components/Balance.vue'
-import { XHeader, XInput, Group, XButton, Box } from 'vux'
+import { XHeader, XInput, XTextarea, Group, XButton, Box } from 'vux'
 
 const re =  /^[0-9a-zA-Z]*$/g;  //判断字符串是否为数字和字母组合     //判断正整数 /^[1-9]+[0-9]*]*$/  
 export default {
   components: {
-    XHeader, XInput, Group, Balance, XButton, Box
+    XHeader, XInput, XTextarea, Group, Balance, XButton, Box
   },
   data () {
     return {
@@ -63,12 +64,9 @@ export default {
             console.log(res)
             let resultStr = res.resultStr
             that.address = resultStr
-            console.log('code', resultStr)
-            that.GLOBAL.myAlert(that.$vux.alert, resultStr);
           },
           fail: function(res) {
-            console.log(res)
-            that.GLOBAL.myAlert(that.$vux.alert, 'scan fail');
+            that.GLOBAL.myAlert(that.$vux.alert, '地址扫描失败');
           }
         });
       },
