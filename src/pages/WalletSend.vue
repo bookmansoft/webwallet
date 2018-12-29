@@ -55,19 +55,20 @@ export default {
       },
       // 调用摄像头
       wxScanCode() {
-        this.$wechat.scanQRCode({
+        let that = this
+        that.$wechat.scanQRCode({
           needResult: 1,
           scanType: ["qrCode", "barCode"],
           success: function(res) {
             console.log(res)
             let resultStr = res.resultStr
-            this.address = resultStr
+            that.address = resultStr
             console.log('code', resultStr)
-            this.GLOBAL.myAlert(this.$vux.alert, resultStr);
+            that.GLOBAL.myAlert(that.$vux.alert, resultStr);
           },
           fail: function(res) {
             console.log(res)
-            this.GLOBAL.myAlert(this.$vux.alert, 'scan fail');
+            that.GLOBAL.myAlert(that.$vux.alert, 'scan fail');
           }
         });
       },
