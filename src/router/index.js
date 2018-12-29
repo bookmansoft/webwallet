@@ -10,6 +10,7 @@ import WalletReceive from '@/pages/WalletReceive'
 import WalletTrans from '@/pages/WalletTrans'
 import WalletDetail from '@/pages/WalletDetail'
 import Props from '@/pages/Props'
+import Member from '@/pages/Member'
 
 Vue.use(Router)
 
@@ -68,6 +69,12 @@ export default new Router({
       path: '/props',
       name: 'Props',
       component: Props
+    },
+    {
+      path: '/member',
+      name: 'Member',
+      component: Member
     }
+    
   ]
 })

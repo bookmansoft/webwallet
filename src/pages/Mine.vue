@@ -1,13 +1,22 @@
 <template>
   <div>
     <group>
-      <flexbox style="padding:0.5rem;">
+      <flexbox style="padding:0.2rem;">
         <flexbox-item :span="4">
           <div class="flex-demo-left">
             <img :src="userProfile.avatar" class="avatar" />
           </div></flexbox-item>
         <flexbox-item><div class="flex-demo-right"><span>{{userProfile.nick}}</span></div></flexbox-item>
       </flexbox>
+    </group>
+    <group>
+      <cell :is-link="item.is_link" v-for="(item, index) in items0" :key="index" :link="item.link">
+        <span slot="title">
+          <span style="vertical-align:middle;">{{item.title}}</span>
+          <badge :text="item.badge" v-if="item.badge > 0"></badge>
+        </span>
+        <img slot="icon" width="20" style="display:block;margin-right:5px;" :src="item.img">
+      </cell>
     </group>
     <group>
       <cell :is-link="item.is_link" v-for="(item, index) in items1" :key="index" :link="item.link">
@@ -34,6 +43,9 @@
 import Navs from '@/components/Navs.vue'
 import { Cell, CellBox, CellFormPreview, Group, Badge, Flexbox, FlexboxItem } from 'vux'
 
+const getItems0 = () => [
+  {title: '会员', is_link: true, img: 'static/images/icon1/4.png', badge: 0, link: {path:'/member'}}
+]
 const getItems1 = () => [
   {title: '我的钱包', is_link: true, img: 'static/images/icon1/12.png', badge: 1, link: {path:'/wallet'}},
   {title: '我的道具', is_link: true, img: 'static/images/icon1/2.png', badge: 2, link: {path:'/props'}},
@@ -50,6 +62,7 @@ export default {
   },
   data () {
     return {
+      items0: getItems0(),
       items1: getItems1(),
       items2: getItems2(),
       hasProfile: false,
