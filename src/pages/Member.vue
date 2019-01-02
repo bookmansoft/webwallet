@@ -75,13 +75,16 @@ const getItems = () => [{
 
 const vipOptions = () => [{
       key: '1',
-      value: 'VIP1/6元'
+      value: 'VIP1/6元',
+      price: 6,
     }, {
       key: '2',
-      value: 'VIP2/66元'
+      value: 'VIP2/66元',
+      price: 66,
     }, {
       key: '3',
-      value: 'VIP3/166元'
+      value: 'VIP3/166元',
+      price: 166,
 }]
 
 export default {
@@ -126,6 +129,15 @@ export default {
       userVip() {
         this.showCard = false
         console.log('vip_level', this.vip_level)
+        let price = 0
+        let productInfo = ''
+        this.vip_options.forEach((element, i) => {
+          if(element.key == this.vip_level) {
+            price = element.price
+            productInfo = element.value
+          }
+        });
+        console.log(price, productInfo)
         /*
         let data = {func:'UserVipBuy', control: 'profile', uid: this.GLOBAL.uid, vip_level: this.vip_level, oemInfo: this.GLOBAL.oemInfo}
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
@@ -138,9 +150,9 @@ export default {
             console.log(res.data)
         });
         */
-        const url = "/pages/wepay/order?price=100&productInfo=dd&returl=dsfdsf&uid=" + this.GLOBAL.uid+"&vip="+this.vip_level;
-        //const url = "/pages/wepay/order"
+        const url = "/pages/wepay/order?price=" + price + "&productInfo=" + productInfo + "&returl=dsfdsf&uid=" + this.GLOBAL.uid+"&vip="+this.vip_level;
         this.$wechat.miniProgram.navigateTo({ url: url })
+        
       }
   },
   created() {
