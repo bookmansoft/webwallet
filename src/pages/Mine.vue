@@ -10,7 +10,7 @@
       </flexbox>
     </group>
     <group>
-      <cell :is-link="item.is_link" v-for="(item, index) in items0" :key="index" :link="item.link">
+      <cell :is-link="item.is_link" v-for="(item, index) in items0" :key="index" :link="item.link" :value="item.value">
         <span slot="title">
           <span style="vertical-align:middle;">{{item.title}}</span>
           <badge :text="item.badge" v-if="item.badge > 0"></badge>
@@ -44,12 +44,12 @@ import Navs from '@/components/Navs.vue'
 import { Cell, CellBox, CellFormPreview, Group, Badge, Flexbox, FlexboxItem } from 'vux'
 
 const getItems0 = () => [
-  {title: '会员', is_link: true, img: 'static/images/icon1/4.png', badge: 0, link: {path:'/member'}}
+  {title: '会员', is_link: true, img: 'static/images/icon1/4.png', badge: 0, link: '/member', value: '普通会员'}
 ]
 const getItems1 = () => [
-  {title: '我的钱包', is_link: true, img: 'static/images/icon1/12.png', badge: 1, link: {path:'/wallet'}},
-  {title: '我的道具', is_link: true, img: 'static/images/icon1/2.png', badge: 2, link: {path:'/props'}},
-  {title: '我的交易', is_link: true, img: 'static/images/icon1/14.png', badge: 3, link: {path:'/wallet/detail'}},
+  {title: '我的钱包', is_link: true, img: 'static/images/icon1/12.png', badge: 0, link: {path:'/wallet'}},
+  {title: '我的道具', is_link: true, img: 'static/images/icon1/2.png', badge: 0, link: {path:'/props'}},
+  {title: '我的交易', is_link: true, img: 'static/images/icon1/14.png', badge: 0, link: {path:'/wallet/detail'}},
   {title: '我的游戏', is_link: true, img: 'static/images/icon1/8.png', badge: 0, link: {path:'/wallet'}}
 ]
 const getItems2 = () => [
@@ -74,18 +74,36 @@ export default {
   },
   methods: {
       getUserProfil(){
-          let data = {func:'Mine', control: 'profile', openid: this.GLOBAL.openid, oemInfo: this.GLOBAL.oemInfo}
+          let data = {func:'Info', control: 'profile', openid: this.GLOBAL.openid, oemInfo: this.GLOBAL.oemInfo}
           this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
               console.log(res.data)
               if(res.data.profile != null) {
                   this.userProfile = res.data.profile
                   this.userProfile.avatar = res.data.profile.avatar_uri
-                  this.hasProfile = true
                   this.GLOBAL.uid = this.userProfile.uid
                   this.GLOBAL.propCount = this.userProfile.current_prop_count
                   this.GLOBAL.userProfile = this.userProfile
+                  this.hasProfile = true
+                  this.getMine()
               } else {
-                  this.gotoLogin();
+                  this.gotoLogin()
+              }
+          });
+      },
+      getMine(){
+          let data = {func:'Mine', control: 'profile', openid: this.GLOBAL.openid, uid: this.GLOBAL.uid, oemInfo: this.GLOBAL.oemInfo}
+          this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+              console.log('mine', res.data)
+              if(res.data.mine != null) {
+                  let mine = res.data.mine
+                  if(mine.vip_level>0) {
+                    this.items0[0].value = '领币加速中'
+                    this.items0[0].img = 'static/images/member/Vip' + mine.vip_level + '.png'
+                  } 
+                  if(mine.current_prop_count > this.userProfile.prop_count) {
+                    this.items1[1].badge = mine.current_prop_count - this.userProfile.prop_count
+                  }
+                  this.GLOBAL.userProfile.mine = mine
               }
           });
       },
@@ -100,6 +118,7 @@ export default {
       this.getUserProfil()
     } else {
       this.userProfile = this.GLOBAL.userProfile
+      this.getMine()
     }
   }
 }

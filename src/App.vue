@@ -38,6 +38,9 @@ export default {
           this.transitionName = 'vux-pop-in';
         }
       }
+  },
+  created() {
+    console.log(this.$route.path);
   }
 }
 </script>
