@@ -115,7 +115,9 @@ var openId = ''
 var uid = 0
 var propCount = 0
 var userProfile = null
-var games = null
+var games = []
+var cplist = []
+var cpCount = 0
 
 export default
 {
@@ -126,7 +128,7 @@ export default
   oemInfo,
   formatGameGold,
   gameGoldOrigin,
-  adminName, openId, uid, propCount,
-  getOpenId, userProfile, games, gameGoldUnit, formatDateStr, checkAddr, myAlert
+  adminName, openId, uid, propCount, cpCount, cplist, games,
+  getOpenId, userProfile, gameGoldUnit, formatDateStr, checkAddr, myAlert
 }
 </script>

@@ -1,9 +1,9 @@
 @tabbar-text-active-color:#FE6658;
 @tab-bar-active-color:#FE6658;
 @tab-text-active-color:#FE6658;
+@group-title-margin-top:0.4rem;
 @cell-font-size:15px;
 @button-tab-border-color:#FE6658;
 @button-tab-default-border-color:#FE6658;
 @button-tab-active-border-color:#FE6658;
 @button-tab-active-background-color:#FE6658;
-@group-title-margin-top:0.4rem;
