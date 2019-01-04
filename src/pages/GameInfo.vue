@@ -5,16 +5,16 @@
         <div id="topImg">
             <img :src="gameInfo.large_img_url">
         </div>
-        <div id="centImg" class="backcolor-white">
+        <div id="centImg" class="backcolor-white" style="height:130px;">
             <div>
                 <img :src="gameInfo.icon_url">
             </div>
-            <ul class="center-ul">
+            <ul class="center-ul" style="position:relative; top:-75px;">
                 <li>{{gameInfo.game_title}}</li>
                 <li class="color-999">发行商：{{gameInfo.provider}}</li>
                 <li>
                 <span class="color-999">射击</span>
-                <a class="play-btn float-right">进入游戏</a>
+                <a class="play-btn float-right"><span style="font-size:11px;">进入游戏</span></a>
                 </li>
                 <li>
                 <span class="color-999">128人玩过</span>
@@ -36,7 +36,7 @@
         <div id="introduce">
             <div class="backcolor-white padding-rem">
                 <p>简介</p>
-                <p style="color: #888; font-size:0.7rem;">{{gameInfo.desc}}</p>
+                <p style="color: #888; font-size:14px;">{{gameInfo.desc}}</p>
             </div>
             <div class="backcolor-white padding-rem">
                 <p>游戏信息</p>
@@ -46,7 +46,7 @@
             <div class="backcolor-white padding-rem">
                 <p>最近更新</p>
                 <p><span>更新时间</span><span>{{gameInfo.publishTime}}</span></p>
-                <p style="color: #888; font-size:0.7rem;">{{gameInfo.update_content}}</p>
+                <p style="color: #888; font-size:14px;">{{gameInfo.update_content}}</p>
             </div>
         </div>
         <div id="gameNameImg" class="backcolor-white">
@@ -74,6 +74,7 @@
 <script>
 import {XHeader, Flexbox, FlexboxItem } from 'vux'
 import { introduce , gameNameImg , gameProps} from "../assets/js/gameName.js"
+
 export default {
   components: {
     XHeader, Flexbox, FlexboxItem
@@ -119,6 +120,19 @@ export default {
         return time
     },
 
+    //生成随机字符串
+    randomString(len) {
+      len = len || 32;
+      /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
+      var $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';    
+      var maxLen = $chars.length;
+      var str = '';
+      for (var i = 0; i < len; i++) {
+        str += $chars.charAt(Math.floor(Math.random() * maxLen));
+      }
+      return str;
+    },
+
     buyProp(item) {
         if(this.cpAddr == '' || this.GLOBAL.openid == '') {
             return;
@@ -126,7 +140,7 @@ export default {
         let cid = this.cpItem.cid
         let uid = this.GLOBAL.openid
         let notifyurl = this.GLOBAL.apiUrl
-        let order_sn = 'sn_' + new Date().getTime()
+        let order_sn = item.id + '_new_' + this.randomString(16)
         let price = this.GLOBAL.gameGoldOrigin(item.props_price)
         var url = "/pages/order/order?cid=" + cid + "&uid=" + uid + "&sn=" + order_sn;
         url += "&price=" + price + '&notifyurl=' + encodeURI(notifyurl) + '&returl=' + encodeURI(window.location.href) ;
@@ -187,6 +201,7 @@ export default {
 }
 .backcolor-white {
   background-color: white;
+  font-size: 14px;
 }
 .float-right {
   float: right;
@@ -211,7 +226,7 @@ export default {
   width: 3.6rem;
   text-align: center;
   height: 1.2rem;
-  line-height: 1.2rem;
+  line-height: 1.1rem;
   border-radius: 1.3rem;
 }
 .play-btn:hover {
@@ -224,12 +239,12 @@ export default {
 }
 #gameNameTop > a:first-child {
   color: #888;
-  font-size: 1.2rem;
+  font-size: 14px;
 }
 #gameNameTop > a:last-child {
   /*color: black;*/
   color: #888;
-  font-size: 0.9rem;
+  font-size: 14px;
   height: 1.2rem;
   line-height: 1.2rem;
 }
@@ -264,10 +279,11 @@ export default {
   border-radius: 0.6rem;
 }
 #centImg > div {
-  position: absolute;
+  /* position: absolute; */
 }
 /* ul>li */
 #centImg > .center-ul {
+  display: inline-block;
   list-style: none;
   margin-top: 0;
   width: 68.5%;
@@ -278,7 +294,7 @@ export default {
 }
 .center-ul > li:first-child {
   font-weight: bold;
-  font-size: 0.7rem;
+  font-size: 15px;
   margin-top: 0.3rem;
 }
 /* 动作  冒险  标签 */
@@ -322,7 +338,7 @@ export default {
 }
 #introduce > div > p:first-child {
   font-weight: 1000;
-  font-size: 0.7rem;
+  font-size: 14px;
   padding: 0.45rem 0;
 }
 #introduce > div > p {

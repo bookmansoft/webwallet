@@ -5,15 +5,15 @@
     
     <group v-for="(item, index) in gameList" :key="index">
       <flexbox @click.native="gotoCpInfo(item, index)">
-        <flexbox-item :span="4" style="padding:0.5rem;">
+        <flexbox-item :span="4" style="padding:0.3rem;">
           <div class="flex-demo-left">
             <img :src="item.src" class="img-game-list" />
           </div></flexbox-item>
         <flexbox-item>
-          <div>
+          <div style="padding-left:15px;">
             <p><span>{{item.title}}</span></p>
             <br />
-            <p><span style="color: #888; font-size:0.3rem;">{{item.desc}}</span></p>
+            <p><span style="color: #888; font-size:14px;">{{item.desc}}</span></p>
           </div>
         </flexbox-item>
       </flexbox>
@@ -139,7 +139,7 @@ export default {
 .img-game-list {
     width: 7.8rem;
     height: 4.6rem;
-    /*border-radius: 12%;*/
+    border-radius: 12%;
 }
 
 </style>
