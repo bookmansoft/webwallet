@@ -73,6 +73,25 @@ export default {
               cpList.forEach(cpItem => {
                 if( this.cpFilter.indexOf(cpItem.cid)==-1) {
                   //从cp获取资源
+                  let url = encodeURI(cpItem.url)
+                  let data = {func:'GetCpProxy', control: 'cp', url: url, oemInfo: this.GLOBAL.oemInfo} 
+                  this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+                    console.log(res.data)
+                    if(res.data.hasOwnProperty('result')) {
+                      let result = res.data.result
+                      this.GLOBAL.cplist.push({
+                        cpItem: cpItem,
+                        cpInfo: result
+                      })
+
+                      this.gameList.push({
+                          src: result.game.small_img_url,
+                          title: result.game.game_title,
+                          desc: result.game.provider
+                      })
+                    }
+                  })
+                  /*
                   this.axios.get(cpItem.url).then(res => {
                     this.GLOBAL.cplist.push({
                       cpItem: cpItem,
@@ -84,6 +103,8 @@ export default {
                         desc: res.data.game.provider
                     })
                   })
+                  */
+                 
                 }
               });
             }

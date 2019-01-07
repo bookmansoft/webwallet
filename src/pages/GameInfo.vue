@@ -140,7 +140,7 @@ export default {
         let cid = this.cpItem.cid
         let uid = this.GLOBAL.openid
         let notifyurl = this.GLOBAL.apiUrl
-        let order_sn = item.id + '_new_' + this.randomString(16)
+        let order_sn = item.id + '-new-' + this.randomString(16)
         let price = this.GLOBAL.gameGoldOrigin(item.props_price)
         var url = "/pages/order/order?cid=" + cid + "&uid=" + uid + "&sn=" + order_sn;
         url += "&price=" + price + '&notifyurl=' + encodeURI(notifyurl) + '&returl=' + encodeURI(window.location.href) ;
@@ -152,12 +152,25 @@ export default {
         this.cpProps.splice(0, this.cpProps.length)
         this.cpInfo.proplist.forEach(element => {
             //从cp获取资源
+            /*
             const url = this.cpItem.url + '/prop/' + element.id
             this.axios.get(url).then(res => {
                 //console.log(res.data)
                 let item = res.data
                 item.props_price = this.GLOBAL.formatGameGold(item.props_price)
                 this.cpProps.push(item)
+            })
+            */
+            //const url = this.cpItem.url + '/prop/' + element.id
+            let url = encodeURI(this.cpItem.url + '/prop/' + element.id)
+            let data = {func:'GetCpProxy', control: 'cp', url: url, oemInfo: this.GLOBAL.oemInfo} 
+            this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+              console.log(res.data)
+              if(res.data.hasOwnProperty('result')) {
+                let item = res.data.result
+                item.props_price = this.GLOBAL.formatGameGold(item.props_price)
+                this.cpProps.push(item)
+              }
             })        
         });
     },
