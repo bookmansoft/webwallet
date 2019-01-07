@@ -1,17 +1,36 @@
 <template>
   <div>
-      <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
+    <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
+      <!--
       <panel header="道具列表" :list="propList" type="5" @on-img-error="onImgError"></panel>
+      -->
+    <div v-for="(item, index) in propList" :key="index" class="propItem">
+      <flexbox @click.native="gotoPropDetail(item, index)">
+        <flexbox-item :span="2.5" style="padding:0.3rem;">
+          <div class="flex-demo-left">
+            <img :src="item.result.icon" class="img-prop-list" />
+          </div></flexbox-item>
+        <flexbox-item>
+          <div style="padding-left:15px;">
+            <p><span style="font-size:16px;">{{item.result.props_name}}</span></p>
+            <br />
+            <p><span style="color: #888; font-size:14px;">{{item.desc}}</span></p>
+          </div>
+        </flexbox-item>
+      </flexbox>
+    </div>
   </div>
 </template>
+
 <script>
+
 import { getPropByOid } from "../assets/js/cp.js"
-import {XHeader, Panel} from 'vux'
+import {XHeader, Panel, Flexbox, FlexboxItem} from 'vux'
 
 export default {
   name: 'Props',
   components: {
-    XHeader, Panel
+    XHeader, Panel, Flexbox, FlexboxItem
   },
   data () {
     return {
@@ -33,29 +52,33 @@ export default {
         var that = this;
         that.axios.post(this.GLOBAL.apiUrl, data)
             .then(res => {
-            console.log(res.data)
             for (var i = 0; i < res.data.props.length; i++) {
-                let item = res.data.props[i]
-                /*
-                setTimeout( function() {
-                    getPropInfo(that.axios, that.myProps, item);
-                }, i*800);
-                */
-                getPropByOid(that, item, function(prop) {
-                    let item = {
-                        src: prop.prop_icon,
-                        title: prop.prop_name,
-                        desc: '含金：' + that.GLOBAL.formatGameGold(prop.gold) + '千克'
+                let prop = res.data.props[i]
+                let url = encodeURI(prop.cp.url + '/prop/' + prop.oid)
+                let data = {func:'GetCpProxy', control: 'cp', url: url, oemInfo: this.GLOBAL.oemInfo} 
+                
+                this.axios.post(this.GLOBAL.apiUrl, data).then(resProxy => {
+                    if(resProxy.data.hasOwnProperty('result')) {
+                        let propResult = resProxy.data.result
+                        prop.result = propResult
+                        prop.desc = '价格：' + that.GLOBAL.formatGameGold(propResult.props_price) + '千克',
+                        that.propList.push(prop)
                     }
-                    that.propList.push(item)
-                })
+                })  
             }
         });
       },
       onImgError (item, $event) {
         console.log(item, $event)
-      }
+      },
+
+      gotoPropDetail(item, index) {
+        console.log('gotoPropDetail', index)
+        console.log('prop', item)
+        this.$router.push({ name: 'PropDetail', params: { prop: item }})
+      },
   },
+
   created() {
       if(this.GLOBAL.uid==0 || this.GLOBAL.openid=='') {
           this.$router.push('/mine')
@@ -65,3 +88,18 @@ export default {
   }
 }
 </script>
+
+<style lang="less" scoped>
+
+.propItem {
+  background-color: white;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+}
+.img-prop-list {
+    width: 4.2rem;
+    height: 4.2rem;
+    border-radius: 12%;
+}
+
+</style>

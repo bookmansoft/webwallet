@@ -165,7 +165,7 @@ export default {
             let url = encodeURI(this.cpItem.url + '/prop/' + element.id)
             let data = {func:'GetCpProxy', control: 'cp', url: url, oemInfo: this.GLOBAL.oemInfo} 
             this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-              console.log(res.data)
+              //console.log(res.data)
               if(res.data.hasOwnProperty('result')) {
                 let item = res.data.result
                 item.props_price = this.GLOBAL.formatGameGold(item.props_price)
@@ -184,11 +184,11 @@ export default {
             uid: this.GLOBAL.openid,
             cid: this.cpItem.cid
         }
-        console.log(data)
+        //console.log(data)
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-            console.log(res.data)
+            //console.log(res.data)
             this.cpAddr = res.data.ret.data.addr
-            console.log('this.cpAddr', this.cpAddr)
+            //console.log('this.cpAddr', this.cpAddr)
         });
     }
   },

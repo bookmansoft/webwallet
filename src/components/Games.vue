@@ -3,7 +3,7 @@
     <swiper style="margin-top:0.6rem;" :list="hotList" v-model="hotListIndex" @on-index-change="hotListOnIndexChange"></swiper>
     <!--<panel header="热门游戏" :list="gameList" type="5" @on-img-error="onImgError"></panel>-->
     
-    <group v-for="(item, index) in gameList" :key="index">
+    <div v-for="(item, index) in gameList" :key="index" class="gameItem">
       <flexbox @click.native="gotoCpInfo(item, index)">
         <flexbox-item :span="4" style="padding:0.3rem;">
           <div class="flex-demo-left">
@@ -17,7 +17,7 @@
           </div>
         </flexbox-item>
       </flexbox>
-    </group>
+    </div>
     
   </div>
 </template>
@@ -60,7 +60,7 @@ export default {
         let data = {func:'List', control: 'cp', page: page, num: num, oemInfo: this.GLOBAL.oemInfo}
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
             if(res.data.errcode == 'success') {
-              console.log('getCpList', res.data)
+              //console.log('getCpList', res.data)
               //清空
               if(this.GLOBAL.cplist.length >0 ) {
                 this.GLOBAL.cplist.splice(0, this.GLOBAL.cplist.length)
@@ -76,7 +76,7 @@ export default {
                   let url = encodeURI(cpItem.url)
                   let data = {func:'GetCpProxy', control: 'cp', url: url, oemInfo: this.GLOBAL.oemInfo} 
                   this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-                    console.log(res.data)
+                    //console.log(res.data)
                     if(res.data.hasOwnProperty('result')) {
                       let result = res.data.result
                       this.GLOBAL.cplist.push({
@@ -157,6 +157,11 @@ export default {
 </script>
 <style lang="less" scoped>
 
+.gameItem {
+  background-color: white;
+  margin-top: 0.4rem;
+  padding: 0.2rem;
+}
 .img-game-list {
     width: 7.8rem;
     height: 4.6rem;

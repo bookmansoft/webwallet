@@ -12,6 +12,10 @@ import WalletDetail from '@/pages/WalletDetail'
 import Props from '@/pages/Props'
 import Member from '@/pages/Member'
 import GameInfo from '@/pages/GameInfo'
+import PropDetail from '@/pages/PropDetail'
+import ContractInfo from '@/pages/ContractInfo'
+import PropSaleInfo from '@/pages/PropSaleInfo'
+import About from '@/pages/About'
 
 Vue.use(Router)
 
@@ -80,7 +84,26 @@ export default new Router({
       path: '/game/info',
       name: 'GameInfo',
       component: GameInfo
+    },
+    {
+      path: '/prop/detail',
+      name: 'PropDetail',
+      component: PropDetail
+    },
+    {
+      path: '/contract/info',
+      name: 'ContractInfo',
+      component: ContractInfo
+    },
+    {
+      path: '/prop/sale/info',
+      name: 'PropSaleInfo',
+      component: PropSaleInfo
+    },
+    {
+      path: '/about',
+      name: 'About',
+      component: About
     }
-    
   ]
 })

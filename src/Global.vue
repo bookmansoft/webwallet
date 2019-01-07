@@ -85,6 +85,15 @@ function getOpenId(){
     return openid;
 }
 
+function getPath(){
+    var request = getRequest();
+    var path = request["path"];
+    if( typeof(path)=="undefined" || path=="") {
+        path = '/'
+    }
+    return path;
+}
+
 function formatDateStr(date, fmt) {
     var o = {
         "M+": date.getMonth() + 1, //月份 
@@ -112,6 +121,7 @@ function checkAddr(value) {
 
 var adminName = 'root'
 var openId = ''
+var path = '/'
 var uid = 0
 var propCount = 0
 var userProfile = null
@@ -127,8 +137,8 @@ export default
   apiUrl,
   oemInfo,
   formatGameGold,
-  gameGoldOrigin,
-  adminName, openId, uid, propCount, cpCount, cplist, games,
-  getOpenId, userProfile, gameGoldUnit, formatDateStr, checkAddr, myAlert
+  gameGoldOrigin, userProfile, gameGoldUnit, formatDateStr, checkAddr, myAlert,
+  adminName, openId, uid, propCount, cpCount, cplist, games, path,
+  getOpenId, getPath,
 }
 </script>

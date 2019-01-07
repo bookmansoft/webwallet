@@ -41,6 +41,16 @@ export default {
   },
   created() {
     console.log(this.$route.path);
+    let path = this.GLOBAL.path
+    this.$router.options.routes.forEach(element => {
+      if(element.path==path) {
+        console.log('path', path)
+        if(path != '/') {
+          console.log('push', path)
+          this.$router.push(path)
+        }
+      }
+    });
   }
 }
 </script>

@@ -50,11 +50,11 @@ const getItems1 = () => [
   {title: '我的钱包', is_link: true, img: 'static/images/icon1/12.png', badge: 0, link: {path:'/wallet'}},
   {title: '我的道具', is_link: true, img: 'static/images/icon1/2.png', badge: 0, link: {path:'/props'}},
   {title: '我的交易', is_link: true, img: 'static/images/icon1/14.png', badge: 0, link: {path:'/wallet/detail'}},
-  {title: '我的游戏', is_link: true, img: 'static/images/icon1/8.png', badge: 0, link: {path:'/wallet'}}
+  {title: '我的游戏', is_link: true, img: 'static/images/icon1/8.png', badge: 0, link: ''}
 ]
 const getItems2 = () => [
-  {title: '使用条款', is_link: true, img: 'static/images/icon1/3.png', badge: 0, link: {path:'/wallet'}},
-  {title: '关于我们', is_link: true, img: 'static/images/icon1/9.png', badge: 0, link: {path:'/wallet'}}
+  /*{title: '使用条款', is_link: true, img: 'static/images/icon1/3.png', badge: 0, link: ''},*/
+  {title: '关于我们', is_link: true, img: 'static/images/icon1/9.png', badge: 0, link: {path:'/about'}}
 ]
 export default {
   components: {
@@ -94,14 +94,14 @@ export default {
           let data = {func:'Mine', control: 'profile', openid: this.GLOBAL.openid, uid: this.GLOBAL.uid, oemInfo: this.GLOBAL.oemInfo}
           this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
               console.log('mine', res.data)
-              if(res.data.mine != null) {
+              if(res.data.errcode == 'success' && res.data.mine != null) {
                   let mine = res.data.mine
                   if(mine.vip_level>0) {
                     this.items0[0].value = '领币加速中'
                     this.items0[0].img = 'static/images/member/Vip' + mine.vip_level + '.png'
                   } 
-                  if(mine.current_prop_count > this.userProfile.prop_count) {
-                    this.items1[1].badge = mine.current_prop_count - this.userProfile.prop_count
+                  if(mine.current_prop_count > mine.prop_count) {
+                    this.items1[1].badge = mine.current_prop_count - mine.prop_count
                   }
                   this.GLOBAL.userProfile.mine = mine
               }
@@ -129,28 +129,33 @@ export default {
 .sub-item {
   color: #888;
 }
+
 .slide {
   padding: 0 20px;
   overflow: hidden;
   max-height: 0;
   transition: max-height .5s cubic-bezier(0, 1, 0, 1) -.1s;
 }
+
 .animate {
   max-height: 9999px;
   transition-timing-function: cubic-bezier(0.5, 0, 1, 0);
   transition-delay: 0s;
 }
+
 .avatar {
     width: 5rem;
     height: 5rem;
     border-radius: 50%;
 }
+
 .flex-demo-left {
   text-align: center;
   color: #fff;
   border-radius: 4px;
   background-clip: padding-box;
 }
+
 .flex-demo-right {
   text-align: left;
   border-radius: 4px;

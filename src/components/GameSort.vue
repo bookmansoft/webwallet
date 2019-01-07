@@ -1,7 +1,6 @@
 <template>
   <div>
-    <group-title>游戏类别</group-title>
-    <grid :show-lr-borders="false" :show-vertical-dividers="true" :cols="3">
+    <grid :show-lr-borders="false" :show-vertical-dividers="true" :cols="3" style="top:5px;">
       <grid-item v-for="(item, index) in gameCategeroys" :key="index" :label="item.label" @on-item-click="onItemClick(item)">
         <img slot="icon" :src="item.icon">
       </grid-item>
@@ -10,7 +9,7 @@
 </template>
 
 <script>
-import { Grid, GridItem, GroupTitle } from 'vux'
+import { Grid, GridItem } from 'vux'
 //益智，消除，休闲，棋牌，射击
 const getGameSorts = () => [{
   label: '益智',
@@ -63,8 +62,7 @@ export default {
   name: 'GameSort',
   components: {
     Grid,
-    GridItem,
-    GroupTitle
+    GridItem
   },
   data () {
     return {

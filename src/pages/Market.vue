@@ -1,30 +1,50 @@
 <template>
   <div>
-    <img src="../assets/images/bazaar.png" class="imgDemo" alt="" />
+    <tab :line-width="3" custom-bar-width="60px" v-model="tabIndex">
+      <tab-item v-for="(item, index) in tabItems" :key="index" @on-item-click="onItemClick">
+        {{item.label}}
+      </tab-item>
+    </tab>
+    <div v-if="tabIndex==0">
+      <PropSales></PropSales>
+    </div>
+    <div v-else>
+      <Contract></Contract>
+    </div>
     <navs></navs>
   </div>
 </template>
 <script>
+import { Tab, TabItem} from 'vux'
 import Navs from '@/components/Navs.vue'
+import PropSales from '@/components/PropSales.vue'
+import Contract from '@/components/Contract.vue'
+
+const tabList = () => [
+  {
+    label:'道具交易'
+  },{
+    label:'比特币交易'
+  }]
 
 export default {
   components: {
-    Navs
+    Tab,
+    TabItem,
+    Navs,
+    Contract,
+    PropSales
   },
   data () {
     return {
-      msg: '集市'
+      tabIndex: 0,
+      tabItems: tabList()
     }
   },
   methods: {
-
+    onItemClick(index) {
+      console.log(this.tabIndex)
+    }
   }
 }
 </script>
-
-<style scoped>
-.imgDemo {
-  width: 100%;
-  height: auto;
-}
-</style>

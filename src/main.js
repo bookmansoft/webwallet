@@ -5,7 +5,7 @@ import FastClick from 'fastclick'
 import router from './router/index'
 import App from './App'
 import Vuex from 'vuex'
-import { WechatPlugin, AjaxPlugin, AlertPlugin, ToastPlugin  } from 'vux'
+import { WechatPlugin, AjaxPlugin, AlertPlugin, ToastPlugin, ConfirmPlugin  } from 'vux'
 import axios from 'axios'
 import global_ from './Global'
 
@@ -16,9 +16,12 @@ Vue.use(WechatPlugin)
 Vue.use(AjaxPlugin)
 Vue.use(AlertPlugin)
 Vue.use(ToastPlugin)
+Vue.use(ConfirmPlugin)
+
 Vue.prototype.axios = axios
 Vue.prototype.GLOBAL = global_
 Vue.prototype.GLOBAL.openid = Vue.prototype.GLOBAL.getOpenId()
+Vue.prototype.GLOBAL.path = Vue.prototype.GLOBAL.getPath()
 
 /* eslint-disable no-new */
 new Vue({

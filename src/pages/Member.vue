@@ -21,7 +21,7 @@
                     <div slot="content" class="card-padding">
                         <p style="color:#999;font-size:16px;">{{item.tag}}</p>
                         <br/>
-                        <p style="font-size:15px;line-height:1.2;color:#C46E43;">{{item.memo}}</p>
+                        <p style="font-size:15px;line-height:1.2;color:#888;">{{item.memo}}</p>
                     </div>
                     </card>
                 </swiper-item>
