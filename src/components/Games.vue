@@ -11,7 +11,7 @@
           </div></flexbox-item>
         <flexbox-item>
           <div style="padding-left:15px;">
-            <p><span>{{item.title}}</span></p>
+            <p><span style="font-size:16px;">{{item.title}}</span></p>
             <br />
             <p><span style="color: #888; font-size:14px;">{{item.desc}}</span></p>
           </div>
