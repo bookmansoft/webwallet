@@ -1,4 +1,4 @@
-# minlong-poker13
+# gamegold-wechat-client
 
 > A Vue.js project
 
