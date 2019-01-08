@@ -2,9 +2,9 @@
   <div>
     <!--<swiper style="margin-top:0.6rem;" :list="hotList" v-model="hotListIndex" @on-index-change="hotListOnIndexChange"></swiper>-->
     <!--<panel header="热门游戏" :list="gameList" type="5" @on-img-error="onImgError"></panel>-->
-    <div style="top:5px;">
+    <div style="top:5px;background-color: white">
       <div style="padding:10px 10px 0px 10px;"><img src="static/img/game-9.jpg" class="img-top" /></div>
-      <div><p style="font-size:15px;">（推荐）奔跑的悟空</p></div>
+      <div><p style="font-size:15px;padding: 5px 0px 0px 10px;"><span style="color:red;">推荐</span><span style="margin-left:5px;">奔跑的悟空</span></p></div>
       <div><p style="font-size:13px; color: #888;padding: 5px 0px 10px 10px;">原石互娱</p></div>
     </div>
     <div v-for="(item, index) in gameList" :key="index" class="gameItem">
