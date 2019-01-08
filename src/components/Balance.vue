@@ -48,8 +48,8 @@ export default {
           let data = {func:'BalanceAll', control: 'wallet', openid: this.GLOBAL.openid, oemInfo: this.GLOBAL.oemInfo}
           this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
               this.balance.confirmed = this.GLOBAL.formatGameGold(res.data.balance.confirmed)
-              this.balance.unconfirmed = this.GLOBAL.formatGameGold(res.data.balance.unconfirmed)
-              this.balance.unconfirmed = this.balance.unconfirmed - this.balance.confirmed
+              this.balance.unconfirmed = this.GLOBAL.formatGameGold(res.data.balance.unconfirmed-res.data.balance.confirmed)
+              //this.balance.unconfirmed = this.balance.unconfirmed - this.balance.confirmed
               this.doStart = true
           }).catch(res => {
               console.log(res)
@@ -69,7 +69,6 @@ export default {
 </script>
 
 <style scoped lang="less">
-@import '~vux/src/styles/1px.less';
 
 .card-demo-flex {
   display: flex;

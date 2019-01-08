@@ -1,7 +1,7 @@
 <template>
   <div>
     <group>
-      <flexbox style="padding:0.2rem;">
+      <flexbox class="vux-1px">
         <flexbox-item :span="4">
           <div class="flex-demo-left">
             <img :src="userProfile.avatar" class="avatar" />
@@ -9,8 +9,9 @@
         <flexbox-item><div class="flex-demo-right"><span>{{userProfile.nick}}</span></div></flexbox-item>
       </flexbox>
     </group>
+    <div style="position:relative; width:100%; height:3px;background-color:#FFFFFF; top:-2px;"></div>
     <group>
-      <cell :is-link="item.is_link" v-for="(item, index) in items0" :key="index" :link="item.link" :value="item.value">
+      <cell :is-link="item.is_link" v-for="(item, index) in items0" :key="index" :link="item.link" :value="item.value" class="vux-1px">
         <span slot="title">
           <span style="vertical-align:middle;">{{item.title}}</span>
           <badge :text="item.badge" v-if="item.badge > 0"></badge>
@@ -18,7 +19,10 @@
         <img slot="icon" width="20" style="display:block;margin-right:5px;" :src="item.img">
       </cell>
     </group>
-    <group>
+    <div style="position:relative; width:100%; height:3px;background-color:#FFFFFF; top:-2px;"></div>
+    
+    <group style="border: 1px solid #ffffff;">
+      
       <cell :is-link="item.is_link" v-for="(item, index) in items1" :key="index" :link="item.link">
         <span slot="title">
           <span style="vertical-align:middle;">{{item.title}}</span>
@@ -27,8 +31,9 @@
         <img slot="icon" width="20" style="display:block;margin-right:5px;" :src="item.img">
       </cell>
     </group>
+    <div style="position:relative; width:100%; height:3px;background-color:#FFFFFF; top:-2px;"></div>
     <group>
-      <cell :is-link="item.is_link" v-for="(item, index) in items2" :key="index" :link="item.link">
+      <cell :is-link="item.is_link" v-for="(item, index) in items2" :key="index" :link="item.link" class="vux-1px">
         <span slot="title">
           <span style="vertical-align:middle;">{{item.title}}</span>
           <badge :text="item.badge" v-if="item.badge > 0"></badge>
@@ -36,6 +41,8 @@
         <img slot="icon" width="20" style="display:block;margin-right:5px;" :src="item.img">
       </cell>
     </group>
+    <div style="position:relative; width:100%; height:3px;background-color:#FFFFFF; top:-2px;"></div>
+    <br/>
     <navs></navs>
   </div>
 </template>
@@ -124,10 +131,24 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-@import '~vux/src/styles/1px.less';
+
+.vux-1px { 
+  border: 1px solid #ffffff;
+  box-shadow: 0 0 1px 0 #ffffff;
+  &::before{
+    border-radius: 1px;
+    box-shadow: 0 0 1px 0 #ffffff;
+    border: 1px solid #ffffff;
+  }
+
+}
 
 .sub-item {
   color: #888;
+}
+
+.weui-group {
+  border-top:none;
 }
 
 .slide {

@@ -192,7 +192,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-@import '~vux/src/styles/1px.less';
+
 .demo1 {
   font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
   font-size: 1em;

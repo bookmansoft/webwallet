@@ -4,7 +4,7 @@
       <tabbar-item :link="item.link" :badge="item.badge" :show-dot="item.showDot" v-for="(item,index) in items" :key="index">
         <img slot="icon" :src="item.icon">
         <img slot="icon-active" :src="item.iconActive">
-        <span slot="label" style="font-size:13px;">{{item.label}}</span>
+        <span slot="label" style="font-size:13px;font-weight:620;">{{item.label}}</span>
       </tabbar-item>
     </tabbar>
   </div>

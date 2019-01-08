@@ -1,54 +1,75 @@
 <template>
-  <div>
-    <!--<swiper style="margin-top:0.6rem;" :list="hotList" v-model="hotListIndex" @on-index-change="hotListOnIndexChange"></swiper>-->
-    <!--<panel header="热门游戏" :list="gameList" type="5" @on-img-error="onImgError"></panel>-->
-    <div style="top:5px;background-color: white">
-      <div style="padding:10px 10px 0px 10px;"><img src="static/img/game-9.jpg" class="img-top" /></div>
-      <div><p style="font-size:15px;padding: 5px 0px 0px 10px;"><span style="color:red;">推荐</span><span style="margin-left:5px;">奔跑的悟空</span></p></div>
-      <div><p style="font-size:13px; color: #888;padding: 5px 0px 10px 10px;">原石互娱</p></div>
+    <div>
+       <scroller v-model="scrollerStatus" height="-100" lock-x scrollbar-y ref="scroller" :bounce="isbounce"
+              :use-pulldown="showDown" :use-pullup="false" :pulldown-config="downobj" @on-pulldown-loading="selPullDown"><div>
+        <!--<swiper style="margin-top:0.6rem;" :list="hotList" v-model="hotListIndex" @on-index-change="hotListOnIndexChange"></swiper>-->
+        <!--<panel header="热门游戏" :list="gameList" type="5" @on-img-error="onImgError"></panel>-->
+        <div style="height:5px;"></div>
+        <div style="background-color: white">
+          <div style="padding:10px 10px 0px 10px;"><img :src="recommendGame.src" class="img-top" /></div>
+          <div><p style="font-size:15px;padding: 5px 0px 0px 10px;"><span style="color:red;">推荐</span><span style="margin-left:5px;">{{recommendGame.gameTitle}}</span></p></div>
+          <div><p style="font-size:13px; color: #888;padding: 5px 0px 10px 10px;">{{recommendGame.gameProvider}}</p></div>
+        </div>
+        <div v-for="(item, index) in gameList" :key="index" class="gameItem">
+          <flexbox @click.native="gotoCpInfo(item, index)">
+            <flexbox-item :span="4" style="padding:0.3rem;">
+              <div class="flex-demo-left">
+                <img :src="item.src" class="img-game-list" />
+              </div></flexbox-item>
+            <flexbox-item>
+              <div style="padding-left:6px;">
+                <p><span style="font-size:15px;">{{item.title}}</span></p>
+                <br />
+                <p><span style="color: #888; font-size:14px;">{{item.desc}}</span></p>
+              </div>
+            </flexbox-item>
+          </flexbox>
+        </div>
+        <br/>
+      </div></scroller>
+      <br/>
     </div>
-    <div v-for="(item, index) in gameList" :key="index" class="gameItem">
-      <flexbox @click.native="gotoCpInfo(item, index)">
-        <flexbox-item :span="4" style="padding:0.3rem;">
-          <div class="flex-demo-left">
-            <img :src="item.src" class="img-game-list" />
-          </div></flexbox-item>
-        <flexbox-item>
-          <div style="padding-left:6px;">
-            <p><span style="font-size:15px;">{{item.title}}</span></p>
-            <br />
-            <p><span style="color: #888; font-size:14px;">{{item.desc}}</span></p>
-          </div>
-        </flexbox-item>
-      </flexbox>
-    </div>
-    <br/>
-  </div>
 </template>
 <script>
-import {Swiper, Group, Panel, Flexbox, FlexboxItem} from 'vux'
-
-const baseList = [{
-  url: 'javascript:',
-  img: 'https://ww1.sinaimg.cn/large/663d3650gy1fq66vvsr72j20p00gogo2.jpg',
-  title: '游戏金链'
-}, {
-  url: 'javascript:',
-  img: 'https://ww1.sinaimg.cn/large/663d3650gy1fq66vw1k2wj20p00goq7n.jpg',
-  title: '百谷王钱包'
-}]
+import {Scroller, Swiper, Group, Panel, Flexbox, FlexboxItem} from 'vux'
+import { setTimeout } from 'timers';
 
 export default {
   name: 'Games',
   components: {
-    Swiper, Group, 
+    Scroller, Swiper, Group, 
     Panel, Flexbox, FlexboxItem
   },
   data () {
     return {
+      isShow: false,//是否显示scroller,第一次请求数据过程中隐藏插件，不隐藏的时候会显示“请上拉刷新数据”的字样，不好看
+      showloading: false,
+      textloading: '加载中',
+      showDown: true,
+      isbounce: true,
+      lists: [],
+      downobj: {
+        content: '请下拉刷新数据',
+        pullUpHeight: 50,
+        height: 40,
+        autoRefresh: false,
+        downContent: '请下拉刷新数据',
+        upContent: '请下拉刷新数据',
+        loadingContent: '加载中...',
+        clsPrefix: 'xs-plugin-pulldown-'
+      },
+      
+      scrollerStatus: {
+        pullupStatus: 'default'
+      },
+
       gameList: [],
-      hotList: baseList,
       hotListIndex: 0,
+      recommendGame: {
+        gameTitle: '奔跑的悟空',
+        src: 'static/img/game-9.jpg',
+        gameProvider: '原石互娱'
+      },
       cpFilter: [
         'xxxxxxxx-game-gold-boss-xxxxxxxxxxxx',
         'eb9d03c0-0ff9-11e9-a575-21541098fe6c',
@@ -57,11 +78,35 @@ export default {
       ]
     }
   },
+  activated () {
+      this.$refs.scroller.reset()
+  },
   methods: {
+      selPullDown () {    
+        console.log('selPullDown')  
+        this.getNewsList(false)
+      },
+      getNewsList(isEmpty) {
+        let that = this
+        setTimeout(()=>{
+          that.scrollerReset()
+        }, 1500)
+      },
+
+      scrollerReset() {
+        this.$refs.scroller.donePulldown()
+        this.$refs.scroller.reset({top: 0})
+      },
       hotListOnIndexChange (index) {
         this.hotListIndex = index
       },
-
+      infinite(done) {
+        console.log('infinite')
+          this.$refs.myScroller.resize();
+        setTimeout(()=>{
+          this.$refs.scroller.finishInfinite(2);
+        })
+      },
       //获取CP列表
       getCpList(page, num) {
         let data = {func:'List', control: 'cp', page: page, num: num, oemInfo: this.GLOBAL.oemInfo}
@@ -144,6 +189,7 @@ export default {
       this.fillGames(this.GLOBAL.cplist)
     } 
     this.getCpCount()
+    this.isShow = true;
   }
 }
 </script>
@@ -165,4 +211,15 @@ export default {
   height:200px;
   border-radius: 4%;
 }
+.xs-plugin-pulldown-container {
+ line-height: 40px;
+ font-size: 18px;
+ color: red;
+}
+.xs-plugin-pullup-container {
+ line-height: 40px;
+ font-size: 18px;
+ color: red;
+ }
+
 </style>
