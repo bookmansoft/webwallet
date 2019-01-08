@@ -162,7 +162,7 @@ export default {
 }
 .img-top {
   width:100%;
-  height:190px;
+  height:200px;
   border-radius: 4%;
 }
 </style>
