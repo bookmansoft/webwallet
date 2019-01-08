@@ -14,7 +14,7 @@
             <img :src="item.src" class="img-game-list" />
           </div></flexbox-item>
         <flexbox-item>
-          <div style="padding-left:0px;">
+          <div style="padding-left:6px;">
             <p><span style="font-size:15px;">{{item.title}}</span></p>
             <br />
             <p><span style="color: #888; font-size:14px;">{{item.desc}}</span></p>
@@ -52,7 +52,8 @@ export default {
       cpFilter: [
         'xxxxxxxx-game-gold-boss-xxxxxxxxxxxx',
         'eb9d03c0-0ff9-11e9-a575-21541098fe6c',
-        '324febe0-1246-11e9-865d-67171db95497'
+        '324febe0-1246-11e9-865d-67171db95497',
+        'b0a7c550-10b9-11e9-be28-7bc3b258896e',
       ]
     }
   },
