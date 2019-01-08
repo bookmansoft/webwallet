@@ -1,8 +1,12 @@
 <template>
   <div>
-    <swiper style="margin-top:0.6rem;" :list="hotList" v-model="hotListIndex" @on-index-change="hotListOnIndexChange"></swiper>
+    <!--<swiper style="margin-top:0.6rem;" :list="hotList" v-model="hotListIndex" @on-index-change="hotListOnIndexChange"></swiper>-->
     <!--<panel header="热门游戏" :list="gameList" type="5" @on-img-error="onImgError"></panel>-->
-    
+    <group>
+      <div style="padding:10px 10px 0px 10px;"><img src="static/img/game-9.jpg" class="img-top" /></div>
+      <div><p style="font-size:15px;">（推荐）奔跑的悟空</p></div>
+      <div><p style="font-size:13px; color: #888;padding: 5px 0px 10px 10px;">原石互娱</p></div>
+    </group>
     <div v-for="(item, index) in gameList" :key="index" class="gameItem">
       <flexbox @click.native="gotoCpInfo(item, index)">
         <flexbox-item :span="4" style="padding:0.3rem;">
@@ -10,15 +14,15 @@
             <img :src="item.src" class="img-game-list" />
           </div></flexbox-item>
         <flexbox-item>
-          <div style="padding-left:15px;">
-            <p><span style="font-size:16px;">{{item.title}}</span></p>
+          <div style="padding-left:0px;">
+            <p><span style="font-size:15px;">{{item.title}}</span></p>
             <br />
             <p><span style="color: #888; font-size:14px;">{{item.desc}}</span></p>
           </div>
         </flexbox-item>
       </flexbox>
     </div>
-    
+    <br/>
   </div>
 </template>
 <script>
@@ -46,7 +50,9 @@ export default {
       hotList: baseList,
       hotListIndex: 0,
       cpFilter: [
-        'xxxxxxxx-game-gold-boss-xxxxxxxxxxxx'
+        'xxxxxxxx-game-gold-boss-xxxxxxxxxxxx',
+        'eb9d03c0-0ff9-11e9-a575-21541098fe6c',
+        '324febe0-1246-11e9-865d-67171db95497'
       ]
     }
   },
@@ -83,28 +89,13 @@ export default {
                         cpItem: cpItem,
                         cpInfo: result
                       })
-
                       this.gameList.push({
                           src: result.game.small_img_url,
                           title: result.game.game_title,
                           desc: result.game.provider
                       })
                     }
-                  })
-                  /*
-                  this.axios.get(cpItem.url).then(res => {
-                    this.GLOBAL.cplist.push({
-                      cpItem: cpItem,
-                      cpInfo: res.data
-                    })
-                    this.gameList.push({
-                        src: res.data.game.small_img_url,
-                        title: res.data.game.game_title,
-                        desc: res.data.game.provider
-                    })
-                  })
-                  */
-                 
+                  })                 
                 }
               });
             }
@@ -163,9 +154,14 @@ export default {
   padding: 0.2rem;
 }
 .img-game-list {
-    width: 7.8rem;
-    height: 4.6rem;
+    width: 110px;
+    height: 75px;
     border-radius: 12%;
+    margin-left: 3px;
 }
-
+.img-top {
+  width:100%;
+  height:190px;
+  border-radius: 4%;
+}
 </style>

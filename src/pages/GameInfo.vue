@@ -11,7 +11,7 @@
             </div>
             <ul class="center-ul" style="position:relative; top:-75px;">
                 <li>{{gameInfo.game_title}}</li>
-                <li class="color-999">发行商：{{gameInfo.provider}}</li>
+                <li class="color-999-provider">发行商：{{gameInfo.provider}}</li>
                 <li>
                 <span class="color-999">射击</span>
                 <a class="play-btn float-right"><span style="font-size:11px;">进入游戏</span></a>
@@ -224,6 +224,12 @@ export default {
 }
 .color-999 {
   color: #999;
+}
+.color-999-provider {
+  color: #999;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
 }
 .color-orange {
   color: rgb(255, 102, 0);

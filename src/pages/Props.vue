@@ -93,7 +93,7 @@ export default {
 
 .propItem {
   background-color: white;
-  margin-top: 0.5rem;
+  margin-top: 0.6rem;
   padding: 0.5rem;
 }
 .img-prop-list {

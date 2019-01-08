@@ -5,13 +5,13 @@
         <div id="topImg">
             <img :src="prop.result.large_icon">
         </div>
-        <div id="centImg" class="backcolor-white" style="height:120px;">
+        <div id="centImg" class="backcolor-white" style="height:90px;">
             <div>
                 <img :src="prop.result.icon">
             </div>
-            <ul class="center-ul" style="position:relative; top:-75px;">
+            <ul class="center-ul" style="position:relative; top:-80px;">
                 <li>{{prop.result.props_name}}</li>
-                <li class="color-999">道具名称：{{prop.result.props_name}}</li>
+                <li class="color-999-provider">道具名称：{{prop.result.props_name}}</li>
                 <li>
                 <span class="color-999">装备</span>
                 <a class="play-btn float-right"><span style="font-size:11px;">进入游戏</span></a>
@@ -232,6 +232,12 @@ export default {
 .color-999 {
   color: #999;
 }
+.color-999-provider {
+  color: #999;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
 .color-orange {
   color: rgb(255, 102, 0);
   margin-right: 0rem;
@@ -315,15 +321,15 @@ export default {
 .center-ul > li:first-child {
   font-weight: bold;
   font-size: 15px;
-  margin-top: 0.3rem;
+  margin-top: 4px;
 }
 /* 动作  冒险  标签 */
 .center-ul > li:nth-child(3) > span {
   margin-top: 0.1rem;
   display: inline-block;
   width: 2.5rem;
-  height: 1rem;
-  line-height: 1rem;
+  height: 1.2rem;
+  line-height: 1.2rem;
   text-align: center;
   background-color: rgba(242, 242, 242, 1);
   /* border:.5px solid ; */
