@@ -20,10 +20,10 @@
 import Balance from '@/components/Balance.vue'
 import { XHeader, Group, Box, Cell } from 'vux'
 const getItems = () => [
-  {title: '2018-12-24', is_link: false, img: 'static/images/icon1/1.png', badge: 0, desc: '接收 1021', link: {path:'/wallet'}},
-  {title: '2018-12-25', is_link: false, img: 'static/images/icon1/7.png', badge: 0, desc: '发送 1022', link: {path:'/wallet'}},
-  {title: '2018-12-26', is_link: false, img: 'static/images/icon1/1.png', badge: 0, desc: '接收 1023', link: {path:'/wallet'}},
-  {title: '2018-12-27', is_link: false, img: 'static/images/icon1/7.png', badge: 0, desc: '发送 1024', link: {path:'/wallet'}}
+  {title: '2018-12-24', is_link: false, img: 'static/img/icon1/1.png', badge: 0, desc: '接收 1021', link: {path:'/wallet'}},
+  {title: '2018-12-25', is_link: false, img: 'static/img/icon1/7.png', badge: 0, desc: '发送 1022', link: {path:'/wallet'}},
+  {title: '2018-12-26', is_link: false, img: 'static/img/icon1/1.png', badge: 0, desc: '接收 1023', link: {path:'/wallet'}},
+  {title: '2018-12-27', is_link: false, img: 'static/img/icon1/7.png', badge: 0, desc: '发送 1024', link: {path:'/wallet'}}
 ]
 export default {
   components: {
@@ -40,7 +40,8 @@ export default {
   },
   methods: {
       onBack() {
-        this.$router.push('/wallet')
+        //this.$router.push('/wallet')
+        this.$router.go(-1)
       },
       //获取交易记录
       getTxLogs() {
@@ -58,10 +59,10 @@ export default {
                       item.badge = 0
                       item.title = this.GLOBAL.formatDateStr(new Date(item.time*1000), 'MM-dd HH:mm:ss');
                       if(item.category=='receive') {
-                        item.img = 'static/images/icon1/1.png'
+                        item.img = 'static/img/icon1/1.png'
                         item.desc = '接收 ' + this.GLOBAL.formatGameGold(item.amount * 10000 * 10000) + '千克'
                       } else {
-                        item.img = 'static/images/icon1/7.png'
+                        item.img = 'static/img/icon1/7.png'
                         item.desc = '发送 ' + this.GLOBAL.formatGameGold(item.amount * 10000 * 10000) + '千克'
                       }
                       this.items.push(item);

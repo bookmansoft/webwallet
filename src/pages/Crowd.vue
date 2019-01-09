@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img src="../assets/images/bazaar.png" class="imgDemo" alt="" />
+    <img src="static/img/no_work.png" class="imgDemo" alt="" />
     <navs></navs>
   </div>
 </template>

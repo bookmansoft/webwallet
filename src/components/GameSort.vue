@@ -15,47 +15,47 @@ const getGameSorts = () => [{
   label: '益智',
   tag: 'yizhi',
   index: 0,
-  icon: 'static/images/icon2/g0.png'
+  icon: 'static/img/icon2/g0.png'
 }, {
   label: '消除',
   tag: 'xiaochu',
   index: 1,
-  icon: 'static/images/icon2/g1.png'
+  icon: 'static/img/icon2/g1.png'
 },{
   label: '休闲',
   tag: 'xiuxian',
   index: 2,
-  icon: 'static/images/icon2/g2.png'
+  icon: 'static/img/icon2/g2.png'
 },{
   label: '棋牌',
   tag: 'qipai',
   index: 3,
-  icon: 'static/images/icon2/g3.png'
+  icon: 'static/img/icon2/g3.png'
 },{
   label: '射击',
   tag: 'sheji',
   index: 4,
-  icon: 'static/images/icon2/g4.png'
+  icon: 'static/img/icon2/g4.png'
 },{
   label: '角色',
   tag: 'juese',
   index: 5,
-  icon: 'static/images/icon2/g5.png'
+  icon: 'static/img/icon2/g5.png'
 },{
   label: '竞技',
   tag: 'jingji',
   index: 6,
-  icon: 'static/images/icon2/g6.png'
+  icon: 'static/img/icon2/g6.png'
 },{
   label: '动作',
   tag: 'dongzuo',
   index: 7,
-  icon: 'static/images/icon2/g7.png'
+  icon: 'static/img/icon2/g7.png'
 },{
   label: '小游戏',
   tag: 'xiaoyouxi',
   index: 8,
-  icon: 'static/images/icon2/g8.png'
+  icon: 'static/img/icon2/g8.png'
 }]
 
 export default {

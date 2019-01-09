@@ -51,17 +51,17 @@ import Navs from '@/components/Navs.vue'
 import { Cell, CellBox, CellFormPreview, Group, Badge, Flexbox, FlexboxItem } from 'vux'
 
 const getItems0 = () => [
-  {title: '会员', is_link: true, img: 'static/images/icon1/4.png', badge: 0, link: '/member', value: '普通会员'}
+  {title: '会员', is_link: true, img: 'static/img/icon1/4.png', badge: 0, link: '/member', value: '普通会员'}
 ]
 const getItems1 = () => [
-  {title: '我的钱包', is_link: true, img: 'static/images/icon1/12.png', badge: 0, link: {path:'/wallet'}},
-  {title: '我的道具', is_link: true, img: 'static/images/icon1/2.png', badge: 0, link: {path:'/props'}},
-  {title: '我的交易', is_link: true, img: 'static/images/icon1/14.png', badge: 0, link: {path:'/wallet/detail'}},
-  {title: '我的游戏', is_link: true, img: 'static/images/icon1/8.png', badge: 0, link: ''}
+  {title: '我的钱包', is_link: true, img: 'static/img/icon1/12.png', badge: 0, link: {path:'/wallet'}},
+  {title: '我的道具', is_link: true, img: 'static/img/icon1/2.png', badge: 0, link: {path:'/props'}},
+  {title: '我的交易', is_link: true, img: 'static/img/icon1/14.png', badge: 0, link: {path:'/wallet/detail'}},
+  {title: '我的游戏', is_link: true, img: 'static/img/icon1/8.png', badge: 0, link: ''}
 ]
 const getItems2 = () => [
-  /*{title: '使用条款', is_link: true, img: 'static/images/icon1/3.png', badge: 0, link: ''},*/
-  {title: '关于我们', is_link: true, img: 'static/images/icon1/9.png', badge: 0, link: {path:'/about'}}
+  /*{title: '使用条款', is_link: true, img: 'static/img/icon1/3.png', badge: 0, link: ''},*/
+  {title: '关于我们', is_link: true, img: 'static/img/icon1/9.png', badge: 0, link: {path:'/about'}}
 ]
 export default {
   components: {
@@ -75,7 +75,7 @@ export default {
       hasProfile: false,
       userProfile: {
         nick: '未登录',
-        avatar: 'static/images/icon3/mine1.png'
+        avatar: 'static/img/icon3/mine1.png'
       }
     }
   },
@@ -105,7 +105,7 @@ export default {
                   let mine = res.data.mine
                   if(mine.vip_level>0) {
                     this.items0[0].value = '领币加速中'
-                    this.items0[0].img = 'static/images/member/Vip' + mine.vip_level + '.png'
+                    this.items0[0].img = 'static/img/member/Vip' + mine.vip_level + '.png'
                   } 
                   if(mine.current_prop_count > mine.prop_count) {
                     this.items1[1].badge = mine.current_prop_count - mine.prop_count

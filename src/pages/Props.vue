@@ -24,7 +24,6 @@
 
 <script>
 
-import { getPropByOid } from "../assets/js/cp.js"
 import {XHeader, Panel, Flexbox, FlexboxItem} from 'vux'
 
 export default {

@@ -20,25 +20,25 @@ const getItems = () => [{
   label: '发送',
   tag: 'send',
   index: 0,
-  icon: 'static/images/icon1/7.png',
+  icon: 'static/img/icon1/7.png',
   link: '/wallet/send'
 }, {
   label: '接收',
   tag: 'receive',
   index: 1,
-  icon: 'static/images/icon1/1.png',
+  icon: 'static/img/icon1/1.png',
   link: '/wallet/receive'
 },{
   label: '交易流水',
   tag: 'detail',
   index: 2,
-  icon: 'static/images/icon1/3.png',
+  icon: 'static/img/icon1/3.png',
   link: '/wallet/detail'
 },{
   label: '发布BTC交易对',
   tag: 'trans',
   index: 3,
-  icon: 'static/images/icon1/5.png',
+  icon: 'static/img/icon1/5.png',
   link: '/wallet/trans'
 }]
 

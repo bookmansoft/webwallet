@@ -67,7 +67,7 @@ export default {
       hotListIndex: 0,
       recommendGame: {
         gameTitle: '奔跑的悟空',
-        src: 'static/img/game-9.jpg',
+        src: 'static/img/game/game-3.jpg',
         gameProvider: '原石互娱'
       },
       cpFilter: [
