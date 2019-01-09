@@ -9,6 +9,7 @@
             <flexbox-item>
             <div style="padding-left:0px;">
                 <p><span style="color: #888; font-size:15px;">出售价：{{GLOBAL.formatGameGold(item.fixed)}}千克</span></p>
+                <br/>
                 <p><span style="color: red; font-size:14px;">含金量：{{GLOBAL.formatGameGold(item.gold)}}千克</span></p>
                 <!--<p><span style="color: #888; font-size:10px;">{{item.addr}}</span></p>-->
             </div>
@@ -88,9 +89,9 @@ export default {
   padding: 0.2rem;
 }
 .img-game-list {
-    width: 3.0rem;
-    height: 3.0rem;
-    border-radius: 0%;
+    width: 4.0rem;
+    height: 4.0rem;
+    border-radius: 10%;
 }
 
 </style>
