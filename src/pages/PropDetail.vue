@@ -141,7 +141,7 @@ export default {
     propSaleInput() {
         let that = this
         this.$vux.confirm.show({
-            title: '出售道具',
+            title: '输入出售价格，单位为千克',
             content: '输入出售价格，单位为千克',
             showInput: true,
             onConfirm (value) {

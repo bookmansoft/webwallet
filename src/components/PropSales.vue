@@ -4,11 +4,11 @@
         <flexbox @click.native="propSaleInfo(item, index)">
             <flexbox-item :span="3" style="padding:0.3rem;">
             <div class="flex-demo-left" style="text-align:center;">
-                <img src="static/images/gamegold/logo.png" class="img-game-list" />
+                <img :src="item.result.icon" class="img-game-list" />
             </div></flexbox-item>
             <flexbox-item>
             <div style="padding-left:0px;">
-                <p><span style="color: #888; font-size:15px;">出售价：{{GLOBAL.formatGameGold(item.price)}}千克</span></p>
+                <p><span style="color: #888; font-size:15px;">出售价：{{GLOBAL.formatGameGold(item.fixed)}}千克</span></p>
                 <p><span style="color: red; font-size:14px;">含金量：{{GLOBAL.formatGameGold(item.gold)}}千克</span></p>
                 <!--<p><span style="color: #888; font-size:10px;">{{item.addr}}</span></p>-->
             </div>
@@ -36,22 +36,43 @@ export default {
             let data = {func:'PropListMarket', control: 'prop', oemInfo: this.GLOBAL.oemInfo};
             this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
                 console.log(res.data);
-                this.propList = res.data.ret;
+                //this.propList = res.data.ret;
                 if(res.data.errcode='success') {
                     res.data.ret.forEach(element => {
-                        let dataCpInfo = {func:'ById', control: 'cp', oemInfo: this.GLOBAL.oemInfo};
-                        this.axios.post(this.GLOBAL.apiUrl, data).then(resCpInfo => {
-                            console.log('cp', resCpInfo.data)
-                        })
+                        this.getCpById(element)
                     });
                 }
             }).catch(res => {
                 console.log(res);
             })
         },
+        
         propSaleInfo(item, index) {
             this.$router.push({ name: 'PropSaleInfo', params: { propSale: item }})
-        }
+        },
+
+        getCpById(marketProp) {
+            let data = {func:'ById', control: 'cp', cid: marketProp.cid, oemInfo: this.GLOBAL.oemInfo};
+            this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+                console.log('cp', res.data)
+                if(res.data.errcode='success') {
+                    let url = res.data.result.url
+                    this.getPropFromCp(marketProp, url)
+                }
+            })
+        },
+
+        getPropFromCp(marketProp, cpurl) {
+          let url = encodeURI(cpurl + '/prop/' + marketProp.oid)
+          let data = {func:'GetCpProxy', control: 'cp', url: url, oemInfo: this.GLOBAL.oemInfo} 
+          this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+              if(res.data.hasOwnProperty('result')) {
+                  marketProp.result = res.data.result
+                  this.propList.push(marketProp)
+              }
+        })
+
+      },
     },
     created() {
         this.PropListMarket();

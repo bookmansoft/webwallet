@@ -48,25 +48,29 @@ export default {
             openid: this.GLOBAL.openid, 
             page: page, 
         };
-        var that = this;
+        let that = this;
         that.axios.post(this.GLOBAL.apiUrl, data)
             .then(res => {
             for (var i = 0; i < res.data.props.length; i++) {
                 let prop = res.data.props[i]
-                let url = encodeURI(prop.cp.url + '/prop/' + prop.oid)
-                let data = {func:'GetCpProxy', control: 'cp', url: url, oemInfo: this.GLOBAL.oemInfo} 
-                
-                this.axios.post(this.GLOBAL.apiUrl, data).then(resProxy => {
-                    if(resProxy.data.hasOwnProperty('result')) {
-                        let propResult = resProxy.data.result
-                        prop.result = propResult
-                        prop.desc = '价格：' + that.GLOBAL.formatGameGold(propResult.props_price) + '千克',
-                        that.propList.push(prop)
-                    }
-                })  
+                that.getPropFromCp(prop)
             }
         });
       },
+
+      getPropFromCp(prop) {
+          let url = encodeURI(prop.cp.url + '/prop/' + prop.oid)
+          let data = {func:'GetCpProxy', control: 'cp', url: url, oemInfo: this.GLOBAL.oemInfo} 
+          this.axios.post(this.GLOBAL.apiUrl, data).then(resProxy => {
+              if(resProxy.data.hasOwnProperty('result')) {
+                  let propResult = resProxy.data.result
+                  prop.result = propResult
+                  prop.desc = '价格：' + this.GLOBAL.formatGameGold(propResult.props_price) + '千克',
+                  this.propList.push(prop)
+              }
+          }) 
+      },
+
       onImgError (item, $event) {
         console.log(item, $event)
       },
