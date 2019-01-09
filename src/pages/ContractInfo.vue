@@ -77,7 +77,7 @@ export default {
                 txid: this.contract.current.hash,
                 openid: this.GLOBAL.openid
             };
-            this.axios.post(this.walletApiUrl, data).then(res => {
+            this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
                 console.log(res.data);
                 if(res.data.errcode='success') {
                     this.showPluginAuto('该笔交易对签署成功!')

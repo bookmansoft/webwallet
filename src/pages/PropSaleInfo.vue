@@ -75,7 +75,7 @@ export default {
                 price: this.propSale.price,
                 openid: this.GLOBAL.openid
             };
-            this.axios.post(this.walletApiUrl, data).then(res => {
+            this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
                 console.log(res.data);
                 if(res.data.errcode='success') {
                     this.showPluginAuto('道具交易成功!')
