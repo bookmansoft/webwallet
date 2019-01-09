@@ -59,3 +59,13 @@ typings/
 
 # next.js build output
 .next
+
+
+# .svn
+.svn/
+
+# .gitignore
+.gitignore
+
+# .svn/wc.db
+.svn/wc.db
