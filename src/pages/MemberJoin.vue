@@ -1,16 +1,81 @@
 <template>
   <div>
     <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
-    <group>
+    <div style="padding:15px 15px 0px 15px;">
+            <img src="static/img/member/vip_6yuan.png" style="width:100%;height:auto;" />
+    </div>
+    <div><p style="text-align:center;width:100%;background-color: white;padding-top:5px;">
+        <span style="color:#CC9900; font-size:16px;font-weight:620;">会员特权</span></p>
+    </div>
+    <div style="background-color: white; padding:15px;">
+        <flexbox>
+          <flexbox-item>
+            <div class="box">
+            <img src="static/img/member/medal1.png">
+            </div>
+          </flexbox-item>
+          <flexbox-item>
+            <div class="box">
+              <img src="static/img/member/lock1.png" />
+            </div>
+          </flexbox-item>
+          <flexbox-item>
+            <div class="box">
+              <img src="static/img/member/gift1.png" />
+            </div>
+          </flexbox-item>
+          <flexbox-item>
+            <div class="box">
+              <img src="static/img/member/fl1.png" />
+            </div>
+          </flexbox-item>
+        </flexbox>
+    </div>
 
-    </group>
+    <div><p style="text-align:center;width:100%;background-color: white;padding-top:5px; top:8px; position: relative;">
+    <span style="color:#CC9900; font-size:16px;font-weight:620;">开通会员方案</span></p>
+    </div>
+    <div style="background-color: white; padding:15px;">
+        <flexbox>
+          <flexbox-item>
+            <div class="box2">
+            <img src="static/img/member/v1_yes.png">
+            </div>
+          </flexbox-item>
+          <flexbox-item>
+            <div class="box2">
+              <img src="static/img/member/v2_no.png" />
+            </div>
+          </flexbox-item>
+          <flexbox-item>
+            <div class="box2">
+              <img src="static/img/member/v3_no.png" />
+            </div>
+          </flexbox-item>
+        </flexbox>
+    </div>
+    <div style="background-color: white; padding:5px 25px 15px 25px;">
+      <divider>.</divider>
+      <div style="color:#CC9900; font-size:13px;">
+        <p>VIP 1会员特权：</p>
+        <p>首次开通会员立得价值188元游戏道具大礼包</p>
+        <p>解锁XXX功能，该功能在会员到期后仍然可以使用</p>
+        <p>会员有效期内每日可领取10kg游戏金福利</p>
+        <p>点亮VIP1会员专属勋章</p>
+        <p>后续会员服务升级，已开通用户将自动更新服务</p>
+      </div>
+    </div>
+    
+    <div style="padding: 10px; background-color: white; top:8px; position: relative;">
+        <x-button :gradients="['#FF5E3A', '#FF9500']">立即开通</x-button>
+    </div>
+
   </div>
 </template>
 
 <script>
 import Balance from '@/components/Balance.vue'
-import { XHeader, XButton, Grid, GridItem, Group, ButtonTab, ButtonTabItem, Divider, Swiper, SwiperItem, Card, Countup } from 'vux'
-import { PopupHeader, Popup, TransferDom, Radio } from 'vux'
+import { XHeader, Flexbox, FlexboxItem, Group, Divider, XButton  } from 'vux'
 
 const getItems = () => [{
   label: 'VIP1',
@@ -44,13 +109,8 @@ const vipOptions = () => [{
 }]
 
 export default {
-  directives: {
-    TransferDom
-  },
   components: {
-    XHeader, XButton, Balance, Grid, GridItem, Group, Card,
-    ButtonTab, ButtonTabItem, Divider, Swiper, SwiperItem,
-    PopupHeader, Popup, Radio, Countup
+    XHeader, Flexbox, FlexboxItem, Group, Divider, XButton
   },
   data () {
     return {
@@ -126,6 +186,22 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+
+.box{
+  text-align:center; 
+}
+.box img {
+  width: 50px;
+  height: 65px;
+}
+
+.box2{
+  text-align:center; 
+}
+.box2 img {
+  width: 90px;
+  height: 64px;
+}
 
 .demo1 {
   font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
