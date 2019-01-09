@@ -10,7 +10,7 @@
                 <img :src="prop.result.icon">
             </div>
             <ul class="center-ul" style="position:relative; top:-80px;">
-                <li>{{prop.result.props_name}}</li>
+                <li><span class="prop-name">{{prop.result.props_name}}</span></li>
                 <li class="color-999-provider">道具名称：{{prop.result.props_name}}</li>
                 <li>
                 <span class="color-999">装备</span>
@@ -234,6 +234,11 @@ export default {
 }
 .color-999-provider {
   color: #999;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+.prop-name {
   overflow: hidden;
   text-overflow:ellipsis;
   white-space: nowrap;
