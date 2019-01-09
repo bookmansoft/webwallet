@@ -63,7 +63,7 @@ html, body {
   height: 100%;
   width: 100%;
   overflow-x: hidden;
-  background-color: #fbf9fe;
+  background-color: #FAFAFA;
 }
 #app {
   position: absolute;

@@ -16,6 +16,7 @@ import PropDetail from '@/pages/PropDetail'
 import ContractInfo from '@/pages/ContractInfo'
 import PropSaleInfo from '@/pages/PropSaleInfo'
 import About from '@/pages/About'
+import MemberJoin from '@/pages/MemberJoin'
 
 Vue.use(Router)
 
@@ -104,6 +105,12 @@ export default new Router({
       path: '/about',
       name: 'About',
       component: About
-    }
+    },
+    {
+      path: '/member/join',
+      name: 'MemberJoin',
+      component: MemberJoin
+    },
+    
   ]
 })

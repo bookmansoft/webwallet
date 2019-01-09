@@ -1,7 +1,7 @@
 <template>
   <div>
     <group>
-      <flexbox class="vux-1px">
+      <flexbox>
         <flexbox-item :span="4">
           <div class="flex-demo-left">
             <img :src="userProfile.avatar" class="avatar" />
@@ -9,7 +9,6 @@
         <flexbox-item><div class="flex-demo-right"><span>{{userProfile.nick}}</span></div></flexbox-item>
       </flexbox>
     </group>
-    <div style="position:relative; width:100%; height:3px;background-color:#FFFFFF; top:-2px;"></div>
     <group>
       <cell :is-link="item.is_link" v-for="(item, index) in items0" :key="index" :link="item.link" :value="item.value" class="vux-1px">
         <span slot="title">
@@ -18,11 +17,8 @@
         </span>
         <img slot="icon" width="20" style="display:block;margin-right:5px;" :src="item.img">
       </cell>
-    </group>
-    <div style="position:relative; width:100%; height:3px;background-color:#FFFFFF; top:-2px;"></div>
-    
-    <group style="border: 1px solid #ffffff;">
-      
+    </group>    
+    <group>
       <cell :is-link="item.is_link" v-for="(item, index) in items1" :key="index" :link="item.link">
         <span slot="title">
           <span style="vertical-align:middle;">{{item.title}}</span>
@@ -31,9 +27,8 @@
         <img slot="icon" width="20" style="display:block;margin-right:5px;" :src="item.img">
       </cell>
     </group>
-    <div style="position:relative; width:100%; height:3px;background-color:#FFFFFF; top:-2px;"></div>
     <group>
-      <cell :is-link="item.is_link" v-for="(item, index) in items2" :key="index" :link="item.link" class="vux-1px">
+      <cell :is-link="item.is_link" v-for="(item, index) in items2" :key="index" :link="item.link">
         <span slot="title">
           <span style="vertical-align:middle;">{{item.title}}</span>
           <badge :text="item.badge" v-if="item.badge > 0"></badge>
@@ -41,7 +36,6 @@
         <img slot="icon" width="20" style="display:block;margin-right:5px;" :src="item.img">
       </cell>
     </group>
-    <div style="position:relative; width:100%; height:3px;background-color:#FFFFFF; top:-2px;"></div>
     <br/>
     <navs></navs>
   </div>
@@ -51,17 +45,17 @@ import Navs from '@/components/Navs.vue'
 import { Cell, CellBox, CellFormPreview, Group, Badge, Flexbox, FlexboxItem } from 'vux'
 
 const getItems0 = () => [
-  {title: '会员', is_link: true, img: 'static/img/icon1/4.png', badge: 0, link: '/member', value: '普通会员'}
+  {title: '会员', is_link: true, img: 'static/img/icon1/4.png', badge: 0, link: '/member/join', value: '普通会员'}
 ]
 const getItems1 = () => [
-  {title: '我的钱包', is_link: true, img: 'static/img/icon1/12.png', badge: 0, link: {path:'/wallet'}},
-  {title: '我的道具', is_link: true, img: 'static/img/icon1/2.png', badge: 0, link: {path:'/props'}},
-  {title: '我的交易', is_link: true, img: 'static/img/icon1/14.png', badge: 0, link: {path:'/wallet/detail'}},
-  {title: '我的游戏', is_link: true, img: 'static/img/icon1/8.png', badge: 0, link: ''}
+  {title: '我的钱包', is_link: true, img: 'static/img/mine/wallet.png', badge: 0, link: {path:'/wallet'}},
+  {title: '我的道具', is_link: true, img: 'static/img/mine/prop.png', badge: 0, link: {path:'/props'}},
+  {title: '我的交易', is_link: true, img: 'static/img/mine/trans.png', badge: 0, link: {path:'/wallet/detail'}},
+  {title: '我的游戏', is_link: true, img: 'static/img/mine/game.png', badge: 0, link: ''}
 ]
 const getItems2 = () => [
   /*{title: '使用条款', is_link: true, img: 'static/img/icon1/3.png', badge: 0, link: ''},*/
-  {title: '关于我们', is_link: true, img: 'static/img/icon1/9.png', badge: 0, link: {path:'/about'}}
+  {title: '关于我们', is_link: true, img: 'static/img/mine/about.png', badge: 0, link: {path:'/about'}}
 ]
 export default {
   components: {
