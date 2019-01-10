@@ -17,6 +17,7 @@ import ContractInfo from '@/pages/ContractInfo'
 import PropSaleInfo from '@/pages/PropSaleInfo'
 import About from '@/pages/About'
 import MemberJoin from '@/pages/MemberJoin'
+import OrderPayResult from '@/pages/OrderPayResult'
 
 Vue.use(Router)
 
@@ -111,6 +112,11 @@ export default new Router({
       name: 'MemberJoin',
       component: MemberJoin
     },
-    
+    {
+      path: '/member/order/pay',
+      name: 'OrderPayResult',
+      component: OrderPayResult
+    },
+     
   ]
 })
