@@ -51,6 +51,11 @@ export default {
         let that = this;
         that.axios.post(this.GLOBAL.apiUrl, data)
             .then(res => {
+            if(res.data.props.length >0 ) {
+                res.data.props.sort(function(a, b){
+                    return  b.time - a.time;
+                });
+            }
             for (var i = 0; i < res.data.props.length; i++) {
                 let prop = res.data.props[i]
                 that.getPropFromCp(prop)

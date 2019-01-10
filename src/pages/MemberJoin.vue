@@ -41,7 +41,7 @@
     </div>
     
     <div style="padding: 10px; background-color: white; top:8px; position: relative;">
-        <x-button :gradients="['#FF5E3A', '#FF9500']">立即开通</x-button>
+        <x-button :gradients="['#FF5E3A', '#FF9500']">立即开通 (￥{{btnLabel}} )</x-button>
     </div>
 
   </div>
@@ -53,7 +53,7 @@ import { XHeader, Flexbox, FlexboxItem, Group, Divider, XButton, Swiper, SwiperI
 
 const getVipDescItems = () => [{
   label: 'VIP1',
-  price: '6元/月',
+  price: '6',
   value: 1,
   memo: [
     'VIP 1会员特权：',
@@ -65,7 +65,7 @@ const getVipDescItems = () => [{
   ]
 }, {
   label: 'VIP2',
-  price: '66元/月',
+  price: '66',
   value: 2,
   memo: [
     'VIP 2会员特权：',
@@ -77,7 +77,7 @@ const getVipDescItems = () => [{
   ]
 },{
   label: 'VIP3',
-  price: '166元/月',
+  price: '166',
   value: 3,
   memo: [
     'VIP 3会员特权：',
@@ -106,16 +106,19 @@ const vipOptions = () => [{
 const vipBtns = () => [
   {
     index: 0,
+    price: '6',
     src0: 'static/img/member/v1_no.png',
     src1: 'static/img/member/v1_yes.png',
     status: 1
   },{
     index: 1,
+    price: '66',
     src0: 'static/img/member/v2_no.png',
     src1: 'static/img/member/v2_yes.png',
     status: 0
   },{
     index: 2,
+    price: '166',
     src0: 'static/img/member/v3_no.png',
     src1: 'static/img/member/v3_yes.png',
     status: 0
@@ -139,7 +142,7 @@ export default {
       selectCard: '选择会员服务',
       msg: '会员享受特权服务',
       getMemberLable: '立即开通',
-
+      btnLabel: '6',
       vipDescItems: getVipDescItems(),
       vip_options: vipOptions(),
       vipAuthoritysItems: memberAuthoritys(),
@@ -168,6 +171,7 @@ export default {
       },
       vipSelect(item, index) {
         item.status = 1
+        this.btnLabel = item.price
         this.vipDescIndex = index
         this.btnItems.forEach(element => {
           if(element.index != index) {
@@ -189,6 +193,7 @@ export default {
         console.log(price, productInfo)
         const url = "/pages/wepay/order?price=" + price + "&productInfo=" + productInfo + "&returl=dsfdsf&uid=" + this.GLOBAL.uid+"&vip="+this.vip_level;
         this.$wechat.miniProgram.navigateTo({ url: url })
+        
       }
   },
   created() {
