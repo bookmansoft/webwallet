@@ -9,24 +9,9 @@
     </div>
     <div style="background-color: white; padding:15px;">
         <flexbox>
-          <flexbox-item>
+          <flexbox-item v-for="(item, index) in vipAuthoritysItems" :key="index">
             <div class="box">
-            <img src="static/img/member/medal1.png">
-            </div>
-          </flexbox-item>
-          <flexbox-item>
-            <div class="box">
-              <img src="static/img/member/lock1.png" />
-            </div>
-          </flexbox-item>
-          <flexbox-item>
-            <div class="box">
-              <img src="static/img/member/gift1.png" />
-            </div>
-          </flexbox-item>
-          <flexbox-item>
-            <div class="box">
-              <img src="static/img/member/fl1.png" />
+            <img :src="item">
             </div>
           </flexbox-item>
         </flexbox>
@@ -37,19 +22,9 @@
     </div>
     <div style="background-color: white; padding:15px;">
         <flexbox>
-          <flexbox-item>
-            <div class="box2">
-            <img src="static/img/member/v1_yes.png">
-            </div>
-          </flexbox-item>
-          <flexbox-item>
-            <div class="box2">
-              <img src="static/img/member/v2_no.png" />
-            </div>
-          </flexbox-item>
-          <flexbox-item>
-            <div class="box2">
-              <img src="static/img/member/v3_no.png" />
+          <flexbox-item v-for="(item, index) in btnItems" :key="index">
+            <div class="box2" @click="vipSelect(item, index)">
+              <img :src="item.status==0 ? item.src0 : item.src1">
             </div>
           </flexbox-item>
         </flexbox>
@@ -57,12 +32,11 @@
     <div style="background-color: white; padding:5px 25px 15px 25px;">
       <divider>.</divider>
       <div style="color:#CC9900; font-size:13px;">
-        <p>VIP 1会员特权：</p>
-        <p>首次开通会员立得价值188元游戏道具大礼包</p>
-        <p>解锁XXX功能，该功能在会员到期后仍然可以使用</p>
-        <p>会员有效期内每日可领取10kg游戏金福利</p>
-        <p>点亮VIP1会员专属勋章</p>
-        <p>后续会员服务升级，已开通用户将自动更新服务</p>
+        <swiper v-model="vipDescIndex" height="100px" :show-dots="false">
+          <swiper-item v-for="(item, index) in vipDescItems" :key="index">
+            <p v-for="(item1, index1) in item.memo" :key="index1">{{item1}}</p>
+          </swiper-item>
+        </swiper>
       </div>
     </div>
     
@@ -75,42 +49,86 @@
 
 <script>
 import Balance from '@/components/Balance.vue'
-import { XHeader, Flexbox, FlexboxItem, Group, Divider, XButton  } from 'vux'
+import { XHeader, Flexbox, FlexboxItem, Group, Divider, XButton, Swiper, SwiperItem  } from 'vux'
 
-const getItems = () => [{
+const getVipDescItems = () => [{
   label: 'VIP1',
-  tag: '6元/月',
+  price: '6元/月',
   value: 1,
-  memo: 'VIP 1会员特权：首次开通会员立得价值188元游戏道具大礼包，解锁XXX功能，该功能在会员到期后仍然可以使用，会员有效期内，每日可领取10kg游戏金福利，点亮VIP1会员专属勋章，开通会员方案，后续会员服务升级，已开通用户将自动更新服务',
+  memo: [
+    'VIP 1会员特权：',
+    '首次开通会员立得价值188元游戏道具大礼包',
+    '解锁XXX功能，该功能在会员到期后仍然可以使用',
+    '会员有效期内每日可领取10kg游戏金福利',
+    '点亮VIP1会员专属勋章',
+    '后续会员服务升级，已开通用户将自动更新服务'
+  ]
 }, {
   label: 'VIP2',
-  tag: '66元/月',
+  price: '66元/月',
   value: 2,
-  memo: 'VIP 2会员特权：首次开通会员立得价值188元游戏道具大礼包，解锁XXX功能，该功能在会员到期后仍然可以使用，会员有效期内，每日可领取100kg游戏金福利，点亮VIP2会员专属勋章，开通会员方案，后续会员服务升级，已开通用户将自动更新服务',
+  memo: [
+    'VIP 2会员特权：',
+    '首次开通会员立得价值188元游戏道具大礼包',
+    '解锁XXX功能，该功能在会员到期后仍然可以使用',
+    '会员有效期内每日可领取100kg游戏金福利',
+    '点亮VIP2会员专属勋章',
+    '后续会员服务升级，已开通用户将自动更新服务'
+  ]
 },{
   label: 'VIP3',
-  tag: '166元/月',
+  price: '166元/月',
   value: 3,
-  memo: 'VIP 3会员特权：首次开通会员立得价值188元游戏道具大礼包，解锁XXX功能，该功能在会员到期后仍然可以使用，会员有效期内，每日可领取300kg游戏金福利，点亮VIP3会员专属勋章，开通会员方案，后续会员服务升级，已开通用户将自动更新服务',
+  memo: [
+    'VIP 3会员特权：',
+    '首次开通会员立得价值188元游戏道具大礼包',
+    '解锁XXX功能，该功能在会员到期后仍然可以使用',
+    '会员有效期内每日可领取300kg游戏金福利',
+    '点亮VIP3会员专属勋章',
+    '后续会员服务升级，已开通用户将自动更新服务'
+  ]
 }]
 
 const vipOptions = () => [{
-      key: '1',
-      value: 'VIP1/6元',
-      price: 6,
-    }, {
-      key: '2',
-      value: 'VIP2/66元',
-      price: 66,
-    }, {
-      key: '3',
-      value: 'VIP3/166元',
-      price: 166,
+    key: '1',
+    value: 'VIP1/6元',
+    price: 6,
+  }, {
+    key: '2',
+    value: 'VIP2/66元',
+    price: 66,
+  }, {
+    key: '3',
+    value: 'VIP3/166元',
+    price: 166,
 }]
+
+const vipBtns = () => [
+  {
+    index: 0,
+    src0: 'static/img/member/v1_no.png',
+    src1: 'static/img/member/v1_yes.png',
+    status: 1
+  },{
+    index: 1,
+    src0: 'static/img/member/v2_no.png',
+    src1: 'static/img/member/v2_yes.png',
+    status: 0
+  },{
+    index: 2,
+    src0: 'static/img/member/v3_no.png',
+    src1: 'static/img/member/v3_yes.png',
+    status: 0
+  }
+]
+
+const memberAuthoritys = () => [
+  'static/img/member/medal1.png','static/img/member/lock1.png','static/img/member/gift1.png','static/img/member/fl1.png'
+]
 
 export default {
   components: {
-    XHeader, Flexbox, FlexboxItem, Group, Divider, XButton
+    XHeader, Flexbox, FlexboxItem, Group, Divider, XButton, Swiper, SwiperItem
   },
   data () {
     return {
@@ -119,13 +137,19 @@ export default {
       cancel: '取消',
       done: '确定',
       selectCard: '选择会员服务',
-      items: getItems(),
       msg: '会员享受特权服务',
+      getMemberLable: '立即开通',
+
+      vipDescItems: getVipDescItems(),
+      vip_options: vipOptions(),
+      vipAuthoritysItems: memberAuthoritys(),
+      btnItems: vipBtns(),
+      vipDescIndex: 0,
+
       btnTab: 0,
       vip_level: 1,
-      vip_options: vipOptions(),
       vip_level_current: 0,
-      getMemberLable: '立即开通',
+      
       memberDisabled: false,
       doStart: false,
       vip_last_get_count: 0,
@@ -141,6 +165,15 @@ export default {
       },
       change (value, label) {
         console.log('change:', value, label)
+      },
+      vipSelect(item, index) {
+        item.status = 1
+        this.vipDescIndex = index
+        this.btnItems.forEach(element => {
+          if(element.index != index) {
+            element.status = 0
+          } 
+        });
       },
       userVip() {
         this.showCard = false
