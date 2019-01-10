@@ -41,7 +41,7 @@
     </div>
     
     <div style="padding: 10px; background-color: white; top:8px; position: relative;">
-        <x-button :gradients="['#FF5E3A', '#FF9500']">立即开通 (￥{{btnLabel}} )</x-button>
+        <x-button :gradients="['#FF5E3A', '#FF9500']" @click.native="orderRePay">立即开通 (￥{{btnLabel}} )</x-button>
     </div>
 
   </div>
@@ -179,21 +179,38 @@ export default {
           } 
         });
       },
-      userVip() {
-        this.showCard = false
-        console.log('vip_level', this.vip_level)
-        let price = 0
-        let productInfo = ''
+      orderPay(price, productInfo, tradeId) {
         this.vip_options.forEach((element, i) => {
           if(element.key == this.vip_level) {
             price = element.price
             productInfo = element.value
           }
         });
-        console.log(price, productInfo)
-        const url = "/pages/wepay/order?price=" + price + "&productInfo=" + productInfo + "&returl=dsfdsf&uid=" + this.GLOBAL.uid+"&vip="+this.vip_level;
-        this.$wechat.miniProgram.navigateTo({ url: url })
         
+        const url = '/pages/wepay/order?price=' + price + '&productInfo=' + productInfo + '&tradeId=' + tradeId
+          + '&returl=/member/order/pay&uid=' + this.GLOBAL.uid;
+        console.log(url)
+        this.$wechat.miniProgram.navigateTo({ url: url })
+      },
+      orderRePay() {
+         let product = this.vipDescItems[this.vipDescIndex]
+         let data = {
+          func:'CommonOrderRepay',
+          control: 'order',
+          uid: this.GLOBAL.uid,
+          price: product.price,
+          productId: product.value,
+          productIntro: product.label,
+          openid: this.GLOBAL.openid,
+          oemInfo: this.GLOBAL.oemInfo
+        };
+        this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+            console.log(res.data);
+            if(res.data.errcode='success') {
+              let tradeId = res.data.tradeId
+              this.orderPay(product.price, product.label, tradeId)
+            }
+        });       
       }
   },
   created() {
@@ -219,7 +236,9 @@ export default {
        this.$router.push('/mine')
      }
      */
-
+    if(this.GLOBAL.userProfile == null) {
+      this.$router.push('/mine')
+    }
   }
 }
 </script>
