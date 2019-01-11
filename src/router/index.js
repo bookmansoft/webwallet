@@ -10,13 +10,12 @@ import WalletReceive from '@/pages/WalletReceive'
 import WalletTrans from '@/pages/WalletTrans'
 import WalletDetail from '@/pages/WalletDetail'
 import Props from '@/pages/Props'
-import Member from '@/pages/Member'
 import GameInfo from '@/pages/GameInfo'
 import PropDetail from '@/pages/PropDetail'
 import ContractInfo from '@/pages/ContractInfo'
 import PropSaleInfo from '@/pages/PropSaleInfo'
 import About from '@/pages/About'
-import MemberJoin from '@/pages/MemberJoin'
+import Member from '@/pages/Member'
 import OrderPay from '@/pages/OrderPay'
 
 Vue.use(Router)
@@ -106,11 +105,6 @@ export default new Router({
       path: '/about',
       name: 'About',
       component: About
-    },
-    {
-      path: '/member/join',
-      name: 'MemberJoin',
-      component: MemberJoin
     },
     {
       path: '/order/pay',
