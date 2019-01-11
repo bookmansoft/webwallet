@@ -26,6 +26,16 @@ export default {
   mounted () {
 
   },
+  methods: {
+    getQueryString: function(name) {
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+      var r = window.location.search.substr(1).match(reg);
+      if (r != null) {
+        return decodeURIComponent(r[2]);
+      }
+      return null;
+    }
+  },
 
   //监听路由的路径，可以通过不同的路径去选择不同的切换效果 
   watch: {
@@ -40,6 +50,7 @@ export default {
       }
   },
   created() {
+    //this.id = this.getQueryString("id") || "0";
     console.log(this.$route.path);
     let path = this.GLOBAL.path
     this.$router.options.routes.forEach(element => {
@@ -51,6 +62,7 @@ export default {
         }
       }
     });
+    //this.$router.push('/order/pay')
   }
 }
 </script>

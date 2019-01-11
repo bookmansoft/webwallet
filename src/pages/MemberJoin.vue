@@ -58,8 +58,7 @@ const getVipDescItems = () => [{
   memo: [
     'VIP 1会员特权：',
     '首次开通会员立得价值188元游戏道具大礼包',
-    '解锁XXX功能，该功能在会员到期后仍然可以使用',
-    '会员有效期内每日可领取10kg游戏金福利',
+    '会员有效期内每秒可产出0.1克游戏金',
     '点亮VIP1会员专属勋章',
     '后续会员服务升级，已开通用户将自动更新服务'
   ]
@@ -70,8 +69,7 @@ const getVipDescItems = () => [{
   memo: [
     'VIP 2会员特权：',
     '首次开通会员立得价值188元游戏道具大礼包',
-    '解锁XXX功能，该功能在会员到期后仍然可以使用',
-    '会员有效期内每日可领取100kg游戏金福利',
+    '会员有效期内每秒可产出1.1克游戏金',
     '点亮VIP2会员专属勋章',
     '后续会员服务升级，已开通用户将自动更新服务'
   ]
@@ -82,8 +80,7 @@ const getVipDescItems = () => [{
   memo: [
     'VIP 3会员特权：',
     '首次开通会员立得价值188元游戏道具大礼包',
-    '解锁XXX功能，该功能在会员到期后仍然可以使用',
-    '会员有效期内每日可领取300kg游戏金福利',
+    '会员有效期内每秒可产出3.3克游戏金',
     '点亮VIP3会员专属勋章',
     '后续会员服务升级，已开通用户将自动更新服务'
   ]
@@ -179,19 +176,11 @@ export default {
           } 
         });
       },
-      orderPay(price, productInfo, tradeId) {
-        this.vip_options.forEach((element, i) => {
-          if(element.key == this.vip_level) {
-            price = element.price
-            productInfo = element.value
-          }
-        });
-        
-        const url = '/pages/wepay/order?price=' + price + '&productInfo=' + productInfo + '&tradeId=' + tradeId
-          + '&returl=/member/order/pay&uid=' + this.GLOBAL.uid;
-        console.log(url)
-        this.$wechat.miniProgram.navigateTo({ url: url })
+
+      orderPay(tradeId) {   
+        this.$router.push({name:'OrderPay', params: {tradeId: tradeId}})
       },
+
       orderRePay() {
          let product = this.vipDescItems[this.vipDescIndex]
          let data = {
@@ -207,35 +196,13 @@ export default {
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
             console.log(res.data);
             if(res.data.errcode='success') {
-              let tradeId = res.data.tradeId
-              this.orderPay(product.price, product.label, tradeId)
+              this.orderPay(res.data.tradeId)
             }
         });       
       }
   },
   created() {
-     /*
-     if(this.GLOBAL.userProfile != null && this.GLOBAL.userProfile.mine != null ) {
-       this.vip_level_current = this.GLOBAL.userProfile.mine.vip_level
-       this.vip_last_get_count = this.GLOBAL.userProfile.mine.vip_last_get_count
-       this.vip_get_all_count = this.GLOBAL.userProfile.mine.vip_get_all_count
-       this.doStart = true
-      console.log('vip_level', this.vip_level_current)
-      this.getMemberLable = this.vip_level_current == 0 ? '立即开通' : '升级VIP'
-      if(this.vip_level_current==3) {
-        this.memberDisabled = true
-      }
-      
-      if(this.vip_level_current > 0) {
-        console.log('remove', this.vip_level_current)
-        let k = this.vip_options.splice(0, this.vip_level_current)
-        console.log(k)
-      }
-     
-     } else {
-       this.$router.push('/mine')
-     }
-     */
+    console.log('memberJoin created')
     if(this.GLOBAL.userProfile == null) {
       this.$router.push('/mine')
     }

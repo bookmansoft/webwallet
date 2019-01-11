@@ -59,8 +59,8 @@ export default {
   padding: 0.2rem;
 }
 .img-game-list {
-    width: 3.0rem;
-    height: 3.0rem;
+    width: 4.0rem;
+    height: 4.0rem;
     border-radius: 0%;
 }
 

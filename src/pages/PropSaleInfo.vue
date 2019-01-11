@@ -16,8 +16,8 @@
                 </flexbox-item>
             </flexbox>
         </group>
-        <group label-width="3.5em" label-margin-right="2em" label-align="right">
-            <div style="padding:0px 5px 0px 5px;">
+        <group label-width="3.5em" label-margin-right="2em" label-align="right" style="position: relative; top:10px;">
+            <div style="padding: 10px;">
                 <x-button type="primary" @click.native="propBuyConfirm">购买</x-button>
             </div>
         </group>
@@ -105,8 +105,8 @@ export default {
   padding: 0.2rem;
 }
 .img-game-list {
-    width: 3.0rem;
-    height: 3.0rem;
+    width: 4.0rem;
+    height: 4.0rem;
     border-radius: 0%;
 }
 

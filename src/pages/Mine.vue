@@ -115,6 +115,8 @@ export default {
       }
   },
   created() {
+    console.log('this.GLOBAL.userProfile', this.GLOBAL.userProfile)
+    console.log('this.GLOBAL.openid', this.GLOBAL.openid)
     if(this.GLOBAL.userProfile == null) {
       this.getUserProfil()
     } else {

@@ -31,6 +31,7 @@
     </div>
 </template>
 <script>
+
 import {Scroller, Swiper, Group, Panel, Flexbox, FlexboxItem} from 'vux'
 import { setTimeout } from 'timers';
 
