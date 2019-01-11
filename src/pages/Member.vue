@@ -2,9 +2,10 @@
   <div>
     <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
     <memberJoin v-if="vip_level==0"></memberJoin>
-
+    <memberGold v-else gold="29.14" time="1547208162"></memberGold>
+    
     <div><p style="text-align:center;width:100%;background-color: white;padding-top:5px; top:8px; position: relative;">
-    <span style="color:#CC9900; font-size:16px;font-weight:620;">开通会员方案</span></p>
+    <span style="color:#CC9900; font-size:16px;font-weight:620;">更多会员方案</span></p>
     </div>
     <div style="background-color: white; padding:15px;">
         <flexbox>
@@ -15,6 +16,7 @@
           </flexbox-item>
         </flexbox>
     </div>
+
     <div style="background-color: white; padding:5px 25px 15px 25px;">
       <divider>.</divider>
       <div style="color:#CC9900; font-size:13px;">
@@ -36,6 +38,7 @@
 <script>
 import Balance from '@/components/Balance.vue'
 import MemberJoin from '@/components/MemberJoin.vue'
+import MemberGold from '@/components/MemberGold.vue'
 import { XHeader, Flexbox, FlexboxItem, Group, Divider, XButton, Swiper, SwiperItem  } from 'vux'
 
 const getVipDescItems = () => [{
@@ -73,20 +76,6 @@ const getVipDescItems = () => [{
   ]
 }]
 
-const vipOptions = () => [{
-    key: '1',
-    value: 'VIP1/6元',
-    price: 6,
-  }, {
-    key: '2',
-    value: 'VIP2/66元',
-    price: 66,
-  }, {
-    key: '3',
-    value: 'VIP3/166元',
-    price: 166,
-}]
-
 const vipBtns = () => [
   {
     index: 0,
@@ -111,41 +100,25 @@ const vipBtns = () => [
 
 export default {
   components: {
-    MemberJoin,
+    MemberJoin, MemberGold,
     XHeader, Flexbox, FlexboxItem, Group, Divider, XButton, Swiper, SwiperItem
   },
   data () {
     return {
-      showCard: false,
       headerTitle: '会员服务',
-      cancel: '取消',
-      done: '确定',
-      selectCard: '选择会员服务',
-      msg: '会员享受特权服务',
-      getMemberLable: '立即开通',
       btnLabel: '6',
       vipDescItems: getVipDescItems(),
-      vip_options: vipOptions(),
       btnItems: vipBtns(),
       vipDescIndex: 0,
 
       btnTab: 0,
       vip_level: -1,
-      vip_level_current: 0,
-      
-      memberDisabled: false,
-      doStart: false,
-      vip_last_get_count: 0,
-      vip_get_all_count: 0
+
     }
   },
   methods: {
       onBack() {
         this.$router.push('/mine')
-      },
-
-      getMember() {
-          this.showCard = true
       },
 
       getMine(){
@@ -214,37 +187,4 @@ export default {
   height: 64px;
 }
 
-.demo1 {
-  font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
-  font-size: 1em;
-  color: #04BE02;
-}
-.card-demo-flex {
-  display: flex;
-}
-.card-demo-content01 {
-  padding: 10px 0;
-}
-.card-padding {
-  padding: 15px;
-}
-.card-demo-flex > div {
-  flex: 1;
-  text-align: center;
-  font-size: 12px;
-}
-.card-demo-flex span {
-  color: #f74c31;
-}
-.divMember {
-    padding-left: 0.8rem;
-    padding-right: 0.8rem;
-}
-.divMember2 {
-    padding: 0.8rem;
-}
-.imgMember {
-  width: 100%;
-  height: auto;
-}
 </style>
