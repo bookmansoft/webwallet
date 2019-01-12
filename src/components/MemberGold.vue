@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="height:10px; width:100%; background-color:#FAFAFA"> </div>
-    <div style="padding: 15px 0px 15px 0px; background-color: white;">
+    <div style="padding:0px; background-color: white;">
       <div style="background-color: #fafafa;">
           <div style="background-color: #d3a92c; padding:15px;">
               <flexbox>
@@ -25,7 +25,7 @@
     </div>
 
     <div style="height:10px; width:100%; background-color:#FAFAFA"> </div>
-    <div style="padding: 15px; background-color: white;">
+    <div style="padding: 0px; background-color: white;">
           <flexbox>
           <flexbox-item :span="9">
               <div class="flex-demo2">
@@ -37,7 +37,7 @@
                   <div><p>(满10千克可提取到钱包)</p></div>
               </div>
           </flexbox-item>
-          <flexbox-item :span="3"><div class="flex-demo2">
+          <flexbox-item :span="3"><div class="flex-demo2" style="padding-left:0px;">
             <img src="static/img/member/tiqu1.png" class="imgDiv2" @click="vipDrawConfirm" v-if="gold>=10" />
             <img src="static/img/member/tiqu.png" class="imgDiv2" v-if="gold<10" />
             </div></flexbox-item>
@@ -196,6 +196,7 @@ export default {
 
 .flex-demo2 {
   text-align: left;
+  padding-left: 15px;
   font-size: 15px;
   color: #d3a92c;
   background-clip: padding-box;
@@ -203,7 +204,7 @@ export default {
 
 .flex-demo3 {
   text-align: left;
-  padding-left: 10px;
+  padding-left: 15px;
   font-size: 15px;
   color: #d3a92c;
   background-clip: padding-box;

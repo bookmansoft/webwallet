@@ -1,7 +1,7 @@
 <template>
   <div>
     <group>
-      <flexbox>
+      <flexbox style="padding:5px;">
         <flexbox-item :span="4">
           <div class="flex-demo-left">
             <img :src="userProfile.avatar" class="avatar" />
@@ -10,7 +10,7 @@
       </flexbox>
     </group>
     <group>
-      <cell :is-link="item.is_link" v-for="(item, index) in items0" :key="index" :link="item.link" :value="item.value" class="vux-1px">
+      <cell :is-link="item.is_link" v-for="(item, index) in items0" :key="index" :link="item.link" :value="item.value">
         <span slot="title">
           <span style="vertical-align:middle;">{{item.title}}</span>
           <badge :text="item.badge" v-if="item.badge > 0"></badge>
