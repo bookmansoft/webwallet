@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="height:10px; width:100%; background-color:#FAFAFA"> </div>
-    <div style="padding: 15px; background-color: white;">
+    <div style="padding: 15px 0px 15px 0px; background-color: white;">
       <div style="background-color: #fafafa;">
           <div style="background-color: #d3a92c; padding:15px;">
               <flexbox>
