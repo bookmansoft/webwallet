@@ -14,8 +14,10 @@
         <span slot="title">
           <span style="vertical-align:middle;">{{item.title}}</span>
           <badge :text="item.badge" v-if="item.badge > 0"></badge>
+          <img src="static/img/member/shot.png" style="width: 8px; height:8px; position: relative; left:-2px; top:0px;" v-if="item.showDot==true" />
         </span>
         <img slot="icon" width="20" style="display:block;margin-right:5px;" :src="item.img">
+        
       </cell>
     </group>    
     <group>
@@ -45,7 +47,7 @@ import Navs from '@/components/Navs.vue'
 import { Cell, CellBox, CellFormPreview, Group, Badge, Flexbox, FlexboxItem } from 'vux'
 
 const getItems0 = () => [
-  {title: '会员', is_link: true, img: 'static/img/icon1/4.png', badge: 0, link: '/member', value: '普通会员'}
+  {title: '会员', is_link: true, img: 'static/img/icon1/4.png', badge: 0, link: '/member', value: '普通会员', showDot: false}
 ]
 const getItems1 = () => [
   {title: '我的钱包', is_link: true, img: 'static/img/mine/wallet.png', badge: 0, link: {path:'/wallet'}},
@@ -98,8 +100,15 @@ export default {
               if(res.data.errcode == 'success' && res.data.mine != null) {
                   let mine = res.data.mine
                   if(mine.vip_level>0) {
-                    this.items0[0].value = '领币加速中'
+                    this.items0[0].value = '产币加速中' //'未提' + this.GLOBAL.formatGameGold(mine.vip_usable_count) + '千克'
                     this.items0[0].img = 'static/img/member/Vip' + mine.vip_level + '.png'
+                    let current_time = parseInt(new Date().getTime() / 1000);
+                    if(current_time > this.GLOBAL.vipGetNotifyTime + 600 && mine.vip_get_count > 0) {
+                      this.items0[0].showDot = true
+                    } else {
+                      this.items0[0].showDot = false
+                    }
+                    
                   } 
                   if(mine.current_prop_count > mine.prop_count) {
                     this.items1[1].badge = mine.current_prop_count - mine.prop_count

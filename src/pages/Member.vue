@@ -1,11 +1,11 @@
 <template>
   <div>
     <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
-    <memberJoin v-if="vip_level==0"></memberJoin>
-    <memberGold v-else gold="29.14" time="1547208162"></memberGold>
+    <memberJoin v-if="mine != null && mine.vip_level==0"></memberJoin>
+    <memberGold v-if="mine != null && mine.vip_level>0" :mine="mine" ></memberGold>
     
     <div><p style="text-align:center;width:100%;background-color: white;padding-top:5px; top:8px; position: relative;">
-    <span style="color:#CC9900; font-size:16px;font-weight:620;">更多会员方案</span></p>
+    <span style="color:#CC9900; font-size:15px;font-weight:620;">更多会员方案</span></p>
     </div>
     <div style="background-color: white; padding:15px;">
         <flexbox>
@@ -29,7 +29,9 @@
     </div>
     
     <div style="padding: 10px; background-color: white; top:8px; position: relative;">
-        <x-button :gradients="['#FF5E3A', '#FF9500']" @click.native="orderRePay">立即开通 (￥{{btnLabel}} )</x-button>
+        <x-button :gradients="['#FF5E3A', '#FF9500']" @click.native="orderRePay" :disabled="!btnEnable">
+          <span>{{btnTitle + btnTitleFee}}</span>
+        </x-button>
     </div>
 
   </div>
@@ -110,10 +112,11 @@ export default {
       vipDescItems: getVipDescItems(),
       btnItems: vipBtns(),
       vipDescIndex: 0,
-
       btnTab: 0,
-      vip_level: -1,
-
+      mine: null,
+      btnTitle: '开通会员',
+      btnEnable: true,
+      btnTitleFee: ''
     }
   },
   methods: {
@@ -121,15 +124,37 @@ export default {
         this.$router.push('/mine')
       },
 
+      getFee() {
+        if(this.mine.vip_level==null || this.mine.vip_level==3) {
+          return ''
+        }
+        if(this.vipDescIndex == 0) {
+          return '(￥6)'
+        } else if(this.vipDescIndex == 1) {
+          return '(￥66)'
+        } else if(this.vipDescIndex == 2) {
+          return '(￥166)'
+        }
+        return ''
+      },
+
       getMine(){
           let data = {func:'Mine', control: 'profile', openid: this.GLOBAL.openid, uid: this.GLOBAL.uid, oemInfo: this.GLOBAL.oemInfo}
           this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
               console.log('mine', res.data)
               if(res.data.errcode == 'success' && res.data.mine != null) {
-                  this.vip_level = res.data.mine.vip_level
-              } else {
-                  this.vip_level = 0
-              }
+                  this.mine = res.data.mine
+                  if(this.mine.vip_level == 0) {
+                    this.vipDescIndex = 0
+                    this.btnTitle = '开通会员'
+                    this.btnTitleFee = '(￥6)'
+                  } else if(this.mine.vip_level == 3) {
+                    this.btnTab = '已开通VIP3'
+                    this.btnEnable = false
+                  } else {
+                    this.btnTitle = '立即升级'
+                  }
+              } 
           });
       },
 
@@ -137,11 +162,23 @@ export default {
         item.status = 1
         this.btnLabel = item.price
         this.vipDescIndex = index
+
         this.btnItems.forEach(element => {
           if(element.index != index) {
             element.status = 0
           } 
         });
+        if(this.mine.vip_level > 0) {
+          console.log('this.vipDescItems[index].value', this.vipDescItems[index].value)
+          console.log('this.mine.vip_level', this.mine.vip_level)
+          if(this.vipDescItems[index].value <= this.mine.vip_level) {
+            this.btnTitleFee = ''
+          } else if(this.vipDescItems[index].value > this.mine.vip_level) {
+            this.btnTitleFee = this.getFee()
+          } 
+        } else {
+          this.btnTitleFee = this.getFee()
+        }
       },
 
       orderPay(tradeId) {   
@@ -149,8 +186,17 @@ export default {
       },
 
       orderRePay() {
-         let product = this.vipDescItems[this.vipDescIndex]
-         let data = {
+        let product = this.vipDescItems[this.vipDescIndex]
+        if(this.mine.vip_level > 0) {
+          if(product.value < this.mine.vip_level) {
+            this.showPluginAuto('不能降级，当前已经是'+ product.label)
+            return
+          } else if(product.value == this.mine.vip_level) {
+            this.showPluginAuto('当前已经是' + product.label)
+            return
+          }
+        }
+        let data = {
           func:'CommonOrderRepay',
           control: 'order',
           uid: this.GLOBAL.uid,
@@ -166,7 +212,20 @@ export default {
               this.orderPay(res.data.tradeId)
             }
         });       
-      }
+      },
+      showPlugin(msg) {
+        this.$vux.alert.show({
+          title: '提示',
+          content: msg
+        })
+      },
+
+      showPluginAuto(msg) {
+        this.showPlugin(msg)
+        setTimeout(() => {
+          this.$vux.alert.hide()
+        }, 3000)
+      },
   },
   created() {
     console.log('memberJoin created')

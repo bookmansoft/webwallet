@@ -17,6 +17,7 @@ import PropSaleInfo from '@/pages/PropSaleInfo'
 import About from '@/pages/About'
 import Member from '@/pages/Member'
 import OrderPay from '@/pages/OrderPay'
+import MemberDrawLog from '@/pages/MemberDrawLog'
 
 Vue.use(Router)
 
@@ -111,6 +112,10 @@ export default new Router({
       name: 'OrderPay',
       component: OrderPay
     },
-     
+    {
+      path: '/member/draw/log',
+      name: 'MemberDrawLog',
+      component: MemberDrawLog
+    },
   ]
 })

@@ -24,8 +24,8 @@ const colorList = [
 
 const colorListLength = 20
 const oemInfo = { token: '9bcf8939a9c96e14700b2209463af411' }
-//const apiUrl = 'https://mini.gamegold.xin/gg-wechat-server/index.html'
-const apiUrl = 'http://192.168.1.9:9101/index.html'
+const apiUrl = 'https://mini.gamegold.xin/gg-wechat-server/index.html'
+//const apiUrl = 'http://192.168.1.9:9101/index.html'
 const gameGoldUnit = '千克'
 
 function getRandColor () {
@@ -134,6 +134,7 @@ var userProfile = null
 var games = []
 var cplist = []
 var cpCount = 0
+var vipGetNotifyTime = 0
 
 export default
 {
@@ -145,6 +146,6 @@ export default
   formatGameGold,
   gameGoldOrigin, userProfile, gameGoldUnit, formatDateStr, checkAddr, myAlert,
   adminName, openId, uid, propCount, cpCount, cplist, games, path,
-  getOpenId, getPath
+  getOpenId, getPath, vipGetNotifyTime
 }
 </script>
