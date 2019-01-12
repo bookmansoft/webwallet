@@ -139,6 +139,7 @@ export default {
               this.gold = this.GLOBAL.formatGameGold(this.mine.vip_usable_count )
               this.doStart = true
               this.drawLog.unshift(res.data.ret)
+              this.showPluginAuto('提币成功')
             }
         });  
     },
