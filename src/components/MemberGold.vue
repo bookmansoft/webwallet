@@ -29,10 +29,10 @@
           <flexbox>
           <flexbox-item :span="9">
               <div class="flex-demo2">
-                  <div>未提取游戏币<span style="color:black; font-size:17px; font-weight:620;">
+                  <div>未提取<span style="color:black; font-size:17px; font-weight:620;">
                       <countup :end-val="gold" :duration="1" :start="doStart" :decimals=3></countup>
                       <!--{{this.GLOBAL.formatGameGold(mine.vip_usable_count)}}-->
-                      </span> 千克
+                      </span>千克
                   </div>
                   <div><p>(满10千克可提取到钱包)</p></div>
               </div>
@@ -59,7 +59,7 @@
               </flexbox-item>
               <flexbox-item :span="5">
                 <div class="flex-demo3">
-                    <span>{{GLOBAL.formatGameGold(item.draw_count)}} 千克</span>
+                    <span>{{GLOBAL.formatGameGold(item.draw_count)}}千克</span>
                 </div>
               </flexbox-item>
             </flexbox>
@@ -221,8 +221,8 @@ export default {
 }
 
 .imgDiv2 {
-  width: 80px;
-  height: 30px;
+  width: 60px;
+  height: 25px;
   vertical-align: -webkit-baseline-middle;
 }
 

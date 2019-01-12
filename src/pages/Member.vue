@@ -149,7 +149,7 @@ export default {
                     this.btnTitle = '开通会员'
                     this.btnTitleFee = '(￥6)'
                   } else if(this.mine.vip_level == 3) {
-                    this.btnTab = '已开通VIP3'
+                    this.btnTitle = '已升最高级VIP3'
                     this.btnEnable = false
                   } else {
                     this.btnTitle = '立即升级'

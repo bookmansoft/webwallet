@@ -38,7 +38,7 @@ export default {
                 this.gotoWePay()
                 this.wePay = true
               } 
-              if(this.payTimeCount < 15) {
+              if(this.payTimeCount < 50) {
                 setTimeout(()=> {
                   this.payTimeCount++
                   this.showLoading = true
