@@ -98,11 +98,12 @@ export default {
               console.log('mine', res.data)
               if(res.data.errcode == 'success' && res.data.mine != null) {
                   let mine = res.data.mine
-                  if(mine.vip_level>0) {
+                  let vip = mine.vip
+                  if(vip != null && vip.vip_level>0) {
                     this.items0[0].value = '产币加速中' //'未提' + this.GLOBAL.formatGameGold(mine.vip_usable_count) + '千克'
-                    this.items0[0].img = 'static/img/member/Vip' + mine.vip_level + '.png'
+                    this.items0[0].img = 'static/img/member/Vip' + vip.vip_level + '.png'
                     let current_time = parseInt(new Date().getTime() / 1000);
-                    if(current_time > this.GLOBAL.vipGetNotifyTime + 600 && mine.vip_get_count > 0) {
+                    if(this.GLOBAL.formatGameGold(vip.vip_usable_count) >= 10) {
                       this.items0[0].showDot = true
                     } else {
                       this.items0[0].showDot = false

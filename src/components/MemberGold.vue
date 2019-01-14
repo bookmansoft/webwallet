@@ -20,7 +20,7 @@
                         <!--{{this.GLOBAL.formatGameGold(mine.vip_usable_count)}}-->
                         </span>千克
                     </div>
-                    <div><p>(满10千克可提取到钱包)</p></div>
+                    <div><p>满10千克可提到钱包</p></div>
                 </div>
             </flexbox-item>
             <flexbox-item :span="5"><div class="flex-demo22">
