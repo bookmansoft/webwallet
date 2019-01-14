@@ -17,7 +17,6 @@
           <img src="static/img/member/shot.png" style="width: 8px; height:8px; position: relative; left:-2px; top:0px;" v-if="item.showDot==true" />
         </span>
         <img slot="icon" width="20" style="display:block;margin-right:5px;" :src="item.img">
-        
       </cell>
     </group>    
     <group>

@@ -4,10 +4,10 @@
     <memberJoin v-if="mine != null && mine.vip_level==0"></memberJoin>
     <memberGold v-if="mine != null && mine.vip_level>0" :mine="mine" ></memberGold>
     
-    <div><p style="text-align:center;width:100%;background-color: white;padding-top:5px; top:8px; position: relative;">
-    <span style="color:#CC9900; font-size:15px;font-weight:620;">更多会员方案</span></p>
+    <div><p class="memberMore">
+    <span>会员方案</span></p>
     </div>
-    <div style="background-color: white; padding:15px;">
+    <div class="memberMoreDiv">
         <flexbox>
           <flexbox-item v-for="(item, index) in btnItems" :key="index">
             <div class="box2" @click="vipSelect(item, index)">
@@ -17,9 +17,9 @@
         </flexbox>
     </div>
 
-    <div style="background-color: white; padding:5px 25px 15px 25px;">
+    <div class="vipDesc">
       <divider>.</divider>
-      <div style="color:#CC9900; font-size:13px;">
+      <div class="vipDescDiv">
         <swiper v-model="vipDescIndex" height="100px" :show-dots="false">
           <swiper-item v-for="(item, index) in vipDescItems" :key="index">
             <p v-for="(item1, index1) in item.memo" :key="index1">{{item1}}</p>
@@ -28,7 +28,7 @@
       </div>
     </div>
     
-    <div style="padding: 10px; background-color: white; top:8px; position: relative;">
+    <div class="memberBtn">
         <x-button :gradients="['#FF5E3A', '#FF9500']" @click.native="orderRePay" :disabled="!btnEnable">
           <span>{{btnTitle + btnTitleFee}}</span>
         </x-button>
@@ -242,8 +242,28 @@ export default {
   text-align:center; 
 }
 .box2 img {
-  width: 90px;
+  width: 80px;
   height: 64px;
 }
-
+.vipDesc {
+  background-color: white; padding:5px 25px 15px 25px;
+}
+.vipDescDiv {
+  color:#CC9900; font-size:13px;
+}
+.memberMore {
+  text-align:center;width:100%;background-color: white;padding-top:5px; top:8px; position: relative;
+}
+.memberMoreDiv {
+  background-color: white; padding:15px;
+}
+.memberMore span {
+  color:#CC9900; font-size:15px;font-weight:620;
+}
+.memberBtn {
+  padding: 10px; 
+  background-color: white; 
+  top:8px; 
+  position: relative;
+}
 </style>

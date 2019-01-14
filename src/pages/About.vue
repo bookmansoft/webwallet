@@ -2,7 +2,7 @@
   <div>
       <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
     <group title="版本信息">
-        <div style="padding:2px;"><p>{{version}}</p></div>
+        <div style="padding:15px;"><p>{{version}}</p></div>
     </group>
   </div>
 </template>
@@ -15,7 +15,7 @@ export default {
   },
   data () {
     return {
-      version: '当前版本1.15',
+      version: '当前版本1.12',
       headerTitle: '关于我们'
     }
   },
