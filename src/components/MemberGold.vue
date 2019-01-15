@@ -34,7 +34,7 @@
                         :percent="percent"
                         :stroke-width="5"
                         stroke-color="#ff8312">
-                        <span style="color:red;" v-if="this.percent==100" @click="vipDrawConfirm">提取</span>
+                        <span style="color:red;" v-if="this.percent >= 100" @click="vipDrawConfirm">提取</span>
                         <span style="color:#b3bfce;" v-else>提取</span>
                       </x-circle>
                     </div>
@@ -194,6 +194,7 @@ export default {
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
             console.log('vipDraw', res.data);
             if(res.data.errcode='success') {
+              this.percent = 0
               this.doStart = false
               this.mine.vip_usable_count = this.mine.vip_usable_count - draw_count
               this.gold = this.GLOBAL.formatGameGold(this.mine.vip_usable_count )

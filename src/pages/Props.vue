@@ -7,21 +7,23 @@
       <scroller v-show="isShow" v-model="scrollerStatus" height="-46" lock-x scrollbar-y ref="scroller" :bounce="isbounce"
               :use-pullup="showUp" :pullup-config="upobj" @on-pullup-loading="selPullUp">
       <div>
-        <div v-for="(item, index) in propList" :key="index" class="propItem">
-          <flexbox @click.native="gotoPropDetail(item, index)">
-            <flexbox-item :span="2.5" style="padding:0.3rem;">
-              <div class="flex-demo-left">
-                <img :src="item.result.icon" class="img-prop-list" />
-              </div></flexbox-item>
-            <flexbox-item>
-              <div style="padding-left:15px;">
-                <p><span style="font-size:16px;">{{item.result.props_name}}</span></p>
-                <br />
-                <p><span style="color: #888; font-size:14px;">{{item.desc}}</span></p>
-              </div>
-            </flexbox-item>
-          </flexbox>
-        </div>
+        <group :title="groupTitle">
+          <div v-for="(item, index) in propList" :key="index" class="propItem">
+            <flexbox @click.native="gotoPropDetail(item, index)">
+              <flexbox-item :span="2.5" style="padding:0.3rem;">
+                <div class="flex-demo-left">
+                  <img :src="item.result.icon" class="img-prop-list" />
+                </div></flexbox-item>
+              <flexbox-item>
+                <div style="padding-left:15px;">
+                  <p><span style="font-size:16px;">{{item.result.props_name}}</span></p>
+                  <br />
+                  <p><span style="color: #888; font-size:14px;">{{item.desc}}</span></p>
+                </div>
+              </flexbox-item>
+            </flexbox>
+          </div>
+        </group>
         <div style="padding: 10px 80px 20px 80px "><divider v-if="isBottom">到底了</divider></div>
       </div>
       </scroller>
@@ -31,7 +33,7 @@
 
 <script>
 
-import {Scroller, XHeader, Panel, Flexbox, FlexboxItem, Loading, Divider} from 'vux'
+import {Scroller, Group, XHeader, Panel, Flexbox, FlexboxItem, Loading, Divider} from 'vux'
 import { setTimeout } from 'timers';
 
 export default {
@@ -40,7 +42,7 @@ export default {
     
   },
   components: {
-    Scroller, XHeader, Panel, Flexbox, FlexboxItem, Loading, Divider
+    Scroller, Group, XHeader, Panel, Flexbox, FlexboxItem, Loading, Divider
   },
   activated () {
       this.$refs.scroller.reset()
@@ -49,7 +51,7 @@ export default {
     return {
         headerTitle: '我的道具',
         propList: [],
-
+        groupTitle: '道具数量：0',
         type: '1',
         isBottom: false,
         PageIndex: 1,//页码从第一页开始
@@ -95,10 +97,27 @@ export default {
         })
         
       },
+
+      // 道具数量
+      getPropCount() {
+        let data = { func: 'PropCount', control: 'prop', oemInfo: this.GLOBAL.oemInfo, 
+            uid: this.GLOBAL.uid, 
+            openid: this.GLOBAL.openid, 
+        };
+        let that = this;
+        that.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+            if(res.data.errcode=='success') {
+               if(res.data.count > 0) {
+                 that.getProps(that.PageIndex)
+               }
+               that.groupTitle = '道具数量：'+res.data.count
+            }
+        })
+      },
+
       // 发送请求 获取道具
       getProps(page) {
-        let data = { func: 'UserProp', control: 'profile', oemInfo: this.GLOBAL.oemInfo, 
-            uid: this.GLOBAL.uid, 
+        let data = { func: 'PropList', control: 'prop', oemInfo: this.GLOBAL.oemInfo, 
             openid: this.GLOBAL.openid, 
             page: page, 
         };
@@ -164,7 +183,7 @@ export default {
     this.$nextTick(() => {
         this.$refs.scroller.reset()
     })
-    this.getProps(this.PageIndex)
+    this.getPropCount()
   }
 }
 </script>
