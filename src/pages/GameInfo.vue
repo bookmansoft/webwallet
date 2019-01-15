@@ -152,20 +152,9 @@ export default {
         this.cpProps.splice(0, this.cpProps.length)
         this.cpInfo.proplist.forEach(element => {
             //从cp获取资源
-            /*
-            const url = this.cpItem.url + '/prop/' + element.id
-            this.axios.get(url).then(res => {
-                //console.log(res.data)
-                let item = res.data
-                item.props_price = this.GLOBAL.formatGameGold(item.props_price)
-                this.cpProps.push(item)
-            })
-            */
-            //const url = this.cpItem.url + '/prop/' + element.id
             let url = encodeURI(this.cpItem.url + '/prop/' + element.id)
             let data = {func:'GetCpProxy', control: 'cp', url: url, oemInfo: this.GLOBAL.oemInfo} 
             this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-              //console.log(res.data)
               if(res.data.hasOwnProperty('result')) {
                 let item = res.data.result
                 item.props_price = this.GLOBAL.formatGameGold(item.props_price)
@@ -184,11 +173,9 @@ export default {
             uid: this.GLOBAL.openid,
             cid: this.cpItem.cid
         }
-        //console.log(data)
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
             //console.log(res.data)
             this.cpAddr = res.data.ret.data.addr
-            //console.log('this.cpAddr', this.cpAddr)
         });
     }
   },

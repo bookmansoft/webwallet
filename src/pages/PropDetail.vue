@@ -36,7 +36,7 @@
         </div>
         <div id="gameNameImg" class="backcolor-white">
             <div>
-                <img v-for="(item, index) in prop.result.more_icon" :key="index" :src="item" alt="">
+                <img v-for="(item, index) in propIcons" :key="index" :src="item" alt="">
             </div>
         </div>
         <div id="gameProps" class="backcolor-white" >
@@ -75,6 +75,8 @@ export default {
     return {
         headerTitle: '道具详情',
         prop: {},
+        propIcons: [],
+        propShareIcon: ''
     };
   },
   methods: {
@@ -107,7 +109,7 @@ export default {
       this.showPlugin(msg)
       setTimeout(() => {
         this.$vux.alert.hide()
-      }, 3000)
+      }, 2000)
     },
 
     // 熔铸
@@ -131,6 +133,7 @@ export default {
           console.log(res.data);
           if(res.data.errcode='success') {
               this.showPluginAuto('道具已被成功熔铸!')
+              this.$router.go(-1)
           } else {
               this.showPluginAuto('道具熔铸操作失败!')
           }
@@ -184,6 +187,10 @@ export default {
 
     // 分享好友
     propShare() {
+      if(this.propShareIcon == '') {
+        return
+      }
+      
       let prop = this.prop;
       var data = {
         func: 'PropDonate', control: 'prop', oemInfo: this.GLOBAL.oemInfo,
@@ -200,7 +207,7 @@ export default {
             console.log("url " + url);
             this.$wechat.miniProgram.navigateTo({ url: url });
           }
-        });
+      });
     },
   },
 
@@ -209,7 +216,18 @@ export default {
         this.$router.push('/props')
     } else {
         this.prop = this.$route.params.prop
-        console.log('this.prop', this.prop)
+        console.log('this.prop', this.prop.result.more_icon)
+
+        let index = 0
+        this.prop.result.more_icon.forEach( item => {
+           if(index > 0) {
+             this.propIcons.push(item)
+           } else {
+             this.propShareIcon = item
+           }
+           index++
+        });
+        
     }
   }
 };

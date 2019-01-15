@@ -91,9 +91,9 @@ export default {
           this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
             console.log(res.data);
             if (res.data.ret == null) {
-              this.GLOBAL.myAlert(this.$vux.alert, "发布失败，请确认BTC接收地址是否正确");
+                this.GLOBAL.myAlert(this.$vux.alert, "发布失败，请确认BTC接收地址是否正确");
             } else {
-              this.GLOBAL.myAlert(this.$vux.alert, '发布成功', null, function() {
+                this.GLOBAL.myAlert(this.$vux.alert, '发布成功', null, function() {
                 that.$router.push('/wallet/detail')
               })
             }

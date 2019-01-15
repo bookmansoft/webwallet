@@ -86,9 +86,9 @@ export default {
             console.log(res.data);
             let that = this
             if (res.data.ret == null) {
-              this.GLOBAL.myAlert(this.$vux.alert, "发送失败，请确认接收地址是否正确");
+                this.GLOBAL.myAlert(this.$vux.alert, "发送失败，请确认接收地址是否正确");
             } else {
-              this.GLOBAL.myAlert(this.$vux.alert, '发送成功', null, function() {
+                this.GLOBAL.myAlert(this.$vux.alert, '发送成功', null, function() {
                 that.$router.push('/wallet/detail')
               })
             }

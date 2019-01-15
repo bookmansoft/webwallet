@@ -180,7 +180,7 @@ export default {
         } else {
           return ''
         }
-
+        
       },
 
       vipSelect(item, index) {
@@ -242,6 +242,7 @@ export default {
             }
         });       
       },
+
       showPlugin(msg) {
         this.$vux.alert.show({
           title: '提示',
@@ -253,11 +254,10 @@ export default {
         this.showPlugin(msg)
         setTimeout(() => {
           this.$vux.alert.hide()
-        }, 3000)
+        }, 2000)
       },
   },
   created() {
-    console.log('memberJoin created')
     if(this.GLOBAL.userProfile == null || this.GLOBAL.uid == 0) {
       this.$router.push('/mine')
     }

@@ -52,9 +52,9 @@ export default {
 
         showPluginAuto(msg) {
         this.showPlugin(msg)
-        setTimeout(() => {
-            this.$vux.alert.hide()
-        }, 3000)
+            setTimeout(() => {
+                this.$vux.alert.hide()
+            }, 2000)
         },
         propBuyConfirm() {
             let that = this

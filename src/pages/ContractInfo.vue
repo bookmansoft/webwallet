@@ -57,7 +57,7 @@ export default {
         this.showPlugin(msg)
         setTimeout(() => {
             this.$vux.alert.hide()
-        }, 3000)
+        }, 2000)
         },
         contractConfirm() {
             let that = this
