@@ -217,17 +217,10 @@ export default {
     } else {
         this.prop = this.$route.params.prop
         console.log('this.prop', this.prop.result.more_icon)
-
-        let index = 0
+        this.propShareIcon = this.prop.result.large_icon
         this.prop.result.more_icon.forEach( item => {
-           if(index > 0) {
              this.propIcons.push(item)
-           } else {
-             this.propShareIcon = item
-           }
-           index++
         });
-        
     }
   }
 };

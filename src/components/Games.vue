@@ -43,7 +43,7 @@ export default {
   },
   data () {
     return {
-      isShow: false,//是否显示scroller,第一次请求数据过程中隐藏插件，不隐藏的时候会显示“请上拉刷新数据”的字样，不好看
+      isShow: true,//是否显示scroller,第一次请求数据过程中隐藏插件，不隐藏的时候会显示“请上拉刷新数据”的字样，不好看
       showloading: false,
       textloading: '加载中',
       showDown: true,
