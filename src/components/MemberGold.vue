@@ -104,11 +104,13 @@ export default {
     console.log('mounted')
 　　//clearInterval(this.timer)
   },
+
   beforeDestroy: function () {
   　console.log('beforeDestroy')　
     clearInterval(this.timer)
     clearInterval(this.timer2)
   },
+
   created() {
     console.log('created')
     let current_time = parseInt(new Date().getTime() / 1000)
@@ -121,6 +123,7 @@ export default {
       //this.setTimer2()
     }
   },
+  
   methods: {
     doCircle() {
       this.maxPercent = parseInt(this.gold / this.canDrawGold * 100)
@@ -189,7 +192,7 @@ export default {
           oemInfo: this.GLOBAL.oemInfo
         };
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-            console.log(res.data);
+            console.log('vipDraw', res.data);
             if(res.data.errcode='success') {
               this.doStart = false
               this.mine.vip_usable_count = this.mine.vip_usable_count - draw_count

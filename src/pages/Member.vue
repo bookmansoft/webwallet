@@ -154,8 +154,10 @@ export default {
       getFee(select_vip, index) {
         if(this.mine.vip_level == 0 || this.mine.is_expired == 1) {
           return this.getBaseFee(select_vip)
+
         } else if(this.mine.vip_level == select_vip) {
           return this.getBaseFee(select_vip)
+
         } else if(select_vip > this.mine.vip_level) {
           let current_time = parseInt(new Date().getTime() / 1000);
           let remainder_time = this.mine.vip_end_time - this.mine.vip_start_time
@@ -163,17 +165,22 @@ export default {
           let days = parseInt(remainder_time / (24 * 3600))
           console.log('days', days)
           let allFee = 0
+          let currentVipIndex = this.mine.vip_level - 1
+          let currentVipPrice = this.vipDescItems[currentVipIndex].price 
           if(select_vip == 2) {
-            allFee = 220 * days - this.vipDescItems[index-1].price
+            allFee = 220 * days
           } else {
-            allFee = 560 * days - this.vipDescItems[index-1].price
+            allFee = 560 * days
           }
+          allFee = allFee - currentVipPrice
           this.vipDescItems[index].price = allFee
           let k = allFee / 100
           return '(￥' + parseFloat(k.toFixed(2)) + ')'
+
         } else {
           return ''
         }
+
       },
 
       vipSelect(item, index) {
@@ -251,7 +258,7 @@ export default {
   },
   created() {
     console.log('memberJoin created')
-    if(this.GLOBAL.userProfile == null) {
+    if(this.GLOBAL.userProfile == null || this.GLOBAL.uid == 0) {
       this.$router.push('/mine')
     }
   },
