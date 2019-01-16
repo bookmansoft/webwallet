@@ -21,7 +21,12 @@
                 <span class="color-orange float-right"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>编辑推荐</span>
                 </li>
             </ul>
-        </div>      
+        </div>   
+        <group title="长按二维码进入游戏">
+        <div style="text-align:center; padding:15px;">
+          <qrcode :value="gameWexQrcode" type="img"></qrcode>
+        </div>   
+        </group>
         <div id="botImage" class="backcolor-white">
             <div @click="introduce">
                 <p id="inIntroduce" class="bottom-orange">详情</p>
@@ -72,12 +77,12 @@
   </div>
 </template> 
 <script>
-import {XHeader, Flexbox, FlexboxItem } from 'vux'
+import {XHeader, Flexbox, FlexboxItem, Qrcode, Group } from 'vux'
 import { introduce , gameNameImg , gameProps} from "../assets/js/gameName.js"
 
 export default {
   components: {
-    XHeader, Flexbox, FlexboxItem
+    XHeader, Flexbox, FlexboxItem, Qrcode, Group
   },
   data() {
     return {
@@ -87,6 +92,7 @@ export default {
         cpItem: {},
         times: "",
         cpAddr: '',
+        gameWexQrcode: 'http://mini.gamegold.xin/wxopen/test',
         // 游戏道具图标
         cpProps:[]
     };
