@@ -27,6 +27,7 @@
           <qrcode :value="gameWexQrcode" type="img"></qrcode>
         </div>   
         </group>
+        
         <div id="botImage" class="backcolor-white">
             <div @click="introduce">
                 <p id="inIntroduce" class="bottom-orange">详情</p>
