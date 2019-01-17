@@ -55,7 +55,7 @@
             <flexbox v-for="(item, index) in drawLog" :key="index">
               <flexbox-item :span="8">
                   <div class="flex-demo3">
-                    <span>{{GLOBAL.formatDateStr(new Date(item.draw_at*1000), 'yyyy-MM-dd HH:mm:ss')}}</span>
+                    <span>{{GLOBAL.formatDateStr(new Date(item.draw_at*1000), 'MM-dd HH:mm:ss')}}</span>
                   </div>
               </flexbox-item>
               <flexbox-item :span="4">

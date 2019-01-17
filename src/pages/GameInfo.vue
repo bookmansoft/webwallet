@@ -14,21 +14,23 @@
                 <li class="color-999-provider">发行商：{{gameInfo.provider}}</li>
                 <li>
                 <span class="color-999">射击</span>
-                <a class="play-btn float-right"><span style="font-size:11px;">进入游戏</span></a>
+                <a class="play-btn float-right"><span style="font-size:11px;" @click="gotoGame">进入游戏</span></a>
                 </li>
                 <li>
                 <span class="color-999">128人玩过</span>
                 <span class="color-orange float-right"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>编辑推荐</span>
                 </li>
             </ul>
-        </div>   
+        </div> 
+        <!-- 
         <group title="长按二维码进入游戏">
         <div style="text-align:center; padding:15px;">
-          <!--<qrcode :value="gameWexQrcode" type="img" @touchstart.native="previewImage"></qrcode>-->
-          <!--<img src="static/img/grcode.png" @click="previewImage" style="width:200px; height:200px;" />-->
+            <qrcode :value="gameWexQrcode" type="img" @touchstart.native="previewImage"></qrcode>
+            <img src="static/img/grcode.png" @click="previewImage" style="width:200px; height:200px;" />
           <img :src="image" :data-src="image" @click="previewImage" style="width:200px; height:200px;" />
         </div>   
         </group>
+        -->
         <div id="botImage" class="backcolor-white">
             <div @click="introduce">
                 <p id="inIntroduce" class="bottom-orange">详情</p>
@@ -186,6 +188,14 @@ export default {
         str += $chars.charAt(Math.floor(Math.random() * maxLen));
       }
       return str;
+    },
+
+    gotoGame() {
+      let cname = this.cpItem.name
+      let addr = this.cpAddr
+      let gameUrl = 'https://mini.gamegold.xin/proxy/cp01/index.html?' + cname + '/' + addr
+      console.log('gameUrl', gameUrl)
+      window.location.href = gameUrl
     },
 
     buyProp(item) {

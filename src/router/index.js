@@ -18,6 +18,7 @@ import About from '@/pages/About'
 import Member from '@/pages/Member'
 import OrderPay from '@/pages/OrderPay'
 import MemberDrawLog from '@/pages/MemberDrawLog'
+import Message from '@/pages/Message'
 
 Vue.use(Router)
 
@@ -116,6 +117,11 @@ export default new Router({
       path: '/member/draw/log',
       name: 'MemberDrawLog',
       component: MemberDrawLog
+    },
+    {
+      path: '/message',
+      name: 'Message',
+      component: Message
     },
   ]
 })
