@@ -24,7 +24,9 @@
         </div>   
         <group title="长按二维码进入游戏">
         <div style="text-align:center; padding:15px;">
-          <qrcode :value="gameWexQrcode" type="img"></qrcode>
+          <!--<qrcode :value="gameWexQrcode" type="img" @touchstart.native="previewImage"></qrcode>-->
+          <!--<img src="static/img/grcode.png" @click="previewImage" style="width:200px; height:200px;" />-->
+          <img :src="image" :data-src="image" @click="previewImage" style="width:200px; height:200px;" />
         </div>   
         </group>
         <div id="botImage" class="backcolor-white">
@@ -92,9 +94,14 @@ export default {
         cpItem: {},
         times: "",
         cpAddr: '',
+        image: 'https://mini.gamegold.xin/gg-wechat-client/static/img/grcode.png',
         gameWexQrcode: 'http://mini.gamegold.xin/wxopen/test',
         // 游戏道具图标
-        cpProps:[]
+        cpProps:[],
+        imagelistbrowse: {
+          type: Array,
+          default: [],
+        }
     };
   },
   methods: {
@@ -124,6 +131,48 @@ export default {
         var c = mydate.getDate();
         var time = "" + a + "年" + b + "月" + c + "日";
         return time
+    },
+
+    getWxConfig() {
+        const url = location.href.split("#")[0];
+        let data = {func:'WechatConfig', control: 'wechat', url: url, oemInfo: this.GLOBAL.oemInfo}
+        this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+            console.log(res.data);
+            this.$wechat.config(res.data.wxconfig)
+        }).catch(res => {
+            console.log(res);
+        })
+    },
+
+    previewImage: function(e) {
+        //alert('abc')
+        //var current = e.target.dataset.src;
+        /*
+        let current = 'https://mini.gamegold.xin/gg-wechat-client/static/img/grcode.png'
+        this.$wechat.previewImage({
+          current: current,
+          urls: [current]
+        })
+        */
+        let that = this
+        console.log(e)
+        //let current = e.target.src
+        let current = this.image
+        //alert(current)
+        that.$wechat.previewImage({
+          current: current, // 当前显示图片的http链接
+          urls: [current], // 需要预览的图片http链接列表
+          success: function(res) {
+            console.log('success', res)
+            alert('success', res)
+          },
+          fail: function(res) {
+            console.log(res)
+            alert('fail', res)
+          }
+        })
+        //alert('ok')
+
     },
 
     //生成随机字符串
@@ -197,6 +246,7 @@ export default {
         this.getCpProps()
         this.userToken()
     }
+    this.getWxConfig()
   }
 };
 </script>
