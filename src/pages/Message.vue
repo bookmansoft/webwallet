@@ -70,7 +70,7 @@ export default {
                   }
                   item.contentType = '订单支付请求'
                   this.notifys.push(item)
-                  this.notifys.push(item)
+                  //this.notifys.push(item)
                 });
             }
         });  
