@@ -116,6 +116,7 @@ export default {
                   }
                   this.GLOBAL.userProfile.mine = mine
               }
+              this.getNotify()
           });
       },
       getNotify() {
@@ -144,7 +145,7 @@ export default {
     } else {
       this.userProfile = this.GLOBAL.userProfile
       this.getMine()
-      this.getNotify()
+      //this.getNotify()
     }
   }
 }

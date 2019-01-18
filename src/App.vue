@@ -62,7 +62,6 @@ export default {
         }
       }
     });
-    //this.$router.push('/order/pay')
   }
 }
 </script>

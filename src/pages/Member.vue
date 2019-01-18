@@ -1,7 +1,7 @@
 <template>
   <div>
     <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
-    <memberJoin v-if="mine != null && mine.vip_level == 0"></memberJoin>
+    <memberJoin v-if="mine != null && mine.vip_level == 0" @click.native="orderRePay"></memberJoin>
     <memberGold v-if="mine != null && mine.vip_level > 0" :mine="mine" ></memberGold>
     
     <div><p class="memberMore">

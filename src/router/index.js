@@ -19,6 +19,7 @@ import Member from '@/pages/Member'
 import OrderPay from '@/pages/OrderPay'
 import MemberDrawLog from '@/pages/MemberDrawLog'
 import Message from '@/pages/Message'
+import PropOrderPay from '@/pages/PropOrderPay'
 
 Vue.use(Router)
 
@@ -122,6 +123,11 @@ export default new Router({
       path: '/message',
       name: 'Message',
       component: Message
+    },
+    {
+      path: '/prop/order/pay',
+      name: 'PropOrderPay',
+      component: PropOrderPay
     },
   ]
 })
