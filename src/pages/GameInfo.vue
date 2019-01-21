@@ -192,10 +192,18 @@ export default {
 
     gotoGame() {
       let cname = this.cpItem.name
+      let cid = this.cpItem.cid
       let addr = this.cpAddr
+      let game = this.gameInfo.game_title
+      let gameUrl = this.gameInfo.large_img_url
+      /*
       let gameUrl = 'https://mini.gamegold.xin/proxy/cp01/index.html?' + cname + '/' + addr
       console.log('gameUrl', gameUrl)
       window.location.href = gameUrl
+      */
+      const url = "/pages/test/test?cid=" + cid + "&addr=" + addr + "&game=" + game + "&gameUrl=" + gameUrl;
+      //wx.miniProgram.navigateTo({ url: url });
+      this.$wechat.miniProgram.navigateTo({ url: url })
     },
 
     buyProp(item) {
