@@ -8,6 +8,7 @@ import Vuex from 'vuex'
 import { WechatPlugin, AjaxPlugin, AlertPlugin, ToastPlugin, ConfirmPlugin  } from 'vux'
 import axios from 'axios'
 import global_ from './Global'
+import utils from './assets/scripts/utils'
 
 FastClick.attach(document.body)
 Vue.config.productionTip = false
@@ -22,6 +23,7 @@ Vue.prototype.axios = axios
 Vue.prototype.GLOBAL = global_
 Vue.prototype.GLOBAL.openid = Vue.prototype.GLOBAL.getOpenId()
 Vue.prototype.GLOBAL.path = Vue.prototype.GLOBAL.getPath()
+Vue.prototype.utils = utils
 
 /* eslint-disable no-new */
 new Vue({

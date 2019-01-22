@@ -57,6 +57,7 @@ const getItems1 = () => [
 ]
 const getItems2 = () => [
   /*{title: '使用条款', is_link: true, img: 'static/img/icon1/3.png', badge: 0, link: ''},*/
+  {title: '红包测试', is_link: true, img: 'static/img/mine/about.png', badge: 0, link: {path:'/redpack'}, value: ''},
   {title: '关于我们', is_link: true, img: 'static/img/mine/about.png', badge: 0, link: {path:'/about'}, value: ''}
 ]
 export default {

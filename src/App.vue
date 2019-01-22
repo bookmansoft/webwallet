@@ -52,6 +52,12 @@ export default {
   created() {
     //this.id = this.getQueryString("id") || "0";
     console.log(this.$route.path);
+    console.log('code', this.utils.getUrlKey('code'))
+    let code = this.utils.getUrlKey('code')
+    if( code != null) {
+      //this.$router.push('/redpack')
+      this.$router.push({ name: 'RedPack', params: { code: code }})
+    }
     let path = this.GLOBAL.path
     this.$router.options.routes.forEach(element => {
       if(element.path==path) {

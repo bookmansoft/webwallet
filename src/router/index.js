@@ -20,6 +20,7 @@ import OrderPay from '@/pages/OrderPay'
 import MemberDrawLog from '@/pages/MemberDrawLog'
 import Message from '@/pages/Message'
 import PropOrderPay from '@/pages/PropOrderPay'
+import RedPack from '@/pages/RedPack'
 
 Vue.use(Router)
 
@@ -128,6 +129,11 @@ export default new Router({
       path: '/prop/order/pay',
       name: 'PropOrderPay',
       component: PropOrderPay
+    },
+    {
+      path: '/redpack',
+      name: 'RedPack',
+      component: RedPack
     },
   ]
 })
