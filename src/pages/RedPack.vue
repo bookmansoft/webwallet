@@ -38,10 +38,19 @@ export default {
           let url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4a5e9d7ae34ad4b4'
           url += '&redirect_uri='+redirect_uri+'&response_type=code&scope=snsapi_base&state=1#wechat_redirect'
           window.location.href = url
+      },
+      getOpenid() {
+          let data = {func:'GetMapOpenId', control: 'wechat', code: this.code, oemInfo: this.GLOBAL.oemInfo}
+          this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+              console.log(res.data)
+          });
       }
   },
   created() {
-      this.code = this.$route.params.code
+      if(!!!this.$route.params.code) {
+          this.code = this.$route.params.code
+      }
+      
   }
 }
 </script>
