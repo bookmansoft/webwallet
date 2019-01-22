@@ -49,6 +49,7 @@ export default {
   created() {
       if(!!this.$route.params.code) {
           this.code = this.$route.params.code
+          this.getOpenid()
       }
       
   }
