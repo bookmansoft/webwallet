@@ -4,7 +4,7 @@
     <group title="红包测试">
         <div style="padding:15px;"><p>{{version}}</p></div>
     </group>
-    <group v-if="mpOpenid!=null">
+    <group v-if="retMsg!=null">
         <div style="padding:15px;"><p>{{retMsg}}</p></div>
     </group>
     <group label-width="3.5em" label-margin-right="2em" label-align="right">
@@ -39,7 +39,7 @@ export default {
           this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
               console.log(res.data)
               if(res.data.errcode=='success') {
-                  this.retMsg = res.ret
+                  this.retMsg = res.data.ret
               }
           });
       },
