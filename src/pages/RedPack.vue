@@ -4,12 +4,12 @@
     <group title="红包测试">
         <div style="padding:15px;"><p>{{version}}</p></div>
     </group>
-    <group>
-        <div style="padding:15px;"><p>code: {{code}}</p></div>
+    <group v-if="mpOpenid!=null">
+        <div style="padding:15px;"><p>{{retMsg}}</p></div>
     </group>
     <group label-width="3.5em" label-margin-right="2em" label-align="right">
         <div style="padding:15px;">
-        <x-button type="primary" @click.native="wxAuthod" v-if="code==null">授权</x-button>
+        <x-button type="primary" @click.native="sendRedPack" v-if="mpOpenid!=null">发一个红包试试</x-button>
         </div>
     </group>
   </div>
@@ -25,12 +25,23 @@ export default {
     return {
       version: '领一个红包',
       headerTitle: '抢红包',
-      code: null
+      code: null,
+      mpOpenid: null,
+      retMsg: null
     }
   },
   methods: {
       onBack() {
         this.$router.go(-1);
+      },
+      sendRedPack() {
+          let data = {func:'SendRecPack', control: 'wechat', openid: this.mpOpenid, oemInfo: this.GLOBAL.oemInfo}
+          this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+              console.log(res.data)
+              if(res.data.errcode=='success') {
+                  this.retMsg = res.ret
+              }
+          });
       },
       wxAuthod() {
           console.log('wxAuthod')
@@ -43,6 +54,9 @@ export default {
           let data = {func:'GetMapOpenId', control: 'wechat', code: this.code, oemInfo: this.GLOBAL.oemInfo}
           this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
               console.log(res.data)
+              if(res.data.errcode=='success') {
+                  this.mpOpenid = res.data.ret.openid
+              }
           });
       }
   },
@@ -50,8 +64,9 @@ export default {
       if(!!this.$route.params.code) {
           this.code = this.$route.params.code
           this.getOpenid()
+      } else {
+          this.wxAuthod()
       }
-      
   }
 }
 </script>
