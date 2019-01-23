@@ -1,45 +1,54 @@
 <template>
     <div>
-       <scroller v-model="scrollerStatus" height="-100" lock-x scrollbar-y ref="scroller" :bounce="isbounce"
-              :use-pulldown="showDown" :use-pullup="false" :pulldown-config="downobj" @on-pulldown-loading="selPullDown"><div>
-        <!--<swiper style="margin-top:0.6rem;" :list="hotList" v-model="hotListIndex" @on-index-change="hotListOnIndexChange"></swiper>-->
-        <!--<panel header="热门游戏" :list="gameList" type="5" @on-img-error="onImgError"></panel>-->
-        <div style="height:5px;"></div>
-        <div style="background-color: white">
-          <div style="padding:10px 10px 0px 10px;"><img :src="recommendGame.src" class="img-top" /></div>
-          <div><p style="font-size:15px;padding: 5px 0px 0px 10px;"><span style="color:red;">推荐</span><span style="margin-left:5px;">{{recommendGame.gameTitle}}</span></p></div>
-          <div><p style="font-size:13px; color: #888;padding: 5px 0px 10px 10px;">{{recommendGame.gameProvider}}</p></div>
-        </div>
-        <div v-for="(item, index) in gameList" :key="index" class="gameItem">
-          <flexbox @click.native="gotoCpInfo(item, index)">
-            <flexbox-item :span="4" style="padding:0.3rem;">
-              <div class="flex-demo-left">
-                <img :src="item.src" class="img-game-list" />
-              </div></flexbox-item>
-            <flexbox-item>
-              <div style="padding-left:6px;">
-                <p><span style="font-size:15px;">{{item.title}}</span></p>
-                <br />
-                <p><span style="color: #888; font-size:14px;">{{item.desc}}</span></p>
-              </div>
-            </flexbox-item>
-          </flexbox>
-        </div>
+       <div v-if="isLoadMore && gameList.length > 0">
+        <scroller v-model="scrollerStatus" height="-100" lock-x scrollbar-y ref="scroller" :bounce="isbounce"
+                :use-pulldown="showDown" :use-pullup="false" :pulldown-config="downobj" @on-pulldown-loading="selPullDown"><div>
+          <!--<swiper style="margin-top:0.6rem;" :list="hotList" v-model="hotListIndex" @on-index-change="hotListOnIndexChange"></swiper>-->
+          <!--<panel header="热门游戏" :list="gameList" type="5" @on-img-error="onImgError"></panel>-->
+          <div style="height:5px;"></div>
+          <div style="background-color: white">
+            <div style="padding:10px 10px 0px 10px;"><img :src="recommendGame.src" class="img-top" /></div>
+            <div><p style="font-size:15px;padding: 5px 0px 0px 10px;"><span style="color:red;">推荐</span><span style="margin-left:5px;">{{recommendGame.gameTitle}}</span></p></div>
+            <div><p style="font-size:13px; color: #888;padding: 5px 0px 10px 10px;">{{recommendGame.gameProvider}}</p></div>
+          </div>
+          <div v-for="(item, index) in gameList" :key="index" class="gameItem">
+            <flexbox @click.native="gotoCpInfo(item, index)">
+              <flexbox-item :span="4" style="padding:0.3rem;">
+                <div class="flex-demo-left">
+                  <img :src="item.src" class="img-game-list" />
+                </div></flexbox-item>
+              <flexbox-item>
+                <div style="padding-left:6px;">
+                  <p><span style="font-size:15px;">{{item.title}}</span></p>
+                  <br />
+                  <p><span style="color: #888; font-size:14px;">{{item.desc}}</span></p>
+                </div>
+              </flexbox-item>
+            </flexbox>
+          </div>
+          <br/>
+        </div></scroller>
         <br/>
-      </div></scroller>
-      <br/>
+      </div>
+      <div v-if="isLoadMore && gameList.length == 0">
+        <no-data src="static/img/default/no-games.png"></no-data>
+      </div>
+      <div v-if="!isLoadMore">
+        <load-more tip="正在加载" style="position: relative; top:200px;" :show-loading="!isLoadMore"></load-more>
+      </div>
     </div>
 </template>
 <script>
 
-import {Scroller, Swiper, Group, Panel, Flexbox, FlexboxItem} from 'vux'
-import { setTimeout } from 'timers';
+import {Scroller, Swiper, Group, Panel, Flexbox, FlexboxItem, LoadMore} from 'vux'
+import { setTimeout } from 'timers'
+import NoData from '@/components/NoData.vue'
 
 export default {
   name: 'Games',
   components: {
-    Scroller, Swiper, Group, 
-    Panel, Flexbox, FlexboxItem
+    Scroller, Swiper, Group, LoadMore,
+    Panel, Flexbox, FlexboxItem, NoData
   },
   data () {
     return {
@@ -65,6 +74,7 @@ export default {
       },
 
       gameList: [],
+      isLoadMore: false,
       hotListIndex: 0,
       recommendGame: {
         gameTitle: '奔跑的悟空',
@@ -146,6 +156,9 @@ export default {
                 }
               });
             }
+            setTimeout(()=>{
+              this.isLoadMore = true
+            }, 500)
         });
       },
 
@@ -155,6 +168,7 @@ export default {
         let cpItem = this.GLOBAL.cplist[index].cpItem
         this.$router.push({ name: 'GameInfo', params: { cpInfo: cpInfo, cpItem: cpItem }})
       },
+
       //获取CP数量
       getCpCount(page, num) {
         let data = {func:'CpCount', control: 'cp', oemInfo: this.GLOBAL.oemInfo}
@@ -188,6 +202,7 @@ export default {
   created() {
     if(this.GLOBAL.cplist.length > 0) {
       this.fillGames(this.GLOBAL.cplist)
+      this.isLoadMore = true
     } 
     this.getCpCount()
     this.isShow = true;

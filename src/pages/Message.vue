@@ -1,29 +1,42 @@
 <template>
   <div>
     <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
-    <group :title="title">
-        <div class="notify-item">
-            <div v-for="(item, index) in notifys" :key="index"> 
-                <div style="height:8px; width:100%; background-color:#FAFAFA"></div>
-                <div style="padding:5px 0px 20px 15px">
-                    <p><span>时间：{{GLOBAL.formatDateStr(new Date(item.create_time*1000), 'yyyy-MM-dd HH:mm:ss')}}</span></p>
-                    <p><span>内容：{{item.contentType}}</span></p>
-                    <p><span>状态：{{item.statusLabel}}</span></p>
-                    <p v-if="item.status !=3" style="top:8px; position: relative;"><x-button mini style="width:70px;" @click.native="notifyPay(item)">处理</x-button></p>
-                </div>
-            </div>
-        </div>
-    </group>
+
+    <div v-if="isLoadMore && notifys.length > 0">
+      <group :title="title">
+          <div class="notify-item">
+              <div v-for="(item, index) in notifys" :key="index"> 
+                  <div style="height:8px; width:100%; background-color:#FAFAFA"></div>
+                  <div style="padding:5px 0px 20px 15px">
+                      <p><span>时间：{{GLOBAL.formatDateStr(new Date(item.create_time*1000), 'yyyy-MM-dd HH:mm:ss')}}</span></p>
+                      <p><span>内容：{{item.contentType}}</span></p>
+                      <p><span>状态：{{item.statusLabel}}</span></p>
+                      <p v-if="item.status !=3" style="top:8px; position: relative;"><x-button mini style="width:70px;" @click.native="notifyPay(item)">处理</x-button></p>
+                  </div>
+              </div>
+          </div>
+      </group>
+    </div>
+
+    <div v-if="isLoadMore && notifys.length == 0">
+        <no-data src="static/img/default/no-walletdetail.png"></no-data>
+    </div>
+
+    <div v-if="!isLoadMore">
+        <load-more tip="正在加载" style="position: relative; top:200px;" :show-loading="!isLoadMore"></load-more>
+    </div>
+
   </div>
 </template>
 
 <script>
-import { XHeader, XButton, Flexbox, FlexboxItem, Group, Panel } from 'vux'
+import { XHeader, XButton, Flexbox, FlexboxItem, Group, Panel, LoadMore } from 'vux'
+import NoData from '@/components/NoData.vue'
 
 export default {
   name: 'Message',
   components: {
-    XHeader, XButton, Flexbox, FlexboxItem, Group, Panel
+    XHeader, XButton, Flexbox, FlexboxItem, Group, Panel, LoadMore, NoData
   },
   props: [
     'mine'
@@ -34,6 +47,7 @@ export default {
       title: '',
       notifyCount: 0,
       notifys: [],
+      isLoadMore: false,
     }
   },
   methods: {
@@ -73,6 +87,10 @@ export default {
                   //this.notifys.push(item)
                 });
             }
+            this.isLoadMore = true
+        }).catch(res => {
+            console.log(res)
+            this.isLoadMore = true
         });  
     }
   },

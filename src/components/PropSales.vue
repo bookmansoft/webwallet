@@ -1,5 +1,6 @@
 <template>
-    <div>
+  <div>
+    <div v-if="isLoadMore && propList.length > 0">
         <div v-for="(item, index) in propList" :key="index" class="gameItem">
         <flexbox @click.native="propSaleInfo(item, index)">
             <flexbox-item :span="3" style="padding:0.3rem;">
@@ -17,18 +18,28 @@
         </flexbox>
         </div>
     </div>
+    <div v-if="isLoadMore && propList.length == 0">
+        <no-data src="static/img/default/no-product.png"></no-data>
+    </div>
+    <div v-if="!isLoadMore">
+        <load-more tip="正在加载" style="position: relative; top:200px;" :show-loading="!isLoadMore"></load-more>
+    </div>
+  </div>
 </template>
 <script>
 
-import {Flexbox, FlexboxItem} from 'vux'
+import {Flexbox, FlexboxItem, LoadMore} from 'vux'
+import NoData from '@/components/NoData.vue'
+
 export default {
     name: 'PropSales',
     components: {
-        Flexbox, FlexboxItem
+        Flexbox, FlexboxItem, LoadMore, NoData
     },   
     data () {
         return {
-            propList:[]
+            propList:[],
+            isLoadMore: false
         }
     },
     methods: {
@@ -43,8 +54,10 @@ export default {
                         this.getCpById(element)
                     });
                 }
+                this.isLoadMore = true
             }).catch(res => {
                 console.log(res);
+                this.isLoadMore = true
             })
         },
         

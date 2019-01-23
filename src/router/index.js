@@ -21,119 +21,34 @@ import MemberDrawLog from '@/pages/MemberDrawLog'
 import Message from '@/pages/Message'
 import PropOrderPay from '@/pages/PropOrderPay'
 import RedPack from '@/pages/RedPack'
+import MyGame from '@/pages/MyGame'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
-    {
-      path:'/',
-      redirect:'Home'
-    },
-    {
-      path: '/home',
-      name: 'Home',
-      component: Home
-    },
-    {
-      path: '/market',
-      name: 'Market',
-      component: Market
-    },
-    {
-      path: '/crowd',
-      name: 'Crowd',
-      component: Crowd
-    },
-    {
-      path: '/mine',
-      name: 'Mine',
-      component: Mine
-    },
-    {
-      path: '/wallet',
-      name: 'Wallet',
-      component: Wallet
-    },
-    {
-      path: '/wallet/send',
-      name: 'WalletSend',
-      component: WalletSend
-    },
-    {
-      path: '/wallet/receive',
-      name: 'WalletReceive',
-      component: WalletReceive
-    },
-    {
-      path: '/wallet/trans',
-      name: 'WalletTrans',
-      component: WalletTrans
-    },
-    {
-      path: '/wallet/detail',
-      name: 'WalletDetail',
-      component: WalletDetail
-    },
-    {
-      path: '/props',
-      name: 'Props',
-      component: Props
-    },
-    {
-      path: '/member',
-      name: 'Member',
-      component: Member
-    },
-    {
-      path: '/game/info',
-      name: 'GameInfo',
-      component: GameInfo
-    },
-    {
-      path: '/prop/detail',
-      name: 'PropDetail',
-      component: PropDetail
-    },
-    {
-      path: '/contract/info',
-      name: 'ContractInfo',
-      component: ContractInfo
-    },
-    {
-      path: '/prop/sale/info',
-      name: 'PropSaleInfo',
-      component: PropSaleInfo
-    },
-    {
-      path: '/about',
-      name: 'About',
-      component: About
-    },
-    {
-      path: '/order/pay',
-      name: 'OrderPay',
-      component: OrderPay
-    },
-    {
-      path: '/member/draw/log',
-      name: 'MemberDrawLog',
-      component: MemberDrawLog
-    },
-    {
-      path: '/message',
-      name: 'Message',
-      component: Message
-    },
-    {
-      path: '/prop/order/pay',
-      name: 'PropOrderPay',
-      component: PropOrderPay
-    },
-    {
-      path: '/redpack',
-      name: 'RedPack',
-      component: RedPack
-    },
+    { path:'/', redirect:'Home' },
+    { path: '/home', name: 'Home', component: Home },
+    { path: '/market', name: 'Market', component: Market },
+    { path: '/crowd', name: 'Crowd', component: Crowd },
+    { path: '/mine', name: 'Mine', component: Mine },
+    { path: '/wallet', name: 'Wallet', component: Wallet },
+    { path: '/wallet/send', name: 'WalletSend', component: WalletSend },
+    { path: '/wallet/receive', name: 'WalletReceive', component: WalletReceive },
+    { path: '/wallet/trans', name: 'WalletTrans', component: WalletTrans },
+    { path: '/wallet/detail', name: 'WalletDetail', component: WalletDetail },
+    { path: '/props', name: 'Props', component: Props },
+    { path: '/member', name: 'Member', component: Member },
+    { path: '/game/info', name: 'GameInfo', component: GameInfo },
+    { path: '/prop/detail', name: 'PropDetail', component: PropDetail },
+    { path: '/contract/info', name: 'ContractInfo', component: ContractInfo },
+    { path: '/prop/sale/info', name: 'PropSaleInfo', component: PropSaleInfo },
+    { path: '/about', name: 'About', component: About },
+    { path: '/order/pay', name: 'OrderPay', component: OrderPay },
+    { path: '/member/draw/log', name: 'MemberDrawLog', component: MemberDrawLog },
+    { path: '/message', name: 'Message', component: Message },
+    { path: '/prop/order/pay', name: 'PropOrderPay', component: PropOrderPay },
+    { path: '/redpack', name: 'RedPack', component: RedPack },
+    { path: '/mygame', name: 'MyGame', component: MyGame },
   ]
 })

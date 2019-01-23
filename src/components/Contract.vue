@@ -1,5 +1,6 @@
 <template>
-    <div>
+  <div>
+    <div v-if="isLoadMore && contractList.length > 0">
         <div v-for="(item, index) in contractList" :key="index" class="gameItem">
         <flexbox @click.native="contracInfo(item, index)">
             <flexbox-item :span="3" style="padding:0.3rem;">
@@ -16,18 +17,30 @@
         </flexbox>
         </div>
     </div>
+
+    <div v-if="isLoadMore && contractList.length == 0">
+        <no-data src="static/img/default/no-product.png"></no-data>
+    </div>
+    <div v-if="!isLoadMore">
+        <load-more tip="正在加载" style="position: relative; top:200px;" :show-loading="!isLoadMore"></load-more>
+    </div>
+
+  </div>
 </template>
 <script>
 
-import {Flexbox, FlexboxItem} from 'vux'
+import {Flexbox, FlexboxItem, LoadMore} from 'vux'
+import NoData from '@/components/NoData.vue'
+
 export default {
     name: 'Contract',
     components: {
-        Flexbox, FlexboxItem
+        Flexbox, FlexboxItem, NoData, LoadMore
     },   
     data () {
         return {
-            contractList:[]
+            contractList:[],
+            isLoadMore: false
         }
     },
     methods: {
@@ -35,10 +48,12 @@ export default {
         getContractList() {
             let data = {func:'ContractList', control: 'contract', oemInfo: this.GLOBAL.oemInfo};
             this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-                console.log(res.data);
-                this.contractList = res.data.ret;
+                console.log(res.data)
+                this.contractList = res.data.ret
+                this.isLoadMore = true
             }).catch(res => {
-                console.log(res);
+                console.log(res)
+                this.isLoadMore = true
             })
         },
         contracInfo(item, index) {
@@ -46,7 +61,7 @@ export default {
         }
     },
     created() {
-        this.getContractList();
+        this.getContractList()
     }
 }
 </script>

@@ -2,8 +2,9 @@
   <div>
     <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
     <balance></balance>
-    <box gap="8px 8px">
-       <group title="交易流水">
+    <div v-if="isLoadMore && items.length > 0">
+      <box gap="8px 8px">
+        <group title="交易流水">
             <cell :is-link="item.is_link" v-for="(item, index) in items" :key="index" :inline-desc="item.desc">
                 <span slot="title">
                 <span style="vertical-align:middle;">{{item.title}}</span>
@@ -11,18 +12,28 @@
                 </span>
                 <img slot="icon" width="32" style="display:block;margin-right:15px;" :src="item.img">
             </cell>
-       </group>
-    </box>
+        </group>
+      </box>
+    </div>
+    
+    <div v-if="isLoadMore && items.length == 0">
+        <no-data src="static/img/default/no-walletdetail.png"></no-data>
+    </div>
+
+    <div v-if="!isLoadMore">
+        <load-more tip="正在加载" style="position: relative; top:200px;" :show-loading="!isLoadMore"></load-more>
+    </div>
   </div>
 </template>
 
 <script>
 import Balance from '@/components/Balance.vue'
-import { XHeader, Group, Box, Cell } from 'vux'
+import { XHeader, Group, Box, Cell, LoadMore } from 'vux'
+import NoData from '@/components/NoData.vue'
 
 export default {
   components: {
-    XHeader, Group, Balance, Box, Cell
+    XHeader, Group, Balance, Box, Cell, LoadMore, NoData
   },
   data () {
     return {
@@ -30,6 +41,7 @@ export default {
       gameGold: '游戏金',
       address: '',
       number: 0.0,
+      isLoadMore: false,
       items: []
     }
   },
@@ -64,8 +76,10 @@ export default {
                       return  b.time - a.time;
                   });
               }
+              this.isLoadMore = true
           }).catch(res => {
               console.log(res);
+              this.isLoadMore = true
           })
       }
   },
