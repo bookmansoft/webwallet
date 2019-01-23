@@ -18,67 +18,6 @@ export default {
     Divider,
     XButton
   },
-  methods: {
-    getOrderStatus() {
-        let data = {
-        func:'OrderStatus',
-        control: 'order',
-        uid: this.GLOBAL.uid,
-        tradeId: this.tradeId,
-        openid: this.GLOBAL.openid,
-        oemInfo: this.GLOBAL.oemInfo
-      };
-      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-          if(res.data.errcode=='success') {
-            console.log('getOrderStatus', res.data.order);
-            this.title = '支付中...'
-            this.order = res.data.order
-            if(this.order.pay_status == 0) {
-              if(this.wePay==false) {
-                this.gotoWePay()
-                this.wePay = true
-              } 
-              if(this.payTimeCount < 50) {
-                setTimeout(()=> {
-                  this.payTimeCount++
-                  this.showLoading = true
-                  if(this.isDestroy==false) {
-                    this.getOrderStatus()
-                  }
-                }, 3000)
-              } else {
-                this.title = '支付超时'
-                this.btnDisabled = false
-                this.showLoading = false
-              }
-
-            } else if(this.order.pay_status == 1) {
-              this.title = '已支付成功'
-              this.btnDisabled = false
-              this.showLoading = false
-            } else {
-              this.title = '支付失败'
-              this.btnDisabled = false
-              this.showLoading = false
-            }
-          }
-      });    
-    },
-
-    gotoWePay() {
-        const url = '/pages/wepay/order?price=' + this.order.order_num + '&productInfo=' + this.order.product_info + '&tradeId=' + this.order.order_sn
-          + '&returl=/member/order/pay&uid=' + this.GLOBAL.uid;
-        console.log(url)
-        this.$wechat.miniProgram.navigateTo({ url: url })
-        this.wePay = true
-    },
-
-    btnClick() {
-      this.$router.go(-1)
-    }
-
-  },
-
   data () {
     return {
       title: '准备支付',
@@ -99,6 +38,68 @@ export default {
       }]
     }
   },
+  methods: {
+    getOrderStatus() {
+        let data = {
+        func:'OrderStatus',
+        control: 'order',
+        uid: this.GLOBAL.uid,
+        tradeId: this.tradeId,
+        openid: this.GLOBAL.openid,
+        oemInfo: this.GLOBAL.oemInfo
+      };
+      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+          if(res.data.errcode=='success') {
+            console.log('getOrderStatus', res.data.order);
+            this.title = '支付中...'
+            this.order = res.data.order
+            if(this.order.pay_status == 0) {
+              if(this.wePay == false) {
+                this.gotoWePay()
+                this.wePay = true
+              } 
+              if(this.payTimeCount < 50) {
+                setTimeout(()=> {
+                  this.payTimeCount++
+                  this.showLoading = true
+                  if(this.isDestroy == false) {
+                    this.getOrderStatus()
+                  }
+                }, 3000)
+              } else {
+                this.title = '支付超时'
+                this.btnDisabled = false
+                this.showLoading = false
+              }
+            } else if(this.order.pay_status == 1) {
+              this.title = '已支付成功'
+              this.btnDisabled = false
+              this.showLoading = false
+            } else {
+              this.title = '支付失败'
+              this.btnDisabled = false
+              this.showLoading = false
+            }
+          }
+      });    
+    },
+
+    gotoWePay() {
+        //const order_num = this.order.order_num
+        const order_num = 1
+        const url = '/pages/wepay/order?price=' + order_num + '&productInfo=' + this.order.product_info + '&tradeId=' + this.order.order_sn
+          + '&returl=/member/order/pay&uid=' + this.GLOBAL.uid;
+        console.log(url)
+        this.$wechat.miniProgram.navigateTo({ url: url })
+        this.wePay = true
+    },
+
+    btnClick() {
+      this.$router.go(-1)
+    }
+
+  },
+
   beforeDestroy() {
     this.isDestroy = true
     console.log('beforeDestroy')
