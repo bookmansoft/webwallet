@@ -19,7 +19,7 @@
     </div>
 
     <div v-if="isLoadMore && notifys.length == 0">
-        <no-data src="static/img/default/no-walletdetail.png"></no-data>
+        <no-data src="static/img/default/no-message.png"></no-data>
     </div>
 
     <div v-if="!isLoadMore">
