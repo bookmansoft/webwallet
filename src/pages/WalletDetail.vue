@@ -15,13 +15,13 @@
         </group>
       </box>
     </div>
-    
+
     <div v-if="isLoadMore && items.length == 0">
         <no-data src="static/img/default/no-walletdetail.png"></no-data>
     </div>
 
     <div v-if="!isLoadMore">
-        <load-more tip="正在加载" style="position: relative; top:200px;" :show-loading="!isLoadMore"></load-more>
+        <load-more tip="正在加载" style="position: relative; top:100px;" :show-loading="!isLoadMore"></load-more>
     </div>
   </div>
 </template>
