@@ -3,24 +3,44 @@
     <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> 
     <div>
         <x-img :src="gameInfo.large_img_url" />
-        <flexbox @click.native="gotoCpInfo(item, index)">
+        <flexbox>
             <flexbox-item :span="2">
                 <x-img :src="gameInfo.icon_url" class="game-icon" />
+                <br/><br/><br/>
+                <p>&nbsp;</p>
             </flexbox-item>
-
-            <flexbox-item :span="10">
+            <flexbox-item :span="6">
+                <div class="game-intro">
+                    <p class="title">{{gameInfo.game_title}}</p>
+                    <p class="provider">{{gameInfo.provider}}</p>
+                                    <br/><br/>
+                <p>&nbsp;</p>
+                </div>
+            </flexbox-item>
+            <flexbox-item :span="4" style="v">
+                <div class="game-evaluate"> 
+                    <p class="mark">9.0</p>
+                    <p>评分</p>
+                    <br/>
+                    <p><x-button mini type="primary" text="进入" @click.native="gotoGame()"></x-button></p>
+                    <br/>
+                </div>
             </flexbox-item>
         </flexbox>
     </div>
-
+    <tab :line-width="3" custom-bar-width="60px" v-model="tabIndex">
+      <tab-item v-for="(item, index) in tabItems" :key="index" @on-item-click="onItemClick">
+        <span style="font-size:15px;font-weight:500;">{{item.label}}</span>
+      </tab-item>
+    </tab>
   </div>
 </template> 
 <script>
-import {XHeader, XImg, Flexbox, FlexboxItem, Qrcode, Group } from 'vux'
+import {XHeader, XImg, Flexbox, FlexboxItem, Qrcode, Group, XButton, Tab, TabItem } from 'vux'
 
 export default {
   components: {
-    XHeader, Flexbox, FlexboxItem, Qrcode, Group, XImg
+    XHeader, Flexbox, FlexboxItem, Qrcode, Group, XImg, XButton, Tab, TabItem
   },
   data() {
     return {
@@ -37,7 +57,13 @@ export default {
         imagelistbrowse: {
           type: Array,
           default: [],
-        }
+        },
+        tabIndex: 0,
+        tabItems: [
+          {label:'详情'},
+          {label:'评价'},
+          {label:'在售道具'}
+        ]
     };
   },
   mounted() {
@@ -47,7 +73,9 @@ export default {
     onBack() {
         this.$router.push('/home')
     },
-
+    onItemClick(index) {
+      console.log(this.tabIndex)
+    },
     // 时间转换
     getTime(t) {
         var mydate = new Date(t * 1000);
@@ -180,12 +208,38 @@ export default {
 
 <style scoped>
 .game-icon {
-  padding: 5px;
+  padding-left: 8px;
   width: 100%;
   height: 100%;
   border-radius: 0.9rem;
 }
 .game-intro {
-    line-height: 30px;
+  color: #999;
+  padding-left: 10px;
+}
+
+.game-intro p {
+  line-height: 30px;
+}
+
+.game-intro .title {
+  color: black;
+  font-size: 16px;
+}
+
+.game-evaluate {
+    padding: 5px;
+    text-align: center;
+}
+
+.game-evaluate .mark {
+    color: rgb(10, 173, 119);
+    font-size: 30px;
+}
+
+.game-intro provider {
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
 }
 </style>
