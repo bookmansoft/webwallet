@@ -214,12 +214,17 @@ export default {
   border-radius: 0.9rem;
 }
 .game-intro {
+  display: inline-block;
   color: #999;
   padding-left: 10px;
 }
 
 .game-intro p {
   line-height: 30px;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+  width: 90%;
 }
 
 .game-intro .title {
