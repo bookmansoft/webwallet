@@ -142,15 +142,14 @@ export default {
                     //console.log(res.data)
                     if(res.data.hasOwnProperty('result')) {
                       let result = res.data.result
-                      this.GLOBAL.cplist.push({
-                        cpItem: cpItem,
-                        cpInfo: result
-                      })
-                      this.gameList.push({
-                          src: result.game.small_img_url,
-                          title: result.game.game_title,
-                          desc: result.game.provider
-                      })
+                      if(result.hasOwnProperty('game')) {
+                        let game = result.game
+                        this.GLOBAL.cplist.push({
+                          cpItem: cpItem,
+                          cpInfo: result
+                        })
+                        this.fillGame(game)
+                      }
                     }
                   })                 
                 }
@@ -166,7 +165,7 @@ export default {
         console.log('goto cp info', index)
         let cpInfo = this.GLOBAL.cplist[index].cpInfo
         let cpItem = this.GLOBAL.cplist[index].cpItem
-        this.$router.push({ name: 'GameInfo', params: { cpInfo: cpInfo, cpItem: cpItem }})
+        this.$router.push({ name: 'GameIntro', params: { cpInfo: cpInfo, cpItem: cpItem }})
       },
 
       //获取CP数量
@@ -183,16 +182,23 @@ export default {
         })
       },
 
-      //填充视图列表
-      fillGames(cpList) {
+      getCpListFromLocal() {
         this.gameList.splice(0, this.gameList)
-        cpList.forEach(element => {
-          this.gameList.push({
-            src: element.cpInfo.game.small_img_url,
-            title: element.cpInfo.game.game_title,
-            desc: element.cpInfo.game.provider
-          })
+        this.GLOBAL.cplist.forEach(element => {
+          let game = element.cpInfo.game 
+          this.fillGame(game)
         });
+      },
+
+      //填充视图列表
+      fillGame(game) {
+        if(game != null && game.hasOwnProperty('small_img_url') && game.hasOwnProperty('game_title') && game.hasOwnProperty('provider')) {
+          this.gameList.push({
+            src: game.small_img_url,
+            title: game.game_title,
+            desc: game.provider
+          })
+        }
       },
 
       onImgError (item, $event) {
@@ -201,7 +207,7 @@ export default {
   },
   created() {
     if(this.GLOBAL.cplist.length > 0) {
-      this.fillGames(this.GLOBAL.cplist)
+      this.getCpListFromLocal()
       this.isLoadMore = true
     } 
     this.getCpCount()
