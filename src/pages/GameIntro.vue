@@ -1,0 +1,191 @@
+<template>
+  <div>
+    <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> 
+    <div>
+        <x-img :src="gameInfo.large_img_url" />
+        <flexbox @click.native="gotoCpInfo(item, index)">
+            <flexbox-item :span="2">
+                <x-img :src="gameInfo.icon_url" class="game-icon" />
+            </flexbox-item>
+
+            <flexbox-item :span="10">
+            </flexbox-item>
+        </flexbox>
+    </div>
+
+  </div>
+</template> 
+<script>
+import {XHeader, XImg, Flexbox, FlexboxItem, Qrcode, Group } from 'vux'
+
+export default {
+  components: {
+    XHeader, Flexbox, FlexboxItem, Qrcode, Group, XImg
+  },
+  data() {
+    return {
+        headerTitle: '游戏详情',
+        cpInfo: [],
+        gameInfo: {},
+        cpItem: {},
+        times: "",
+        cpAddr: '',
+        image: 'https://mini.gamegold.xin/gg-wechat-client/static/img/grcode.png',
+        gameWexQrcode: 'http://mini.gamegold.xin/wxopen/test',
+        // 游戏道具图标
+        cpProps:[],
+        imagelistbrowse: {
+          type: Array,
+          default: [],
+        }
+    };
+  },
+  mounted() {
+
+  },
+  methods: {
+    onBack() {
+        this.$router.push('/home')
+    },
+
+    // 时间转换
+    getTime(t) {
+        var mydate = new Date(t * 1000);
+        var a = mydate.getFullYear();
+        var b = mydate.getMonth() + 1;
+        var c = mydate.getDate();
+        var time = "" + a + "年" + b + "月" + c + "日";
+        return time
+    },
+
+    getWxConfig() {
+        const url = location.href.split("#")[0];
+        let data = {func:'WechatConfig', control: 'wechat', url: url, oemInfo: this.GLOBAL.oemInfo}
+        this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+            console.log(res.data);
+            this.$wechat.config(res.data.wxconfig)
+        }).catch(res => {
+            console.log(res);
+        })
+    },
+
+    previewImage: function(e) {
+        let that = this
+        let current = this.image
+        that.$wechat.previewImage({
+          current: current, // 当前显示图片的http链接
+          urls: [current], // 需要预览的图片http链接列表
+          success: function(res) {
+            console.log('success', res)
+            alert('success', res)
+          },
+          fail: function(res) {
+            console.log(res)
+            alert('fail', res)
+          }
+        })
+    },
+
+    //生成随机字符串
+    randomString(len) {
+      len = len || 32;
+      /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
+      var $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';    
+      var maxLen = $chars.length;
+      var str = '';
+      for (var i = 0; i < len; i++) {
+        str += $chars.charAt(Math.floor(Math.random() * maxLen));
+      }
+      return str;
+    },
+
+    gotoGame() {
+      let cname = this.cpItem.name
+      let cid = this.cpItem.cid
+      let addr = this.cpAddr
+      let game = this.gameInfo.game_title
+      let gameUrl = this.gameInfo.large_img_url
+      /*
+      let gameUrl = 'https://mini.gamegold.xin/proxy/cp01/index.html?' + cname + '/' + addr
+      console.log('gameUrl', gameUrl)
+      window.location.href = gameUrl
+      */
+      const url = "/pages/test/test?cid=" + cid + "&addr=" + addr + "&game=" + game + "&gameUrl=" + gameUrl;
+      //wx.miniProgram.navigateTo({ url: url });
+      this.$wechat.miniProgram.navigateTo({ url: url })
+    },
+
+    buyProp(item) {
+        if(this.cpAddr == '' || this.GLOBAL.openid == '') {
+            return;
+        }
+        let cid = this.cpItem.cid
+        let uid = this.GLOBAL.openid
+        let notifyurl = this.GLOBAL.apiUrl
+        let order_sn = item.id + '-new-' + this.randomString(16)
+        let price = this.GLOBAL.gameGoldOrigin(item.props_price)
+        var url = "/pages/order/order?cid=" + cid + "&uid=" + uid + "&sn=" + order_sn;
+        url += "&price=" + price + '&notifyurl=' + encodeURI(notifyurl) + '&returl=' + encodeURI(window.location.href) ;
+        console.log(url);
+        this.$wechat.miniProgram.navigateTo({ url: url });
+    },
+
+    getCpProps() {
+        this.cpProps.splice(0, this.cpProps.length)
+        this.cpInfo.proplist.forEach(element => {
+            //从cp获取资源
+            let url = encodeURI(this.cpItem.url + '/prop/' + element.id)
+            let data = {func:'GetCpProxy', control: 'cp', url: url, oemInfo: this.GLOBAL.oemInfo} 
+            this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+              if(res.data.hasOwnProperty('result')) {
+                let item = res.data.result
+                item.props_price = this.GLOBAL.formatGameGold(item.props_price)
+                this.cpProps.push(item)
+              }
+            })        
+        });
+    },
+
+    userToken() {
+        if(this.GLOBAL.openid == '') {
+            return
+        }
+        let data = {func:'UserToken', control: 'cp', oemInfo: this.GLOBAL.oemInfo,
+            openid: this.GLOBAL.openid, 
+            uid: this.GLOBAL.openid,
+            cid: this.cpItem.cid
+        }
+        this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+            //console.log(res.data)
+            this.cpAddr = res.data.ret.data.addr
+        });
+    }
+  },
+
+  created() {
+    if(!!!this.$route.params.cpInfo || !!!this.$route.params.cpItem) {
+        this.$router.push('/Home')
+    } else {
+        this.cpInfo = this.$route.params.cpInfo
+        this.cpItem = this.$route.params.cpItem
+        this.gameInfo = this.cpInfo.game
+        this.gameInfo.publishTime = this.getTime(this.gameInfo.publish_time)
+        this.getCpProps()
+        this.userToken()
+    }
+    this.getWxConfig()
+  }
+};
+</script>
+
+<style scoped>
+.game-icon {
+  padding: 5px;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.9rem;
+}
+.game-intro {
+    line-height: 30px;
+}
+</style>
