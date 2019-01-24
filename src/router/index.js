@@ -11,6 +11,7 @@ import WalletTrans from '@/pages/WalletTrans'
 import WalletDetail from '@/pages/WalletDetail'
 import Props from '@/pages/Props'
 import GameInfo from '@/pages/GameInfo'
+import GameIntro from '@/pages/GameIntro'
 import PropDetail from '@/pages/PropDetail'
 import ContractInfo from '@/pages/ContractInfo'
 import PropSaleInfo from '@/pages/PropSaleInfo'
@@ -40,6 +41,7 @@ export default new Router({
     { path: '/props', name: 'Props', component: Props },
     { path: '/member', name: 'Member', component: Member },
     { path: '/game/info', name: 'GameInfo', component: GameInfo },
+    { path: '/game/intro', name: 'GameIntro', component: GameIntro },
     { path: '/prop/detail', name: 'PropDetail', component: PropDetail },
     { path: '/contract/info', name: 'ContractInfo', component: ContractInfo },
     { path: '/prop/sale/info', name: 'PropSaleInfo', component: PropSaleInfo },
