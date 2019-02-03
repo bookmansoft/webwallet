@@ -72,10 +72,8 @@
                     <p>{{item.props_name}}</p>
                     <p>&nbsp;<p>
                     <p>{{item.props_desc}}</p>
-                    <!--
-                    <a class="gp-btn" @click="buyProp(item)">购买</a>
+                    <a class="gp-btn" @click="buyProp(item)">体验</a>
                     <p class="color-red">{{item.props_price}}千克</p>
-                    -->
                 </div>
             </div>
         </div>
@@ -112,6 +110,14 @@ export default {
     onBack() {
         this.$router.push('/home')
     },
+
+    showPlugin(msg) {
+      this.$vux.alert.show({
+        title: '提示',
+        content: msg
+      })
+    },
+
     //游戏详情
     introduce() { 
         introduce()
@@ -193,6 +199,9 @@ export default {
     },
 
     gotoGame() {
+      this.showPlugin('暂未开放，请稍后再来')
+      return
+
       let cname = this.cpItem.name
       let cid = this.cpItem.cid
       let addr = this.cpAddr
@@ -209,6 +218,8 @@ export default {
     },
 
     buyProp(item) {
+        this.showPlugin('暂未开放，请稍后再来')
+        return
         if(this.cpAddr == '' || this.GLOBAL.openid == '') {
             return;
         }
