@@ -165,7 +165,8 @@ export default {
         console.log('goto cp info', index)
         let cpInfo = this.GLOBAL.cplist[index].cpInfo
         let cpItem = this.GLOBAL.cplist[index].cpItem
-        this.$router.push({ name: 'GameIntro', params: { cpInfo: cpInfo, cpItem: cpItem }})
+        //this.$router.push({ name: 'GameIntro', params: { cpInfo: cpInfo, cpItem: cpItem }})
+        this.$router.push({ name: 'GameInfo', params: { cpInfo: cpInfo, cpItem: cpItem }})
       },
 
       //获取CP数量
