@@ -49,15 +49,15 @@ const getItems0 = () => [
   {title: '会员', is_link: true, img: 'static/img/icon1/4.png', badge: 0, link: '/member', value: '普通会员', showDot: false}
 ]
 const getItems1 = () => [
-  {title: '我的钱包', is_link: true, img: 'static/img/mine/wallet.png', badge: 0, link: {path:'/wallet'}, value: ''},
+  /*{title: '我的钱包', is_link: true, img: 'static/img/mine/wallet.png', badge: 0, link: {path:'/wallet'}, value: ''},*/
   {title: '我的道具', is_link: true, img: 'static/img/mine/prop.png', badge: 0, link: {path:'/props'}, value: ''},
   {title: '我的消息', is_link: true, img: 'static/img/mine/msg.png', badge: 0, link: {path:'/message'}, value: ''},
-  {title: '我的交易', is_link: true, img: 'static/img/mine/trans.png', badge: 0, link: {path:'/wallet/detail'}, value: ''},
+  /*{title: '我的交易', is_link: true, img: 'static/img/mine/trans.png', badge: 0, link: {path:'/wallet/detail'}, value: ''},*/
   {title: '我的游戏', is_link: true, img: 'static/img/mine/game.png', badge: 0, link: {path:'/mygame'}, value: ''}
 ]
 const getItems2 = () => [
   /*{title: '使用条款', is_link: true, img: 'static/img/icon1/3.png', badge: 0, link: ''},*/
-  {title: '红包测试', is_link: true, img: 'static/img/mine/about.png', badge: 0, link: {path:'/redpack'}, value: ''},
+  /*{title: '红包测试', is_link: true, img: 'static/img/mine/about.png', badge: 0, link: {path:'/redpack'}, value: ''},*/
   {title: '关于我们', is_link: true, img: 'static/img/mine/about.png', badge: 0, link: {path:'/about'}, value: ''}
 ]
 export default {

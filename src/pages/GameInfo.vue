@@ -72,8 +72,10 @@
                     <p>{{item.props_name}}</p>
                     <p>&nbsp;<p>
                     <p>{{item.props_desc}}</p>
+                    <!--
                     <a class="gp-btn" @click="buyProp(item)">购买</a>
                     <p class="color-red">{{item.props_price}}千克</p>
+                    -->
                 </div>
             </div>
         </div>
