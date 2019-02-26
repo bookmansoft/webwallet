@@ -1,6 +1,6 @@
 <template>
   <div>
-    <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">用户登录<a slot="right" @click="btnRegister">注册</a></x-header>
+    <x-header :left-options="{preventGoBack: false}" >用户登录</x-header>
     <group label-width="4.5em" label-margin-right="2em" label-align="right">
       <x-input title="手机号码" name="mobile" placeholder="请输入手机号码" v-model="username" keyboard="number" is-type="china-mobile"></x-input>
     </group>
@@ -34,10 +34,6 @@ export default {
       btnLogin() {
         console.log('btnLogin')
         this.showLoading = true
-      },
-      btnRegister() {
-        console.log('Register')
-        this.$router.push('/Register')
       },
       onBack() {
         this.$router.push('/Home')

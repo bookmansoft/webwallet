@@ -14,7 +14,11 @@
                 <li class="color-999-provider">发行商：{{gameInfo.provider}}</li>
                 <li>
                 <span class="color-999">射击</span>
-                <a class="play-btn float-right"><span style="font-size:11px;" @click="gotoGame">进入游戏</span></a>
+                  <!--
+                  <a class="play-btn float-right">
+                    <span style="font-size:11px;" @click="gotoGame">{{playGameLable}}</span>
+                  </a>
+                  -->
                 </li>
                 <li>
                 <span class="color-999">128人玩过</span>
@@ -39,7 +43,8 @@
                 <p id="inGameNameImg">游戏截图</p>
             </div>
             <div @click="gameProps">
-                <p id="inGameProps">游戏道具</p>
+                <!--<p id="inGameProps">游戏道具</p>-->
+                <p id="inGameProps">游戏评论</p>
             </div>
         </div>      
         <div id="introduce">
@@ -63,6 +68,7 @@
                 <img v-for="(item, index) in gameInfo.pic_urls" :key="index" :src="item" alt="">
             </div>
         </div>
+        <!--
         <div id="gameProps" class="backcolor-white" >
             <div class="game-props" v-for="(item, index) in cpProps" :key="index">
                 <div>
@@ -77,20 +83,41 @@
                 </div>
             </div>
         </div>
+        -->
+        <div id="gameProps" class="backcolor-white">
+          <div class="no-comment-box" v-if="hasComments==false">暂无评论</div>
+          <tabbar style="background-color: #FAFAFA; height:50px;">
+            <flexbox>
+              <flexbox-item>
+                <div class="flex-demo">
+                  <x-input placeholder="输入评论内容" />
+                </div>
+              </flexbox-item>
+              <flexbox-item :span="3">
+                <div class="flex-demo" style="padding:10px;">
+                  <x-button type="primary"><span style="font-size: 14px;">发表</span></x-button>
+                </div>
+              </flexbox-item>
+            </flexbox>
+            
+          </tabbar>
+        </div>
     </div>
   </div>
 </template> 
 <script>
-import {XHeader, Flexbox, FlexboxItem, Qrcode, Group } from 'vux'
+import {XHeader, Flexbox, FlexboxItem, Qrcode, Group, XInput, Tabbar, XButton } from 'vux'
 import { introduce , gameNameImg , gameProps} from "../assets/js/gameName.js"
 
 export default {
   components: {
-    XHeader, Flexbox, FlexboxItem, Qrcode, Group
+    XHeader, Flexbox, FlexboxItem, Qrcode, Group, XInput, Tabbar, XButton
   },
   data() {
     return {
         headerTitle: '游戏详情',
+        playGameLable: '进入游戏',
+        hasComments: false,
         cpInfo: [],
         gameInfo: {},
         cpItem: {},
@@ -234,6 +261,18 @@ export default {
         this.$wechat.miniProgram.navigateTo({ url: url });
     },
 
+    //获取评论列表列表
+    getCommentList(page, num) {
+      let cid = this.cpItem.cid
+      let data = {func:'GameCommentList', control: 'comments', page: page, cid: cid, oemInfo: this.GLOBAL.oemInfo}
+      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+          console.log(res.data)
+          if(res.data.errcode == 'success') {
+
+          }
+      })
+    },
+
     getCpProps() {
         this.cpProps.splice(0, this.cpProps.length)
         this.cpInfo.proplist.forEach(element => {
@@ -276,6 +315,7 @@ export default {
         this.gameInfo.publishTime = this.getTime(this.gameInfo.publish_time)
         this.getCpProps()
         this.userToken()
+        this.getCommentList()
     }
     this.getWxConfig()
   }
@@ -286,6 +326,33 @@ export default {
 #gameName {
   background-color: rgb(245, 245, 249);
 }
+.flex-demo {
+  text-align: center;
+  border-radius: 2px;
+  background-clip: padding-box;
+}
+.no-comment-box {
+  margin: 0 auto;
+  text-align: center;
+  /*border: 1px solid #f00;*/
+
+  width: 700px;
+  height: 100%;
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  z-index: 11;
+  /*设定这个div的margin-top的负值为自身的高度的一半,margin-left的值也是自身的宽度的一半的负值.*/ 
+    /*高为400,那么margin-top为-200px*/ 
+    /*宽为700那么margin-left为-350px;*/ 
+  margin: 150px 0 0 -350px;
+}
+
+.comment-footer {
+  position: relative; 
+  background-color: red;
+}
+
 .backcolor-white {
   background-color: white;
   font-size: 14px;
