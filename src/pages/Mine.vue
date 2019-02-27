@@ -4,7 +4,7 @@
       <flexbox style="padding:5px;">
         <flexbox-item :span="4">
           <div class="flex-demo-left">
-            <img :src="userProfile.avatar" class="avatar" />
+            <img :src="userProfile.avatar_uri" class="avatar" />
           </div></flexbox-item>
         <flexbox-item><div class="flex-demo-right"><span>{{userProfile.nick}}</span></div></flexbox-item>
       </flexbox>
