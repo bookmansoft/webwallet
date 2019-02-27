@@ -14,7 +14,11 @@
                 <li class="color-999-provider">道具名称：{{prop.result.props_name}}</li>
                 <li>
                 <span class="color-999">装备</span>
-                <a class="play-btn float-right"><span style="font-size:11px;">进入游戏</span></a>
+                <!--
+                <a class="play-btn float-right">
+                  <span style="font-size:11px;">进入游戏</span>
+                </a>
+                -->
                 </li>
             </ul>
         </div>      

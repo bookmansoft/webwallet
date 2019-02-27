@@ -85,17 +85,38 @@
         </div>
         -->
         <div id="gameProps" class="backcolor-white">
-          <div class="no-comment-box" v-if="hasComments==false">暂无评论</div>
+          <div class="no-comment-box" v-if="commentsList.length==0">暂无评论</div>
+          <div v-if="commentsList.length > 0">
+            <div class="game-props" v-for="(item, index) in commentsList" :key="index">
+                <div>
+                    <img :src="item.avatar">
+                </div>
+                <div>
+                    <p>
+                      <span style="color:#666; font-size:15px;">{{item.nick}}</span>
+                    </p>
+                    <p>&nbsp;<p>
+                    <p><span style="color:#888;">{{item.content}}</span></p>
+                    <p>&nbsp;</p>
+                    <!--
+                    <a class="gp-btn" @click="buyProp(item)">体验</a>
+                    <p class="color-red">{{item.props_price}}千克</p>
+                    -->
+                    <p style="text-align:right; width:100%;"><span style="color:#888;">{{item.timestamp}}</span></p>
+                </div>
+            </div>
+          </div>
+
           <tabbar style="background-color: #FAFAFA; height:50px;">
             <flexbox>
               <flexbox-item>
                 <div class="flex-demo">
-                  <x-input placeholder="输入评论内容" />
+                  <x-input placeholder="输入评论内容" v-model="msgInput" />
                 </div>
               </flexbox-item>
               <flexbox-item :span="3">
                 <div class="flex-demo" style="padding:10px;">
-                  <x-button type="primary"><span style="font-size: 14px;">发表</span></x-button>
+                  <x-button type="primary" @click.native="commentPub"><span style="font-size: 14px">发表</span></x-button>
                 </div>
               </flexbox-item>
             </flexbox>
@@ -118,15 +139,18 @@ export default {
         headerTitle: '游戏详情',
         playGameLable: '进入游戏',
         hasComments: false,
+        commentsList: [],
         cpInfo: [],
         gameInfo: {},
         cpItem: {},
+        msgInput: "",
         times: "",
         cpAddr: '',
         image: 'https://mini.gamegold.xin/gg-wechat-client/static/img/grcode.png',
         gameWexQrcode: 'http://mini.gamegold.xin/wxopen/test',
         // 游戏道具图标
         cpProps:[],
+        userProfile: null,
         imagelistbrowse: {
           type: Array,
           default: [],
@@ -143,6 +167,13 @@ export default {
         title: '提示',
         content: msg
       })
+    },
+
+    showPluginAuto(msg) {
+      this.showPlugin(msg)
+      setTimeout(() => {
+        this.$vux.alert.hide()
+      }, 3000)
     },
 
     //游戏详情
@@ -169,6 +200,77 @@ export default {
         var time = "" + a + "年" + b + "月" + c + "日";
         return time
     },
+    gotoLogin() {
+        const url = "/pages/login/login";
+        //wx.miniProgram.navigateTo({ url: url });
+        this.$wechat.miniProgram.navigateTo({ url: url })
+    },
+    async getUserProfile(){
+        let data = {func:'Info', control: 'profile', openid: this.GLOBAL.openid, oemInfo: this.GLOBAL.oemInfo}
+        let that = this
+        let ret = new Promise(function(resolve, reject) {
+            that.axios.post(that.GLOBAL.apiUrl, data).then(res => {
+                console.log(res.data)
+                if(res.data.profile != null) {
+                  let profile = res.data.profile
+                  that.GLOBAL.uid = profile.uid
+                  that.GLOBAL.propCount = profile.current_prop_count
+                  that.GLOBAL.userProfile = profile
+                  resolve(true)
+                } else {
+                  resolve(false) 
+                }
+            })
+        })
+        return ret
+    },
+    async commentPub() {
+      if(this.msgInput == "") {
+        this.showPlugin("请输入评论内容")
+        return
+      }
+
+      if(this.GLOBAL.userProfile == null) {
+        let getUser = await this.getUserProfile()
+        if(getUser == false) {
+          this.gotoLogin()
+          return
+        } else {
+          console.log("userProfile", this.userProfile)
+        }
+      } 
+
+      let data = {
+        func:'GameCommentAdd', 
+        control: 'comments', 
+        openid: this.GLOBAL.openid, 
+        oemInfo: this.GLOBAL.oemInfo,
+        uid: this.GLOBAL.uid,
+        cid: this.cpItem.cid,
+        reply_id: 0,
+        nick: this.GLOBAL.userProfile.nick,
+        avatar_url: this.GLOBAL.userProfile.avatar_uri,
+        title: '',
+        content: this.msgInput
+      }
+      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+          console.log(res.data)
+          if(res.data.errcode == "success") {
+             this.$vux.toast.show({text: '评论已发布'})
+             let current_time = parseInt(new Date().getTime() / 1000)
+             this.commentsList.push({
+                avatar: data.avatar_url,
+                nick: data.nick,
+                content: data.content,
+                timestamp: this.GLOBAL.formatDateStr(new Date(current_time*1000), 'yyyy-MM-dd HH:mm'),
+                create_at: current_time,
+             })
+             this.sortCommentList()
+          } else {
+            this.$vux.toast.show({text: '评论发布失败'})
+          }
+      })
+    },
 
     getWxConfig() {
         const url = location.href.split("#")[0];
@@ -182,34 +284,16 @@ export default {
     },
 
     previewImage: function(e) {
-        //alert('abc')
-        //var current = e.target.dataset.src;
-        /*
-        let current = 'https://mini.gamegold.xin/gg-wechat-client/static/img/grcode.png'
-        this.$wechat.previewImage({
-          current: current,
-          urls: [current]
-        })
-        */
         let that = this
-        console.log(e)
-        //let current = e.target.src
         let current = this.image
-        //alert(current)
         that.$wechat.previewImage({
           current: current, // 当前显示图片的http链接
           urls: [current], // 需要预览的图片http链接列表
           success: function(res) {
-            console.log('success', res)
-            alert('success', res)
           },
           fail: function(res) {
-            console.log(res)
-            alert('fail', res)
           }
         })
-        //alert('ok')
-
     },
 
     //生成随机字符串
@@ -228,17 +312,11 @@ export default {
     gotoGame() {
       this.showPlugin('暂未开放，请稍后再来')
       return
-
       let cname = this.cpItem.name
       let cid = this.cpItem.cid
       let addr = this.cpAddr
       let game = this.gameInfo.game_title
       let gameUrl = this.gameInfo.large_img_url
-      /*
-      let gameUrl = 'https://mini.gamegold.xin/proxy/cp01/index.html?' + cname + '/' + addr
-      console.log('gameUrl', gameUrl)
-      window.location.href = gameUrl
-      */
       const url = "/pages/test/test?cid=" + cid + "&addr=" + addr + "&game=" + game + "&gameUrl=" + gameUrl;
       //wx.miniProgram.navigateTo({ url: url });
       this.$wechat.miniProgram.navigateTo({ url: url })
@@ -260,15 +338,31 @@ export default {
         console.log(url);
         this.$wechat.miniProgram.navigateTo({ url: url });
     },
-
+    sortCommentList() {
+      if(this.commentsList.length >0 ) {
+          this.commentsList.sort(function(a, b){
+              return  b.create_at - a.create_at;
+          });
+      }
+    },
     //获取评论列表列表
-    getCommentList(page, num) {
+    getCommentList() {
       let cid = this.cpItem.cid
-      let data = {func:'GameCommentList', control: 'comments', page: page, cid: cid, oemInfo: this.GLOBAL.oemInfo}
+      console.log('cid', cid)
+      let data = {func:'GameCommentList', control: 'comments', cid: cid, oemInfo: this.GLOBAL.oemInfo}
       this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
           console.log(res.data)
           if(res.data.errcode == 'success') {
-
+            res.data.data.forEach(element => {
+              this.commentsList.push({
+                avatar: element.avatar_url,
+                nick: element.nick,
+                content: element.content,
+                timestamp: this.GLOBAL.formatDateStr(new Date(element.create_at*1000), 'yyyy-MM-dd HH:mm'),
+                create_at: element.create_at,
+              })
+            });
+            this.sortCommentList()
           }
       })
     },
@@ -530,7 +624,7 @@ export default {
     display: flex;
     margin-right: 1rem;
     padding:0.5rem 0;
-    border-bottom: 1px solid gray;
+    border-bottom: 10px solid #fafafa;
 }
 .game-props>div:first-child{
     width:3rem;
