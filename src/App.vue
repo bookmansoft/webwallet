@@ -47,7 +47,7 @@ export default {
             }
         });
     },
-    
+
     wxAuthod() {
         console.log('wxAuthod')
         let redirect_uri = 'https://mini.gamegold.xin/gg-wechat-client/'
@@ -74,7 +74,7 @@ export default {
     let code = this.utils.getUrlKey('code')
     console.log(this.$route.path);
     console.log('code', code)
-    if(this.code != "") {
+    if(code != "") {
       this.initUserFromWechatCode(code)
 
     } else if( this.uid == "") {
