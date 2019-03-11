@@ -44,9 +44,9 @@ export default {
       return null;
     },
 
-    initUserFromWechatCode(code) {
-        console.log('initUserFromWechatCode')
-        let data = {func:'InitUserFromWechat', control: 'wechat', code: code, oemInfo: this.GLOBAL.oemInfo}
+    InitUserFromCode(code) {
+        console.log('InitUserFromCode')
+        let data = {func:'InitUserFromCode', control: 'wechat', code: code, oemInfo: this.GLOBAL.oemInfo}
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
             console.log(res.data)
             if(res.data.errcode=='success') {
@@ -83,7 +83,7 @@ export default {
     console.log('code', code)
     if(code != null) {
       this.showPlugin(code)
-      this.initUserFromWechatCode(code)
+      this.InitUserFromCode(code)
 
     } else if( this.uid == "") {
       this.wxAuthod()
