@@ -81,7 +81,7 @@ export default {
     let code = this.utils.getUrlKey('code')
     console.log(this.$route.path);
     console.log('code', code)
-    if(code != "") {
+    if(code != null) {
       this.showPlugin(code)
       this.initUserFromWechatCode(code)
 
