@@ -20,7 +20,8 @@ export default {
   name: 'app',
 　data () {
     return {
-      transitionName:'vux-pop-in'
+      transitionName:'vux-pop-in',
+      openid: "",
     } 
 　},
   mounted () {
@@ -34,7 +35,26 @@ export default {
         return decodeURIComponent(r[2]);
       }
       return null;
-    }
+    },
+    getOpenid(code) {
+        console.log('getOpenid')
+        let data = {func:'GetMapOpenId', control: 'wechat', code: code, oemInfo: this.GLOBAL.oemInfo}
+        this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+            console.log(res.data)
+            if(res.data.errcode=='success') {
+                this.wxopenid = res.data.userProfile.wxopenid
+                this.uid = res.data.userProfile.uid
+            }
+        });
+    },
+    wxAuthod() {
+        console.log('wxAuthod')
+        let redirect_uri = 'https://mini.gamegold.xin/gg-wechat-client/'
+        let url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4a5e9d7ae34ad4b4'
+        url += '&redirect_uri='+redirect_uri+'&response_type=code&scope=snsapi_base&state=1#wechat_redirect'
+        window.location.href = url
+    },
+
   },
 
   //监听路由的路径，可以通过不同的路径去选择不同的切换效果 
@@ -50,14 +70,13 @@ export default {
       }
   },
   created() {
-    //this.id = this.getQueryString("id") || "0";
-    console.log(this.$route.path);
-    console.log('code', this.utils.getUrlKey('code'))
     let code = this.utils.getUrlKey('code')
+    console.log(this.$route.path);
+    console.log('code', code)
     if( code != null) {
       //this.$router.push('/redpack')
       this.$router.push({ name: 'RedPack', params: { code: code }})
-    }
+    } else 
     let path = this.GLOBAL.path
     this.$router.options.routes.forEach(element => {
       if(element.path==path) {
