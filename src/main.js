@@ -21,7 +21,7 @@ Vue.use(ConfirmPlugin)
 
 Vue.prototype.axios = axios
 Vue.prototype.GLOBAL = global_
-Vue.prototype.GLOBAL.openid = Vue.prototype.GLOBAL.getOpenId()
+Vue.prototype.GLOBAL.openid = '' //Vue.prototype.GLOBAL.getOpenId()
 Vue.prototype.GLOBAL.path = Vue.prototype.GLOBAL.getPath()
 Vue.prototype.utils = utils
 

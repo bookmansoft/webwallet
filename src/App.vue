@@ -50,7 +50,9 @@ export default {
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
             console.log(res.data)
             if(res.data.errcode=='success') {
-                this.uid = res.data.userProfile.uid
+                this.uid = res.data.uid
+                this.GLOBAL.openid = res.data.openid
+                console.log('get openid', this.GLOBAL.openid)
             }
         });
     },
@@ -58,8 +60,9 @@ export default {
     wxAuthod() {
         console.log('wxAuthod')
         let redirect_uri = 'https://mini.gamegold.xin/gg-wechat-client/'
+        //let redirect_uri = 'http://test.gamegold.xin/'
         let url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4a5e9d7ae34ad4b4'
-        url += '&redirect_uri='+redirect_uri+'&response_type=code&scope=snsapi_base&state=1#wechat_redirect'
+        url += '&redirect_uri='+redirect_uri+'&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect'
         window.location.href = url
     },
 
@@ -82,10 +85,9 @@ export default {
     console.log(this.$route.path);
     console.log('code', code)
     if(code != null) {
-      this.showPlugin(code)
       this.InitUserFromCode(code)
-
-    } else if( this.uid == "") {
+      
+    } else if( this.GLOBAL.openid == "") {
       this.wxAuthod()
 
     } else {
