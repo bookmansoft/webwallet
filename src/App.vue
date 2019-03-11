@@ -21,7 +21,7 @@ export default {
 　data () {
     return {
       transitionName:'vux-pop-in',
-      openid: "",
+      uid: "",
     } 
 　},
   mounted () {
@@ -36,17 +36,18 @@ export default {
       }
       return null;
     },
-    getOpenid(code) {
-        console.log('getOpenid')
-        let data = {func:'GetMapOpenId', control: 'wechat', code: code, oemInfo: this.GLOBAL.oemInfo}
+
+    initUserFromWechatCode(code) {
+        console.log('initUserFromWechatCode')
+        let data = {func:'InitUserFromWechat', control: 'wechat', code: code, oemInfo: this.GLOBAL.oemInfo}
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
             console.log(res.data)
             if(res.data.errcode=='success') {
-                this.wxopenid = res.data.userProfile.wxopenid
                 this.uid = res.data.userProfile.uid
             }
         });
     },
+    
     wxAuthod() {
         console.log('wxAuthod')
         let redirect_uri = 'https://mini.gamegold.xin/gg-wechat-client/'
@@ -73,20 +74,24 @@ export default {
     let code = this.utils.getUrlKey('code')
     console.log(this.$route.path);
     console.log('code', code)
-    if( code != null) {
-      //this.$router.push('/redpack')
-      this.$router.push({ name: 'RedPack', params: { code: code }})
-    } else 
-    let path = this.GLOBAL.path
-    this.$router.options.routes.forEach(element => {
-      if(element.path==path) {
-        console.log('path', path)
-        if(path != '/') {
-          console.log('push', path)
-          this.$router.push(path)
+    if(this.code != "") {
+      this.initUserFromWechatCode(code)
+
+    } else if( this.uid == "") {
+      this.wxAuthod()
+
+    } else {
+      let path = this.GLOBAL.path
+      this.$router.options.routes.forEach(element => {
+        if(element.path==path) {
+          console.log('path', path)
+          if(path != '/') {
+            console.log('push', path)
+            this.$router.push(path)
+          }
         }
-      }
-    });
+      });
+    }
   }
 }
 </script>
