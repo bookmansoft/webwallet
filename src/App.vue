@@ -28,6 +28,13 @@ export default {
 
   },
   methods: {
+    showPlugin(msg) {
+      this.$vux.alert.show({
+        title: '提示',
+        content: msg
+      })
+    },
+
     getQueryString: function(name) {
       var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
       var r = window.location.search.substr(1).match(reg);
@@ -75,6 +82,7 @@ export default {
     console.log(this.$route.path);
     console.log('code', code)
     if(code != "") {
+      this.showPlugin(code)
       this.initUserFromWechatCode(code)
 
     } else if( this.uid == "") {
