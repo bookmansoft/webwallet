@@ -80,8 +80,12 @@ export default {
         }
       }
   },
+  
   created() {
     let code = this.utils.getUrlKey('code')
+    this.GLOBAL.openid = this.utils.getUrlKey('openid')
+    this.GLOBAL.path = this.utils.getUrlKey('path')
+
     console.log(this.$route.path);
     console.log('code', code)
     if(code != null) {

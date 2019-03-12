@@ -188,7 +188,29 @@ export default {
           }
         });
     },
-
+    getWxConfig() {
+      const url = location.href.split("#")[0];
+      let data = {func:'WechatConfig', control: 'wechat', url: url, oemInfo: this.GLOBAL.oemInfo}
+      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+          console.log(res.data);
+          this.$wechat.config(res.data.wxconfig)
+      }).catch(res => {
+          console.log(res);
+      })
+    },
+    wxReady(prop) {
+      this.$wechat.ready(function () {   //需在用户可能点击分享按钮前就先调用
+          this.$wechat.updateAppMessageShareData({ 
+              title: '游戏金道具分享', // 分享标题
+              desc: prop.result.props_name, // 分享描述
+              link: '', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+              imgUrl: '', // 分享图标
+              success: function () {
+                // 设置成功
+              }
+          })
+      });
+    },
     // 分享好友
     propShare() {
       if(this.propShareIcon == '') {
@@ -220,11 +242,13 @@ export default {
         this.$router.push('/props')
     } else {
         this.prop = this.$route.params.prop
+        this.wxReady(prop)
         console.log('this.prop', this.prop.result.more_icon)
         this.propShareIcon = this.prop.result.large_icon
         this.prop.result.more_icon.forEach( item => {
              this.propIcons.push(item)
         });
+        this.getWxConfig()
     }
   }
 };
