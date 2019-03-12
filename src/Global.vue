@@ -24,8 +24,9 @@ const colorList = [
 
 const colorListLength = 20
 const oemInfo = { token: '9bcf8939a9c96e14700b2209463af411' }
-const apiUrl = 'https://mini.gamegold.xin/gg-wechat-server/index.html'
-//const apiUrl = 'http://192.168.1.9:9101/index.html'
+//const apiUrl = 'https://mini.gamegold.xin/gg-wechat-server/index.html'
+const apiUrl = 'http://192.168.5.73:9101/index.html'
+const siteUri = 'http://test.gamegold.xin'
 const gameGoldUnit = '千克'
 
 function getRandColor () {
@@ -80,26 +81,6 @@ function  myAlert(alert, content, onshow=null, onhide=null) {
   })
 }
 
-function getOpenId(){
-    var request = getRequest();
-    var openid = request["openid"];
-    if( typeof(openid)=="undefined" || openid=="") {
-        openid = "oHvae4rF-nfnTQVxuCw6PS9Y8vw0";
-        //openid = "oHvae4vecsyXDJJKREnmkOUxkq_4";
-        //openid = "oHvae4kfxyGPY6MSHfEUPYzhXFfI";
-    }
-    return openid;
-}
-
-function getPath(){
-    var request = getRequest();
-    var path = request["path"];
-    if( typeof(path)=="undefined" || path=="") {
-        path = '/'
-    }
-    return path;
-}
-
 function formatDateStr(date, fmt) {
     var o = {
         "M+": date.getMonth() + 1, //月份 
@@ -142,10 +123,10 @@ export default
   colorListLength,
   getRandColor,
   apiUrl,
+  siteUri,
   oemInfo,
   formatGameGold,
   gameGoldOrigin, userProfile, gameGoldUnit, formatDateStr, checkAddr, myAlert,
-  adminName, openId, uid, propCount, cpCount, cplist, games, path,
-  getOpenId, getPath, vipGetNotifyTime
+  adminName, openId, uid, propCount, cpCount, cplist, games, path, vipGetNotifyTime
 }
 </script>

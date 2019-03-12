@@ -44,7 +44,7 @@
             </div>
             <div @click="gameProps">
                 <!--<p id="inGameProps">游戏道具</p>-->
-                <p id="inGameProps">游戏评论</p>
+                <p id="inGameProps">游戏道具</p>
             </div>
         </div>      
         <div id="introduce">
@@ -68,7 +68,7 @@
                 <img v-for="(item, index) in gameInfo.pic_urls" :key="index" :src="item" alt="">
             </div>
         </div>
-        <!--
+
         <div id="gameProps" class="backcolor-white" >
             <div class="game-props" v-for="(item, index) in cpProps" :key="index">
                 <div>
@@ -83,7 +83,7 @@
                 </div>
             </div>
         </div>
-        -->
+        <!--
         <div id="gameProps" class="backcolor-white">
           <div class="no-comment-box" v-if="commentsList.length==0">暂无评论</div>
           <div v-if="commentsList.length > 0">
@@ -98,15 +98,13 @@
                     <p>&nbsp;<p>
                     <p><span style="color:#888;">{{item.content}}</span></p>
                     <p>&nbsp;</p>
-                    <!--
+
                     <a class="gp-btn" @click="buyProp(item)">体验</a>
                     <p class="color-red">{{item.props_price}}千克</p>
-                    -->
                     <p style="text-align:right; width:100%;"><span style="color:#888;">{{item.timestamp}}</span></p>
                 </div>
             </div>
           </div>
-
           <tabbar style="background-color: #FAFAFA; height:50px;">
             <flexbox>
               <flexbox-item>
@@ -122,7 +120,10 @@
             </flexbox>
             
           </tabbar>
+          
         </div>
+        -->
+
     </div>
   </div>
 </template> 
@@ -205,40 +206,12 @@ export default {
         //wx.miniProgram.navigateTo({ url: url });
         this.$wechat.miniProgram.navigateTo({ url: url })
     },
-    async getUserProfile(){
-        let data = {func:'Info', control: 'profile', openid: this.GLOBAL.openid, oemInfo: this.GLOBAL.oemInfo}
-        let that = this
-        let ret = new Promise(function(resolve, reject) {
-            that.axios.post(that.GLOBAL.apiUrl, data).then(res => {
-                console.log(res.data)
-                if(res.data.profile != null) {
-                  let profile = res.data.profile
-                  that.GLOBAL.uid = profile.uid
-                  that.GLOBAL.propCount = profile.current_prop_count
-                  that.GLOBAL.userProfile = profile
-                  resolve(true)
-                } else {
-                  resolve(false) 
-                }
-            })
-        })
-        return ret
-    },
+
     async commentPub() {
       if(this.msgInput == "") {
         this.showPlugin("请输入评论内容")
         return
       }
-
-      if(this.GLOBAL.userProfile == null) {
-        let getUser = await this.getUserProfile()
-        if(getUser == false) {
-          this.gotoLogin()
-          return
-        } else {
-          console.log("userProfile", this.userProfile)
-        }
-      } 
 
       let data = {
         func:'GameCommentAdd', 
@@ -253,6 +226,7 @@ export default {
         title: '',
         content: this.msgInput
       }
+
       this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
           console.log(res.data)
           if(res.data.errcode == "success") {
@@ -323,11 +297,13 @@ export default {
     },
 
     buyProp(item) {
-        this.showPlugin('暂未开放，请稍后再来')
-        return
+        //this.showPlugin('暂未开放，请稍后再来')
+        //return
         if(this.cpAddr == '' || this.GLOBAL.openid == '') {
             return;
         }
+
+        /*
         let cid = this.cpItem.cid
         let uid = this.GLOBAL.openid
         let notifyurl = this.GLOBAL.apiUrl
@@ -337,7 +313,28 @@ export default {
         url += "&price=" + price + '&notifyurl=' + encodeURI(notifyurl) + '&returl=' + encodeURI(window.location.href) ;
         console.log(url);
         this.$wechat.miniProgram.navigateTo({ url: url });
+        */
+        let order_sn = item.id + '-new-' + this.randomString(16)
+        let data = {
+          func:'OrderPay', 
+          control: 'order', 
+          cid: this.cpItem.cid, 
+          user_id: this.GLOBAL.uid,
+          sn: order_sn,
+          price: this.GLOBAL.gameGoldOrigin(item.props_price),
+          account: this.GLOBAL.uid,
+          oemInfo: this.GLOBAL.oemInfo
+        }
+        this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+            console.log(res.data)
+            if(res.data.errcode == 'success') {
+              this.showPlugin('道具订单已发送至游戏厂商，请等待支付通知')
+            } else {
+              this.showPlugin('你的游戏金余额不足')
+            }
+        })
     },
+
     sortCommentList() {
       if(this.commentsList.length >0 ) {
           this.commentsList.sort(function(a, b){
@@ -345,6 +342,7 @@ export default {
           });
       }
     },
+    
     //获取评论列表列表
     getCommentList() {
       let cid = this.cpItem.cid
@@ -384,12 +382,13 @@ export default {
     },
 
     userToken() {
-        if(this.GLOBAL.openid == '') {
+        if(this.GLOBAL.uid == 0) {
             return
         }
         let data = {func:'UserToken', control: 'cp', oemInfo: this.GLOBAL.oemInfo,
-            openid: this.GLOBAL.openid, 
-            uid: this.GLOBAL.openid,
+            uid: this.GLOBAL.uid,
+            account: this.GLOBAL.uid, 
+            user_id: this.GLOBAL.uid,
             cid: this.cpItem.cid
         }
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
