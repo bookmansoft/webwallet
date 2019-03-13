@@ -122,7 +122,7 @@ export default {
       },
 
       getMine(){
-          let data = {func:'Mine', control: 'profile', openid: this.GLOBAL.openid, uid: this.GLOBAL.uid, oemInfo: this.GLOBAL.oemInfo}
+          let data = {func:'Mine', control: 'profile', uid: this.GLOBAL.userBase.uid, oemInfo: this.GLOBAL.oemInfo}
           this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
               console.log('mine', res.data)
               if(res.data.errcode == 'success') {

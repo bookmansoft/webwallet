@@ -4,7 +4,7 @@
       <flexbox style="padding:5px;">
         <flexbox-item :span="4">
           <div class="flex-demo-left">
-            <img :src="userProfile.avatar_uri" class="avatar" />
+            <img :src="userProfile.avatar_uri " class="avatar" />
           </div></flexbox-item>
         <flexbox-item><div class="flex-demo-right"><span>{{userProfile.nick}}</span></div></flexbox-item>
       </flexbox>
@@ -46,14 +46,14 @@ import Navs from '@/components/Navs.vue'
 import { Cell, CellBox, CellFormPreview, Group, Badge, Flexbox, FlexboxItem } from 'vux'
 
 const getItems0 = () => [
-  /*{title: '会员', is_link: true, img: 'static/img/icon1/4.png', badge: 0, link: '/member', value: '普通会员', showDot: false}*/
+  {title: '会员', is_link: true, img: 'static/img/icon1/4.png', badge: 0, link: '/member', value: '普通会员', showDot: false}
 ]
 const getItems1 = () => [
-  /*{title: '我的钱包', is_link: true, img: 'static/img/mine/wallet.png', badge: 0, link: {path:'/wallet'}, value: ''},*/
+  {title: '我的钱包', is_link: true, img: 'static/img/mine/wallet.png', badge: 0, link: {path:'/wallet'}, value: ''},
   {title: '我的道具', is_link: true, img: 'static/img/mine/prop.png', badge: 0, link: {path:'/props'}, value: ''},
   {title: '我的消息', is_link: true, img: 'static/img/mine/msg.png', badge: 0, link: {path:'/message'}, value: ''},
-  /*{title: '我的交易', is_link: true, img: 'static/img/mine/trans.png', badge: 0, link: {path:'/wallet/detail'}, value: ''},*/
-  /*{title: '我的游戏', is_link: true, img: 'static/img/mine/game.png', badge: 0, link: {path:'/mygame'}, value: ''}*/
+  {title: '我的交易', is_link: true, img: 'static/img/mine/trans.png', badge: 0, link: {path:'/wallet/detail'}, value: ''},
+  {title: '我的游戏', is_link: true, img: 'static/img/mine/game.png', badge: 0, link: {path:'/mygame'}, value: ''}
 ]
 const getItems2 = () => [
   /*{title: '使用条款', is_link: true, img: 'static/img/icon1/3.png', badge: 0, link: ''},*/
@@ -78,24 +78,20 @@ export default {
   },
   methods: {
       getUserProfil(){
-          let data = {func:'Info', control: 'profile', openid: this.GLOBAL.openid, oemInfo: this.GLOBAL.oemInfo}
+          let data = {func:'Info', control: 'profile', uid: this.GLOBAL.userBase.uid, oemInfo: this.GLOBAL.oemInfo}
           this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
               console.log(res.data)
               if(res.data.profile != null) {
+                  this.GLOBAL.propCount = res.data.profile.current_prop_count
+                  this.GLOBAL.userProfile = res.data.profile
                   this.userProfile = res.data.profile
-                  this.userProfile.avatar = res.data.profile.avatar_uri
-                  this.GLOBAL.uid = this.userProfile.uid
-                  this.GLOBAL.propCount = this.userProfile.current_prop_count
-                  this.GLOBAL.userProfile = this.userProfile
                   this.hasProfile = true
                   this.getMine()
-              } else {
-                  this.gotoLogin()
-              }
+              } 
           });
       },
       getMine(){
-          let data = {func:'Mine', control: 'profile', openid: this.GLOBAL.openid, uid: this.GLOBAL.uid, oemInfo: this.GLOBAL.oemInfo}
+          let data = {func:'Mine', control: 'profile', uid: this.GLOBAL.userBase.uid, oemInfo: this.GLOBAL.oemInfo}
           this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
               console.log('mine', res.data)
               if(res.data.errcode == 'success' && res.data.mine != null) {
@@ -121,7 +117,7 @@ export default {
           });
       },
       getNotify() {
-          let data = {func:'GetNotify', control: 'wallet', openid: this.GLOBAL.openid, uid: this.GLOBAL.uid, oemInfo: this.GLOBAL.oemInfo}
+          let data = {func:'GetNotify', control: 'wallet', uid: this.GLOBAL.userBase.uid, oemInfo: this.GLOBAL.oemInfo}
           this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
               console.log('GetNotify', res.data)
               if(res.data.errcode == 'success') {
@@ -131,11 +127,6 @@ export default {
                 }
               }
           })
-      },
-      gotoLogin() {
-          const url = "/pages/login/login";
-          //wx.miniProgram.navigateTo({ url: url });
-          this.$wechat.miniProgram.navigateTo({ url: url })
       }
   },
   created() {

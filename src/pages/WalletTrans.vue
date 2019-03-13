@@ -86,7 +86,7 @@ export default {
             num: this.GLOBAL.gameGoldOrigin(this.number),
             btc: this.btc * 100000000,
             addr: this.address,
-            openid: this.GLOBAL.openid
+            uid: this.GLOBAL.userBase.uid
           };
           this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
             console.log(res.data);

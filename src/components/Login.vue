@@ -1,46 +1,125 @@
 <template>
   <div>
-    <x-header :left-options="{preventGoBack: false}" >用户登录</x-header>
-    <group label-width="4.5em" label-margin-right="2em" label-align="right">
-      <x-input title="手机号码" name="mobile" placeholder="请输入手机号码" v-model="username" keyboard="number" is-type="china-mobile"></x-input>
-    </group>
-    <group label-width="4.5em" label-margin-right="2em" label-align="right">
-        <x-input title="密码" type="password" placeholder="必填" ></x-input>
-    </group>
-    <div style="padding:15px;">
-      <x-button @click.native="btnLogin()" ref="child1" type="primary" v-bind:show-loading="showLoading"> 登录</x-button>
+    <div class="data-box">
+        <inline-loading></inline-loading>
     </div>
   </div>
 </template>
 
 <script>
-import { Group, Cell, XInput, XButton, XHeader  } from 'vux'
+import { InlineLoading   } from 'vux'
 
 export default {
   components: {
-    Group,
-    Cell,
-    XInput,
-    XButton,
-    XHeader 
+    InlineLoading 
   },
   data () {
     return {
-      showLoading: false,
-      username: ''
+
     }
   },
   methods: {
-      btnLogin() {
-        console.log('btnLogin')
-        this.showLoading = true
-      },
-      onBack() {
-        this.$router.push('/Home')
-      },
+   checkUserAgent() {
+      var browser = navigator.userAgent.toLowerCase();
+      if(browser.match(/MicroMessenger/i)=="micromessenger"){
+          return 1
+      }else if(browser.match(/Alipay/i)=="alipay"){
+          return 2
+      }else{
+          return 0
+      }
+    },
+
+    showPlugin(msg) {
+      this.$vux.alert.show({
+        title: '提示',
+        content: msg
+      })
+    },
+
+    getQueryString: function(name) {
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+      var r = window.location.search.substr(1).match(reg);
+      if (r != null) {
+        return decodeURIComponent(r[2]);
+      }
+      return null;
+    },
+
+    GetUserFromMapCode(code) {
+        console.log('GetUserFromMapCode')
+        let data = {func:'GetUserFromMapCode', control: 'wechat', code: code, oemInfo: this.GLOBAL.oemInfo}
+        this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+            console.log(res.data)
+            if(res.data.errcode=='success') {
+                let user = res.data.user
+                this.GLOBAL.userBase.uid = user.id
+                this.GLOBAL.userBase.user_name = user.user_name
+                this.GLOBAL.userBase.openid = res.data.openid
+                if(user.id == 0 ) {
+                  this.$router.push('/user/bind')
+                } else {
+                  this.$router.push('/home')
+                }
+            } else {
+              this.showPlugin('登录失败')
+            }
+        });
+    },
+
+    wxAuthod() {
+        console.log('wxAuthod')
+        let redirect_uri = this.GLOBAL.siteUri
+        //let redirect_uri = 'http://test.gamegold.xin/'
+        let url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4a5e9d7ae34ad4b4'
+        url += '&redirect_uri='+redirect_uri+'&response_type=code&scope=snsapi_base&state=1#wechat_redirect'
+        window.location.href = url
+    },
   },
   created() {
-      console.log('on create')
+    let userAgent = this.checkUserAgent()
+    this.GLOBAL.userBase.userAgent = userAgent
+    console.log('userAgent', userAgent)
+    if(userAgent == 1) {
+      let code = this.utils.getUrlKey('code')
+      if(code != null) {
+        this.GetUserFromMapCode(code)
+      } else if(this.GLOBAL.userBase.openid == null) {
+        this.wxAuthod()
+      }
+    } //微信
+    /*
+      let path = this.GLOBAL.path
+      this.$router.options.routes.forEach(element => {
+        if(element.path==path) {
+          console.log('path', path)
+          if(path != '/') {
+            console.log('push', path)
+            this.$router.push(path)
+          }
+        }
+      });
+    */
   }
 }
 </script>
+<style scoped lang="less">
+
+.data-box {
+  margin: 0 auto;
+  text-align: center;
+  /*border: 1px solid #f00;*/
+
+  width: 700px;
+  height: 260px;
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  z-index: 11;
+  /*设定这个div的margin-top的负值为自身的高度的一半,margin-left的值也是自身的宽度的一半的负值.*/ 
+    /*高为400,那么margin-top为-200px*/ 
+    /*宽为700那么margin-left为-350px;*/ 
+  margin: -180px 0 0 -350px;
+}
+
+</style>

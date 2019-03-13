@@ -23,12 +23,14 @@ import Message from '@/pages/Message'
 import PropOrderPay from '@/pages/PropOrderPay'
 import RedPack from '@/pages/RedPack'
 import MyGame from '@/pages/MyGame'
+import UserBind from '@/components/UserBind'
+import Login from '@/components/Login'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
-    { path:'/', redirect:'Home' },
+    { path:'/', redirect:'Login' },
     { path: '/home', name: 'Home', component: Home },
     { path: '/market', name: 'Market', component: Market },
     { path: '/crowd', name: 'Crowd', component: Crowd },
@@ -52,5 +54,7 @@ export default new Router({
     { path: '/prop/order/pay', name: 'PropOrderPay', component: PropOrderPay },
     { path: '/redpack', name: 'RedPack', component: RedPack },
     { path: '/mygame', name: 'MyGame', component: MyGame },
+    { path: '/user/bind', name: 'UserBind', component: UserBind },
+    { path: '/login', name: 'Login', component: Login },
   ]
 })
