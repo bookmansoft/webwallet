@@ -28,6 +28,17 @@ export default {
 
   },
   methods: {
+    checkUserAgent() {
+      var browser = navigator.userAgent.toLowerCase();
+      if(browser.match(/MicroMessenger/i)=="micromessenger"){
+          return 1
+      }else if(browser.match(/Alipay/i)=="alipay"){
+          return 2
+      }else{
+          return 0
+      }
+    },
+
     showPlugin(msg) {
       this.$vux.alert.show({
         title: '提示',
@@ -44,18 +55,19 @@ export default {
       return null;
     },
 
-    InitUserFromCode(code) {
-        console.log('InitUserFromCode')
-        let data = {func:'InitUserFromCode', control: 'wechat', code: code, oemInfo: this.GLOBAL.oemInfo}
+    GetUserFromMapCode(code) {
+        console.log('GetUserFromMapCode')
+        let data = {func:'GetUserFromMapCode', control: 'wechat', code: code, oemInfo: this.GLOBAL.oemInfo}
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
             console.log(res.data)
             if(res.data.errcode=='success') {
-                this.uid = res.data.uid
-                this.GLOBAL.uid = res.data.uid
-                this.GLOBAL.openid = res.data.openid
-                this.GLOBAL.userProfile = res.data.userProfile
-                console.log('uid', this.GLOBAL.uid)
-                console.log('userProfile', this.GLOBAL.userProfile)
+                let user = res.data.user
+                this.GLOBAL.userBase.uid = user.id
+                this.GLOBAL.userBase.user_name = user.user_name
+                this.GLOBAL.userBase.openid = res.data.openid
+                if(user.id == 0 ) {
+
+                }
             } else {
               this.showPlugin('登录失败')
             }
@@ -87,19 +99,15 @@ export default {
   },
   
   created() {
-    let code = this.utils.getUrlKey('code')
-    this.GLOBAL.openid = this.utils.getUrlKey('openid')
-    this.GLOBAL.path = this.utils.getUrlKey('path')
-
-    console.log(this.$route.path);
-    console.log('code', code)
-    if(code != null) {
-      this.InitUserFromCode(code)
-
-    } else if( this.GLOBAL.openid == null) {
-      this.wxAuthod()
-
-    } else {
+    let userAgent = this.checkUserAgent()
+    this.GLOBAL.userBase.userAgent = userAgent
+    if(userAgent == 1) {
+      let code = this.utils.getUrlKey('code')
+      if(code != null) {
+        this.GetUserFromMapCode()
+      }
+    } //微信
+    /*
       let path = this.GLOBAL.path
       this.$router.options.routes.forEach(element => {
         if(element.path==path) {
@@ -110,7 +118,7 @@ export default {
           }
         }
       });
-    }
+    */
   }
 }
 </script>

@@ -56,12 +56,6 @@ function getRequest() {
     return theRequest;
 }
 
-function getPostData(obj) {
-  return {
-
-  }
-}
-
 function  myAlert(alert, content, onshow=null, onhide=null) {
   alert.show({
     title: '提示',
@@ -106,11 +100,7 @@ function checkAddr(value) {
     }
 }
 
-var adminName = 'root'
-var openId = ''
-var path = '/'
-var uid = 0
-var propCount = 0
+var userBase = {userAgent: 0, uid: 0, user_name: null, openid: null}
 var userProfile = null
 var games = []
 var cplist = []
@@ -119,14 +109,10 @@ var vipGetNotifyTime = 0
 
 export default
 {
-  colorList,
-  colorListLength,
-  getRandColor,
-  apiUrl,
-  siteUri,
-  oemInfo,
-  formatGameGold,
-  gameGoldOrigin, userProfile, gameGoldUnit, formatDateStr, checkAddr, myAlert,
-  adminName, openId, uid, propCount, cpCount, cplist, games, path, vipGetNotifyTime
+  colorList, colorListLength, getRandColor,
+  apiUrl, siteUri, oemInfo,
+  formatGameGold, gameGoldOrigin, gameGoldUnit, 
+  myAlert, formatDateStr, checkAddr,
+  userBase, userProfile, games, cplist, cpCount, vipGetNotifyTime
 }
 </script>
