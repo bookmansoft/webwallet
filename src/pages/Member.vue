@@ -227,11 +227,10 @@ export default {
         let data = {
           func:'CommonOrderRepay',
           control: 'order',
-          uid: this.GLOBAL.uid,
+          uid: this.GLOBAL.userBase.uid,
           price: parseInt(product.price/100),
           productId: product.value,
           productIntro: '游戏金'+product.label,
-          openid: this.GLOBAL.openid,
           oemInfo: this.GLOBAL.oemInfo
         };
         console.log('order', data)
