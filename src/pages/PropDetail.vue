@@ -202,13 +202,27 @@ export default {
 
     wxReady() {
       this.$wechat.ready(function () {   //需在用户可能点击分享按钮前就先调用
-          this.$wechat.updateAppMessageShareData({ 
-              title: '游戏金道具分享', // 分享标题
-              desc: this.prop.result.props_name, // 分享描述
-              link: this.GLOBAL.siteUri + '/#/prop/receive', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-              imgUrl: this.prop.result.large_icon, // 分享图标
+          //分享给朋友
+          let title = '游戏金道具分享'
+          let desc = this.prop.result.props_name
+          let link = this.GLOBAL.siteUri + '/?path=/prop/receive'
+          let imgUrl = this.prop.result.large_icon
+          this.$wechat.onMenuShareAppMessage({ 
+              title: title, // 分享标题
+              desc: desc, // 分享描述
+              link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+              imgUrl: imgUrl, // 分享图标
               success: function () {
                 // 设置成功
+              }
+          })
+          //分享到朋友圈
+          wx.onMenuShareTimeline({
+              title: title, // 分享标题
+              link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+              imgUrl: imgUrl, // 分享图标
+              success: function () {
+              // 用户点击了分享后执行的回调函数
               }
           })
       });
