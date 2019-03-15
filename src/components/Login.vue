@@ -59,7 +59,7 @@ export default {
                 if(user.id == 0 ) {
                   this.$router.push('/user/bind')
                 } else {
-                  this.$router.push('/home')
+                  this.gotoHome()
                 }
             } else {
               this.showPlugin('登录失败')
@@ -67,7 +67,7 @@ export default {
         });
     },
 
-    wxAuthod() {
+    wxAuthCode() {
         console.log('wxAuthod')
         let redirect_uri = this.GLOBAL.siteUri
         //let redirect_uri = 'http://test.gamegold.xin/'
@@ -75,31 +75,45 @@ export default {
         url += '&redirect_uri='+redirect_uri+'&response_type=code&scope=snsapi_base&state=1#wechat_redirect'
         window.location.href = url
     },
+
+    isValidPath(path) {
+      this.$router.options.routes.forEach(element => {
+        if(element.path==path) {
+          return true
+        }
+      })
+      return false
+    },
+
+    gotoHome() {
+        let path = this.utils.getUrlKey('path')
+        if(path==null || this.isValidPath(path)==false) {
+          this.$router.push('/home')
+        } else {
+          this.$router.push(path)
+        }
+    }
+
   },
   created() {
     let userAgent = this.checkUserAgent()
     this.GLOBAL.userBase.userAgent = userAgent
     console.log('userAgent', userAgent)
+
+    //微信浏览器
     if(userAgent == 1) {
-      let code = this.utils.getUrlKey('code')
-      if(code != null) {
-        this.GetUserFromMapCode(code)
-      } else if(this.GLOBAL.userBase.openid == null) {
-        this.wxAuthod()
-      }
-    } //微信
-    /*
-      let path = this.GLOBAL.path
-      this.$router.options.routes.forEach(element => {
-        if(element.path==path) {
-          console.log('path', path)
-          if(path != '/') {
-            console.log('push', path)
-            this.$router.push(path)
-          }
+      if(this.GLOBAL.userBase.uid == 0) {
+        let code = this.utils.getUrlKey('code')
+        if(code != null) {
+          this.GetUserFromMapCode(code)
+        } else  {
+          this.wxAuthCode()
         }
-      });
-    */
+      } else {
+          this.gotoHome()
+      }
+    } 
+
   }
 }
 </script>

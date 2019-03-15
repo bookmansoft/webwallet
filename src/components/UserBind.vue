@@ -79,20 +79,16 @@ export default {
             if(res.data.errcode=='success') {
                 let userProfile = res.data.userProfile
                 this.GLOBAL.userBase.uid = res.data.uid
-                this.$router.push('/home')
+                this.$router.push('/login')
             } else {
                 this.showPlugin('创建失败')
             }
         });
 
       },
-
-      onBack() {
-        this.$router.push('/Home')
-      },
   },
   created() {
-      console.log('on create')
+      console.log('onUserBind')
   }
 }
 </script>
