@@ -7,7 +7,7 @@
         </div>
     </div>
     <group>
-        <cell title="道具" :value="order.desc"></cell>
+        <cell title="道具" :value="prop.desc"></cell>
     </group>
     <div style="padding:15px;">
       <x-button @click.native="propRec()" type="primary" > 接收</x-button>
