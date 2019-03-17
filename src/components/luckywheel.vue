@@ -133,10 +133,6 @@ export default {
     this.init_prize_list();
   },
   computed: {
-    onBack() {
-        this.$router.push('/mine')
-    },
-
     toast_title() {
       return this.hasPrize
         ? "恭喜您，获得" +this.prize_list[this.index].count + ' ' + this.prize_list[this.index].name
@@ -193,7 +189,10 @@ export default {
     //关闭弹窗
     close_toast() {
       this.toast_control = false;
-    }
+    },
+    onBack() {
+        this.$router.push('/mine')
+    },
   }
 };
 </script>
