@@ -206,12 +206,12 @@ export default {
           //分享给朋友
           let title = '游戏金道具分享'
           let desc = 'T10自行反坦克车'
-          let link = that.GLOBAL.siteUri + '/?path='+ encodeURI('/prop/receive')
+          let link = that.GLOBAL.siteUri + '/?path='+ encodeURIComponent('/prop/receive')
           let imgUrl = 'http://114.116.148.48:9701/image/3/prop_large_icon.jpg' //prop.result.large_icon
           let params = JSON.stringify({
             title:title,
             desc:desc,
-            imgUrl: encodeURI(imgUrl)
+            imgUrl: encodeURIComponent(imgUrl)
           })
           link = link + '&prop=' + params
           that.$wechat.onMenuShareAppMessage({ 
