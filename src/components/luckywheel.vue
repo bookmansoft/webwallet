@@ -32,6 +32,7 @@
             <div class="tip">
                 <div class="tip-title">活动规则</div>
                 <div class="tip-content">
+
                     <p> 2.游戏金抽奖，每10个游戏金可以兑换一次大转盘抽奖机会</p>
                     <p> 3.所中奖品将以红包形式发送到微信</p>
                 </div>
@@ -191,7 +192,7 @@ export default {
 .lucky-wheel {
   width: 100%;
   height: 31.5625rem;
-  background: rgb(252, 207, 133) url("../assets/img/color_pillar.png") no-repeat
+  background: rgb(252, 207, 133) url("https://mini.gamegold.xin/gg-wechat-client/img/lucky/color_pillar.png") no-repeat
     center bottom;
   background-size: 100%;
   padding-top: 1.5625rem;
@@ -199,7 +200,7 @@ export default {
 .lucky-title {
   width: 100%;
   height: 8.125rem;
-  background: url("../assets/img/lucky_title.png") no-repeat center top;
+  background: url("https://mini.gamegold.xin/gg-wechat-client/img/lucky/lucky_title.png") no-repeat center top;
   background-size: 100%;
 }
 .wheel-main {
@@ -211,7 +212,7 @@ export default {
 .wheel-bg {
   width: 18.4375rem;
   height: 18.4375rem;
-  background: url("../assets/img/draw_wheel.png") no-repeat center top;
+  background: url("https://mini.gamegold.xin/gg-wechat-client/img/lucky/draw_wheel.png") no-repeat center top;
   background-size: 100%;
   color: #fff;
   font-weight: 500;
@@ -233,7 +234,7 @@ export default {
 .wheel-pointer {
   width: 5.3125rem;
   height: 5.3125rem;
-  background: url("../assets/img/draw_btn.png") no-repeat center top;
+  background: url("https://mini.gamegold.xin/gg-wechat-client/img/lucky/draw_btn.png") no-repeat center top;
   background-size: 100%;
   transform-origin: center 60%;
 }
