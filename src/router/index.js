@@ -18,6 +18,7 @@ import PropSaleInfo from '@/pages/PropSaleInfo'
 import About from '@/pages/About'
 import Member from '@/pages/Member'
 import OrderPay from '@/pages/OrderPay'
+import WeChatPay from '@/pages/WeChatPay'
 import MemberDrawLog from '@/pages/MemberDrawLog'
 import Message from '@/pages/Message'
 import PropOrderPay from '@/pages/PropOrderPay'
@@ -49,6 +50,7 @@ export default new Router({
     { path: '/prop/sale/info', name: 'PropSaleInfo', component: PropSaleInfo },
     { path: '/about', name: 'About', component: About },
     { path: '/order/pay', name: 'OrderPay', component: OrderPay },
+    { path: '/wechat/pay', name: 'WeChatPay', component: WeChatPay },
     { path: '/member/draw/log', name: 'MemberDrawLog', component: MemberDrawLog },
     { path: '/message', name: 'Message', component: Message },
     { path: '/prop/order/pay', name: 'PropOrderPay', component: PropOrderPay },
