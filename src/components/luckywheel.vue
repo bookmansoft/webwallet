@@ -66,7 +66,7 @@ export default {
     return {
       headerTitle: '红包抽奖',
       easejoy_bean: 0, //金豆
-      lottery_ticket: 0, //抽奖次数
+      lottery_ticket: 5, //抽奖次数
       prize_list: [
         {
           icon: require("../assets/img/bean_500.png"), // 奖品图片
@@ -76,31 +76,31 @@ export default {
         },
         {
           icon: require("../assets/img/bean_five.png"),
-          count: 5,
+          count: 20,
           name: "20元",
           isPrize: 1
         },
         {
           icon: require("../assets/img/bean_one.png"),
-          count: 10,
+          count: 30,
           name: "30元",
           isPrize: 1
         },
         {
           icon: require("../assets/img/point_five.png"),
-          count: 5,
+          count: 50,
           name: "50元",
           isPrize: 1
         },
         {
           icon: require("../assets/img/point_ten.png"),
-          count: 10,
+          count: 60,
           name: "60元",
           isPrize: 1
         },
         {
           icon: require("../assets/img/bean_500.png"),
-          count: 10,
+          count: 80,
           name: "80元",
           isPrize: 1
         },
@@ -135,7 +135,7 @@ export default {
   computed: {
     toast_title() {
       return this.hasPrize
-        ? "恭喜您，获得" +this.prize_list[this.index].count + ' ' + this.prize_list[this.index].name
+        ? "恭喜您，获得" + this.prize_list[this.index].name
         : "未中奖";
     },
     toast_pictrue() {
@@ -145,9 +145,21 @@ export default {
     }
   },
   methods: {
+    showPlugin(msg) {
+      this.$vux.alert.show({
+        title: '提示',
+        content: msg
+      })
+    },
+
     //此方法为处理奖品数据
     init_prize_list(list) {},
     rotate_handle() {
+      if(this.lottery_ticket==0) {
+        this.showPlugin('今天抽奖结束')
+        return
+      }
+      this.lottery_ticket--
       this.index = 1 //指定每次旋转到的奖品下标
       this.rotating();
     },
