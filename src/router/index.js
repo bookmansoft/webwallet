@@ -27,6 +27,7 @@ import RedPack from '@/pages/RedPack'
 import MyGame from '@/pages/MyGame'
 import UserBind from '@/components/UserBind'
 import Login from '@/components/Login'
+import LuckyWheel from '@/components/luckywheel'
 
 Vue.use(Router)
 
@@ -60,5 +61,6 @@ export default new Router({
     { path: '/user/bind', name: 'UserBind', component: UserBind },
     { path: '/login', name: 'Login', component: Login },
     { path: '/prop/receive', name: 'PropReceive', component: PropReceive },
+    { path: '/lucky', name: 'LuckyWheel', component: LuckyWheel },
   ]
 })

@@ -46,7 +46,8 @@ import Navs from '@/components/Navs.vue'
 import { Cell, CellBox, CellFormPreview, Group, Badge, Flexbox, FlexboxItem } from 'vux'
 
 const getItems0 = () => [
-  {title: '会员', is_link: true, img: 'static/img/icon1/4.png', badge: 0, link: '/member', value: '普通会员', showDot: false}
+  {title: '会员', is_link: true, img: 'static/img/icon1/4.png', badge: 0, link: '/member', value: '普通会员', showDot: false},
+  {title: '抽奖', is_link: true, img: 'static/img/icon3/market3.png', badge: 0, link: '/lucky', value: '抽奖', showDot: false}
 ]
 const getItems1 = () => [
   {title: '我的钱包', is_link: true, img: 'static/img/mine/wallet.png', badge: 0, link: {path:'/wallet'}, value: ''},
