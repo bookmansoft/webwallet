@@ -112,8 +112,8 @@ export default {
         },
         {
           icon: require("../assets/img/bean_500.png"),
-          count: 10,
-          name: "500元",
+          count: 100,
+          name: "100元",
           isPrize: 1
         }
       ], //奖品列表
