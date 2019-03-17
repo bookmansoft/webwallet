@@ -5,22 +5,17 @@
         <div id="topImg">
             <img :src="prop.imgUrl">
         </div>
-        <div id="centImg" class="backcolor-white" style="height:90px;">
-            <div></div>
-            <ul class="center-ul" style="position:relative; top:-80px;">
-                <li><span class="prop-name">{{prop.desc}}</span></li>
-
-            </ul>
-        </div>      
-
     </div>
+    <group>
+        <cell title="道具" :value="order.desc"></cell>
+    </group>
     <div style="padding:15px;">
       <x-button @click.native="propRec()" type="primary" > 接收</x-button>
     </div>
   </div>
 </template> 
 <script>
-import {XHeader, Flexbox, FlexboxItem, TransferDomDirective as TransferDom } from 'vux'
+import {XHeader, XButton, Group, Cell, Flexbox, FlexboxItem, TransferDomDirective as TransferDom } from 'vux'
 import { introduce , gameNameImg , gameProps} from "../assets/js/gameName.js"
 import { setTimeout } from 'timers';
 
@@ -29,7 +24,7 @@ export default {
     TransferDom
   },
   components: {
-    XHeader, Flexbox, FlexboxItem
+    XHeader, Flexbox, FlexboxItem, XButton, Cell, Group
   },
   data() {
     return {
