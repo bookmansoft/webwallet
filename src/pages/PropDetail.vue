@@ -200,24 +200,29 @@ export default {
       })
     },
 
-    wxReady() {
-      this.$wechat.ready(function () {   //需在用户可能点击分享按钮前就先调用
+    wxReady(prop) {
+      let that = this
+      that.$wechat.ready(function () {   //需在用户可能点击分享按钮前就先调用
           //分享给朋友
           let title = '游戏金道具分享'
-          let desc = this.prop.result.props_name
-          let link = this.GLOBAL.siteUri + '/?path=/prop/receive'
-          let imgUrl = this.prop.result.large_icon
-          this.$wechat.onMenuShareAppMessage({ 
+          let desc = 'T10自行反坦克车'
+          let link = that.GLOBAL.siteUri + '/?path=/prop/receive'
+          let imgUrl = 'http://114.116.148.48:9701/image/3/prop_large_icon.jpg' //prop.result.large_icon
+          that.$wechat.onMenuShareAppMessage({ 
               title: title, // 分享标题
               desc: desc, // 分享描述
               link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
               imgUrl: imgUrl, // 分享图标
               success: function () {
                 // 设置成功
+                alert('设置成功')
+              },
+              fail: function() {
+                alert('设置失败')
               }
           })
           //分享到朋友圈
-          wx.onMenuShareTimeline({
+          that.$wechat.onMenuShareTimeline({
               title: title, // 分享标题
               link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
               imgUrl: imgUrl, // 分享图标
@@ -259,7 +264,7 @@ export default {
         this.$router.push('/props')
     } else {
         this.prop = this.$route.params.prop
-        this.wxReady()
+        this.wxReady(this.prop)
         console.log('this.prop', this.prop.result.more_icon)
         this.propShareIcon = this.prop.result.large_icon
         this.prop.result.more_icon.forEach( item => {
