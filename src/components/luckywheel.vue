@@ -57,10 +57,10 @@
     </div>
 </template>
 <script>
-import { XHeader, Grid, GridItem, Group } from 'vux'
+import { XHeader} from 'vux'
 export default {
   components: {
-    XHeader, Balance, Grid, GridItem, Group
+    XHeader
   },
   data() {
     return {
@@ -136,7 +136,7 @@ export default {
     onBack() {
         this.$router.push('/mine')
     },
-    
+
     toast_title() {
       return this.hasPrize
         ? "恭喜您，获得" +this.prize_list[this.index].count + ' ' + this.prize_list[this.index].name
