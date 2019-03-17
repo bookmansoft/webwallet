@@ -49,14 +49,17 @@ export default {
             this.showPlugin('游戏金ID不能为空')
             return
         }
+        
         if(this.password == '') {
             this.showPlugin('密码不能为空')
             return
         }
+
         if(this.GLOBAL.userBase.openid == null) {
             this.showPlugin('未用微信账号登录，现在无法绑定')
             return 
         }
+
         this.showLoading = true
         setTimeout(()=>{
             this.showPlugin('游戏金ID或密码错误')

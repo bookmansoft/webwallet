@@ -15,7 +15,7 @@ export default {
   },
   data () {
     return {
-
+      urlParamPath: '',
     }
   },
   methods: {
@@ -70,6 +70,9 @@ export default {
     wxAuthCode() {
         console.log('wxAuthod')
         let redirect_uri = this.GLOBAL.siteUri
+        if(this.urlParamPath != null) {
+          redirect_uri = redirect_uri + '?path=' + this.urlParamPath 
+        }
         //let redirect_uri = 'http://test.gamegold.xin/'
         let url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4a5e9d7ae34ad4b4'
         url += '&redirect_uri='+redirect_uri+'&response_type=code&scope=snsapi_base&state=1#wechat_redirect'
@@ -86,8 +89,7 @@ export default {
     },
 
     gotoHome() {
-        let path = this.utils.getUrlKey('path')
-        if(path==null || this.isValidPath(path)==false) {
+        if(this.urlParamPath==null || this.isValidPath(this.urlParamPath)==false) {
           this.$router.push('/home')
         } else {
           this.$router.push(path)
@@ -96,6 +98,7 @@ export default {
 
   },
   created() {
+    this.urlParamPath = this.utils.getUrlKey('path')
     let userAgent = this.checkUserAgent()
     this.GLOBAL.userBase.userAgent = userAgent
     console.log('userAgent', userAgent)
