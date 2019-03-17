@@ -15,6 +15,7 @@ import GameIntro from '@/pages/GameIntro'
 import PropDetail from '@/pages/PropDetail'
 import ContractInfo from '@/pages/ContractInfo'
 import PropSaleInfo from '@/pages/PropSaleInfo'
+import PropReceive from '@/pages/PropReceive'
 import About from '@/pages/About'
 import Member from '@/pages/Member'
 import OrderPay from '@/pages/OrderPay'
@@ -58,5 +59,6 @@ export default new Router({
     { path: '/mygame', name: 'MyGame', component: MyGame },
     { path: '/user/bind', name: 'UserBind', component: UserBind },
     { path: '/login', name: 'Login', component: Login },
+    { path: '/prop/receive', name: 'PropReceive', component: PropReceive },
   ]
 })

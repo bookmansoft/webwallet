@@ -208,6 +208,12 @@ export default {
           let desc = 'T10自行反坦克车'
           let link = that.GLOBAL.siteUri + '/?path=/prop/receive'
           let imgUrl = 'http://114.116.148.48:9701/image/3/prop_large_icon.jpg' //prop.result.large_icon
+          let params = JSON.stringify({
+            title:title,
+            desc:desc,
+            imgUrl: encodeURIComponent(imgUrl)
+          })
+          link = link + '&prop=' + params
           that.$wechat.onMenuShareAppMessage({ 
               title: title, // 分享标题
               desc: desc, // 分享描述
@@ -215,10 +221,10 @@ export default {
               imgUrl: imgUrl, // 分享图标
               success: function () {
                 // 设置成功
-                alert('设置成功')
+                //alert('设置成功')
               },
               fail: function() {
-                alert('设置失败')
+                //alert('设置失败')
               }
           })
           //分享到朋友圈

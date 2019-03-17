@@ -179,7 +179,7 @@ export default {
 .avatar {
     width: 5rem;
     height: 5rem;
-    border-radius: 50%;
+    /*border-radius: 50%;*/
 }
 
 .flex-demo-left {
