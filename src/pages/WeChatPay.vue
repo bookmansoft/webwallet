@@ -6,7 +6,7 @@
             <inline-loading></inline-loading>
             </p>
       </div>
-      <div v-else>
+      <div v-else-if="payResult==false">
         <group>
             <cell title="商品" :value="order.product_info"></cell>
             <cell title="价格" :value="order.order_num"></cell>
@@ -15,17 +15,20 @@
             <x-button @click.native="jsSDK()" type="primary" v-bind:show-loading="showLoading"> 确定支付</x-button>
          </div>
        </div>
+       <div v-else>
+           <msg :title="payTitle" :icon="payIcon"></msg>
+       </div>
     <br>
   </div>
 </template>
 
 <script>
-import { InlineLoading, Cell, Group, XButton } from 'vux'
+import { InlineLoading, Cell, Group, XButton, Msg  } from 'vux'
 //import { setTimeout } from 'timers';
 
 export default {
   components: {
-    InlineLoading, Cell, Group, XButton
+    InlineLoading, Cell, Group, XButton, Msg 
   },
   data () {
     return {
@@ -33,7 +36,10 @@ export default {
       tradeId: '',
       orderPre: true,
       showLoading: false,
-      orderParams: null
+      orderParams: null,
+      payResult: false,
+      payIcon: 'waiting',
+      payTitle: '支付中'
     }
   },
   methods: {
@@ -85,6 +91,8 @@ export default {
     },
 
     onBridgeReady (params) {
+        let that = this
+        that.payResult = true
         window.WeixinJSBridge.invoke(
             'getBrandWCPayRequest', {
                 'appId': params.appId, // 公众号名称，由商户传入
@@ -95,7 +103,13 @@ export default {
                 'paySign': params.paySign // 微信签名
             },
             function (res) {
-                console.log(res)
+                if(res.err_msg == "get_brand_wcpay_request:ok" ){
+                    that.payTitle = '支付成功'
+                    that.payIcon = 'warn'
+                } else {
+                    that.payTitle = '支付失败'
+                    that.payIcon = 'warn'
+                }
             }
         )
     }
