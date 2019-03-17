@@ -16,6 +16,7 @@
          </div>
        </div>
        <div v-else>
+           <br/>
            <msg :title="payTitle" :icon="payIcon"></msg>
        </div>
     <br>
@@ -24,6 +25,7 @@
 
 <script>
 import { InlineLoading, Cell, Group, XButton, Msg  } from 'vux'
+import { setTimeout } from 'timers';
 //import { setTimeout } from 'timers';
 
 export default {
@@ -44,13 +46,13 @@ export default {
   },
   methods: {
     getWxConfig() {
-        const url = location.href.split("#")[0];
+        const url = location.href.split("#")[0]
         let data = {func:'WechatConfig', control: 'wechat', url: url, oemInfo: this.GLOBAL.oemInfo}
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-            console.log(res.data);
+            console.log(res.data)
             this.$wechat.config(res.data.wxconfig)
         }).catch(res => {
-            console.log(res);
+            console.log(res)
         })
     },
     unifiedOrder() {
@@ -64,7 +66,7 @@ export default {
             price: this.order.order_num,
             productInfo: this.order.product_info,
             oemInfo: this.GLOBAL.oemInfo
-        };
+        }
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
             if(res.data.errcode=='success') {
                 this.orderParams = res.data.unifiedOrder
@@ -72,7 +74,7 @@ export default {
                 this.orderPre = false
                 //this.jsSDK(unifiedOrder)
             }
-        });    
+        })   
     },
 
     jsSDK() {
@@ -105,14 +107,38 @@ export default {
             function (res) {
                 if(res.err_msg == "get_brand_wcpay_request:ok" ){
                     that.payTitle = '支付成功'
-                    that.payIcon = 'warn'
+                    that.payIcon = 'success'
+                    that.orderNotify()
                 } else {
                     that.payTitle = '支付失败'
                     that.payIcon = 'warn'
+                    setTimeout(()=>{
+                        that.$router.go(-1)
+                    }, 1000)
                 }
             }
         )
+    },
+
+    orderNotify() {
+        let data = {
+            func: 'OrderPayResutl',         //action
+            uid: this.GLOBAL.userBase.uid,
+            tradeId: this.tradeId,
+            status: 1,
+            msg: 'success',
+            control: 'order',               //控制器
+            oemInfo: this.GLOBAL.oemInfo
+        }
+        this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+            if(res.data.errcode=='success') {
+                setTimeout(()=>{
+                    this.$router.go(-1)
+                }, 1000)
+            }
+        }) 
     }
+
   },
 
   created() {
