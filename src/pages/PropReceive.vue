@@ -70,6 +70,7 @@ export default {
 
   created() {
       let prop = this.utils.getUrlKey('prop')
+      console.log(prop)
       this.prop = JSON.parse(prop)
       console.log(this.prop)
   }
