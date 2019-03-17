@@ -210,7 +210,7 @@ export default {
           let imgUrl = 'http://114.116.148.48:9701/image/3/prop_large_icon.jpg' //prop.result.large_icon
           let params = JSON.stringify({
             title:title,
-            desc:desc,
+            desc: desc,
             imgUrl: imgUrl
           })
           link = link + '&prop=' + params

@@ -6,6 +6,7 @@
             <img :src="prop.imgUrl">
         </div>
         <div id="centImg" class="backcolor-white" style="height:90px;">
+            <div></div>
             <ul class="center-ul" style="position:relative; top:-80px;">
                 <li><span class="prop-name">{{prop.desc}}</span></li>
 
@@ -13,12 +14,15 @@
         </div>      
 
     </div>
-
+    <div style="padding:15px;">
+      <x-button @click.native="propRec()" type="primary" > 接收</x-button>
+    </div>
   </div>
 </template> 
 <script>
 import {XHeader, Flexbox, FlexboxItem, TransferDomDirective as TransferDom } from 'vux'
 import { introduce , gameNameImg , gameProps} from "../assets/js/gameName.js"
+import { setTimeout } from 'timers';
 
 export default {
   directives: {
@@ -65,6 +69,13 @@ export default {
         this.$vux.alert.hide()
       }, 2000)
     },
+
+    propRec() {
+      this.showPlugin('道具已成功接收')
+      setTimeout(()=>{
+        this.onBack()
+      }, 500)
+    }
 
   },
 
