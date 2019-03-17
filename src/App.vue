@@ -28,7 +28,6 @@ export default {
   },
   methods: {
  
-
   },
 
   //监听路由的路径，可以通过不同的路径去选择不同的切换效果 
@@ -45,7 +44,7 @@ export default {
   },
   
   created() {
-    
+    console.log(this.$route.path)
   }
 }
 </script>

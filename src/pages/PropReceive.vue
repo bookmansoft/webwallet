@@ -29,6 +29,7 @@ export default {
   },
   data() {
     return {
+        headerTitle: '道具分享',
         prop: {}
     };
   },
@@ -70,6 +71,7 @@ export default {
   created() {
       let prop = this.utils.getUrlKey('prop')
       this.prop = JSON.parse(prop)
+      console.log(this.prop)
   }
 };
 </script>

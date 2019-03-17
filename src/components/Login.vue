@@ -47,7 +47,7 @@ export default {
     },
 
     GetUserFromMapCode(code) {
-        console.log('GetUserFromMapCode')
+        console.log('GetUserFromMapCode', code)
         let data = {func:'GetUserFromMapCode', control: 'wechat', code: code, oemInfo: this.GLOBAL.oemInfo}
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
             console.log(res.data)
@@ -70,10 +70,11 @@ export default {
     wxAuthCode() {
         console.log('wxAuthod')
         let redirect_uri = this.GLOBAL.siteUri
-        if(this.urlParamPath != null) {
-          redirect_uri = redirect_uri + '?path=' + this.urlParamPath 
+        if (location.search.indexOf("?") == 0 && location.search.indexOf("=") > 1) {
+          //arrSource = location.search.substring(1, this.location.search.length)
+          redirect_uri = redirect_uri + location.search
         }
-        //let redirect_uri = 'http://test.gamegold.xin/'
+        console.log('redirect_uri', redirect_uri)
         let url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4a5e9d7ae34ad4b4'
         url += '&redirect_uri='+redirect_uri+'&response_type=code&scope=snsapi_base&state=1#wechat_redirect'
         window.location.href = url
@@ -81,6 +82,7 @@ export default {
 
     isValidPath(path) {
       this.$router.options.routes.forEach(element => {
+        console.log(element.path)
         if(element.path==path) {
           return true
         }
@@ -89,10 +91,11 @@ export default {
     },
 
     gotoHome() {
-        if(this.urlParamPath==null || this.isValidPath(this.urlParamPath)==false) {
+        //this.showPlugin(this.urlParamPath)
+        if(this.urlParamPath==null) {
           this.$router.push('/home')
         } else {
-          this.$router.push(path)
+          this.$router.push(this.urlParamPath)
         }
     }
 

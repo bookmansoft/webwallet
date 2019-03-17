@@ -211,9 +211,9 @@ export default {
           let params = JSON.stringify({
             title:title,
             desc:desc,
-            imgUrl: encodeURIComponent(imgUrl)
+            imgUrl: imgUrl
           })
-          link = link + '&prop=' + params
+          link = encodeURIComponent(link + '&prop=' + params)
           that.$wechat.onMenuShareAppMessage({ 
               title: title, // 分享标题
               desc: desc, // 分享描述
