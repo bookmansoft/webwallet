@@ -1,62 +1,70 @@
 <template>
-    <div class="container">
-        <div class="lucky-wheel">
-            <div class="lucky-title"></div>
-            <div class="wheel-main">
-                <div class="wheel-pointer-box">
-                     <div class="wheel-pointer" @click="rotate_handle()" :style="{transform:rotate_angle_pointer,transition:rotate_transition_pointer}"></div>
-                </div>               
-                <div class="wheel-bg" :style="{transform:rotate_angle,transition:rotate_transition}">                   
-                    <div class="prize-list">
-                        <div class="prize-item" v-for="(item,index) in prize_list" :key="index">
-                            <div class="prize-pic">
-                                <img :src="item.icon">
-                            </div>
-                            <div class="prize-count" v-if="item.count">
-                                {{item.count}}
-                            </div>
-                            <div class="prize-type">
-                                {{item.name}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="main">
-            <div class="main-bg"></div>
-            <div class="bg-p"></div>
-            <div class="content">
-                <div class="lottery_ticket">今日免费抽奖次数： {{ lottery_ticket}}</div>
-            </div>
-            <div class="tip">
-                <div class="tip-title">活动规则</div>
-                <div class="tip-content">
+    <div>
+      <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
+      <div class="container">
+          <div class="lucky-wheel">
+              <div class="lucky-title"></div>
+              <div class="wheel-main">
+                  <div class="wheel-pointer-box">
+                      <div class="wheel-pointer" @click="rotate_handle()" :style="{transform:rotate_angle_pointer,transition:rotate_transition_pointer}"></div>
+                  </div>               
+                  <div class="wheel-bg" :style="{transform:rotate_angle,transition:rotate_transition}">                   
+                      <div class="prize-list">
+                          <div class="prize-item" v-for="(item,index) in prize_list" :key="index">
+                              <div class="prize-pic">
+                                  <img :src="item.icon">
+                              </div>
+                              <div class="prize-count" v-if="item.count">
+                                  {{item.count}}
+                              </div>
+                              <div class="prize-type">
+                                  {{item.name}}
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="main">
+              <div class="main-bg"></div>
+              <div class="bg-p"></div>
+              <div class="content">
+                  <div class="lottery_ticket">今日免费抽奖次数： {{ lottery_ticket}}</div>
+              </div>
+              <div class="tip">
+                  <div class="tip-title">活动规则</div>
+                  <div class="tip-content">
 
-                    <p> 2.游戏金抽奖，每10个游戏金可以兑换一次大转盘抽奖机会</p>
-                    <p> 3.所中奖品将以红包形式发送到微信</p>
-                </div>
-            </div>
-        </div>
-        <div class="toast" v-show="toast_control">
-            <div class="toast-container">
-                <img :src="toast_pictrue" class="toast-picture">
-                <div class="close" @click="close_toast()"></div>
-                <div class="toast-title">
-                    {{toast_title}}
-                </div>
-                <div class="toast-btn">
-                    <div class="toast-cancel"  @click="close_toast">关闭</div>
-                </div>
-            </div>
-        </div>
-        <div class="toast-mask" v-show="toast_control"></div>
+                      <p> 2.游戏金抽奖，每10个游戏金可以兑换一次大转盘抽奖机会</p>
+                      <p> 3.所中奖品将以红包形式发送到微信</p>
+                  </div>
+              </div>
+          </div>
+          <div class="toast" v-show="toast_control">
+              <div class="toast-container">
+                  <img :src="toast_pictrue" class="toast-picture">
+                  <div class="close" @click="close_toast()"></div>
+                  <div class="toast-title">
+                      {{toast_title}}
+                  </div>
+                  <div class="toast-btn">
+                      <div class="toast-cancel"  @click="close_toast">关闭</div>
+                  </div>
+              </div>
+          </div>
+          <div class="toast-mask" v-show="toast_control"></div>
+      </div>
     </div>
 </template>
 <script>
+import { XHeader, Grid, GridItem, Group } from 'vux'
 export default {
+  components: {
+    XHeader, Balance, Grid, GridItem, Group
+  },
   data() {
     return {
+      headerTitle: '红包抽奖',
       easejoy_bean: 0, //金豆
       lottery_ticket: 0, //抽奖次数
       prize_list: [
@@ -125,6 +133,10 @@ export default {
     this.init_prize_list();
   },
   computed: {
+    onBack() {
+        this.$router.push('/mine')
+    },
+    
     toast_title() {
       return this.hasPrize
         ? "恭喜您，获得" +this.prize_list[this.index].count + ' ' + this.prize_list[this.index].name
