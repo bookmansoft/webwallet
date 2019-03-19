@@ -47,7 +47,7 @@ import { Cell, CellBox, CellFormPreview, Group, Badge, Flexbox, FlexboxItem } fr
 
 const getItems0 = () => [
   {title: '会员', is_link: true, img: 'static/img/icon1/4.png', badge: 0, link: '/member', value: '普通会员', showDot: false},
-  {title: '抽奖', is_link: true, img: 'static/img/icon3/market3.png', badge: 0, link: '/lucky', value: '游戏金抽奖', showDot: false}
+  {title: '红包活动', is_link: true, img: 'static/img/icon3/market3.png', badge: 0, link: '/redpack/act', value: '游戏金抽红包', showDot: false}
 ]
 const getItems1 = () => [
   {title: '我的钱包', is_link: true, img: 'static/img/mine/wallet.png', badge: 0, link: {path:'/wallet'}, value: ''},
@@ -132,7 +132,7 @@ export default {
   },
   created() {
     console.log('this.GLOBAL.userProfile', this.GLOBAL.userProfile)
-    console.log('this.GLOBAL.openid', this.GLOBAL.openid)
+    console.log('this.GLOBAL.openid', this.GLOBAL.userBase.openid)
     if(this.GLOBAL.userProfile == null) {
       this.getUserProfil()
     } else {

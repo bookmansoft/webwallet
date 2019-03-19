@@ -65,7 +65,7 @@ export default {
     return {
       headerTitle: '红包抽奖',
       easejoy_bean: 0, //金豆
-      lottery_ticket: 5, //抽奖次数
+      lottery_ticket: 0, //抽奖次数
       prize_list: [
         {
           icon: require("../assets/img/bean_500.png"), // 奖品图片
@@ -125,11 +125,19 @@ export default {
       rotate_transition: "transform 6s ease-in-out", //初始化选中的过度属性控制
       rotate_transition_pointer: "transform 12s ease-in-out", //初始化指针过度属性控制
       click_flag: true, //是否可以旋转抽奖
-      index: 0 
+      index: 0,
+      redPackAct: null
     };
   },
   created() {
-    this.init_prize_list();
+    if(!!!this.$route.params.lotteryTicket) {
+       this.onBack()
+    } else {
+      this.lottery_ticket = this.$route.params.lotteryTicket
+      this.redPackAct = this.$route.params.redPackAct
+      this.init_prize_list();
+    }
+    
   },
   computed: {
     toast_title() {
@@ -155,7 +163,8 @@ export default {
     init_prize_list(list) {},
     rotate_handle() {
       if(this.lottery_ticket==0) {
-        this.showPlugin('今天抽奖结束')
+        this.showPlugin('本次抽奖结束')
+        this.onBack()
         return
       }
       this.lottery_ticket--
@@ -196,14 +205,31 @@ export default {
     game_over() {
       this.toast_control = true;
       this.hasPrize = this.prize_list[this.index].isPrize
+      this.UserRedPackAdd()
     },
     //关闭弹窗
     close_toast() {
       this.toast_control = false;
     },
     onBack() {
-        this.$router.push('/mine')
+        this.$router.push('/redpack/act')
     },
+    UserRedPackAdd() {
+        let data = {func:'UserRedPackAdd', control: 'redact', oemInfo: this.GLOBAL.oemInfo,
+          uid: this.GLOBAL.userBase.uid, 
+          act_id: this.redPackAct.id,
+          act_name: this.redPackAct.act_name,
+          gamegold: 100000,
+          amount: 200
+        }
+        this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+            console.log('UserRedPackAdd', res.data)
+            if(res.data.errcode=='success') {
+                
+            }
+        });
+    },
+
   }
 };
 </script>

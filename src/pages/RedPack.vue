@@ -1,6 +1,6 @@
 <template>
   <div>
-      <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
+    <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
     <group title="红包测试">
         <div style="padding:15px;"><p>{{version}}</p></div>
     </group>

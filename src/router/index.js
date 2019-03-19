@@ -24,6 +24,7 @@ import MemberDrawLog from '@/pages/MemberDrawLog'
 import Message from '@/pages/Message'
 import PropOrderPay from '@/pages/PropOrderPay'
 import RedPack from '@/pages/RedPack'
+import RedPackAct from '@/pages/RedPackAct'
 import MyGame from '@/pages/MyGame'
 import UserBind from '@/components/UserBind'
 import Login from '@/components/Login'
@@ -57,6 +58,7 @@ export default new Router({
     { path: '/message', name: 'Message', component: Message },
     { path: '/prop/order/pay', name: 'PropOrderPay', component: PropOrderPay },
     { path: '/redpack', name: 'RedPack', component: RedPack },
+    { path: '/redpack/act', name: 'RedPackAct', component: RedPackAct },
     { path: '/mygame', name: 'MyGame', component: MyGame },
     { path: '/user/bind', name: 'UserBind', component: UserBind },
     { path: '/login', name: 'Login', component: Login },
