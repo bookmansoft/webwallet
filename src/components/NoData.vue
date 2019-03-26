@@ -41,11 +41,11 @@ export default {
   /*设定这个div的margin-top的负值为自身的高度的一半,margin-left的值也是自身的宽度的一半的负值.*/ 
     /*高为400,那么margin-top为-200px*/ 
     /*宽为700那么margin-left为-350px;*/ 
-  margin: -180px 0 0 -350px;
+  margin: -100px 0 0 -350px;
 }
 
 .no-data-box img {
-    width: 15rem;
-    height: 15rem;
+    width: 12rem;
+    height: 12rem;
 }
 </style>
