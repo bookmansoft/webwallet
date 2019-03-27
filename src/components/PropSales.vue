@@ -9,9 +9,9 @@
             </div></flexbox-item>
             <flexbox-item>
             <div style="padding-left:0px;">
-                <p><span style="color: #888; font-size:15px;">出售价：{{GLOBAL.formatGameGold(item.fixed)}}千克</span></p>
+                <p><span style="color: #888; font-size:15px;">出售价：{{GLOBAL.formatGameGold(item.bid.fixed)}}千克</span></p>
                 <br/>
-                <p><span style="color: red; font-size:14px;">含金量：{{GLOBAL.formatGameGold(item.gold)}}千克</span></p>
+                <p><span style="color: red; font-size:14px;">含金量：{{GLOBAL.formatGameGold(item.bid.value)}}千克</span></p>
                 <!--<p><span style="color: #888; font-size:10px;">{{item.addr}}</span></p>-->
             </div>
             </flexbox-item>

@@ -130,9 +130,9 @@ export default {
 
     propFound() {
         let prop = this.prop;
-        console.log(prop);
-				console.log(prop.current.rev);
-				var data = {func: 'PropFound', control: 'prop', oemInfo: this.GLOBAL.oemInfo, txid: prop.current.rev};
+        console.log('propFound', prop);
+				console.log(prop.current.hash);
+				var data = {func: 'PropFound', control: 'prop', oemInfo: this.GLOBAL.oemInfo, pid: prop.pid};
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
           console.log(res.data);
           if(res.data.errcode='success') {
@@ -170,13 +170,12 @@ export default {
     propSale(amount) {
       let prop = this.prop;
         console.log(prop);
-        console.log(prop.current.rev);
+        console.log(prop.current.hash);
         var data = {
           func: 'PropSale', control: 'prop', oemInfo: this.GLOBAL.oemInfo,
-          txid: prop.current.rev,
-          index: prop.current.index,
+          pid: prop.pid,
           fixedPrice: amount,
-          openid: this.GLOBAL.openid
+          uid: this.GLOBAL.userBase.uid
         };
         console.log(data.index);
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
@@ -248,9 +247,8 @@ export default {
       let prop = this.prop;
       var data = {
         func: 'PropDonate', control: 'prop', oemInfo: this.GLOBAL.oemInfo,
-        txid: prop.current.rev,
-        index: prop.current.index,
-        openid: this.GLOBAL.openid
+        pid: prop.pid,
+        uid: this.GLOBAL.userBase.uid
       };
       this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
           var rep = res.data;
