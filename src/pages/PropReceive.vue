@@ -66,10 +66,27 @@ export default {
     },
 
     propRec() {
-      this.showPlugin('道具已成功接收')
-      setTimeout(()=>{
-        this.onBack()
-      }, 500)
+      if(!this.prop.hasOwnProperty('raw')) {
+        this.showPlugin('无效的道具分享')
+        return
+      }
+
+      var data = {
+        func: 'PropReceive', control: 'prop', oemInfo: this.GLOBAL.oemInfo,
+        raw: this.prop.raw,
+        uid: this.GLOBAL.userBase.uid
+      };
+      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+          var rep = res.data;
+          console.log("donate " + rep);
+          if(rep.errcode == 'success') { 
+            this.showPlugin('道具已成功接收')
+            setTimeout(()=>{
+              this.$router.push('/props')
+            }, 1000)
+            
+          }
+      });
     }
 
   },
