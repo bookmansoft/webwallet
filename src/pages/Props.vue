@@ -116,8 +116,7 @@ export default {
       // 道具数量
       getPropCount() {
         let data = { func: 'PropCount', control: 'prop', oemInfo: this.GLOBAL.oemInfo, 
-            uid: this.GLOBAL.uid, 
-            openid: this.GLOBAL.openid, 
+            uid: this.GLOBAL.userBase.uid
         };
         let that = this;
         that.axios.post(this.GLOBAL.apiUrl, data).then(res => {
@@ -133,7 +132,7 @@ export default {
       // 发送请求 获取道具
       getProps(page) {
         let data = { func: 'PropList', control: 'prop', oemInfo: this.GLOBAL.oemInfo, 
-            openid: this.GLOBAL.openid, 
+            uid: this.GLOBAL.userBase.uid, 
             page: page, 
         };
         let that = this;
@@ -166,6 +165,7 @@ export default {
       },
 
       getPropFromCp(prop) {
+          console.log('prop', prop)
           let url = encodeURI(prop.cp.url + '/prop/' + prop.oid)
           let data = {func:'GetCpProxy', control: 'cp', url: url, oemInfo: this.GLOBAL.oemInfo} 
           this.axios.post(this.GLOBAL.apiUrl, data).then(resProxy => {
