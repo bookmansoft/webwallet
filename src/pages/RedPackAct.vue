@@ -37,12 +37,16 @@
                     <flexbox-item >
                         <div class="flex-demo">
                             <p v-if="item.status==0">
-                                <x-button type="primary" @click.native="userRedPackSend(item)" style="width:80px; height:40px;">
+                                <x-button type="primary" @click.native="userRedPackSend(item)" class="redpackBtn">
                                     <span style="font-size:14px;">领取</span></x-button>
                             </p>
                             <p v-else-if="item.status==1">
-                                <x-button :disabled="true" type="default" style="width:60px; height:40px;">
-                                    <span style="font-size:14px;">已领</span></x-button>
+                                <x-button :disabled="true" type="default" class="redpackBtn">
+                                    <span style="font-size:14px;">待确认</span></x-button>
+                            </p>
+                            <p v-else-if="item.status==2">
+                                <x-button :disabled="true" type="default" class="redpackBtn">
+                                    <span style="font-size:14px;">已发送</span></x-button>
                             </p>
                         </div>
                     </flexbox-item>
@@ -144,6 +148,7 @@ export default {
             act_id: item.act_id,
             oemInfo: this.GLOBAL.oemInfo
           }
+
           this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
               console.log('UserRedPackSend', res.data)
               if(res.data.errcode=='success') {
@@ -178,3 +183,12 @@ export default {
 
 }
 </script>
+
+<style scoped lang="less">
+.redpackBtn {
+    width: 40px; 
+    height: 25px; 
+    line-height: 25px;
+}
+
+</style>
