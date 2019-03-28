@@ -123,7 +123,7 @@ export default {
         let data = {func:'List', control: 'cp', page: page, num: num, oemInfo: this.GLOBAL.oemInfo}
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
             if(res.data.errcode == 'success') {
-              //console.log('getCpList', res.data)
+              console.log('getCpList', res.data)
               //清空
               if(this.GLOBAL.cplist.length >0 ) {
                 this.GLOBAL.cplist.splice(0, this.GLOBAL.cplist.length)

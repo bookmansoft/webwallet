@@ -78,7 +78,7 @@
                     <p>{{item.props_name}}</p>
                     <p>&nbsp;<p>
                     <p>{{item.props_desc}}</p>
-                    <a class="gp-btn" @click="buyProp(item)">体验</a>
+                    <a class="gp-btn" @click="buyProp(item)">购买</a>
                     <p class="color-red">{{item.props_price}}千克</p>
                 </div>
             </div>
@@ -299,7 +299,7 @@ export default {
     buyProp(item) {
         //this.showPlugin('暂未开放，请稍后再来')
         //return
-        if(this.cpAddr == '' || this.GLOBAL.openid == '') {
+        if(this.cpAddr == '' || this.GLOBAL.userBase.uid == 0) {
             return;
         }
 
@@ -319,16 +319,16 @@ export default {
           func:'OrderPay', 
           control: 'order', 
           cid: this.cpItem.cid, 
-          user_id: this.GLOBAL.uid,
+          user_id: this.GLOBAL.userBase.uid,
           sn: order_sn,
           price: this.GLOBAL.gameGoldOrigin(item.props_price),
-          account: this.GLOBAL.uid,
+          account: this.GLOBAL.userBase.uid,
           oemInfo: this.GLOBAL.oemInfo
         }
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
             console.log(res.data)
             if(res.data.errcode == 'success') {
-              this.showPlugin('道具订单已发送至游戏厂商，请等待支付通知')
+              this.showPlugin('道具已购买成功')
             } else {
               this.showPlugin('你的游戏金余额不足')
             }
@@ -386,14 +386,15 @@ export default {
             return
         }
         let data = {func:'UserToken', control: 'cp', oemInfo: this.GLOBAL.oemInfo,
-            uid: this.GLOBAL.uid,
-            account: this.GLOBAL.uid, 
-            user_id: this.GLOBAL.uid,
+            uid: this.GLOBAL.userBase.uid,
+            account: this.GLOBAL.userBase.uid, 
+            user_id: this.GLOBAL.userBase.uid,
             cid: this.cpItem.cid
         }
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
             //console.log(res.data)
             this.cpAddr = res.data.ret.data.addr
+            console.log('cpAddr', this.cpAddr)
         });
     }
   },

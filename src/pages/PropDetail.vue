@@ -130,9 +130,9 @@ export default {
 
     propFound() {
         let prop = this.prop;
-        console.log(prop);
-				console.log(prop.current.rev);
-				var data = {func: 'PropFound', control: 'prop', oemInfo: this.GLOBAL.oemInfo, txid: prop.current.rev};
+        console.log('propFound', prop);
+				console.log(prop.current.hash);
+				var data = {func: 'PropFound', control: 'prop', oemInfo: this.GLOBAL.oemInfo, pid: prop.pid};
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
           console.log(res.data);
           if(res.data.errcode='success') {
@@ -170,13 +170,12 @@ export default {
     propSale(amount) {
       let prop = this.prop;
         console.log(prop);
-        console.log(prop.current.rev);
+        console.log(prop.current.hash);
         var data = {
           func: 'PropSale', control: 'prop', oemInfo: this.GLOBAL.oemInfo,
-          txid: prop.current.rev,
-          index: prop.current.index,
+          pid: prop.pid,
           fixedPrice: amount,
-          openid: this.GLOBAL.openid
+          uid: this.GLOBAL.userBase.uid
         };
         console.log(data.index);
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
@@ -200,20 +199,22 @@ export default {
       })
     },
 
-    wxReady(prop) {
+    wxReady(prop, raw) {
       let that = this
       that.$wechat.ready(function () {   //需在用户可能点击分享按钮前就先调用
           //分享给朋友
           let title = '游戏金道具分享'
-          let desc = 'T10自行反坦克车'
+          let desc = prop.result.props_name //'T10自行反坦克车'
           let link = that.GLOBAL.siteUri + '/?path=/prop/receive'
-          let imgUrl = 'http://114.116.148.48:9701/image/3/prop_large_icon.jpg' //prop.result.large_icon
+          let imgUrl = prop.result.large_icon // 'http://114.116.148.48:9701/image/3/prop_large_icon.jpg' //prop.result.large_icon
           let params = JSON.stringify({
-            title:title,
+            title: title,
             desc: desc,
-            imgUrl: imgUrl
+            imgUrl: imgUrl,
+            raw: raw
           })
           link = link + '&prop=' + params
+          console.log(link)
           that.$wechat.onMenuShareAppMessage({ 
               title: title, // 分享标题
               desc: desc, // 分享描述
@@ -248,18 +249,23 @@ export default {
       let prop = this.prop;
       var data = {
         func: 'PropDonate', control: 'prop', oemInfo: this.GLOBAL.oemInfo,
-        txid: prop.current.rev,
+        txid: prop.current.hash,
         index: prop.current.index,
-        openid: this.GLOBAL.openid
+        uid: this.GLOBAL.userBase.uid
       };
       this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
           var rep = res.data;
           console.log("donate " + rep);
           if(rep.errcode == 'success') { 
+            /*
             var url = "/pages/prop/index?openid=" + data.openid + "&pid=" + prop.pid + "&prop_name=" + prop.result.props_name;
             url += "&txid=" + prop.current.rev + "&prop_icon=" + prop.result.large_icon + "&act=send&raw=" + rep.ret.raw;
             console.log("url " + url);
             this.$wechat.miniProgram.navigateTo({ url: url });
+            */
+             console.log('raw', rep.ret.raw)
+             this.showPlugin('点击右上角分享')
+             this.wxReady(prop, rep.ret.raw)
           }
       });
     },
@@ -270,7 +276,7 @@ export default {
         this.$router.push('/props')
     } else {
         this.prop = this.$route.params.prop
-        this.wxReady(this.prop)
+        //this.wxReady(this.prop)
         console.log('this.prop', this.prop.result.more_icon)
         this.propShareIcon = this.prop.result.large_icon
         this.prop.result.more_icon.forEach( item => {

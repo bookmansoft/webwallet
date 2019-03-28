@@ -9,8 +9,8 @@
                 </div></flexbox-item>
                 <flexbox-item>
                 <div style="padding-left:0px;">
-                    <p><span style="color: #888; font-size:15px;">出售价：{{GLOBAL.formatGameGold(propSale.fixed)}}千克</span></p>
-                    <p><span style="color: red; font-size:14px;">含金量：{{GLOBAL.formatGameGold(propSale.gold)}}千克</span></p>
+                    <p><span style="color: #888; font-size:15px;">出售价：{{GLOBAL.formatGameGold(propSale.bid.fixed)}}千克</span></p>
+                    <p><span style="color: red; font-size:14px;">含金量：{{GLOBAL.formatGameGold(propSale.bid.value)}}千克</span></p>
                     <!--<p><span style="color: #888; font-size:10px;">{{item.addr}}</span></p>-->
                 </div>
                 </flexbox-item>
@@ -72,8 +72,8 @@ export default {
                 control: 'prop',
                 oemInfo: this.GLOBAL.oemInfo,
                 pid: this.propSale.pid,
-                price: this.propSale.price,
-                openid: this.GLOBAL.openid
+                price: this.propSale.bid.fixed,
+                uid: this.GLOBAL.userBase.uid
             };
             this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
                 console.log(res.data);
