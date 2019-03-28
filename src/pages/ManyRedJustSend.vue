@@ -19,7 +19,7 @@
     </box>
 
     <div v-transfer-dom>
-      <alert v-model="show" :title="asdsds">ddd</alert>
+      <alert v-model="show" :title="好的">点击页面右上角-发送给好友，即可将该红包分享到微信好友/群。</alert>
     </div>
   </div>
 </template>
@@ -66,9 +66,8 @@ export default {
   methods: {
     //显示发送给朋友对话框
     showDialog() {
-      this.show=true;
+      this.show = true;
     }
-
   }
 };
 </script>

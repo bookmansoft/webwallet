@@ -1,19 +1,9 @@
 <template>
   <div>
-    <!--
-    <tab :line-width="3" custom-bar-width="60px" v-model="tabIndex">
-      <tab-item v-for="(item, index) in tabItems" :key="index" @on-item-click="onItemClick">
-        <span style="font-size:15px;font-weight:620;">{{item.label}}</span>
-      </tab-item>
+    <tab>
+      <tab-item selected @on-item-click="onItemClick">我领取的</tab-item>
+      <tab-item @on-item-click="onItemClick">我发出的</tab-item>
     </tab>
-    <div v-if="tabIndex==0">
-      <PropSales></PropSales>
-    </div>
-    <div v-else>
-      <Contract></Contract>
-    </div>
-    -->
-  Manage
   </div>
 </template>
 <script>
@@ -41,7 +31,9 @@ export default {
   },
   methods: {
     onItemClick(index) {
-      console.log(this.tabIndex)
+      this.tabIndex=index;
+      
+      alert(this.tabIndex);
     }
   }
 }
