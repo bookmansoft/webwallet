@@ -29,6 +29,10 @@ import MyGame from '@/pages/MyGame'
 import UserBind from '@/components/UserBind'
 import Login from '@/components/Login'
 import LuckyWheel from '@/components/luckywheel'
+import ManyRedManage from '@/pages/ManyRedManage';
+import ManyRedSend from '@/pages/ManyRedSend';
+import ManyRedJustSend from '@/pages/ManyRedJustSend';
+import ManyRedReceive from '@/pages/ManyRedReceive';
 
 Vue.use(Router)
 
@@ -64,5 +68,9 @@ export default new Router({
     { path: '/login', name: 'Login', component: Login },
     { path: '/prop/receive', name: 'PropReceive', component: PropReceive },
     { path: '/lucky', name: 'LuckyWheel', component: LuckyWheel },
+    { path: '/manyRed/manage',name:'ManyRedManage',component:ManyRedManage},
+    { path: '/manyRed/send',name:'ManyRedSend',component:ManyRedSend},
+    { path: '/manyRed/justSend',name:'ManyRedJustSend',component:ManyRedJustSend},
+    { path: '/manyRed/receive',name:'ManyRedReceive',component:ManyRedReceive},
   ]
 })
