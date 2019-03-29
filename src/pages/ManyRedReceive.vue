@@ -1,18 +1,37 @@
 <template>
   <div>
+    <div class="topDiv">
+      <div align="center">
+        <img class="topHeadImg" style="width:60px;height:60px;" src="/static/img/manyRed/head3.png">
+      </div>
+      <div align="center">
+        <label id="label1">张祖钦的游戏金红包</label>
+      </div>
+      <div align="center">
+        <label id="label2">恭喜发财，万事如意</label>
+      </div>
+    </div>
+    <div class="nextDiv">
+      <div align="center">
+        <label id="label3">0.456千克</label>
+      </div>
+      <div align="center">
+        <label id="label4">已领取，进入钱包查看> </label>
+      </div>
+    </div>
 
-      <group class="group">
-        <group-title slot="title">
-          <span class="groupTitle">已领取 16/20 个</span>
-        </group-title>
-      </group>
+    <group class="group">
+      <group-title slot="title">
+        <span class="groupTitle">已领取 16/20 个</span>
+      </group-title>
+    </group>
     <div v-show="true">
       <box gap="10px 10px">
-        <card>
+        <card class="card">
           <div slot="content">
             <flexbox>
               <flexbox-item :span="2">
-                <div id="imgDiv" align="center">
+                <div class="imgDiv" align="center">
                   <img style="width:60px;height:60px;" src="/static/img/manyRed/head1.png">
                 </div>
               </flexbox-item>
@@ -29,11 +48,11 @@
           </div>
         </card>
 
-        <card>
+        <card class="card">
           <div slot="content">
             <flexbox>
               <flexbox-item :span="2">
-                <div id="imgDiv" align="center">
+                <div class="imgDiv" align="center">
                   <img style="width:60px;height:60px;" src="/static/img/manyRed/head2.png">
                 </div>
               </flexbox-item>
@@ -51,9 +70,7 @@
         </card>
       </box>
     </div>
-
-
-   </div>
+  </div>
 </template>
 <script>
 import {
@@ -108,7 +125,24 @@ export default {
 </script>
 
 <style scoped>
-#imgDiv {
+.topDiv {
+  background-image: url(/static/img/manyRed/top.png);
+  background-repeat: no-repeat;
+  height: 200px;
+    background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+}
+.nextDiv {
+  background-color: white;
+
+}
+.imgDiv {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+.topHeadImg {
   margin-top: 20px;
   margin-bottom: 20px;
   margin-left: 15px;
@@ -124,5 +158,23 @@ export default {
 .text {
   font-size: 20px;
   line-height: 36px;
+}
+.card {
+  margin-top: -5px;
+}
+#label1 {
+  font-size: 22px;
+  color:#ffff00;
+}
+#label2 {
+  font-size: 18px;
+  color:#ffff00;
+}
+#label3 {
+  font-size: 32px;
+}
+#label4 {
+  font-size: 16px;
+  color:#888888;
 }
 </style>
