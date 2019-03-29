@@ -1,8 +1,8 @@
 <template>
   <div>
     <tab>
-      <tab-item selected @on-item-click="onItemClick">我领取的</tab-item>
-      <tab-item @on-item-click="onItemClick">我发出的</tab-item>
+      <tab-item selected @on-item-click="onTabClick">我领取的</tab-item>
+      <tab-item @on-item-click="onTabClick">我发出的</tab-item>
     </tab>
     <!--第1页-->
     <div v-show="tabIndex==0">
@@ -53,16 +53,16 @@
     <!--第2页-->
     <div v-show="tabIndex==1">
       <box gap="10px 10px">
-        <card>
+        <card  @click.native="onItemClick">
           <div slot="content">
-            <flexbox>
+            <flexbox >
               <flexbox-item :span="2">
                 <div id="imgDiv" align="center">
-                  <img style="width:60px;height:72px;" src="/static/img/manyRed/redpacketsmall.jpg">
+                  <img style="width:60px;height:72px;" src="/static/img/manyRed/redpacketsmall.jpg" >
                 </div>
               </flexbox-item>
               <flexbox-item :span="6">
-                <div class="text">
+                <div class="text" >
                   游戏金红包10个
                   <br>3-10 23:52
                 </div>
@@ -74,7 +74,7 @@
           </div>
         </card>
 
-        <card>
+        <card   @click.native="onItemClick">
           <div slot="content">
             <flexbox>
               <flexbox-item :span="2">
@@ -146,10 +146,11 @@ export default {
     };
   },
   methods: {
-    onItemClick(index) {
+    onTabClick(index) {
       this.tabIndex = index;
-
-      //alert(this.tabIndex);
+    },
+    onItemClick() {
+      this.$router.push('/manyRed/receive');
     }
   }
 };

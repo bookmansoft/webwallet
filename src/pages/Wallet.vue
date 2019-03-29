@@ -40,6 +40,18 @@ const getItems = () => [{
   index: 3,
   icon: 'static/img/icon1/5.png',
   link: '/wallet/trans'
+},{
+  label: '红包管理',
+  tag: 'manyRedManage',
+  index: 4,
+  icon: 'static/img/icon1/5.png',
+  link: '/manyRed/manage'
+},{
+  label: '发红包',
+  tag: 'manyRedSend',
+  index: 4,
+  icon: 'static/img/icon1/5.png',
+  link: '/manyRed/send'
 }]
 
 export default {
