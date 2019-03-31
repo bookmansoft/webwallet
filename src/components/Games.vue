@@ -122,8 +122,9 @@ export default {
       getCpList(page, num) {
         let data = {func:'List', control: 'cp', page: page, num: num, oemInfo: this.GLOBAL.oemInfo}
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+            console.log('getCpList', res.data)
             if(res.data.errcode == 'success') {
-              console.log('getCpList', res.data)
+              //console.log('getCpList', res.data)
               //清空
               if(this.GLOBAL.cplist.length >0 ) {
                 this.GLOBAL.cplist.splice(0, this.GLOBAL.cplist.length)
@@ -210,9 +211,14 @@ export default {
     if(this.GLOBAL.cplist.length > 0) {
       this.getCpListFromLocal()
       this.isLoadMore = true
-    } 
+    } else {
+      this.isShow = true;
+      this.getCpList(1, 10000)
+    }
+    /* 
     this.getCpCount()
-    this.isShow = true;
+    */
+    
   }
 }
 </script>

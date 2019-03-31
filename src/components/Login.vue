@@ -93,6 +93,8 @@ export default {
 
     gotoHome() {
         //this.showPlugin(this.urlParamPath)
+        this.GLOBAL.initRemote(this.GLOBAL.userBase.uid)
+        
         if(this.urlParamPath==null) {
           this.$router.push('/home')
         } else {

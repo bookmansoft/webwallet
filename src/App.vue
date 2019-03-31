@@ -27,42 +27,7 @@ export default {
 
   },
   methods: {
-    async initRemote() {
-      //创建连接器对象
-      let remote = new toolkit.gameconn(
-        // CommMode = {
-        //     ws: "webSocket",    //Web Socket
-        //     get: "get",         //HTTP GET
-        //     post: "post",       //HTTP POST
-        // }
-        toolkit.gameconn.CommMode.ws,      //连接方式
-        {
-          "UrlHead": "http",              //协议选择: http/https
-          "webserver": {
-            "host": "192.168.5.73",        //远程主机地址
-            "port": 9901                //远程主机端口
-          },
-          "auth": {
-            "openid": "18681223392",    //用户标识
-            "openkey": "18681223392",   //和用户标识关联的用户令牌
-            "domain": "tx.IOS",         //用户所在的域，tx是提供登录验证服务的厂商类别，IOS是该厂商下的服务器组别
-          }
-        }
-      )
-      this.GLOBAL.remote = remote
-      console.log('remote', this.GLOBAL.remote)
-
-      let msg = await remote.login({openid: 10005882});
-      //console.log(remote.NotifyType.test)
-      console.log('msg', msg)
-      if(remote.isSuccess(msg)) { 
-          await remote.watch(msg => {
-              console.log(msg);
-              console.log('收到消息了');
-          }, '9999').fetching({func: "test.notify", id: 10005882});
-      }
-
-    }
+    
   },
 
   //监听路由的路径，可以通过不同的路径去选择不同的切换效果 
@@ -78,11 +43,10 @@ export default {
       }
   },
   
-
   created() {
     console.log(this.$route.path)
-    this.initRemote()
   }
+  
 }
 </script>
 
