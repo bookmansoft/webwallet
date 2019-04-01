@@ -85,6 +85,7 @@ export default {
   },
   created() {
     this.getTxLogs()
+    this.GLOBAL.hasTx = false
   }
 }
 </script>

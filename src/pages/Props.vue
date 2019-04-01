@@ -96,6 +96,7 @@ export default {
       onBack() {
         this.$router.push('/mine')
       },
+
       selPullUp() {
         console.log('selPullUp')  
         this.showLoading = true
@@ -103,6 +104,7 @@ export default {
           this.getProps(this.PageIndex)
         }, 1000)
       },
+
       scrollerReset() {
         this.$refs.scroller.donePullup()
         //this.$refs.scroller.reset({top: 500})
@@ -137,18 +139,22 @@ export default {
         };
         let that = this;
         that.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+            console.log(res.data)
             if(res.data.errcode=='success') {
               //console.log('props.length', res.data.props.length)  
+              that.groupTitle = '道具数量：'+ res.data.count
               that.PageIndex++
               if(res.data.props.length >0 ) {
                   res.data.props.sort(function(a, b){
                       return  b.time - a.time;
                   });
               }
+
               for (var i = 0; i < res.data.props.length; i++) {
                   let prop = res.data.props[i]
                   that.getPropFromCp(prop)
               }
+
               if(res.data.props.length < 10) {
                 //console.log('pullupStatus.disabled')
                 that.scrollerStatus.pullupStatus = 'disabled' // 禁用下拉
@@ -158,6 +164,7 @@ export default {
                 that.scrollerStatus.pullupStatus = 'default' 
                 this.getProps(that.PageIndex)
               }
+
             }
             //that.scrollerReset()
             that.showLoading = false
@@ -201,7 +208,7 @@ export default {
         this.$refs.scroller.reset()
     })
     */
-    this.getPropCount()
+    this.getProps()
   }
 }
 </script>

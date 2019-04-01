@@ -37,6 +37,10 @@ var cplist = []
 var cpCount = 0
 var vipGetNotifyTime = 0
 var remote = null
+var hasMsg = false
+var hasProp = false
+var hasTx = false
+var hasPropAuction = false
 
 function getRandColor () {
   var tem = Math.round(Math.random() * colorListLength)
@@ -109,7 +113,7 @@ function checkAddr(value) {
     }
 }
 
-async function initRemote(uid) {
+async function initRemote(uid, callback) {
   //创建连接器对象
   remote = new toolkit.gameconn(
     // CommMode = {
@@ -136,20 +140,14 @@ async function initRemote(uid) {
   console.log('msg', msg)
   if(remote.isSuccess(msg)) { 
       await remote.watch(msg => {
-          console.log('收到消息', msg);
-          if(msg.msgType=='balance.account.client') {
-
-          } else if(msg.msgType=='balance.account.client') {
-
-          } else if(msg.msgType=='balance.account.client') {
-
+          if(callback) {
+            callback(msg)
           }
       }, '9999')
       //.fetching({func: "test.notify", id: uid});
   }
 
 }
-
 
 export default
 {
@@ -158,6 +156,6 @@ export default
   formatGameGold, gameGoldOrigin, gameGoldUnit, initRemote,
   myAlert, formatDateStr, checkAddr,
   userBase, userProfile, games, cplist, cpCount, vipGetNotifyTime,
-  remote
+  remote, hasMsg, hasProp, hasTx, hasPropAuction
 }
 </script>

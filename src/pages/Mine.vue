@@ -24,6 +24,7 @@
         <span slot="title">
           <span style="vertical-align:middle;">{{item.title}}</span>
           <badge :text="item.badge" v-if="item.badge > 0"></badge>
+          <img src="static/img/member/shot.png" style="width: 8px; height:8px; position: relative; left:-2px; top:0px;" v-if="item.showDot==true" />
         </span>
         <img slot="icon" width="20" style="display:block;margin-right:5px;" :src="item.img">
       </cell>
@@ -50,11 +51,11 @@ const getItems0 = () => [
   {title: '红包活动', is_link: true, img: 'static/img/icon3/market3.png', badge: 0, link: '/redpack/act', value: '游戏金抽红包', showDot: false}
 ]
 const getItems1 = () => [
-  {title: '我的钱包', is_link: true, img: 'static/img/mine/wallet.png', badge: 0, link: {path:'/wallet'}, value: ''},
-  {title: '我的道具', is_link: true, img: 'static/img/mine/prop.png', badge: 0, link: {path:'/props'}, value: ''},
-  {title: '我的消息', is_link: true, img: 'static/img/mine/msg.png', badge: 0, link: {path:'/message'}, value: ''},
-  {title: '我的交易', is_link: true, img: 'static/img/mine/trans.png', badge: 0, link: {path:'/wallet/detail'}, value: ''},
-  {title: '我的游戏', is_link: true, img: 'static/img/mine/game.png', badge: 0, link: {path:'/mygame'}, value: ''}
+  {title: '我的钱包', is_link: true, img: 'static/img/mine/wallet.png', badge: 0, link: {path:'/wallet'}, value: '', showDot: false},
+  {title: '我的道具', is_link: true, img: 'static/img/mine/prop.png', badge: 0, link: {path:'/props'}, value: '', showDot: false},
+  {title: '我的消息', is_link: true, img: 'static/img/mine/msg.png', badge: 0, link: {path:'/message'}, value: '', showDot: false},
+  {title: '我的交易', is_link: true, img: 'static/img/mine/trans.png', badge: 0, link: {path:'/wallet/detail'}, value: '', showDot: false},
+  {title: '我的游戏', is_link: true, img: 'static/img/mine/game.png', badge: 0, link: {path:'/mygame'}, value: '', showDot: false}
 ]
 const getItems2 = () => [
   /*{title: '使用条款', is_link: true, img: 'static/img/icon1/3.png', badge: 0, link: ''},*/
@@ -78,7 +79,7 @@ export default {
     }
   },
   methods: {
-      getUserProfil(){
+      getUserProfile(){
           let data = {func:'Info', control: 'profile', uid: this.GLOBAL.userBase.uid, oemInfo: this.GLOBAL.oemInfo}
           this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
               console.log(res.data)
@@ -107,7 +108,7 @@ export default {
                     } else {
                       this.items0[0].showDot = false
                     }
-                    
+
                   } 
                   if(mine.current_prop_count > mine.prop_count) {
                     this.items1[1].badge = mine.current_prop_count - mine.prop_count
@@ -128,17 +129,38 @@ export default {
                 }
               }
           })
-      }
+      },
+      showPlugin(msg) {
+        this.$vux.alert.show({
+          title: '提示',
+          content: msg
+        })
+      },
+
+      showPluginAuto(msg) {
+        this.showPlugin(msg)
+        setTimeout(() => {
+          this.$vux.alert.hide()
+        }, 3000)
+      },
   },
   created() {
     console.log('this.GLOBAL.userProfile', this.GLOBAL.userProfile)
     console.log('this.GLOBAL.openid', this.GLOBAL.userBase.openid)
     if(this.GLOBAL.userProfile == null) {
-      this.getUserProfil()
+      this.getUserProfile()
     } else {
       this.userProfile = this.GLOBAL.userProfile
       this.getMine()
       //this.getNotify()
+    }
+    console.log('this.GLOBAL.hasTx', this.GLOBAL.hasTx)
+    if(this.GLOBAL.hasTx == true) {
+      this.items1[0].showDot = true
+    }
+    if(this.GLOBAL.hasPropAuction == true) {
+      this.showPluginAuto('您发布的道具已被成功拍卖')
+      this.GLOBAL.hasPropAuction = false
     }
   }
 }
