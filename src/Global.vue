@@ -24,10 +24,11 @@ const colorList = [
 
 const colorListLength = 20
 const oemInfo = { token: '9bcf8939a9c96e14700b2209463af411' }
-//const apiUrl = 'https://mini.gamegold.xin/gg-wechat-server/index.html'
-const apiUrl = 'http://192.168.5.73:9101/index.html'
-const siteUri = 'http://test.gamegold.xin'
-//const siteUri = 'https://mini.gamegold.xin/gg-wechat-client'
+const apiUrl = 'http://h5.gamegold.xin:9101/index.html'
+const siteUri = 'http://h5.gamegold.xin'
+//const apiUrl = 'http://192.168.5.73:9101/index.html'
+//const siteUri = 'http://test.gamegold.xin'
+
 const gameGoldUnit = '千克'
 
 var userBase = {userAgent: 0, uid: 0, user_name: null, openid: null}
@@ -125,7 +126,7 @@ async function initRemote(uid, callback) {
     {
       "UrlHead": "http",              //协议选择: http/https
       "webserver": {
-        "host": "192.168.5.73",        //远程主机地址
+        "host": "h5.gamegold.xin",        //远程主机地址
         "port": 9901                //远程主机端口
       },
       "auth": {
