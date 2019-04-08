@@ -47,7 +47,7 @@
                   </div>
                 </flexbox-item>
                 <flexbox-item>
-                  <div class="text">+{{parseInt(item.receive_amount / 100)/1000}}千克</div>
+                  <div class="text">+{{item.receive_amount|amountFomat}}千克</div>
                 </flexbox-item>
               </flexbox>
             </div>
@@ -59,7 +59,7 @@
     <div v-show="tabIndex==1">
       <box gap="10px 10px">
         <template v-for="item in this.sendData">
-          <card :key="item.id" @click.native="onItemClick">
+          <card :key="item.id" @click.native="onItemClick(item.id)">
             <div slot="content">
               <flexbox>
                 <flexbox-item :span="2">
@@ -78,7 +78,7 @@
                   </div>
                 </flexbox-item>
                 <flexbox-item>
-                  <div class="text">-{{parseInt(item.total_amount / 100)/1000}}千克</div>
+                  <div class="text">-{{item.total_amount|amountFomat}}千克</div>
                 </flexbox-item>
               </flexbox>
             </div>
@@ -184,14 +184,17 @@ export default {
         });
       }
     },
-    onItemClick() {
-      this.$router.push("/manyRed/receive");
+    onItemClick(send_id) {
+      this.$router.push(`/manyRed/receive/${send_id}`);
     }
   },
   filters: {
     dateFormat: function(el) {
       return moment(el * 1000).format("MM-DD HH:mm");
-    }
+    },
+    amountFomat: function(el) {
+      return parseInt(el / 100)/1000;
+    },
   },
   created: function() {
     let params = {

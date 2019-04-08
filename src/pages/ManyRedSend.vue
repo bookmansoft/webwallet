@@ -54,7 +54,7 @@ import {
   Box,
   GroupTitle
 } from "vux";
-
+import moment from "moment";
 export default {
   components: {
     Flexbox,
@@ -80,7 +80,15 @@ export default {
     justSend() {
       this.$router.push('/manyRed/justSend');
     }
-  }
+  },
+  filters: {
+    dateFormat: function(el) {
+      return moment(el * 1000).format("MM-DD HH:mm");
+    },
+    amountFomat: function(el) {
+      return parseInt(el / 100)/1000;
+    },
+  },
 };
 </script>
 
