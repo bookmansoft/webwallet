@@ -51,7 +51,7 @@ export default {
         let data = {func:'GetUserFromMapCode', control: 'wechat', code: code, oemInfo: this.GLOBAL.oemInfo}
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
             console.log(res.data)
-            if(res.data.errcode=='success') {
+            if(res.data.errcode == 'success') {
                 let user = res.data.user
                 this.GLOBAL.userBase.uid = user.id
                 this.GLOBAL.userBase.user_name = user.user_name

@@ -1,11 +1,11 @@
 <template>
   <div>
-    <x-header :left-options="{showBack: false}" >用户绑定</x-header>
+    <x-header :left-options="{showBack: false}" >{{toDo}}</x-header>
     <group label-width="4.5em" label-margin-right="2em" label-align="right">
-      <x-input title="钱包ID" name="user_name" placeholder="游戏金钱包ID" v-model="user_name" keyboard="number"></x-input>
+      <x-input title="手机号码" name="user_name" placeholder="必填" v-model="user_name" keyboard="number"></x-input>
     </group>
     <group label-width="4.5em" label-margin-right="2em" label-align="right">
-        <x-input title="密码" v-model="password" type="password" placeholder="必填" ></x-input>
+        <x-input title="短信验证码" v-model="password" type="password" placeholder="必填" ></x-input>
     </group>
     <div style="padding:15px;">
       <x-button @click.native="btnBind()" type="primary" v-bind:show-loading="showLoading"> 绑定</x-button>
@@ -30,6 +30,7 @@ export default {
   },
   data () {
     return {
+      toDo: '账号绑定',
       showLoading: false,
       showCreateing: false,
       user_name: '',
@@ -46,12 +47,12 @@ export default {
 
       btnBind() {
         if(this.user_name == '') {
-            this.showPlugin('游戏金ID不能为空')
+            this.showPlugin('手机号码不能为空')
             return
         }
         
         if(this.password == '') {
-            this.showPlugin('密码不能为空')
+            this.showPlugin('验证码不能为空')
             return
         }
 
