@@ -2,16 +2,15 @@
   <div>
     <x-header :left-options="{showBack: false}" >{{toDo}}</x-header>
     <group label-width="4.5em" label-margin-right="2em" label-align="right">
-      <x-input title="手机号码" name="user_name" placeholder="必填" v-model="user_name" keyboard="number"></x-input>
+      <x-input title="手机号码" name="mobile" placeholder="必填" v-model="mobile" keyboard="number"></x-input>
     </group>
     <group label-width="4.5em" label-margin-right="2em" label-align="right">
-        <x-input title="短信验证码" v-model="password" type="password" placeholder="必填" ></x-input>
+        <x-input title="短信验证码" class="weui-vcode">
+          <x-button slot="right" type="primary" mini v-model="code">发送验证码</x-button>
+        </x-input>
     </group>
     <div style="padding:15px;">
-      <x-button @click.native="btnBind()" type="primary" v-bind:show-loading="showLoading"> 绑定</x-button>
-    </div>
-    <div style="padding:15px;">
-      <x-button @click.native="btnCreate()" type="default" v-bind:show-loading="showCreateing"> 自动创建新用户</x-button>
+      <x-button @click.native="btnLogin()" type="primary" v-bind:show-loading="showLoading"> 登录</x-button>
     </div>
   </div>
 </template>
@@ -33,8 +32,8 @@ export default {
       toDo: '账号绑定',
       showLoading: false,
       showCreateing: false,
-      user_name: '',
-      password: ''
+      mobile: '',
+      code: ''
     }
   },
   methods: {
@@ -45,13 +44,13 @@ export default {
         })
       },
 
-      btnBind() {
-        if(this.user_name == '') {
+      btnLogin() {
+        if(this.mobile == '') {
             this.showPlugin('手机号码不能为空')
             return
         }
         
-        if(this.password == '') {
+        if(this.code == '') {
             this.showPlugin('验证码不能为空')
             return
         }
