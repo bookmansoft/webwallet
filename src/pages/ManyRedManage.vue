@@ -7,7 +7,7 @@
     <!--第1页-->
     <div v-show="tabIndex==0">
       <box gap="10px 10px">
-        <card>
+        <!-- <card>
           <div slot="content">
             <flexbox>
               <flexbox-item :span="2">
@@ -26,55 +26,65 @@
               </flexbox-item>
             </flexbox>
           </div>
-        </card>
-
-        <card>
-          <div slot="content">
-            <flexbox>
-              <flexbox-item :span="2">
-                <div id="imgDiv" align="center">
-                  <img style="width:60px;height:72px;" src="/static/img/manyRed/redpacketsmall.jpg">
-                </div>
-              </flexbox-item>
-              <flexbox-item :span="6">
-                <div class="text">
-                  来自张祖钦的红包
-                  <br>3-10 23:52
-                </div>
-              </flexbox-item>
-              <flexbox-item>
-                <div class="text">+0.500千克</div>
-              </flexbox-item>
-            </flexbox>
-          </div>
-        </card>
+        </card>-->
+        <template v-for="item in this.receiveData">
+          <card :key="item.id">
+            <div slot="content">
+              <flexbox>
+                <flexbox-item :span="2">
+                  <div id="imgDiv" align="center">
+                    <img
+                      style="width:60px;height:72px;"
+                      src="/static/img/manyRed/redpacketsmall.jpg"
+                    >
+                  </div>
+                </flexbox-item>
+                <flexbox-item :span="6">
+                  <div class="text">
+                    来自{{item.send_nickname}}的红包
+                    <br>
+                    {{item.modify_date | dateFormat}}
+                  </div>
+                </flexbox-item>
+                <flexbox-item>
+                  <div class="text">+{{parseInt(item.receive_amount / 100)/1000}}千克</div>
+                </flexbox-item>
+              </flexbox>
+            </div>
+          </card>
+        </template>
       </box>
     </div>
     <!--第2页-->
     <div v-show="tabIndex==1">
       <box gap="10px 10px">
-        <card  @click.native="onItemClick">
-          <div slot="content">
-            <flexbox >
-              <flexbox-item :span="2">
-                <div id="imgDiv" align="center">
-                  <img style="width:60px;height:72px;" src="/static/img/manyRed/redpacketsmall.jpg" >
-                </div>
-              </flexbox-item>
-              <flexbox-item :span="6">
-                <div class="text" >
-                  游戏金红包10个
-                  <br>3-10 23:52
-                </div>
-              </flexbox-item>
-              <flexbox-item>
-                <div class="text">-5.000千克</div>
-              </flexbox-item>
-            </flexbox>
-          </div>
-        </card>
+        <template v-for="item in this.sendData">
+          <card :key="item.id" @click.native="onItemClick">
+            <div slot="content">
+              <flexbox>
+                <flexbox-item :span="2">
+                  <div id="imgDiv" align="center">
+                    <img
+                      style="width:60px;height:72px;"
+                      src="/static/img/manyRed/redpacketsmall.jpg"
+                    >
+                  </div>
+                </flexbox-item>
+                <flexbox-item :span="6">
+                  <div class="text">
+                    游戏金红包{{item.total_num}}个
+                    <br>{{item.modify_date | dateFormat}}
+                  </div>
+                </flexbox-item>
+                <flexbox-item>
+                  <div class="text">-{{parseInt(item.total_amount / 100)/1000}}千克</div>
+                </flexbox-item>
+              </flexbox>
+            </div>
+          </card>
+        </template>
 
-        <card   @click.native="onItemClick">
+        <!-- <card @click.native="onItemClick">
           <div slot="content">
             <flexbox>
               <flexbox-item :span="2">
@@ -93,8 +103,7 @@
               </flexbox-item>
             </flexbox>
           </div>
-        </card>
-
+        </card> -->
       </box>
     </div>
   </div>
@@ -114,6 +123,7 @@ import {
   GroupTitle,
   Card
 } from "vux";
+import moment from "moment";
 
 const tabList = () => [
   {
@@ -142,15 +152,44 @@ export default {
   data() {
     return {
       tabIndex: 0,
-      tabItems: tabList()
+      tabItems: tabList(),
+      receiveData: {},
+      sendData: {}
     };
   },
   methods: {
     onTabClick(index) {
       this.tabIndex = index;
+      // 我领取的
+      if (index == 0) {
+        let params = {
+          func: "ListRecord",
+          control: "manyreceive",
+          uid: this.GLOBAL.userBase.uid,
+          oemInfo: this.GLOBAL.oemInfo
+        };
+        this.axios.post(this.GLOBAL.apiUrl, params).then(res => {
+          this.receiveData = res.data.list;
+        });
+      } else if (index == 1) {
+        let params = {
+          func: "ListRecord",
+          control: "manysend",
+          uid: this.GLOBAL.userBase.uid,
+          oemInfo: this.GLOBAL.oemInfo
+        };
+        this.axios.post(this.GLOBAL.apiUrl, params).then(res => {
+          this.sendData = res.data.list;
+        });
+      }
     },
     onItemClick() {
-      this.$router.push('/manyRed/receive');
+      this.$router.push("/manyRed/receive");
+    }
+  },
+  filters: {
+    dateFormat: function(el) {
+      return moment(el * 1000).format("MM-DD HH:mm");
     }
   }
 };
