@@ -73,7 +73,8 @@
                 <flexbox-item :span="6">
                   <div class="text">
                     游戏金红包{{item.total_num}}个
-                    <br>{{item.modify_date | dateFormat}}
+                    <br>
+                    {{item.modify_date | dateFormat}}
                   </div>
                 </flexbox-item>
                 <flexbox-item>
@@ -103,7 +104,7 @@
               </flexbox-item>
             </flexbox>
           </div>
-        </card> -->
+        </card>-->
       </box>
     </div>
   </div>
@@ -191,8 +192,21 @@ export default {
     dateFormat: function(el) {
       return moment(el * 1000).format("MM-DD HH:mm");
     }
+  },
+  created: function() {
+    let params = {
+      func: "ListRecord",
+      control: "manyreceive",
+      uid: this.GLOBAL.userBase.uid,
+      oemInfo: this.GLOBAL.oemInfo
+    };
+    this.axios.post(this.GLOBAL.apiUrl, params).then(res => {
+      this.receiveData = res.data.list;
+    });
   }
 };
+
+
 </script>
 
 <style scoped>
