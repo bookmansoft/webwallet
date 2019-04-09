@@ -124,9 +124,7 @@ export default {
     amountFomat: function(el) {
       return parseInt(el / 100) / 1000;
     },
-    imageFormat: function(el) {
-      return require(el);
-    }
+
   },
   created: function() {
     // alert(this.$route.params.send_id);
