@@ -2,7 +2,7 @@
   <div>
     <box gap="10px 10px">
       <group class="group">
-        <x-input class="input" title="总金额" placeholder="0.000">
+        <x-input class="input" title="总金额" placeholder="0.000" v-model="total_amount">
           <x-button slot="right">千克</x-button>
         </x-input>
       </group>
@@ -12,7 +12,7 @@
         </group-title>
       </group>
       <group class="group">
-        <x-input class="input" title="红包个数" placeholder="请填写个数">
+        <x-input class="input" title="红包个数" placeholder="请填写个数" v-model="total_num">
           <x-button slot="right">个</x-button>
         </x-input>
       </group>
@@ -22,13 +22,13 @@
         </group-title>
       </group>
       <group>
-        <x-input class="input" placeholder="祝福语：恭喜发财，万事如意！" value="恭喜发财，万事如意！"></x-input>
+        <x-input class="input" placeholder="祝福语：恭喜发财，万事如意！" value="恭喜发财，万事如意！" v-model="wishing"></x-input>
       </group>
 
       <flexbox>
         <flexbox-item :span="3"></flexbox-item>
         <flexbox-item :span="6">
-          <div align="center" style="font-size:20px;margin-top:45px;">总金额10000千克</div>
+          <div align="center" style="font-size:20px;margin-top:45px;">总金额{{ total_amount }}千克</div>
         </flexbox-item>
       </flexbox>
       <flexbox>
@@ -69,7 +69,10 @@ export default {
   },
   data() {
     return {
-      tabIndex: 0
+      tabIndex: 0,
+      total_amount:'1',//金额
+      total_num:'1',//红包个数
+      wishing:'恭喜发财，万事如意！',//祝福语
     };
   },
   methods: {
@@ -78,19 +81,22 @@ export default {
     },
 
     justSend() {
+      let params = {
+        func: "Send",
+        control: "manysend",
+        uid: this.GLOBAL.userBase.uid,
+        oemInfo: this.GLOBAL.oemInfo,
+        total_amount: parseInt(this.total_amount)*100000,
+        total_num: parseInt(this.total_num),
+        wishing: this.wishing,
+        modify_date: new Date().getTime()/1000,
+      };
+      this.axios.post(this.GLOBAL.apiUrl, params).then(res => {
+        this.receiveData = res.data.list;
+        alert(JSON.stringify(this.receiveData));
+      });
 
-    let params = {
-      func: "Send",
-      control: "manysend",
-      uid: this.GLOBAL.userBase.uid,
-      oemInfo: this.GLOBAL.oemInfo
-    };
-    this.axios.post(this.GLOBAL.apiUrl, params).then(res => {
-      this.receiveData = res.data.list;
-      alert(JSON.stringify(this.receiveData));
-    });
-
-      this.$router.push('/manyRed/justSend');
+      this.$router.push("/manyRed/justSend");
     }
   },
   filters: {
@@ -98,9 +104,9 @@ export default {
       return moment(el * 1000).format("MM-DD HH:mm");
     },
     amountFomat: function(el) {
-      return parseInt(el / 100)/1000;
-    },
-  },
+      return parseInt(el / 100) / 1000;
+    }
+  }
 };
 </script>
 
