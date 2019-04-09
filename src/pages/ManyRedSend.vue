@@ -22,7 +22,7 @@
         </group-title>
       </group>
       <group>
-        <x-input class="input" placeholder="祝福语：恭喜发财，万事如意！"></x-input>
+        <x-input class="input" placeholder="祝福语：恭喜发财，万事如意！" value="恭喜发财，万事如意！"></x-input>
       </group>
 
       <flexbox>
@@ -78,6 +78,18 @@ export default {
     },
 
     justSend() {
+
+    let params = {
+      func: "Send",
+      control: "manysend",
+      uid: this.GLOBAL.userBase.uid,
+      oemInfo: this.GLOBAL.oemInfo
+    };
+    this.axios.post(this.GLOBAL.apiUrl, params).then(res => {
+      this.receiveData = res.data.list;
+      alert(JSON.stringify(this.receiveData));
+    });
+
       this.$router.push('/manyRed/justSend');
     }
   },
