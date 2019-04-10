@@ -13,16 +13,16 @@
     </div>
     <div class="nextDiv">
       <div align="center">
-        <label id="label3">{{this.sendData.total_amount|amountFomat}}千克</label>
+        <label id="label3">{{this.sendData.state_id==1?(this.sendData.total_amount|amountFomat)+'千克':this.sendData.state_name}}</label>
       </div>
       <div align="center">
-        <label id="label4">已领取，进入钱包查看></label>
+        <label id="label4">{{this.sendData.state_id==1?'已领取，进入钱包查看>':''}}</label>
       </div>
     </div>
 
     <group class="group">
       <group-title slot="title">
-        <span class="groupTitle">已领取 16/20 个</span>
+        <span class="groupTitle">已领取 {{this.receiveData.length}}/{{this.sendData.total_num}} 个</span>
       </group-title>
     </group>
     <div v-show="true">
@@ -139,22 +139,22 @@ export default {
 
     this.axios.post(this.GLOBAL.apiUrl, params1).then(res => {
       this.sendData = res.data.data;
-      this.receiveData = res.data.list;
-      //  alert(JSON.stringify(this.sendData));
+      // this.receiveData = res.data.list;
+      
     });
 
     //获取接收列表--可能不再需要了
-    // let params2 = {
-    //   func: "ListRecord",
-    //   control: "manyreceive",
-    //   uid: this.GLOBAL.userBase.uid,
-    //   oemInfo: this.GLOBAL.oemInfo,
-    //   send_id: this.$route.params.send_id //此处用send_id
-    // };
-    // this.axios.post(this.GLOBAL.apiUrl, params2).then(res => {
-    //   this.receiveData = res.data.list;
-    //   alert(JSON.stringify(this.receiveData));
-    // });
+    let params2 = {
+      func: "ListRecord",
+      control: "manyreceive",
+      uid: this.GLOBAL.userBase.uid,
+      oemInfo: this.GLOBAL.oemInfo,
+      id: this.$route.params.send_id //此处用send_id
+    };
+    this.axios.post(this.GLOBAL.apiUrl, params2).then(res => {
+      this.receiveData = res.data.list;
+      
+    });
   }
 };
 </script>
