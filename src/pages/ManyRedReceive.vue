@@ -130,8 +130,8 @@ export default {
     // alert(this.$route.params.send_id);
     //获取发送的信息
     let params1 = {
-      func: "Retrieve",
-      control: "manysend",
+      func: "Receive",
+      control: "manyreceive",
       uid: this.GLOBAL.userBase.uid,
       oemInfo: this.GLOBAL.oemInfo,
       id: this.$route.params.send_id
@@ -139,21 +139,22 @@ export default {
 
     this.axios.post(this.GLOBAL.apiUrl, params1).then(res => {
       this.sendData = res.data.data;
+      this.receiveData = res.data.list;
       //  alert(JSON.stringify(this.sendData));
     });
 
-    //获取接收列表
-    let params2 = {
-      func: "ListRecord",
-      control: "manyreceive",
-      uid: this.GLOBAL.userBase.uid,
-      oemInfo: this.GLOBAL.oemInfo,
-      send_id: this.$route.params.send_id //此处用send_id
-    };
-    this.axios.post(this.GLOBAL.apiUrl, params2).then(res => {
-      this.receiveData = res.data.list;
-      alert(JSON.stringify(this.receiveData));
-    });
+    //获取接收列表--可能不再需要了
+    // let params2 = {
+    //   func: "ListRecord",
+    //   control: "manyreceive",
+    //   uid: this.GLOBAL.userBase.uid,
+    //   oemInfo: this.GLOBAL.oemInfo,
+    //   send_id: this.$route.params.send_id //此处用send_id
+    // };
+    // this.axios.post(this.GLOBAL.apiUrl, params2).then(res => {
+    //   this.receiveData = res.data.list;
+    //   alert(JSON.stringify(this.receiveData));
+    // });
   }
 };
 </script>
