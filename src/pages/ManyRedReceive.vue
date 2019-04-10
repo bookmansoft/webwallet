@@ -147,7 +147,8 @@ export default {
       func: "ListRecord",
       control: "manyreceive",
       uid: this.GLOBAL.userBase.uid,
-      oemInfo: this.GLOBAL.oemInfo
+      oemInfo: this.GLOBAL.oemInfo,
+      send_id: this.$route.params.send_id //此处用send_id
     };
     this.axios.post(this.GLOBAL.apiUrl, params2).then(res => {
       this.receiveData = res.data.list;
