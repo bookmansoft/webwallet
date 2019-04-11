@@ -167,17 +167,19 @@ export default {
           func: "ListRecord",
           control: "manyreceive",
           uid: this.GLOBAL.userBase.uid,
-          oemInfo: this.GLOBAL.oemInfo
+          oemInfo: this.GLOBAL.oemInfo,
+          receive_uid: this.GLOBAL.userBase.uid,
         };
         this.axios.post(this.GLOBAL.apiUrl, params).then(res => {
           this.receiveData = res.data.list;
         });
-      } else if (index == 1) {
+      } else if (index == 1) {  //我发出的
         let params = {
           func: "ListRecord",
           control: "manysend",
           uid: this.GLOBAL.userBase.uid,
-          oemInfo: this.GLOBAL.oemInfo
+          oemInfo: this.GLOBAL.oemInfo,
+          send_uid: this.GLOBAL.userBase.uid,
         };
         this.axios.post(this.GLOBAL.apiUrl, params).then(res => {
           this.sendData = res.data.list;

@@ -89,7 +89,7 @@ export default {
         total_amount: parseInt(this.total_amount)*100000,
         total_num: parseInt(this.total_num),
         wishing: this.wishing,
-        modify_date: new Date().getTime()/1000,
+        // modify_date: new Date().getTime()/1000,
       };
       this.axios.post(this.GLOBAL.apiUrl, params).then(res => {
         this.receiveData = res.data.list;

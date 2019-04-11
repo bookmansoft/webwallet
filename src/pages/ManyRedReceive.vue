@@ -13,7 +13,7 @@
     </div>
     <div class="nextDiv">
       <div align="center">
-        <label id="label3">{{this.sendData.state_id==1?(this.sendData.total_amount|amountFomat)+'千克':this.sendData.state_name}}</label>
+        <label id="label3">{{this.sendData.state_id==1?(parseInt(this.sendData.real_amount/100)/1000+'千克'):this.sendData.state_name}}</label>
       </div>
       <div align="center">
         <label id="label4">{{this.sendData.state_id==1?'已领取，进入钱包查看>':''}}</label>
