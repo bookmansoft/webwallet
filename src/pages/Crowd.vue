@@ -11,15 +11,45 @@
             <flexbox>
               <flexbox-item :span="8">
                   <div class="flex-left">
-                    <span style="font-size:15px;font-weight:700;">进击的兵长</span>
+                    <span style="font-size:17px;font-weight:590;">进击的兵长</span>
                   </div>
               </flexbox-item>
               <flexbox-item :span="4">
                 <div class="flex-right">
-                    <span>d</span>
+                    <p style="margin:0 auto; overflow:hidden; display:block; height:40px;line-height:40px;">
+                      <img src="static/img/crowd/hot.png" style="width:18px; heigth:18px;" />
+                      <span style="font-size: 15px; color:green;">众筹中</span>
+                    </p>
                 </div>
               </flexbox-item>
             </flexbox>
+
+            <flexbox style="height:40px;line-height:40px;">
+              <flexbox-item :span="8">
+                  <div class="flex-left">
+                    <span style="color:coral; font-size:16px;">￥10.00 起售</span>
+                  </div>
+              </flexbox-item>
+              <flexbox-item :span="4">
+                <div class="flex-right" >
+                    <x-button mini :gradients="['#FF5E3A', '#FF9500']" >立即支持</x-button>
+                </div>
+              </flexbox-item>
+            </flexbox>
+
+            <flexbox style="height:30px;line-height:30px; color:#888; font-size:14px;">
+              <flexbox-item :span="8">
+                  <div class="flex-left">
+                    199人支持
+                  </div>
+              </flexbox-item>
+              <flexbox-item :span="4">
+                <div class="flex-right" >
+                    还剩11份
+                </div>
+              </flexbox-item>
+            </flexbox>
+
       </div>
     </div>
     <div v-else>
@@ -30,7 +60,7 @@
 </template>
 <script>
 //import { XHeader, Group, Cell } from 'vux'
-import { Tab, TabItem, Flexbox, FlexboxItem} from 'vux'
+import { XButton, Tab, TabItem, Flexbox, FlexboxItem} from 'vux'
 import Navs from '@/components/Navs.vue'
 
 const tabList = () => [
@@ -42,7 +72,7 @@ const tabList = () => [
 
 export default {
   components: {
-    Navs, Tab, TabItem, Flexbox, FlexboxItem
+    Navs, Tab, XButton, TabItem, Flexbox, FlexboxItem
   },
   data () {
     return {
@@ -67,7 +97,7 @@ export default {
 }
 .img-top {
   width:100%;
-  height:160px;
+  height:180px;
   /*border-radius: 4%;*/
   border-top-left-radius:1.5em; 
   border-top-right-radius:1.5em; 

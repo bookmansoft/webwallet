@@ -30,6 +30,7 @@
 import Balance from '@/components/Balance.vue'
 import { XHeader, Group, Box, Cell, LoadMore } from 'vux'
 import NoData from '@/components/NoData.vue'
+import { setTimeout } from 'timers';
 
 export default {
   components: {
@@ -84,7 +85,9 @@ export default {
       }
   },
   created() {
-    this.getTxLogs()
+    setTimeout(()=>{
+      this.getTxLogs()
+    }, 800) 
     this.GLOBAL.hasTx = false
   }
 }
