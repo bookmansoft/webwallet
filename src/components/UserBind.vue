@@ -10,7 +10,7 @@
         </x-input>
     </group>
     <div style="padding:15px;">
-      <x-button @click.native="btnLogin()" type="primary" v-bind:show-loading="showLoading"> 登录</x-button>
+      <x-button @click.native="btnCreate()" type="primary" v-bind:show-loading="showLoading"> 登录</x-button>
     </div>
   </div>
 </template>
