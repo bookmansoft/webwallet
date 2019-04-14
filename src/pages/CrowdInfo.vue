@@ -6,7 +6,7 @@
             <div style="padding-left:10px;">
                 <p><span style="font-size:16px;font-weight:610;">进击的兵长 代练宝宝</span></p>
                 <br/>
-                <p>《进击的兵长》本次共上架代练宝宝10000个，单个售价10元，购买后将持续获得游戏内的游戏金收入。</p>
+                <p><span style="font-size:13px; color:#888;">《进击的兵长》本次共上架代练宝宝10000个，单个售价10元，购买后将持续获得游戏内的游戏金收入。</span></p>
             </div>
 
             <flexbox style="height:40px;line-height:40px;">
@@ -17,7 +17,7 @@
               </flexbox-item>
               <flexbox-item :span="5">
                 <div class="flex-right" >
-                    <span >剩余4200个</span>
+                    <span style="font-size:15px; color:#888;">剩余4200个</span>
                 </div>
               </flexbox-item>
             </flexbox>
@@ -39,9 +39,9 @@
             </flexbox-item>
         </flexbox> 
         <flexbox>
-            <flexbox-item :span="4" class="flex-center"><p>10000</p><p><span style="font-size:12px;">上架个数</span></p></flexbox-item>
-            <flexbox-item :span="3" class="flex-center"><p>4200</p><p><span style="font-size:12px;">剩余数量</span></p></flexbox-item>
-            <flexbox-item  class="flex-center"><p>199</p><p><span style="font-size:12px;">参与人数</span></p></flexbox-item>
+            <flexbox-item :span="4" class="flex-center"><p>10000</p><p><span style="font-size:12px; color:#888;">上架个数</span></p></flexbox-item>
+            <flexbox-item :span="3" class="flex-center"><p>4200</p><p><span style="font-size:12px; color:#888;">剩余数量</span></p></flexbox-item>
+            <flexbox-item  class="flex-center"><p>199</p><p><span style="font-size:12px; color:#888;">参与人数</span></p></flexbox-item>
         </flexbox>
         <div style="background-color: white; padding: 20px;">
             <div class="crowd-info">
