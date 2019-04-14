@@ -23,37 +23,61 @@
             </flexbox>
           </div>
       </div>
-      <div style="background-color: #f5f5f9; padding: 0px 12px 0px 12px">
-          <div style="background-color: white; padding: 15px;">
+      <div style="background-color: #f5f5f9; padding: 0px 0px 0px 0px">
+          <div style="padding: 0px 12px 0px 12px">
+                <group>
+                <cell :is-link="true" value="微信支付">
+                  <span slot="title">
+                    <span style="vertical-align:middle;">支付方式</span>
+                  </span>
+                </cell>
+                <cell :is-link="true" value="无可用">
+                  <span slot="title">
+                    <span style="vertical-align:middle;">优惠券</span>
+                  </span>
+                </cell>
+              </group>
+
+              <group>
+                <cell :is-link="true" value="10元">
+                  <span slot="title">
+                    <span style="vertical-align:middle;">商品金额</span>
+                  </span>
+                </cell>
+              </group>
+
           </div>
       </div>
-
+      <div>
+        <br/>
+        <box gap="10px 10px">
+            <x-button :gradients="['#FF5E3A', '#FF9500']" @click.native="crowdPay()">去支付</x-button>
+        </box>
+      </div>
   </div>
   
 </template>
 <script>
 //import { XHeader, Group, Cell } from 'vux'
-import { XButton, Tab, TabItem, Flexbox, FlexboxItem, Group, Divider, Box, InlineXNumber } from 'vux'
+import { XButton, Tab, TabItem, Flexbox, FlexboxItem, Group, Divider, Box, InlineXNumber, Cell, CellBox, CellFormPreview, Badge } from 'vux'
 import Navs from '@/components/Navs.vue'
 
 export default {
   components: {
-    Navs, Tab, XButton, TabItem, Flexbox, FlexboxItem, Group, Divider, Box, InlineXNumber 
+    Navs, Tab, XButton, TabItem, Flexbox, FlexboxItem, Group, Divider, Box, InlineXNumber, Cell, CellBox, CellFormPreview, Badge
   },
   data () {
     return {
       msg: '众筹',
-      tabIndex: 0,
-      tabItems: tabList(),
-      crowdItems: crowdList()
+      tabIndex: 0
     }
   },
   methods: {
     onItemClick(index) {
       console.log(this.tabIndex)
     },
-    crowdDetail(item, index) {
-
+    crowdPay() {
+      this.$router.push({ name: 'CrowdPay', params: {  }})
     }
   }
 }

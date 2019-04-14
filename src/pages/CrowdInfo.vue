@@ -56,9 +56,9 @@
         </div>
 
       </group>
-            <box gap="10px 10px">
-                <x-button :gradients="['#FF5E3A', '#FF9500']" @click.native="crowdOrder()">立即购买</x-button>
-            </box>
+      <box gap="10px 10px">
+          <x-button :gradients="['#FF5E3A', '#FF9500']" @click.native="crowdOrder()">立即购买</x-button>
+      </box>
   </div>
   
 </template>
