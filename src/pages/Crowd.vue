@@ -51,6 +51,27 @@
             </flexbox>
 
       </div>
+
+      <div v-for="(item, index) in crowdItems" :key="index" class="crowdItem">
+            <flexbox @click.native="crowdDetail(item, index)">
+              <flexbox-item :span="2.5" style="padding:0.3rem;">
+                <div class="flex-demo-left">
+                  <img :src="item.src" class="img-game-list" />
+                </div></flexbox-item>
+              <flexbox-item>
+                <div style="padding-left:6px;">
+                  <p><span style="font-size:15px;">{{item.title}}</span></p>
+                  <p><span style="color: coral; font-size:14px;">{{item.desc}}</span></p>
+                  <p>
+                    <flexbox>
+                    <flexbox-item :span="8">{{item.support}}</flexbox-item>
+                    <flexbox-item :span="4">{{item.remainder}}</flexbox-item>
+                    </flexbox>
+                  </p>
+                </div>
+              </flexbox-item>
+            </flexbox>
+      </div>
     </div>
     <div v-else>
 
@@ -70,6 +91,27 @@ const tabList = () => [
     label:'自由市场'
 }]
 
+const crowdList = () => [
+  {
+    src: 'static/img/crowd/item1.jpg',
+    title: 'Forza Horizon 3',
+    desc: '￥ 25元起售',
+    support: '60人支持',
+    remainder: '剩余13天'
+  },{
+    src: 'static/img/crowd/item2.jpg',
+    title: 'Forza Horizon 3',
+    desc: '￥ 47元起售',
+    support: '52人支持',
+    remainder: '剩余8天'
+  },{
+    src: 'static/img/crowd/item3.jpg',
+    title: 'Forza Horizon 3',
+    desc: '￥ 47元起售',
+    support: '139人支持',
+    remainder: '剩余5天'
+  }
+]
 export default {
   components: {
     Navs, Tab, XButton, TabItem, Flexbox, FlexboxItem
@@ -78,23 +120,45 @@ export default {
     return {
       msg: '众筹',
       tabIndex: 0,
-      tabItems: tabList()
+      tabItems: tabList(),
+      crowdItems: crowdList()
     }
   },
   methods: {
     onItemClick(index) {
       console.log(this.tabIndex)
+    },
+    crowdDetail(item, index) {
+      this.$router.push({ name: 'CrowdInfo', params: {  }})
     }
   }
 }
 </script>
 
 <style scoped>
+.crowdItem {
+  background-color: white;
+  margin-top: 0.4rem;
+  padding: 0.2rem;
+}
+
+.crowdItem p {
+  height: 30px;
+  line-height: 30px;
+}
 .crowd-car {
   padding: 10px; 
   /*background-color: white; */ 
   /*border-radius: 4%;*/
 }
+
+.img-game-list {
+    width: 75px;
+    height: 75px;
+    border-radius: 12%;
+    margin-left: 3px;
+}
+
 .img-top {
   width:100%;
   height:180px;
