@@ -40,12 +40,12 @@
             <flexbox style="height:30px;line-height:30px; color:#888; font-size:14px;">
               <flexbox-item :span="8">
                   <div class="flex-left">
-                    199人支持
+                    <p><span>199人支持</span></p>
                   </div>
               </flexbox-item>
               <flexbox-item :span="4">
                 <div class="flex-right" >
-                    还剩11份
+                    <p><span>还剩11份</span></p>
                 </div>
               </flexbox-item>
             </flexbox>
@@ -64,8 +64,8 @@
                   <p><span style="color: coral; font-size:14px;">{{item.desc}}</span></p>
                   <p>
                     <flexbox>
-                    <flexbox-item :span="8">{{item.support}}</flexbox-item>
-                    <flexbox-item :span="4">{{item.remainder}}</flexbox-item>
+                    <flexbox-item :span="8"><p><span style="color: #888; font-size:13px;">{{item.support}}</span></p></flexbox-item>
+                    <flexbox-item :span="4"><p><span style="color: #888; font-size:13px;">{{item.remainder}}</span></p></flexbox-item>
                     </flexbox>
                   </p>
                 </div>
