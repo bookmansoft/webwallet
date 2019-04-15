@@ -72,11 +72,33 @@
               </flexbox-item>
             </flexbox>
       </div>
-    </div>
-    <div v-else>
 
     </div>
+
+    <div v-else>
+      <div v-for="(item, index) in crowdFreeItems" :key="index" class="crowdItem2">
+            <flexbox @click.native="crowFreedDetail(item, index)">
+              <flexbox-item :span="2.5" style="padding:0.3rem;">
+                <div class="flex-demo-left">
+                  <img :src="item.src" class="img-game-list2" />
+                </div></flexbox-item>
+              <flexbox-item>
+                <div style="padding-left:0px;">
+                  <p><span style="font-size:15px;">{{item.title}}</span></p>
+                  <p>
+                    <flexbox>
+                    <flexbox-item :span="8"><p><span style="color: #888; font-size:13px;">{{item.sales}}</span></p></flexbox-item>
+                    <flexbox-item :span="4"><p><span style="color: red; font-size:13px;">{{item.gold}}</span></p></flexbox-item>
+                    </flexbox>
+                  </p>
+                </div>
+              </flexbox-item>
+            </flexbox>
+      </div>
+    </div>
+    
     <navs></navs>
+
   </div>
 </template>
 <script>
@@ -112,6 +134,23 @@ const crowdList = () => [
     remainder: '剩余5天'
   }
 ]
+
+const crowdFreeList = () => [
+  {
+    src: 'static/img/crowd/a.jpg',
+    title: '进击的兵长 代练宝宝',
+    sales: '15个挂单出售',
+    gold: '11000.000',
+    group: 'Vallnet Co., Ltd'
+  },{
+    src: 'static/img/crowd/item1.jpg',
+    title: 'Forza Horizon 代练宝宝 ',
+    sales: '20个挂单出售',
+    gold: '800.00',
+    group: 'Vallnet Co., Ltd'
+  }
+]
+
 export default {
   components: {
     Navs, Tab, XButton, TabItem, Flexbox, FlexboxItem
@@ -121,7 +160,8 @@ export default {
       msg: '众筹',
       tabIndex: 0,
       tabItems: tabList(),
-      crowdItems: crowdList()
+      crowdItems: crowdList(),
+      crowdFreeItems: crowdFreeList()
     }
   },
   methods: {
@@ -130,6 +170,9 @@ export default {
     },
     crowdDetail(item, index) {
       this.$router.push({ name: 'CrowdInfo', params: {  }})
+    },
+    crowFreedDetail(item, index) {
+      this.$router.push({ name: 'CrowdFreeInfo', params: { item: item }})
     }
   }
 }
@@ -146,6 +189,18 @@ export default {
   height: 30px;
   line-height: 30px;
 }
+
+.crowdItem2 {
+  background-color: white;
+  margin-top: 0.4rem;
+  padding: 0.2rem;
+}
+
+.crowdItem2 p {
+  height: 40px;
+  line-height: 40px;
+}
+
 .crowd-car {
   padding: 10px; 
   /*background-color: white; */ 
@@ -157,6 +212,13 @@ export default {
     height: 75px;
     border-radius: 12%;
     margin-left: 3px;
+}
+
+.img-game-list2 {
+    width: 65px;
+    height: 65px;
+    border-radius: 10%;
+    margin-left: 4px;
 }
 
 .img-top {
