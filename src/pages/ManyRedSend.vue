@@ -93,8 +93,8 @@ export default {
         // modify_date: new Date().getTime()/1000,
       };
       this.axios.post(this.GLOBAL.apiUrl, params).then(res => {
-        alert(JSON.stringify(res.data));
-        this.send_id = res.data;
+        //alert(JSON.stringify(res.data));
+        this.send_id = res.data.data;
       this.$router.push("/manyRed/justSend/" + this.send_id);
       });
 
