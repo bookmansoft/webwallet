@@ -79,7 +79,7 @@ export default new Router({
     { path: '/lucky', name: 'LuckyWheel', component: LuckyWheel },
     { path: '/manyRed/manage',name:'ManyRedManage',component:ManyRedManage},
     { path: '/manyRed/send',name:'ManyRedSend',component:ManyRedSend},
-    { path: '/manyRed/justSend',name:'ManyRedJustSend',component:ManyRedJustSend},
+    { path: '/manyRed/justSend/:send_id',name:'ManyRedJustSend',component:ManyRedJustSend},
     { path: '/manyRed/receive/:send_id',name:'ManyRedReceive',component:ManyRedReceive},
     { path: '/manyRed/unpack/:send_id',name:'ManyRedUnpack',component:ManyRedUnpack},
   ]

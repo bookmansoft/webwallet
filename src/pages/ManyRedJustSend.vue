@@ -79,7 +79,7 @@ export default {
       wx.onMenuShareAppMessage({
         title: "[游戏金红包]恭喜发财，吉祥如意！", // 分享标题
         desc: "来自XXX的游戏金红包", // 分享描述
-        link: "http://h5.gamegold.xin/#/manyRed/justSend", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        link: "http://h5.gamegold.xin/#/manyRed/unpack", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
         imgUrl: "", // 分享图标
         success: function() {
           console.log("微信分享设置成功");
