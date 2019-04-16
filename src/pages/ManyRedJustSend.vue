@@ -61,7 +61,8 @@ export default {
   },
   data() {
     return {
-      show: false
+      show: false,
+      sendData: {},
     };
   },
   methods: {
@@ -72,6 +73,19 @@ export default {
   },
 
   created: function() {
+    //第一步先获取参数带来的发送包信息
+    let params = {
+      func: "Receive",
+      control: "manysend",
+      uid: this.GLOBAL.userBase.uid,
+      oemInfo: this.GLOBAL.oemInfo,
+      id: this.$route.params.send_id
+    };
+    this.axios.post(this.GLOBAL.apiUrl, params).then(res => {
+      console.log("红包组信息:",res.data);
+      this.sendData = res.data.list;
+    });
+
     //配置成的处理方法
     wx.ready(function() {
       console.log("wx ready ok!!!");
