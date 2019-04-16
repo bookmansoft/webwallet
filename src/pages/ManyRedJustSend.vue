@@ -96,7 +96,7 @@ export default {
       console.log("wx ready ok!!!");
       console.log("http://h5.gamegold.xin/#/manyRed/unpack/"+that);
       //发送给朋友
-      wx.onMenuShareAppMessage({
+      wx.updateAppMessageShareData({
         title: "[游戏金红包]恭喜发财，吉祥如意！", // 分享标题
         desc: "来自XXX的游戏金红包", // 分享描述
         link: "http://h5.gamegold.xin/#/manyRed/unpack/"+that, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
@@ -104,9 +104,6 @@ export default {
         success: function() {
           console.log("微信分享设置成功");
           // 设置成功
-        },
-        fail: function (res) {
-          console.log("失败了："+JSON.stringify(res));
         }
       });
       console.log("走过了设置程序");
