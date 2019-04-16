@@ -96,7 +96,7 @@ export default {
         console.log(res.data);
       });
 
-      this.$router.push("/manyRed/justSend/");
+      this.$router.push("/manyRed/justSend/"+this.receiveData);
     }
   },
   filters: {
