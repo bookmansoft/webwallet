@@ -81,6 +81,7 @@ export default {
       oemInfo: this.GLOBAL.oemInfo,
       id: this.$route.params.send_id
     };
+    console.log("84:",params);
     this.axios.post(this.GLOBAL.apiUrl, params).then(res => {
       console.log("红包组信息:",res.data);
       this.sendData = res.data.list;
