@@ -75,8 +75,8 @@ export default {
   },
 
   created: function() {
-    let that=this;
     this.send_id=this.$route.params.send_id;
+    let that=this.send_id;
     //第一步先获取参数带来的发送包信息
     let params = {
       func: "Retrieve",
@@ -92,7 +92,7 @@ export default {
     });
 
     //配置成的处理方法
-    wx.ready(function(that) {
+    wx.ready(function() {
       console.log("wx ready ok!!!");
       console.log("http://h5.gamegold.xin/#/manyRed/unpack/"+that.send_id);
       //发送给朋友
