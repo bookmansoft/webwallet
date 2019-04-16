@@ -2,7 +2,7 @@
   <div>
     <box gap="10px 10px">
       <div id="imgDiv" align="center">
-        <img style="width:250px" src="/static/img/manyRed/redpacketunpack.jpg">
+        <img style="width:250px" src="/static/img/manyRed/redpacketunpack.jpg" @click.native="openPack">
       </div>
     </box>
 
@@ -46,19 +46,20 @@ export default {
   },
   data() {
     return {
-      show: false
+      send_id:-1,
     };
   },
   methods: {
-    //显示发送给朋友对话框
-    showDialog() {
-      this.show = true;
+    //打开钱包
+    openPack() {
+      
+      this.$router.push("/manyRed/receive/" + this.send_id);
     }
   },
 
   created: function() {
-    alert("进入");
-
+    //alert("进入");
+    this.send_id=this.$route.params.send_id;
   }
 };
 </script>
