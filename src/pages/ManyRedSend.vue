@@ -70,9 +70,10 @@ export default {
   data() {
     return {
       tabIndex: 0,
-      total_amount:'1',//金额
-      total_num:'1',//红包个数
-      wishing:'恭喜发财，万事如意！',//祝福语
+      total_amount: "1", //金额
+      total_num: "1", //红包个数
+      wishing: "恭喜发财，万事如意！", //祝福语
+      send_id: -1
     };
   },
   methods: {
@@ -86,17 +87,17 @@ export default {
         control: "manysend",
         uid: this.GLOBAL.userBase.uid,
         oemInfo: this.GLOBAL.oemInfo,
-        total_amount: parseInt(this.total_amount)*100000,
+        total_amount: parseInt(this.total_amount) * 100000,
         total_num: parseInt(this.total_num),
-        wishing: this.wishing,
+        wishing: this.wishing
         // modify_date: new Date().getTime()/1000,
       };
       this.axios.post(this.GLOBAL.apiUrl, params).then(res => {
-        this.receiveData = res.data;
         console.log(res.data);
+        this.send_id = res.data;
       });
 
-      this.$router.push("/manyRed/justSend/"+this.receiveData);
+      this.$router.push("/manyRed/justSend/" + this.send_id);
     }
   },
   filters: {
