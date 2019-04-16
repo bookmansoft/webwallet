@@ -52,7 +52,7 @@ export default {
   methods: {
     //打开钱包
     openPack() {
-      
+      alert(this.send_id);
       this.$router.push("/manyRed/receive/" + this.send_id);
     }
   },
