@@ -63,7 +63,8 @@ export default {
     return {
       show: false,
       sendData: {},
-      send_id:-1
+      send_id:-1,
+      that:{},
     };
   },
   methods: {
@@ -74,6 +75,7 @@ export default {
   },
 
   created: function() {
+    let that=this;
     this.send_id=this.$route.params.send_id;
     //第一步先获取参数带来的发送包信息
     let params = {
@@ -90,14 +92,14 @@ export default {
     });
 
     //配置成的处理方法
-    wx.ready(function() {
+    wx.ready(function(that) {
       console.log("wx ready ok!!!");
-      console.log("http://h5.gamegold.xin/#/manyRed/unpack/"+send_id);
+      console.log("http://h5.gamegold.xin/#/manyRed/unpack/"+that.send_id);
       //发送给朋友
       wx.onMenuShareAppMessage({
         title: "[游戏金红包]恭喜发财，吉祥如意！", // 分享标题
         desc: "来自XXX的游戏金红包", // 分享描述
-        link: "http://h5.gamegold.xin/#/manyRed/unpack/"+send_id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        link: "http://h5.gamegold.xin/#/manyRed/unpack/"+that.send_id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
         imgUrl: "", // 分享图标
         success: function() {
           console.log("微信分享设置成功");
