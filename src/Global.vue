@@ -24,11 +24,24 @@ const colorList = [
 
 const colorListLength = 20
 const oemInfo = { token: '9bcf8939a9c96e14700b2209463af411' }
-//const apiUrl = 'https://mini.gamegold.xin/gg-wechat-server/index.html'
-const apiUrl = 'http://192.168.5.73:9101/index.html'
-const siteUri = 'http://test.gamegold.xin'
-//const siteUri = 'https://mini.gamegold.xin/gg-wechat-client'
+const apiUrl = 'http://h5.gamegold.xin:9101/index.html'
+const siteUri = 'http://h5.gamegold.xin'
+//const apiUrl = 'http://192.168.5.73:9101/index.html'
+//const siteUri = 'http://test.gamegold.xin'
+
 const gameGoldUnit = '千克'
+
+var userBase = {userAgent: 0, uid: 0, user_name: null, openid: null}
+var userProfile = null
+var games = []
+var cplist = []
+var cpCount = 0
+var vipGetNotifyTime = 0
+var remote = null
+var hasMsg = false
+var hasProp = false
+var hasTx = false
+var hasPropAuction = false
 
 function getRandColor () {
   var tem = Math.round(Math.random() * colorListLength)
@@ -101,21 +114,49 @@ function checkAddr(value) {
     }
 }
 
-var userBase = {userAgent: 0, uid: 0, user_name: null, openid: null}
-var userProfile = null
-var games = []
-var cplist = []
-var cpCount = 0
-var vipGetNotifyTime = 0
-var remote = null
+async function initRemote(uid, callback) {
+  //创建连接器对象
+  remote = new toolkit.gameconn(
+    // CommMode = {
+    //     ws: "webSocket",    //Web Socket
+    //     get: "get",         //HTTP GET
+    //     post: "post",       //HTTP POST
+    // }
+    toolkit.gameconn.CommMode.ws,      //连接方式
+    {
+      "UrlHead": "http",              //协议选择: http/https
+      "webserver": {
+        "host": "h5.gamegold.xin",        //远程主机地址
+        "port": 9901                //远程主机端口
+      },
+      "auth": {
+        "openid": "18681223392",    //用户标识
+        "openkey": "18681223392",   //和用户标识关联的用户令牌
+        "domain": "tx.IOS",         //用户所在的域，tx是提供登录验证服务的厂商类别，IOS是该厂商下的服务器组别
+      }
+    }
+  )
+  
+  let msg = await remote.login({openid: uid});
+  console.log('msg', msg)
+  if(remote.isSuccess(msg)) { 
+      await remote.watch(msg => {
+          if(callback) {
+            callback(msg)
+          }
+      }, '9999')
+      //.fetching({func: "test.notify", id: uid});
+  }
+
+}
 
 export default
 {
   colorList, colorListLength, getRandColor,
   apiUrl, siteUri, oemInfo,
-  formatGameGold, gameGoldOrigin, gameGoldUnit, 
+  formatGameGold, gameGoldOrigin, gameGoldUnit, initRemote,
   myAlert, formatDateStr, checkAddr,
   userBase, userProfile, games, cplist, cpCount, vipGetNotifyTime,
-  remote
+  remote, hasMsg, hasProp, hasTx, hasPropAuction
 }
 </script>

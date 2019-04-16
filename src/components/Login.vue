@@ -51,7 +51,7 @@ export default {
         let data = {func:'GetUserFromMapCode', control: 'wechat', code: code, oemInfo: this.GLOBAL.oemInfo}
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
             console.log(res.data)
-            if(res.data.errcode=='success') {
+            if(res.data.errcode == 'success') {
                 let user = res.data.user
                 this.GLOBAL.userBase.uid = user.id
                 this.GLOBAL.userBase.user_name = user.user_name
@@ -93,6 +93,21 @@ export default {
 
     gotoHome() {
         //this.showPlugin(this.urlParamPath)
+        let that = this
+        this.GLOBAL.initRemote(this.GLOBAL.userBase.uid, function(msg) {
+          console.log('收到消息', msg);
+          if(msg.msgType=='balance.account.client') {
+            console.log('balance.account.client')
+            that.GLOBAL.hasTx = true
+          } else if(msg.msgType=='prop/receive') {
+            console.log('prop/receive')
+            that.GLOBAL.hasProp = true
+          } else if(msg.msgType=='prop/auction') {
+            console.log('prop/auction')
+            that.GLOBAL.hasPropAuction = true
+          }
+        })
+        
         if(this.urlParamPath==null) {
           this.$router.push('/home')
         } else {
