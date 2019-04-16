@@ -1,8 +1,8 @@
 <template>
   <div>
     <box gap="10px 10px">
-      <div id="imgDiv" align="center" @click.native="openPack">
-        <img style="width:250px" src="/static/img/manyRed/redpacketunpack.jpg" @click.native="openPack">
+      <div id="imgDiv" align="center" @click="openPack();">
+        <img style="width:250px" src="/static/img/manyRed/redpacketunpack.jpg" @click="openPack">
       </div>
     </box>
 
