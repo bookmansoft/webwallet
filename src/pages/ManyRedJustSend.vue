@@ -75,7 +75,7 @@ export default {
   created: function() {
     //第一步先获取参数带来的发送包信息
     let params = {
-      func: "Receive",
+      func: "Retrieve",
       control: "manysend",
       uid: this.GLOBAL.userBase.uid,
       oemInfo: this.GLOBAL.oemInfo,
