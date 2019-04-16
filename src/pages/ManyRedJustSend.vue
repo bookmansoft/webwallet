@@ -93,7 +93,7 @@ export default {
     });
 
     //获取配置信息
-    let url = "http://h5.gamegold.xin/#/manyRed/justSend";
+    let url = location.href.split("#")[0];//"http://h5.gamegold.xin/#/manyRed/justSend";
     console.log("WechatConfig:" + url);
     let data = {
       func: "WechatConfig",
