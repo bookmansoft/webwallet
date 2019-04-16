@@ -39,6 +39,7 @@ import {
   Alert,
   TransferDomDirective as TransferDom
 } from "vux";
+import wx from "weixin-js-sdk";
 
 export default {
   directives: {
@@ -68,6 +69,48 @@ export default {
     showDialog() {
       this.show = true;
     }
+  },
+
+  created: function() {
+    //配置成的处理方法
+    wx.ready(function() {
+      console.log("wx ready ok!!!");
+      //发送给朋友
+      wx.onMenuShareAppMessage({
+        title: "分享", // 分享标题
+        desc: "描述", // 分享描述
+        link: "http://test.gamegold.xin/", //#/manyRed/justSend 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: "", // 分享图标
+        success: function() {
+          console.log("微信分享设置成功");
+          // 设置成功
+        },
+        fail: function (res) {
+          console.log("失败了："+JSON.stringify(res));
+        }
+      });
+      console.log("走过了设置程序");
+    });
+
+    //获取配置信息
+    let url = "http://test.gamegold.xin/#/manyRed/justSend";
+    console.log("WechatConfig:" + url);
+    let data = {
+      func: "WechatConfig",
+      control: "wechat",
+      oemInfo: this.GLOBAL.oemInfo,
+      url: url
+    };
+    //alert(data);
+    this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+      //alert(res.data);
+      if (res.data.errcode == "success") {
+        console.log("wxconfig::" + JSON.stringify(res.data.wxconfig));
+        wx.config(res.data.wxconfig);
+      } else {
+        console.log("获取WechatConfig信息失败");
+      }
+    });
   }
 };
 </script>
