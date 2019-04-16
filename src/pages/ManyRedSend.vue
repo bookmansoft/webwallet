@@ -93,7 +93,7 @@ export default {
       };
       this.axios.post(this.GLOBAL.apiUrl, params).then(res => {
         this.receiveData = res.data;
-        alert(JSON.stringify(this.receiveData));
+        alert(JSON.stringify(res.data));
       });
 
       this.$router.push("/manyRed/justSend/");
