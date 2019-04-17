@@ -139,8 +139,6 @@ export default {
 
     this.axios.post(this.GLOBAL.apiUrl, params1).then(res => {
       this.sendData = res.data.data;
-      // this.receiveData = res.data.list;
-      
     });
 
     //获取接收列表--可能不再需要了
