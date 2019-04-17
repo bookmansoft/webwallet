@@ -63,8 +63,8 @@ export default {
     return {
       show: false,
       sendData: {},
-      send_id:-1,
-      that:{},
+      send_id: -1,
+      that: {}
     };
   },
   methods: {
@@ -75,45 +75,46 @@ export default {
   },
 
   created: function() {
-    this.send_id=this.$route.params.send_id;
-    let that=this.send_id;
+    this.send_id = this.$route.params.send_id;
+    let that = this.send_id;
     //第一步先获取参数带来的发送包信息
     let params = {
       func: "Retrieve",
       control: "manysend",
       uid: this.GLOBAL.userBase.uid,
       oemInfo: this.GLOBAL.oemInfo,
-      id: this.send_id,
+      id: this.send_id
     };
-    console.log("84:",params);
+    console.log("84:", params);
     this.axios.post(this.GLOBAL.apiUrl, params).then(res => {
-      console.log("红包组信息:",res.data);
+      console.log("红包组信息:", res.data);
       this.sendData = res.data.list;
-    });
-
-    //配置成的处理方法
-    wx.ready(function() {
-      console.log("wx ready ok!!!");
-      console.log("http://h5.gamegold.xin/?path=/manyRed/unpack/"+that);
-      //发送给朋友
-      wx.onMenuShareAppMessage({
-        title: "[游戏金红包]恭喜发财，吉祥如意！", // 分享标题
-        desc: "来自XXX的游戏金红包", // 分享描述
-        link: "http://h5.gamegold.xin/?path=/manyRed/unpack/"+that, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-        imgUrl: "", // 分享图标
-        success: function() {
-          console.log("微信分享设置成功");
-          // 设置成功
-        },
-        fail: function (res) {
-          console.log("失败了："+JSON.stringify(res));
-        }
+      let sendDataWishing=this.sendData.wishing;
+      let sendDataSendNickName=this.sendData.send_nickname;
+      //配置成的处理方法
+      wx.ready(function() {
+        console.log("wx ready ok!!!");
+        console.log("http://h5.gamegold.xin/?path=/manyRed/unpack/" + that);
+        //发送给朋友
+        wx.onMenuShareAppMessage({
+          title: "[游戏金红包]"+sendDataWishing+"！", // 分享标题
+          desc: "来自"+sendDataSendNickName+"的游戏金红包", // 分享描述
+          link: "http://h5.gamegold.xin/?path=/manyRed/unpack/" + that, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+          imgUrl: "", // 分享图标
+          success: function() {
+            console.log("微信分享设置成功");
+            // 设置成功
+          },
+          fail: function(res) {
+            console.log("失败了：" + JSON.stringify(res));
+          }
+        });
+        console.log("走过了设置程序");
       });
-      console.log("走过了设置程序");
     });
 
     //获取配置信息
-    let url = location.href.split("#")[0];//"http://h5.gamegold.xin/#/manyRed/justSend";
+    let url = location.href.split("#")[0]; //"http://h5.gamegold.xin/#/manyRed/justSend";
     console.log("WechatConfig:" + url);
     let data = {
       func: "WechatConfig",
