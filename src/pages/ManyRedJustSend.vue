@@ -87,18 +87,18 @@ export default {
     };
     console.log("84:", params);
     this.axios.post(this.GLOBAL.apiUrl, params).then(res => {
-      console.log("红包组信息:", res.data);
-      this.sendData = res.data.list;
-      let sendDataWishing=this.sendData.wishing;
-      let sendDataSendNickName=this.sendData.send_nickname;
+      this.sendData = res.data.data;
+      console.log("红包组信息:", this.sendData);
+      let sendDataWishing = this.sendData.wishing;
+      let sendDataSendNickName = this.sendData.send_nickname;
       //配置成的处理方法
       wx.ready(function() {
         console.log("wx ready ok!!!");
         console.log("http://h5.gamegold.xin/?path=/manyRed/unpack/" + that);
         //发送给朋友
         wx.onMenuShareAppMessage({
-          title: "[游戏金红包]"+sendDataWishing+"！", // 分享标题
-          desc: "来自"+sendDataSendNickName+"的游戏金红包", // 分享描述
+          title: "[游戏金红包]" + sendDataWishing + "！", // 分享标题
+          desc: "来自" + sendDataSendNickName + "的游戏金红包", // 分享描述
           link: "http://h5.gamegold.xin/?path=/manyRed/unpack/" + that, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
           imgUrl: "", // 分享图标
           success: function() {
