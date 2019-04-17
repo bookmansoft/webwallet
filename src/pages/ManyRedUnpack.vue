@@ -2,8 +2,9 @@
   <div>
     <box gap="10px 10px">
       <div id="imgDiv" align="center" @click="openPack();">
+        abc
         <img style="width:250px" src="/static/img/manyRed/redpacketunpack.jpg" @click="openPack">
-           <input type="button" value="clickme" @click="openPack" @native.click="openPack"/>
+           <input type="button" value="clickme" @click="openPack" />
       </div>
     </box>
 
