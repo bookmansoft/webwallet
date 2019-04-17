@@ -100,7 +100,7 @@ export default {
           title: "[游戏金红包]" + sendDataWishing + "！", // 分享标题
           desc: "来自" + sendDataSendNickName + "的游戏金红包", // 分享描述
           link: "http://h5.gamegold.xin/?path=/manyRed/unpack/" + that, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-          imgUrl: "", // 分享图标
+          imgUrl: "http://h5.gamegold.xin/static/img/manyRed/redpacketsmall.jpg", // 分享图标
           success: function() {
             console.log("微信分享设置成功");
             // 设置成功
