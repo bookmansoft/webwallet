@@ -62,11 +62,11 @@
                 <p><span>更新时间</span><span>{{gameInfo.publishTime}}</span></p>
                 <p style="color: #888; font-size:14px;">{{gameInfo.update_content}}</p>
             </div>
-
+            <!--
             <div style="padding:15px;">
               <x-button @click.native="test2()" type="primary"> 测试</x-button>
             </div>
-
+            -->
         </div>
         <div id="gameNameImg" class="backcolor-white">
             <div>
