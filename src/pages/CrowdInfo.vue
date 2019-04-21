@@ -1,23 +1,23 @@
 <template>
   <div>
       <div class="crowd-car">
-        <img src="static/img/crowd/binzan.jpg" class="img-top">
+        <img :src="crowdItem.pic" class="img-top">
         <div style="background-color: white">
             <div style="padding-left:10px;">
-                <p><span style="font-size:16px;font-weight:610;">进击的兵长 代练宝宝</span></p>
+                <p><span style="font-size:16px;font-weight:610;">{{crowdItem.cname}}</span></p>
                 <br/>
-                <p><span style="font-size:13px; color:#888;">《进击的兵长》本次共上架代练宝宝10000个，单个售价10元，购买后将持续获得游戏内的游戏金收入。</span></p>
+                <p><span style="font-size:13px; color:#888;">{{crowdItem.title}}</span></p>
             </div>
 
             <flexbox style="height:40px;line-height:40px;">
               <flexbox-item :span="7">
                   <div class="flex-left">
-                    <span style="color:coral; font-size:16px;">￥10.00/个</span>
+                    <span style="color:coral; font-size:16px;">￥{{crowdItem.price}}/个</span>
                   </div>
               </flexbox-item>
               <flexbox-item :span="5">
                 <div class="flex-right" >
-                    <span style="font-size:15px; color:#888;">剩余4200个</span>
+                    <span style="font-size:15px; color:#888;">剩余{{crowdItem.remainder}}个</span>
                 </div>
               </flexbox-item>
             </flexbox>
@@ -39,8 +39,8 @@
             </flexbox-item>
         </flexbox> 
         <flexbox>
-            <flexbox-item :span="4" class="flex-center"><p>10000</p><p><span style="font-size:12px; color:#888;">上架个数</span></p></flexbox-item>
-            <flexbox-item :span="3" class="flex-center"><p>4200</p><p><span style="font-size:12px; color:#888;">剩余数量</span></p></flexbox-item>
+            <flexbox-item :span="4" class="flex-center"><p>{{crowdItem.totality}}</p><p><span style="font-size:12px; color:#888;">上架个数</span></p></flexbox-item>
+            <flexbox-item :span="3" class="flex-center"><p>{{crowdItem.remainder}}</p><p><span style="font-size:12px; color:#888;">剩余数量</span></p></flexbox-item>
             <flexbox-item  class="flex-center"><p>199</p><p><span style="font-size:12px; color:#888;">参与人数</span></p></flexbox-item>
         </flexbox>
         <div style="background-color: white; padding: 20px;">
@@ -103,6 +103,7 @@ export default {
     return {
       msg: '众筹',
       tabIndex: 0,
+      crowdItem: null
     }
   },
   methods: {
@@ -114,7 +115,27 @@ export default {
     },
     crowdOrder() {
       this.$router.push({ name: 'CrowdOrder', params: {  }})
-    }
+    },
+    userToken() {
+        if(this.GLOBAL.uid == 0) {
+            return
+        }
+        let data = {func:'UserToken', control: 'cp', oemInfo: this.GLOBAL.oemInfo,
+            uid: this.GLOBAL.userBase.uid,
+            account: this.GLOBAL.userBase.uid, 
+            user_id: this.GLOBAL.userBase.uid,
+            cid: this.crowdItem.cid
+        }
+        this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+            //console.log(res.data)
+            this.cpAddr = res.data.ret.data.addr
+            console.log('cpAddr', this.cpAddr)
+        });
+    },
+  },
+  created() {
+    this.crowdItem = this.$route.params.item
+    this.userToken()
   }
 }
 </script>

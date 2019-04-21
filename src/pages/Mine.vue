@@ -55,7 +55,8 @@ const getItems1 = () => [
   {title: '我的道具', is_link: true, img: 'static/img/mine/prop.png', badge: 0, link: {path:'/props'}, value: '', showDot: false},
   {title: '我的消息', is_link: true, img: 'static/img/mine/msg.png', badge: 0, link: {path:'/message'}, value: '', showDot: false},
   {title: '我的交易', is_link: true, img: 'static/img/mine/trans.png', badge: 0, link: {path:'/wallet/detail'}, value: '', showDot: false},
-  {title: '我的游戏', is_link: true, img: 'static/img/mine/game.png', badge: 0, link: {path:'/mygame'}, value: '', showDot: false}
+  {title: '我的游戏', is_link: true, img: 'static/img/mine/game.png', badge: 0, link: {path:'/mygame'}, value: '', showDot: false},
+  {title: '我的代练宝宝', is_link: true, img: 'static/img/mine/stock.png', badge: 0, link: {path:'/my/stock'}, value: '', showDot: false}
 ]
 const getItems2 = () => [
   /*{title: '使用条款', is_link: true, img: 'static/img/icon1/3.png', badge: 0, link: ''},*/
