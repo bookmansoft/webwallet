@@ -76,8 +76,29 @@ export default {
     onItemClick(index) {
       console.log(this.tabIndex)
     },
+
+    orderRePay() {
+      let data = {
+        func:'CommonOrderRepay',
+        control: 'order',
+        uid: this.GLOBAL.userBase.uid,
+        price: parseInt(product.price/100),
+        productId: product.value,
+        productIntro: '游戏金'+product.label,
+        oemInfo: this.GLOBAL.oemInfo
+      };
+      console.log('order', data)
+      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+          console.log(res.data);
+          if(res.data.errcode='success') {
+            //this.orderPay(res.data.tradeId)
+            this.$router.push({name:'WeChatPay', params: {order: res.data.order, tradeId: res.data.tradeId}})
+          }
+      });       
+    },
     crowdPay() {
-      this.$router.push({ name: 'CrowdPay', params: {  }})
+      //this.$router.push({ name: 'CrowdPay', params: {  }})
+      this.orderRePay()
     }
   }
 }
