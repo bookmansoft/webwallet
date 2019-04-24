@@ -28,7 +28,7 @@
               <flexbox style="height:40px;line-height:40px;">
                 <flexbox-item :span="8">
                     <div class="flex-left">
-                      <span style="color:coral; font-size:16px;">{{topItem.desc}}</span>
+                      <span style="color:coral; font-size:16px;">￥ {{topItem.price}}元起售</span>
                     </div>
                 </flexbox-item>
                 <flexbox-item :span="4">
@@ -41,12 +41,12 @@
               <flexbox style="height:30px;line-height:30px; color:#888; font-size:14px;">
                 <flexbox-item :span="8">
                     <div class="flex-left">
-                      <p><span>199人支持</span></p>
+                      <p><span>{{topItem.support}}人支持</span></p>
                     </div>
                 </flexbox-item>
                 <flexbox-item :span="4">
                   <div class="flex-right" >
-                      <p><span>还剩11份</span></p>
+                      <p><span>还剩{{topItem.remainder/100}}份</span></p>
                   </div>
                 </flexbox-item>
               </flexbox>
@@ -62,10 +62,10 @@
                 <flexbox-item>
                   <div style="padding-left:6px;">
                     <p><span style="font-size:15px;">{{item.cname}}</span></p>
-                    <p><span style="color: coral; font-size:14px;">{{item.desc}}</span></p>
+                    <p><span style="color: coral; font-size:14px;">￥ {{item.price}}元起售</span></p>
                     <p>
                       <flexbox>
-                      <flexbox-item :span="8"><p><span style="color: #888; font-size:13px;">60人支持</span></p></flexbox-item>
+                      <flexbox-item :span="8"><p><span style="color: #888; font-size:13px;">{{item.support}}人支持</span></p></flexbox-item>
                       <flexbox-item :span="4"><p><span style="color: #888; font-size:13px;">剩余13天</span></p></flexbox-item>
                       </flexbox>
                     </p>
@@ -167,7 +167,7 @@ export default {
       tabIndex: 0,
       tabItems: tabList(),
       topItem: null,
-      crowdItems: crowdList(),
+      crowdItems: [],
       crowdFreeItems: crowdFreeList(),
       isLoadMore: false
     }
@@ -188,8 +188,15 @@ export default {
             console.log('mine', res.data)
             this.isLoadMore = true
             if(res.data.errcode == 'success') {
-              this.crowdItems = res.data.data
+              //this.crowdItems = res.data.data
               this.topItem = res.data.data[0]
+              let index = 0
+              res.data.data.forEach(element => {
+                if(index > 0) {
+                  this.crowdItems.push(element)
+                }
+                index++
+              });
             }
         });
     },

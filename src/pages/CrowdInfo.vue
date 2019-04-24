@@ -12,12 +12,12 @@
             <flexbox style="height:40px;line-height:40px;">
               <flexbox-item :span="7">
                   <div class="flex-left">
-                    <span style="color:coral; font-size:16px;">￥{{crowdItem.price}}/个</span>
+                    <span style="color:coral; font-size:16px;">￥{{crowdItem.price}}/份</span>
                   </div>
               </flexbox-item>
               <flexbox-item :span="5">
                 <div class="flex-right" >
-                    <span style="font-size:15px; color:#888;">剩余{{crowdItem.remainder}}个</span>
+                    <span style="font-size:15px; color:#888;">剩余{{crowdItem.remainder/100}}份</span>
                 </div>
               </flexbox-item>
             </flexbox>
@@ -39,8 +39,8 @@
             </flexbox-item>
         </flexbox> 
         <flexbox>
-            <flexbox-item :span="4" class="flex-center"><p>{{crowdItem.totality}}</p><p><span style="font-size:12px; color:#888;">上架个数</span></p></flexbox-item>
-            <flexbox-item :span="3" class="flex-center"><p>{{crowdItem.remainder}}</p><p><span style="font-size:12px; color:#888;">剩余数量</span></p></flexbox-item>
+            <flexbox-item :span="4" class="flex-center"><p>{{crowdItem.totality/100}}</p><p><span style="font-size:12px; color:#888;">上架个数</span></p></flexbox-item>
+            <flexbox-item :span="3" class="flex-center"><p>{{crowdItem.remainder/100}}</p><p><span style="font-size:12px; color:#888;">剩余数量</span></p></flexbox-item>
             <flexbox-item  class="flex-center"><p>199</p><p><span style="font-size:12px; color:#888;">参与人数</span></p></flexbox-item>
         </flexbox>
         <div style="background-color: white; padding: 20px;">
@@ -114,7 +114,7 @@ export default {
 
     },
     crowdOrder() {
-      this.$router.push({ name: 'CrowdOrder', params: {  }})
+      this.$router.push({ name: 'CrowdOrder', params: { item: this.crowdItem }})
     },
     userToken() {
         if(this.GLOBAL.uid == 0) {

@@ -18,7 +18,7 @@
                     <p><span style="font-size:17px;">购买数量</span></p>
                 </flexbox-item>
                 <flexbox-item class="flex-right">
-                    <p><inline-x-number width="50px"></inline-x-number></p>
+                    <p><inline-x-number width="50px" v-model="quantity"></inline-x-number></p>
                 </flexbox-item>
             </flexbox>
           </div>
@@ -69,7 +69,9 @@ export default {
   data () {
     return {
       msg: '众筹',
-      tabIndex: 0
+      tabIndex: 0,
+      crowdItem: null,
+      quantity: 1
     }
   },
   methods: {
@@ -82,9 +84,11 @@ export default {
         func:'CommonOrderRepay',
         control: 'order',
         uid: this.GLOBAL.userBase.uid,
-        price: parseInt(product.price/100),
-        productId: product.value,
-        productIntro: '游戏金'+product.label,
+        price: this.quantity * 10,
+        productId: this.crowdItem.id,
+        attach: this.crowdItem.cid,
+        quantity: this.quantity,
+        productIntro: this.crowdItem.cname,
         oemInfo: this.GLOBAL.oemInfo
       };
       console.log('order', data)
@@ -97,10 +101,14 @@ export default {
       });       
     },
     crowdPay() {
-      //this.$router.push({ name: 'CrowdPay', params: {  }})
       this.orderRePay()
     }
+  },
+  
+  created() {
+    this.crowdItem = this.$route.params.item
   }
+
 }
 </script>
 

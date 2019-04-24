@@ -230,6 +230,8 @@ export default {
           uid: this.GLOBAL.userBase.uid,
           price: parseInt(product.price/100),
           productId: product.value,
+          attach: '',
+          quantity: 1,
           productIntro: '游戏金'+product.label,
           oemInfo: this.GLOBAL.oemInfo
         };
