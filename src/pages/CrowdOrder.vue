@@ -1,5 +1,6 @@
 <template>
   <div>
+      <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
       <div style="background-color: #f5f5f9; padding: 12px;">
           <div style="background-color: white; padding: 15px;">
             <flexbox>
@@ -9,7 +10,7 @@
                 <flexbox-item :span="9" class="flex-left">
                     <p><span style="font-size:17px;">进击的兵长 代练宝宝</span></p>
                     <br/>
-                    <p><span style="color:coral; font-size:16px;">￥10.00</span></p>
+                    <p><span style="color:coral; font-size:16px;">￥{{crowdItem.price*quantity}}</span></p>
                 </flexbox-item>
             </flexbox>
             <br/>
@@ -59,16 +60,17 @@
 </template>
 <script>
 //import { XHeader, Group, Cell } from 'vux'
-import { XButton, Tab, TabItem, Flexbox, FlexboxItem, Group, Divider, Box, InlineXNumber, Cell, CellBox, CellFormPreview, Badge } from 'vux'
+import { XButton, XHeader, Tab, TabItem, Flexbox, FlexboxItem, Group, Divider, Box, InlineXNumber, Cell, CellBox, CellFormPreview, Badge } from 'vux'
 import Navs from '@/components/Navs.vue'
 
 export default {
   components: {
-    Navs, Tab, XButton, TabItem, Flexbox, FlexboxItem, Group, Divider, Box, InlineXNumber, Cell, CellBox, CellFormPreview, Badge
+    Navs, Tab, XButton, XHeader, TabItem, Flexbox, FlexboxItem, Group, Divider, Box, InlineXNumber, Cell, CellBox, CellFormPreview, Badge
   },
   data () {
     return {
       msg: '众筹',
+      headerTitle: '众筹购买',
       tabIndex: 0,
       crowdItem: null,
       quantity: 1
@@ -78,13 +80,15 @@ export default {
     onItemClick(index) {
       console.log(this.tabIndex)
     },
-
+    onBack() {
+      this.$router.push({ name: 'CrowdInfo', params: {item: this.crowdItem }})
+    },
     orderRePay() {
       let data = {
         func:'CommonOrderRepay',
         control: 'order',
         uid: this.GLOBAL.userBase.uid,
-        price: this.quantity * 10,
+        price: this.crowdItem.price * this.quantity,
         productId: this.crowdItem.id,
         attach: this.crowdItem.cid,
         quantity: this.quantity,
@@ -107,6 +111,10 @@ export default {
   
   created() {
     this.crowdItem = this.$route.params.item
+    if(!!!this.crowdItem) {
+      this.$router.push({name:'Crowd'})
+    }
+    console.log('crowdItem', this.crowdItem)
   }
 
 }

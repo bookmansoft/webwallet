@@ -1,5 +1,6 @@
 <template>
   <div>
+      <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
       <div class="crowd-car">
         <img :src="crowdItem.pic" class="img-top">
         <div style="background-color: white">
@@ -64,7 +65,7 @@
 </template>
 <script>
 //import { XHeader, Group, Cell } from 'vux'
-import { XButton, Tab, TabItem, Flexbox, FlexboxItem, Group, Divider, Box} from 'vux'
+import { XButton, Tab, XHeader, TabItem, Flexbox, FlexboxItem, Group, Divider, Box} from 'vux'
 import Navs from '@/components/Navs.vue'
 
 const tabList = () => [
@@ -97,16 +98,20 @@ const crowdList = () => [
 ]
 export default {
   components: {
-    Navs, Tab, XButton, TabItem, Flexbox, FlexboxItem, Group, Divider, Box
+    Navs, Tab, XHeader, XButton, TabItem, Flexbox, FlexboxItem, Group, Divider, Box
   },
   data () {
     return {
       msg: '众筹',
+      headerTitle: '众筹详情',
       tabIndex: 0,
       crowdItem: null
     }
   },
   methods: {
+    onBack() {
+      this.$router.push({ name: 'Crowd'})
+    },
     onItemClick(index) {
       console.log(this.tabIndex)
     },
