@@ -52,7 +52,7 @@
       <div>
         <br/>
         <box gap="10px 10px">
-            <x-button :gradients="['#FF5E3A', '#FF9500']" @click.native="crowdPay()">去支付</x-button>
+            <x-button :gradients="['#FF5E3A', '#FF9500']" @click.native="crowdPay()" v-bind:show-loading="showLoading">去支付</x-button>
         </box>
       </div>
   </div>
@@ -73,7 +73,8 @@ export default {
       headerTitle: '众筹购买',
       tabIndex: 0,
       crowdItem: null,
-      quantity: 1
+      quantity: 1,
+      showLoading: false
     }
   },
   methods: {
@@ -100,11 +101,16 @@ export default {
           console.log(res.data);
           if(res.data.errcode='success') {
             //this.orderPay(res.data.tradeId)
-            this.$router.push({name:'WeChatPay', params: {order: res.data.order, tradeId: res.data.tradeId}})
+            setTimeout(() => {
+              this.showLoading = false
+              this.$router.push({name:'WeChatPay', params: {order: res.data.order, tradeId: res.data.tradeId}})
+            }, 1500);
+            
           }
       });       
     },
     crowdPay() {
+      this.showLoading = true
       this.orderRePay()
     }
   },
