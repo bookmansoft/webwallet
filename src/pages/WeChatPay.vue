@@ -144,7 +144,7 @@ export default {
 
   created() {
     console.log('created')
-    if(this.GLOBAL.userProfile == null || this.$route.params.tradeId == null) {
+    if(this.GLOBAL.userBase.uid == 0 || this.$route.params.tradeId == null) {
       this.$router.push('/mine')
     }
 
