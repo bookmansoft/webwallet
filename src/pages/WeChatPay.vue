@@ -68,6 +68,7 @@ export default {
             oemInfo: this.GLOBAL.oemInfo
         }
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+            console.log(res.data)
             if(res.data.errcode=='success') {
                 this.orderParams = res.data.unifiedOrder
                 console.log(this.orderParams)
@@ -143,18 +144,14 @@ export default {
 
   created() {
     console.log('created')
-    if(this.GLOBAL.userProfile == null) {
+    if(this.GLOBAL.userProfile == null || this.$route.params.tradeId == null) {
       this.$router.push('/mine')
     }
 
-    if(this.$route.params.tradeId == null) {
-      this.$router.push('/member/join')
-    } else {
-      this.tradeId = this.$route.params.tradeId
-      this.order = this.$route.params.order
-      //this.getWxConfig()
-      this.unifiedOrder()
-    }
+    this.tradeId = this.$route.params.tradeId
+    this.order = this.$route.params.order
+    this.unifiedOrder()
+    
   }
 }
 </script>
