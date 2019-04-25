@@ -46,7 +46,7 @@
                 </flexbox-item>
                 <flexbox-item :span="4">
                   <div class="flex-right" >
-                      <p><span>还剩{{topItem.remainder/100}}份</span></p>
+                      <p><span>还剩{{topItem.remainder}}个</span></p>
                   </div>
                 </flexbox-item>
               </flexbox>

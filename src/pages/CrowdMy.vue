@@ -7,60 +7,68 @@
       </tab-item>
     </tab>
     <div v-if="tabIndex==0">
-    
-      <div v-for="(item, index) in crowdItems" :key="index" class="crowdItem">
-            <flexbox @click.native="crowdDetail(item, index)">
-              <flexbox-item :span="2.5" style="padding:0.3rem;">
-                <div class="flex-demo-left">
-                  <img :src="item.src" class="img-game-list" />
-                </div></flexbox-item>
-              <flexbox-item>
-                <div style="padding-left:6px;">
-                  <p><span style="font-size:15px;">{{item.title}}</span></p>
-                  <p><span style="color: coral; font-size:14px;">{{item.desc}}</span></p>
-                  <p>
-                    <flexbox>
-                    <flexbox-item :span="8"><p><span style="color: #888; font-size:13px;">{{item.support}}</span></p></flexbox-item>
-                    <flexbox-item :span="4"><p><span style="color: #888; font-size:13px;">{{item.remainder}}</span></p></flexbox-item>
-                    </flexbox>
-                  </p>
-                </div>
-              </flexbox-item>
-            </flexbox>
+      <div v-if="isLoadMore && crowdItems.length == 0">
+        <no-data src="static/img/default/no-walletdetail.png"></no-data>
+      </div>
+      <div v-if="isLoadMore" class="crowdItem">
+        <div v-for="(item, index) in crowdItems" :key="index" class="crowdItem">
+              <flexbox @click.native="crowdDetail(item, index)">
+                <flexbox-item :span="2.5" style="padding:0.3rem;">
+                  <div class="flex-demo-left">
+                    <img :src="item.src" class="img-game-list" />
+                  </div></flexbox-item>
+                <flexbox-item>
+                  <div style="padding-left:6px;">
+                    <p><span style="font-size:15px;">{{item.title}}</span></p>
+                    <p><span style="color: coral; font-size:14px;">持有 {{item.quantity}} 个</span></p>
+                  </div>
+                </flexbox-item>
+              </flexbox>
+        </div>
       </div>
 
     </div>
 
     <div v-else>
-      <div v-for="(item, index) in crowdFreeItems" :key="index" class="crowdItem2">
-            <flexbox @click.native="crowFreedDetail(item, index)">
-              <flexbox-item :span="2.5" style="padding:0.3rem;">
-                <div class="flex-demo-left">
-                  <img :src="item.src" class="img-game-list2" />
-                </div></flexbox-item>
-              <flexbox-item>
-                <div style="padding-left:0px;">
-                  <p><span style="font-size:15px;">{{item.title}}</span></p>
-                  <p>
-                    <flexbox>
-                    <flexbox-item :span="8"><p><span style="color: #888; font-size:13px;">{{item.sales}}</span></p></flexbox-item>
-                    <flexbox-item :span="4"><p><span style="color: red; font-size:13px;">{{item.gold}}</span></p></flexbox-item>
-                    </flexbox>
-                  </p>
-                </div>
-              </flexbox-item>
-            </flexbox>
+      <div v-if="isLoadMore && crowdFreeItems.length == 0">
+        <no-data src="static/img/default/no-walletdetail.png"></no-data>
+      </div>
+      <div v-if="isLoadMore">
+        <div v-for="(item, index) in crowdFreeItems" :key="index" class="crowdItem2">
+              <flexbox @click.native="crowFreedDetail(item, index)">
+                <flexbox-item :span="2.5" style="padding:0.3rem;">
+                  <div class="flex-demo-left">
+                    <img :src="item.src" class="img-game-list2" />
+                  </div></flexbox-item>
+                <flexbox-item>
+                  <div style="padding-left:0px;">
+                    <p><span style="font-size:15px;">{{item.title}}</span></p>
+                    <p>
+                      <flexbox>
+                      <flexbox-item :span="8"><p><span style="color: #888; font-size:13px;">{{item.sales}}</span></p></flexbox-item>
+                      <flexbox-item :span="4"><p><span style="color: red; font-size:13px;">{{item.gold}}</span></p></flexbox-item>
+                      </flexbox>
+                    </p>
+                  </div>
+                </flexbox-item>
+              </flexbox>
+        </div>
       </div>
     </div>
     
+    <div v-if="!isLoadMore">
+        <load-more tip="正在加载" style="position: relative; top:200px;" :show-loading="!isLoadMore"></load-more>
+    </div>
+
     <navs></navs>
 
   </div>
 </template>
 <script>
 //import { XHeader, Group, Cell } from 'vux'
-import { XHeader, XButton, Tab, TabItem, Flexbox, FlexboxItem} from 'vux'
+import { XHeader, XButton, Tab, TabItem, Flexbox, FlexboxItem, LoadMore } from 'vux'
 import Navs from '@/components/Navs.vue'
+import NoData from '@/components/NoData.vue'
 
 const tabList = () => [
   {
@@ -109,7 +117,7 @@ const crowdFreeList = () => [
 
 export default {
   components: {
-    Navs, XHeader, Tab, XButton, TabItem, Flexbox, FlexboxItem
+    Navs, XHeader, Tab, XButton, TabItem, Flexbox, FlexboxItem, NoData, LoadMore
   },
   data () {
     return {
@@ -117,8 +125,9 @@ export default {
       msg: '众筹',
       tabIndex: 0,
       tabItems: tabList(),
-      crowdItems: crowdList(),
-      crowdFreeItems: crowdFreeList()
+      crowdItems: [], //crowdList(),
+      crowdFreeItems: [], //crowdFreeList(),
+      isLoadMore: false
     }
   },
   methods: {
@@ -126,14 +135,25 @@ export default {
             this.$router.push('/mine')
         },
         onItemClick(index) {
-        console.log(this.tabIndex)
+          console.log(this.tabIndex)
         },
         crowdDetail(item, index) {
-        this.$router.push({ name: 'CrowdInfo', params: {  }})
+          this.$router.push({ name: 'CrowdMyInfo', params: { item: item }})
         },
         crowFreedDetail(item, index) {
-        this.$router.push({ name: 'CrowdFreeInfo', params: { item: item }})
-        }
+          this.$router.push({ name: 'CrowdFreeInfo', params: { item: item }})
+        },
+        getUserStocks(){
+            let data = {func:'UserStocks', control: 'stock', uid: this.GLOBAL.userBase.uid, oemInfo: this.GLOBAL.oemInfo}
+            this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+                console.log('mine', res.data)
+                this.isLoadMore = true
+                this.crowdItems = res.data.data
+            });
+        },
+  },
+  created() {
+    this.getUserStocks()
   }
 }
 </script>
@@ -146,8 +166,8 @@ export default {
 }
 
 .crowdItem p {
-  height: 30px;
-  line-height: 30px;
+  height: 45px;
+  line-height: 45px;
 }
 
 .crowdItem2 {

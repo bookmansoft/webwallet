@@ -13,12 +13,12 @@
             <flexbox style="height:40px;line-height:40px;">
               <flexbox-item :span="7">
                   <div class="flex-left">
-                    <span style="color:coral; font-size:16px;">￥{{crowdItem.price}}/份</span>
+                    <span style="color:coral; font-size:16px;">￥元{{crowdItem.price}}/个</span>
                   </div>
               </flexbox-item>
               <flexbox-item :span="5">
                 <div class="flex-right" >
-                    <span style="font-size:15px; color:#888;">剩余{{crowdItem.remainder/100}}份</span>
+                    <span style="font-size:15px; color:#888;">剩余{{crowdItem.remainder}}个</span>
                 </div>
               </flexbox-item>
             </flexbox>
