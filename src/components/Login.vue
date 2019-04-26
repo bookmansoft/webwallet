@@ -67,6 +67,22 @@ export default {
         });
     },
 
+    InitUserFromOpenId() {
+      console.log('InitUserFromOpenId')
+      let openid = this.GLOBAL.userBase.openid
+      let data = {func:'InitUserFromOpenId', control: 'wechat', openid: openid, oemInfo: this.GLOBAL.oemInfo}
+      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+          console.log(res.data)
+          if(res.data.errcode=='success') {
+              this.GLOBAL.userBase.uid = res.data.uid
+              this.gotoHome()
+          } else {
+              this.showPlugin('创建失败')
+          }
+      });
+
+    },
+
     wxAuthCode() {
         console.log('wxAuthod')
         let redirect_uri = this.GLOBAL.siteUri
@@ -108,7 +124,7 @@ export default {
           }
         })
         
-        if(this.urlParamPath==null) {
+        if(this.urlParamPath == null) {
           this.$router.push('/home')
         } else {
           this.$router.push(this.urlParamPath)
@@ -116,27 +132,27 @@ export default {
     }
 
   },
+
   created() {
     this.urlParamPath = this.utils.getUrlKey('path')
     let userAgent = this.checkUserAgent()
     this.GLOBAL.userBase.userAgent = userAgent
     console.log('userAgent', userAgent)
 
-    //微信浏览器
-    if(userAgent == 1) {
-      if(this.GLOBAL.userBase.uid == 0) {
-        let code = this.utils.getUrlKey('code')
-        if(code != null) {
-          this.GetUserFromMapCode(code)
-        } else  {
-          this.wxAuthCode()
-        }
-      } else {
-          this.gotoHome()
+    //if(userAgent == 1) { 微信浏览器
+    if(this.GLOBAL.userBase.uid == 0) {
+      let code = this.utils.getUrlKey('code')
+      if(code != null) {
+        this.GetUserFromMapCode(code)
+      } else  {
+        this.wxAuthCode()
       }
-    } 
-
+    } else {
+        this.gotoHome()
+    }
+    
   }
+
 }
 </script>
 <style scoped lang="less">
