@@ -10,7 +10,7 @@
                 <flexbox-item :span="9" class="flex-left">
                     <p><span style="font-size:17px;">进击的兵长 代练宝宝</span></p>
                     <br/>
-                    <p><span style="color:coral; font-size:16px;">￥{{crowdItem.price*quantity}}</span></p>
+                    <p><span style="color:coral; font-size:16px;">￥{{crowdItem.price}}</span></p>
                 </flexbox-item>
             </flexbox>
             <br/>
@@ -40,7 +40,7 @@
               </group>
 
               <group>
-                <cell :is-link="true" value="10元">
+                <cell :is-link="true" :value="crowdItem.price*quantity+'元'">
                   <span slot="title">
                     <span style="vertical-align:middle;">商品金额</span>
                   </span>
