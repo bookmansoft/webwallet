@@ -103,7 +103,7 @@ export default {
             //this.orderPay(res.data.tradeId)
             setTimeout(() => {
               this.showLoading = false
-              this.$router.push({name:'WeChatPay', params: {order: res.data.order, tradeId: res.data.tradeId, returnUrl: '/my/stock'}})
+              this.$router.push({name:'WeChatPay', params: {order: res.data.order, tradeId: res.data.tradeId, retPath: '/my/stock'}})
             }, 1500);
             
           }

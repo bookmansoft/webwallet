@@ -42,7 +42,7 @@ export default {
       payResult: false,
       payIcon: 'waiting',
       payTitle: '支付中',
-      returnUrl: ''
+      retPath: ''
     }
   },
   methods: {
@@ -120,6 +120,7 @@ export default {
     },
 
     orderNotify() {
+        let that = this
         let data = {
             func: 'OrderPayResutl',         //action
             uid: this.GLOBAL.userBase.uid,
@@ -130,10 +131,15 @@ export default {
             oemInfo: this.GLOBAL.oemInfo
         }
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+            alert("1")
             if(res.data.errcode=='success') {
+                alert("2")
                 setTimeout(()=>{
-                    if(!!this.returnUrl) {
-                        this.$router.push(this.returnUrl)
+                    if(!!that.retPath) {
+                        alert("3")
+                        that.$router.push(that.retPath)
+                    } else {
+                        that.$router.go(-1)
                     }
                 }, 1000)
             }
@@ -150,7 +156,7 @@ export default {
 
     this.tradeId = this.$route.params.tradeId
     this.order = this.$route.params.order
-    this.returnUrl = this.$route.params.returnUrl
+    this.retPath = this.$route.params.retPath
     this.unifiedOrder()
     
   }
