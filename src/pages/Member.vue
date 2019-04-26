@@ -240,7 +240,7 @@ export default {
             console.log(res.data);
             if(res.data.errcode='success') {
               //this.orderPay(res.data.tradeId)
-              this.$router.push({name:'WeChatPay', params: {order: res.data.order, tradeId: res.data.tradeId}})
+              this.$router.push({name:'WeChatPay', params: {order: res.data.order, tradeId: res.data.tradeId, retPath: '/member'}})
             }
         });       
       },

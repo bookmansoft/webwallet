@@ -64,7 +64,7 @@ export default {
             uid: this.GLOBAL.userBase.uid,
             tradeId: this.tradeId,
             openid: this.GLOBAL.userBase.openid,
-            price: this.order.order_num,
+            price: this.order.order_num*100,
             productInfo: this.order.product_info,
             oemInfo: this.GLOBAL.oemInfo
         }
@@ -131,12 +131,9 @@ export default {
             oemInfo: this.GLOBAL.oemInfo
         }
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-            alert("1")
             if(res.data.errcode=='success') {
-                alert("2")
                 setTimeout(()=>{
                     if(!!that.retPath) {
-                        alert("3")
                         that.$router.push(that.retPath)
                     } else {
                         that.$router.go(-1)
