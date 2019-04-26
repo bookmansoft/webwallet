@@ -41,7 +41,8 @@ export default {
       orderParams: null,
       payResult: false,
       payIcon: 'waiting',
-      payTitle: '支付中'
+      payTitle: '支付中',
+      returnUrl: ''
     }
   },
   methods: {
@@ -113,9 +114,6 @@ export default {
                 } else {
                     that.payTitle = '支付失败'
                     that.payIcon = 'warn'
-                    setTimeout(()=>{
-                        that.$router.go(-1)
-                    }, 1000)
                 }
             }
         )
@@ -134,7 +132,9 @@ export default {
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
             if(res.data.errcode=='success') {
                 setTimeout(()=>{
-                    this.$router.go(-1)
+                    if(!!this.returnUrl) {
+                        this.$router.push(this.returnUrl)
+                    }
                 }, 1000)
             }
         }) 
@@ -150,6 +150,7 @@ export default {
 
     this.tradeId = this.$route.params.tradeId
     this.order = this.$route.params.order
+    this.returnUrl = this.$route.params.returnUrl
     this.unifiedOrder()
     
   }
