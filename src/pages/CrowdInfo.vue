@@ -42,7 +42,7 @@
         <flexbox>
             <flexbox-item :span="4" class="flex-center"><p>{{crowdItem.totality/100}}</p><p><span style="font-size:12px; color:#888;">上架个数</span></p></flexbox-item>
             <flexbox-item :span="3" class="flex-center"><p>{{crowdItem.remainder/100}}</p><p><span style="font-size:12px; color:#888;">剩余数量</span></p></flexbox-item>
-            <flexbox-item  class="flex-center"><p>199</p><p><span style="font-size:12px; color:#888;">参与人数</span></p></flexbox-item>
+            <flexbox-item  class="flex-center"><p>{{crowdItem.support}}</p><p><span style="font-size:12px; color:#888;">参与人数</span></p></flexbox-item>
         </flexbox>
         <div style="background-color: white; padding: 20px;">
             <div class="crowd-info">
