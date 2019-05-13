@@ -70,3 +70,5 @@ typings/
 .svn/wc.db
 
 
+/src/Global.vue
+/src/Global.vue
