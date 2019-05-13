@@ -62,6 +62,11 @@
                 <p><span>更新时间</span><span>{{gameInfo.publishTime}}</span></p>
                 <p style="color: #888; font-size:14px;">{{gameInfo.update_content}}</p>
             </div>
+            <!--
+            <div style="padding:15px;">
+              <x-button @click.native="test2()" type="primary"> 测试</x-button>
+            </div>
+            -->
         </div>
         <div id="gameNameImg" class="backcolor-white">
             <div>
@@ -396,6 +401,20 @@ export default {
             this.cpAddr = res.data.ret.data.addr
             console.log('cpAddr', this.cpAddr)
         });
+    },
+
+    test2() {
+      alert("ok");
+      this.$wechat.getLocation({
+          type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+          success: function (res) {
+              var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+              var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+              var speed = res.speed; // 速度，以米/每秒计
+              var accuracy = res.accuracy; // 位置精度
+              alert(latitude + "." + longitude);
+          }
+      });
     }
   },
 

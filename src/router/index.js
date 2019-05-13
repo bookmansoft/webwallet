@@ -7,6 +7,9 @@ import CrowdInfo from '@/pages/CrowdInfo'
 import CrowdOrder from '@/pages/CrowdOrder'
 import CrowdPay from '@/pages/CrowdPay'
 import CrowdFreeInfo from '@/pages/CrowdFreeInfo'
+import CrowdMy from '@/pages/CrowdMy'
+import CrowdMyInfo from '@/pages/CrowdMyInfo'
+import CrowdMySale from '@/pages/CrowdMySale'
 import Mine from '@/pages/Mine'
 import Wallet from '@/pages/Wallet'
 import WalletSend from '@/pages/WalletSend'
@@ -51,6 +54,9 @@ export default new Router({
     { path: '/crowd/order', name: 'CrowdOrder', component: CrowdOrder },
     { path: '/crowd/pay', name: 'CrowdPay', component: CrowdPay },
     { path: '/crowd/free/info', name: 'CrowdFreeInfo', component: CrowdFreeInfo },
+    { path: '/crowd/my/info', name: 'CrowdMyInfo', component: CrowdMyInfo },
+    { path: '/crowd/my/sale', name: 'CrowdMySale', component: CrowdMySale },
+    { path: '/my/stock', name: 'CrowdMy', component: CrowdMy },
     { path: '/mine', name: 'Mine', component: Mine },
     { path: '/wallet', name: 'Wallet', component: Wallet },
     { path: '/wallet/send', name: 'WalletSend', component: WalletSend },

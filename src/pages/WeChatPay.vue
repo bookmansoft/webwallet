@@ -41,7 +41,8 @@ export default {
       orderParams: null,
       payResult: false,
       payIcon: 'waiting',
-      payTitle: '支付中'
+      payTitle: '支付中',
+      retPath: ''
     }
   },
   methods: {
@@ -63,11 +64,12 @@ export default {
             uid: this.GLOBAL.userBase.uid,
             tradeId: this.tradeId,
             openid: this.GLOBAL.userBase.openid,
-            price: this.order.order_num,
+            price: this.order.order_num*100,
             productInfo: this.order.product_info,
             oemInfo: this.GLOBAL.oemInfo
         }
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+            console.log(res.data)
             if(res.data.errcode=='success') {
                 this.orderParams = res.data.unifiedOrder
                 console.log(this.orderParams)
@@ -112,15 +114,13 @@ export default {
                 } else {
                     that.payTitle = '支付失败'
                     that.payIcon = 'warn'
-                    setTimeout(()=>{
-                        that.$router.go(-1)
-                    }, 1000)
                 }
             }
         )
     },
 
     orderNotify() {
+        let that = this
         let data = {
             func: 'OrderPayResutl',         //action
             uid: this.GLOBAL.userBase.uid,
@@ -133,7 +133,11 @@ export default {
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
             if(res.data.errcode=='success') {
                 setTimeout(()=>{
-                    this.$router.go(-1)
+                    if(!!that.retPath) {
+                        that.$router.push(that.retPath)
+                    } else {
+                        that.$router.go(-1)
+                    }
                 }, 1000)
             }
         }) 
@@ -143,18 +147,15 @@ export default {
 
   created() {
     console.log('created')
-    if(this.GLOBAL.userProfile == null) {
+    if(this.GLOBAL.userBase.uid == 0 || this.$route.params.tradeId == null) {
       this.$router.push('/mine')
     }
 
-    if(this.$route.params.tradeId == null) {
-      this.$router.push('/member/join')
-    } else {
-      this.tradeId = this.$route.params.tradeId
-      this.order = this.$route.params.order
-      //this.getWxConfig()
-      this.unifiedOrder()
-    }
+    this.tradeId = this.$route.params.tradeId
+    this.order = this.$route.params.order
+    this.retPath = this.$route.params.retPath
+    this.unifiedOrder()
+    
   }
 }
 </script>

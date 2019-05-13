@@ -230,6 +230,8 @@ export default {
           uid: this.GLOBAL.userBase.uid,
           price: parseInt(product.price/100),
           productId: product.value,
+          attach: '',
+          quantity: 1,
           productIntro: '游戏金'+product.label,
           oemInfo: this.GLOBAL.oemInfo
         };
@@ -238,7 +240,7 @@ export default {
             console.log(res.data);
             if(res.data.errcode='success') {
               //this.orderPay(res.data.tradeId)
-              this.$router.push({name:'WeChatPay', params: {order: res.data.order, tradeId: res.data.tradeId}})
+              this.$router.push({name:'WeChatPay', params: {order: res.data.order, tradeId: res.data.tradeId, retPath: '/member'}})
             }
         });       
       },

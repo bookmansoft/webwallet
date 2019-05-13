@@ -249,6 +249,7 @@ export default {
       let prop = this.prop;
       var data = {
         func: 'PropDonate', control: 'prop', oemInfo: this.GLOBAL.oemInfo,
+        pid: prop.pid,
         txid: prop.current.hash,
         index: prop.current.index,
         uid: this.GLOBAL.userBase.uid
@@ -266,6 +267,8 @@ export default {
              console.log('raw', rep.ret.raw)
              this.showPlugin('点击右上角分享')
              this.wxReady(prop, rep.ret.raw)
+          } else {
+            this.showPlugin('道具熔铸失败！')
           }
       });
     },

@@ -1,5 +1,6 @@
 <template>
   <div>
+      <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
       <div style="background-color: #f5f5f9; padding: 12px;">
           <div style="background-color: white; padding: 15px;">
             <flexbox>
@@ -9,7 +10,7 @@
                 <flexbox-item :span="9" class="flex-left">
                     <p><span style="font-size:17px;">进击的兵长 代练宝宝</span></p>
                     <br/>
-                    <p><span style="color:coral; font-size:16px;">￥10.00</span></p>
+                    <p><span style="color:coral; font-size:16px;">￥{{crowdItem.price}}</span></p>
                 </flexbox-item>
             </flexbox>
             <br/>
@@ -18,7 +19,7 @@
                     <p><span style="font-size:17px;">购买数量</span></p>
                 </flexbox-item>
                 <flexbox-item class="flex-right">
-                    <p><inline-x-number width="50px"></inline-x-number></p>
+                    <p><inline-x-number width="50px" v-model="quantity"></inline-x-number></p>
                 </flexbox-item>
             </flexbox>
           </div>
@@ -39,7 +40,7 @@
               </group>
 
               <group>
-                <cell :is-link="true" value="10元">
+                <cell :is-link="true" :value="crowdItem.price*quantity+'元'">
                   <span slot="title">
                     <span style="vertical-align:middle;">商品金额</span>
                   </span>
@@ -51,7 +52,7 @@
       <div>
         <br/>
         <box gap="10px 10px">
-            <x-button :gradients="['#FF5E3A', '#FF9500']" @click.native="crowdPay()">去支付</x-button>
+            <x-button :gradients="['#FF5E3A', '#FF9500']" @click.native="crowdPay()" v-bind:show-loading="showLoading">去支付</x-button>
         </box>
       </div>
   </div>
@@ -59,27 +60,69 @@
 </template>
 <script>
 //import { XHeader, Group, Cell } from 'vux'
-import { XButton, Tab, TabItem, Flexbox, FlexboxItem, Group, Divider, Box, InlineXNumber, Cell, CellBox, CellFormPreview, Badge } from 'vux'
+import { XButton, XHeader, Tab, TabItem, Flexbox, FlexboxItem, Group, Divider, Box, InlineXNumber, Cell, CellBox, CellFormPreview, Badge } from 'vux'
 import Navs from '@/components/Navs.vue'
 
 export default {
   components: {
-    Navs, Tab, XButton, TabItem, Flexbox, FlexboxItem, Group, Divider, Box, InlineXNumber, Cell, CellBox, CellFormPreview, Badge
+    Navs, Tab, XButton, XHeader, TabItem, Flexbox, FlexboxItem, Group, Divider, Box, InlineXNumber, Cell, CellBox, CellFormPreview, Badge
   },
   data () {
     return {
       msg: '众筹',
-      tabIndex: 0
+      headerTitle: '众筹购买',
+      tabIndex: 0,
+      crowdItem: null,
+      quantity: 1,
+      showLoading: false
     }
   },
   methods: {
     onItemClick(index) {
       console.log(this.tabIndex)
     },
+    onBack() {
+      this.$router.push({ name: 'CrowdInfo', params: {item: this.crowdItem }})
+    },
+    orderRePay() {
+      let data = {
+        func:'CommonOrderRepay',
+        control: 'order',
+        uid: this.GLOBAL.userBase.uid,
+        price: this.crowdItem.price * this.quantity,
+        productId: this.crowdItem.id,
+        attach: this.crowdItem.cid,
+        quantity: this.quantity,
+        productIntro: this.crowdItem.cname,
+        oemInfo: this.GLOBAL.oemInfo
+      };
+      console.log('order', data)
+      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+          console.log(res.data);
+          if(res.data.errcode='success') {
+            //this.orderPay(res.data.tradeId)
+            setTimeout(() => {
+              this.showLoading = false
+              this.$router.push({name:'WeChatPay', params: {order: res.data.order, tradeId: res.data.tradeId, retPath: '/my/stock'}})
+            }, 1500);
+            
+          }
+      });       
+    },
     crowdPay() {
-      this.$router.push({ name: 'CrowdPay', params: {  }})
+      this.showLoading = true
+      this.orderRePay()
     }
+  },
+  
+  created() {
+    this.crowdItem = this.$route.params.item
+    if(!!!this.crowdItem) {
+      this.$router.push({name:'Crowd'})
+    }
+    console.log('crowdItem', this.crowdItem)
   }
+
 }
 </script>
 
