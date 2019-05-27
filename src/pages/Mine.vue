@@ -1,7 +1,15 @@
 <template>
-  <div>
+  <div style="margin-top:-20px">
+      <scroller
+        height="-100"
+        lock-x
+        scrollbar-y
+        ref="scroller"
+
+      >
+        <div>
     <group>
-      <flexbox style="padding:5px;">
+      <flexbox style="padding:5px;margin-top:5px">
         <flexbox-item :span="4">
           <div class="flex-demo-left">
             <img :src="userProfile.avatar_uri " class="avatar" />
@@ -38,23 +46,27 @@
         <img slot="icon" width="20" style="display:block;margin-right:5px;" :src="item.img">
       </cell>
     </group>
+        </div>
+      </scroller>
+
+
     <br/>
     <navs></navs>
   </div>
 </template>
 <script>
 import Navs from '@/components/Navs.vue'
-import { Cell, CellBox, CellFormPreview, Group, Badge, Flexbox, FlexboxItem } from 'vux'
+import {     Scroller,Cell, CellBox, CellFormPreview, Group, Badge, Flexbox, FlexboxItem } from 'vux'
 
 const getItems0 = () => [
-  {title: '会员', is_link: true, img: 'static/img/icon1/4.png', badge: 0, link: '/member', value: '普通会员', showDot: false},
-  {title: '红包活动', is_link: true, img: 'static/img/icon3/market3.png', badge: 0, link: '/redpack/act', value: '游戏金抽红包', showDot: false}
+  {title: '会员', is_link: true, img: 'static/img/icon1/4.png', badge: 0, link: '/member', value: '', showDot: false},
+  {title: '红包活动', is_link: true, img: 'static/img/icon3/market3.png', badge: 0, link: '/redpack/act', value: '限时抽红包', showDot: false}
 ]
 const getItems1 = () => [
   {title: '我的钱包', is_link: true, img: 'static/img/mine/wallet.png', badge: 0, link: {path:'/wallet'}, value: '', showDot: false},
   {title: '我的道具', is_link: true, img: 'static/img/mine/prop.png', badge: 0, link: {path:'/props'}, value: '', showDot: false},
   {title: '我的消息', is_link: true, img: 'static/img/mine/msg.png', badge: 0, link: {path:'/message'}, value: '', showDot: false},
-  {title: '我的交易', is_link: true, img: 'static/img/mine/trans.png', badge: 0, link: {path:'/wallet/detail'}, value: '', showDot: false},
+  // {title: '我的交易', is_link: true, img: 'static/img/mine/trans.png', badge: 0, link: {path:'/wallet/detail'}, value: '', showDot: false},
   {title: '我的游戏', is_link: true, img: 'static/img/mine/game.png', badge: 0, link: {path:'/mygame'}, value: '', showDot: false},
   {title: '我的代练宝宝', is_link: true, img: 'static/img/mine/stock.png', badge: 0, link: {path:'/my/stock'}, value: '', showDot: false}
 ]
@@ -65,7 +77,7 @@ const getItems2 = () => [
 ]
 export default {
   components: {
-    Navs, Cell, CellBox, CellFormPreview, Group, Badge, Flexbox, FlexboxItem
+    Scroller,Navs, Cell, CellBox, CellFormPreview, Group, Badge, Flexbox, FlexboxItem
   },
   data () {
     return {
