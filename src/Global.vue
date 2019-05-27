@@ -24,10 +24,10 @@ const colorList = [
 
 const colorListLength = 20
 const oemInfo = { token: '9bcf8939a9c96e14700b2209463af411' }
-const apiUrl = 'http://h5.gamegold.xin:9101/index.html'
-const siteUri = 'http://h5.gamegold.xin'
-//const apiUrl = 'http://192.168.5.73:9101/index.html'
-//const siteUri = 'http://test.gamegold.xin'
+// const apiUrl = 'http://h5.gamegold.xin:9101/index.html'
+// const siteUri = 'http://h5.gamegold.xin'
+const apiUrl = 'http://test.gamegold.xin:9101/index.html';  //服务端是否可以本地调试非常可疑
+const siteUri = 'http://test.gamegold.xin'
 
 const gameGoldUnit = '千克'
 

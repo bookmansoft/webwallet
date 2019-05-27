@@ -15,7 +15,7 @@ export default {
   },
   data () {
     return {
-      version: '当前版本1.12',
+      version: '当前版本1.14',
       headerTitle: '关于我们'
     }
   },
