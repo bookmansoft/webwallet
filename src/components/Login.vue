@@ -46,6 +46,9 @@ export default {
       return null;
     },
 
+    /**
+     * 从 code 获取到 User 信息。如果获取不到，也不会创建。
+     */
     GetUserFromMapCode(code) {
         console.log('GetUserFromMapCode', code)
         let data = {func:'GetUserFromMapCode', control: 'wechat', code: code, oemInfo: this.GLOBAL.oemInfo}
@@ -57,7 +60,9 @@ export default {
                 this.GLOBAL.userBase.user_name = user.user_name
                 this.GLOBAL.userBase.openid = res.data.openid
                 if(user.id == 0 ) {
-                  this.$router.push('/user/bind')
+                  console.log("Login.vue 63:此处引导到注册？",user.id);
+                  // this.$router.push('/user/bind'); //此调用暂时注释，修改为自动注册
+                  this.InitUserFromOpenId();
                 } else {
                   this.gotoHome()
                 }
