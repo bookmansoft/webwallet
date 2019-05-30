@@ -137,8 +137,11 @@ export default {
       id: this.$route.params.send_id
     };
 
+    console.log("ManyRedReceive.vue 140:",params1);
+
     this.axios.post(this.GLOBAL.apiUrl, params1).then(res => {
       this.sendData = res.data.data;
+      console.log("ManyRedReceive.vue 144:",this.sendData);
     });
 
     //获取接收列表--可能不再需要了
