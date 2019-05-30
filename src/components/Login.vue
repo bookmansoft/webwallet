@@ -60,9 +60,9 @@ export default {
                 this.GLOBAL.userBase.user_name = user.user_name
                 this.GLOBAL.userBase.openid = res.data.openid
                 if(user.id == 0 ) {
-                  console.log("Login.vue 63:此处引导到注册？",user.id);
+                  console.log("Login.vue 63:此处引导到注册？",res.data.access_token);
                   // this.$router.push('/user/bind'); //此调用暂时注释，修改为自动注册
-                  this.InitUserFromOpenId();
+                  this.InitUserFromOpenId(res.data.access_token);//此处不可能再传递code参数了；code只能使用一次。
                 } else {
                   this.gotoHome()
                 }
@@ -72,10 +72,13 @@ export default {
         });
     },
 
-    InitUserFromOpenId() {
-      console.log('InitUserFromOpenId')
+    /**
+     * 
+     */
+    InitUserFromOpenId(access_token) {
+      console.log('InitUserFromOpenId:',access_token)
       let openid = this.GLOBAL.userBase.openid
-      let data = {func:'InitUserFromOpenId', control: 'wechat', openid: openid, oemInfo: this.GLOBAL.oemInfo}
+      let data = {func:'InitUserFromOpenId', control: 'wechat', openid: openid,access_token, oemInfo: this.GLOBAL.oemInfo}
       this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
           console.log(res.data)
           if(res.data.errcode=='success') {
