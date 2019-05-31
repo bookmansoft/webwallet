@@ -6,11 +6,11 @@
           <x-button slot="right">千克</x-button>
         </x-input>
       </group>
-      <group class="group">
+      <!-- <group class="group">
         <group-title slot="title">
           <span class="groupTitle">当前钱包剩余金额XXXX千克</span>
         </group-title>
-      </group>
+      </group>-->
       <group class="group">
         <x-input class="input" title="红包个数" placeholder="请填写个数" v-model="total_num">
           <x-button slot="right">个</x-button>
@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     onItemClick(index) {
-      console.log(this.tabIndex);
+      // console.log(this.tabIndex);
     },
 
     justSend() {
@@ -95,10 +95,8 @@ export default {
       this.axios.post(this.GLOBAL.apiUrl, params).then(res => {
         //alert(JSON.stringify(res.data));
         this.send_id = res.data.data;
-      this.$router.push("/manyRed/justSend/" + this.send_id);
+        this.$router.push("/manyRed/justSend/" + this.send_id);
       });
-
-
     }
   },
   filters: {
