@@ -38,7 +38,7 @@
                 </flexbox-item>
                 <flexbox-item :span="6">
                   <div class="text">
-                    {{item.send_nickname}}
+                    {{item.receive_nickname}}
                     <br>{{item.modify_date|dateFormat}}
                   </div>
                 </flexbox-item>
