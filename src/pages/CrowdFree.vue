@@ -1,101 +1,12 @@
 <template>
   <div>
     <div v-if="isLoadMore">
-      <tab :line-width="3" custom-bar-width="60px" v-model="tabIndex">
+      <!-- <tab :line-width="3" custom-bar-width="60px" v-model="tabIndex">
         <tab-item v-for="(item, index) in tabItems" :key="index" @on-item-click="onItemClick">
           <span style="font-size:15px;font-weight:620;">{{item.label}}</span>
         </tab-item>
-      </tab>
-      <div v-if="tabIndex==0">
-        <div class="crowd-car">
-          <img :src="topItem.pic" class="img-top">
-          <flexbox>
-            <flexbox-item :span="8">
-              <div class="flex-left">
-                <span style="font-size:17px;font-weight:590;">{{topItem.cname}}</span>
-              </div>
-            </flexbox-item>
-            <!-- <flexbox-item :span="4">
-                  <div class="flex-right">
-                      <p style="margin:0 auto; overflow:hidden; display:block; height:40px;line-height:40px;">
-                        <img src="static/img/crowd/hot.png" style="width:18px; heigth:18px;" />
-                        <span style="font-size: 15px; color:green;">众筹中</span>
-                      </p>
-                  </div>
-            </flexbox-item>-->
-          </flexbox>
-
-          <flexbox style="height:40px;line-height:40px;">
-            <flexbox-item :span="8">
-              <div class="flex-left">
-                <span style="color:coral; font-size:16px;">￥ {{topItem.price}}</span>
-              </div>
-            </flexbox-item>
-            <flexbox-item :span="4">
-              <div class="flex-right">
-                <x-button
-                  mini
-                  :gradients="['#FF5E3A', '#FF9500']"
-                  @click.native="crowdDetail(topItem, 0)"
-                >立即支持</x-button>
-              </div>
-            </flexbox-item>
-          </flexbox>
-
-          <flexbox style="height:30px;line-height:30px; color:#888; font-size:14px;">
-            <flexbox-item :span="8">
-              <div class="flex-left">
-                <p>
-                  <span>{{topItem.support}}人支持</span>
-                </p>
-              </div>
-            </flexbox-item>
-            <flexbox-item :span="4">
-              <div class="flex-right">
-                <p>
-                  <span>还剩{{topItem.remainder}}个</span>
-                </p>
-              </div>
-            </flexbox-item>
-          </flexbox>
-        </div>
-
-        <div v-for="(item, index) in crowdItems" :key="index" class="crowdItem">
-          <flexbox @click.native="crowdDetail(item, index)">
-            <flexbox-item :span="2.5" style="padding:0.3rem;">
-              <div class="flex-demo-left">
-                <img :src="item.item_pic" class="img-game-list">
-              </div>
-            </flexbox-item>
-            <flexbox-item>
-              <div style="padding-left:6px;">
-                <p>
-                  <span style="font-size:15px;">{{item.cname}}</span>
-                </p>
-                <p>
-                  <span style="color: coral; font-size:14px;">￥ {{item.price}}</span>
-                </p>
-                <p>
-                  <flexbox>
-                    <flexbox-item :span="8">
-                      <p>
-                        <span style="color: #888; font-size:13px;">{{item.support}}人支持</span>
-                      </p>
-                    </flexbox-item>
-                    <flexbox-item :span="4">
-                      <p>
-                        <span style="color: #888; font-size:13px;">剩余13天</span>
-                      </p>
-                    </flexbox-item>
-                  </flexbox>
-                </p>
-              </div>
-            </flexbox-item>
-          </flexbox>
-        </div>
-      </div>
-
-      <div v-else>
+      </tab> -->
+      <div>
         <div v-for="(item, index) in crowdFreeItems" :key="index" class="crowdItem2">
           <flexbox @click.native="crowFreedDetail(item, index)">
             <flexbox-item :span="2" style="padding:0.1rem;">
