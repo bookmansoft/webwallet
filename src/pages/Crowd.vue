@@ -3,7 +3,7 @@
     <div v-if="isLoadMore">
       <div>
         <box gap="18px" style="margin-top:13px">
-          <img src="http://114.116.148.48:9701/image/1/banner.png" style="width:100%">
+          <img src="static/img/stock/banner.png" style="width:100%">
         </box>
         <!-- todo: 替换为vue专用轮播组件 -->
 
@@ -11,17 +11,40 @@
           <div class="crowd-car">
             <img :src="item.large_img_url" class="img-top">
             <flexbox>
-              <flexbox-item :span="8">
+              <flexbox-item :span="12">
                 <div class="flex-left">
-                  <span style="font-size:17px;font-weight:590;">{{item.cp_text}}</span>
+                  <span style="font-size:15px;font-weight:590;">{{item.funding_text}}</span>
                 </div>
               </flexbox-item>
             </flexbox>
 
+            <flexbox>
+              <flexbox-item :span="12">
+                <box gap="10px">
+                  <x-progress :percent="percent2" :show-cancel="false"></x-progress>
+                </box><!-- 无法设置颜色，需要更换实现方式 -->
+              </flexbox-item>
+            </flexbox>
+
             <flexbox style="height:40px;line-height:40px;">
-              <flexbox-item :span="8">
+              <flexbox-item :span="4">
                 <div class="flex-left">
-                  <span style="color:coral; font-size:16px;">￥ {{item.stock_money}}</span>
+                  <img src="static/img/stock/stock_jiner.png" style="width:15px;hegith:15px">
+                  <span style="color:coral; font-size:12px;">￥ {{item.stock_money}}</span>
+                </div>
+              </flexbox-item>
+              <flexbox-item :span="4">
+                <div class="flex-left">
+                  <img src="static/img/stock/stock_renshu.png" style="width:15px;hegith:15px">
+                  <span style="color:coral; font-size:12px;">￥{{item.supply_people_num}}</span>
+                </div>
+              </flexbox-item>
+              <flexbox-item :span="4">
+                <div class="flex-left">
+                  <img src="static/img/stock/stock_shichang.png" style="width:15px;hegith:15px">
+                  <span
+                    style="color:coral; font-size:12px;"
+                  >￥ {{parseInt(item.funding_done_amount*100/item.funding_target_amount) + '%'}}</span>
                 </div>
               </flexbox-item>
               <flexbox-item :span="4">
@@ -92,7 +115,8 @@ export default {
   data() {
     return {
       crowdItems: [],
-      isLoadMore: false
+      isLoadMore: false,
+      percent2: 50,
     };
   },
   methods: {
@@ -116,6 +140,7 @@ export default {
         this.isLoadMore = true;
         if (res.data.total > 0) {
           res.data.list.forEach(element => {
+            //无效：element.percent2=parseInt(item.funding_done_amount*100/item.funding_target_amount);
             this.crowdItems.push(element);
           });
         }
