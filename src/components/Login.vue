@@ -135,7 +135,8 @@ export default {
         })
         
         if(this.urlParamPath == null) {
-          this.$router.push('/home')
+          // this.$router.push('/home')
+          this.$router.push('/crowd')
         } else {
           this.$router.push(this.urlParamPath)
         }

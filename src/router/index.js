@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from '@/pages/Home'
 import Market from '@/pages/Market'
 import Crowd from '@/pages/Crowd'
+import CrowdFree from '@/pages/CrowdFree'
 import CrowdInfo from '@/pages/CrowdInfo'
 import CrowdOrder from '@/pages/CrowdOrder'
 import CrowdPay from '@/pages/CrowdPay'
@@ -50,6 +51,7 @@ export default new Router({
     { path: '/home', name: 'Home', component: Home },
     { path: '/market', name: 'Market', component: Market },
     { path: '/crowd', name: 'Crowd', component: Crowd },
+    { path: '/crowdFree', name: 'CrowdFree', component: CrowdFree },
     { path: '/crowd/info', name: 'CrowdInfo', component: CrowdInfo },
     { path: '/crowd/order', name: 'CrowdOrder', component: CrowdOrder },
     { path: '/crowd/pay', name: 'CrowdPay', component: CrowdPay },

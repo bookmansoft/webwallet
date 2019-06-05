@@ -1,12 +1,12 @@
 <template>
   <div>
     <div v-if="isLoadMore">
-      <!-- <tab :line-width="3" custom-bar-width="60px" v-model="tabIndex">
+      <tab :line-width="3" custom-bar-width="60px" v-model="tabIndex">
         <tab-item v-for="(item, index) in tabItems" :key="index" @on-item-click="onItemClick">
           <span style="font-size:15px;font-weight:620;">{{item.label}}</span>
         </tab-item>
-      </tab> -->
-      <div>
+      </tab>
+      <div v-if="tabIndex==0">
         <div class="crowd-car">
           <img :src="topItem.pic" class="img-top">
           <flexbox>
@@ -95,7 +95,46 @@
         </div>
       </div>
 
-
+      <div v-else>
+        <div v-for="(item, index) in crowdFreeItems" :key="index" class="crowdItem2">
+          <flexbox @click.native="crowFreedDetail(item, index)">
+            <flexbox-item :span="2" style="padding:0.1rem;">
+              <div class="flex-demo-left">
+                <img :src="item.src" class="img-game-list2">
+              </div>
+            </flexbox-item>
+            <flexbox-item :span="6">
+              <div style="padding-left:0px;">
+                <p style="height:24px">
+                  <span style="font-size:15px;">{{item.title}}</span>
+                </p>
+                <p>
+                  <flexbox>
+                    <flexbox-item :span="6">
+                      <p>
+                        <span style="color: #888; font-size:13px;">{{item.sales}}</span>
+                      </p>
+                    </flexbox-item>
+                    <flexbox-item :span="6">
+                      <p>
+                        <span style="font-size:13px;">{{item.gold}}</span>
+                      </p>
+                    </flexbox-item>
+                  </flexbox>
+                </p>
+              </div>
+            </flexbox-item>
+            <flexbox-item :span="4">
+              <div style="padding-left:0px;">
+                <p>
+                  <span v-if="item.gold>=item.baseGold" style="color: red; font-size:15px;">+ {{parseInt(item.gold*100/item.baseGold-100)}}%</span>
+                  <span v-if="item.gold<item.baseGold" style="color: blue; font-size:15px;">- {{parseInt(100-item.gold*100/item.baseGold)}}%</span>
+                </p>
+              </div>
+            </flexbox-item>>
+          </flexbox>
+        </div>
+      </div>
     </div>
 
     <div v-if="!isLoadMore">
@@ -119,6 +158,49 @@ const tabList = () => [
   }
 ];
 
+const crowdList = () => [
+  {
+    src: "static/img/crowd/item1.jpg",
+    title: "Forza Horizon 3",
+    desc: "￥ 25元起售",
+    support: "60人支持",
+    remainder: "剩余13天"
+  },
+  {
+    src: "static/img/crowd/item2.jpg",
+    title: "Forza Horizon 3",
+    desc: "￥ 47元起售",
+    support: "52人支持",
+    remainder: "剩余8天"
+  },
+  {
+    src: "static/img/crowd/item3.jpg",
+    title: "Forza Horizon 3",
+    desc: "￥ 47元起售",
+    support: "139人支持",
+    remainder: "剩余5天"
+  }
+];
+
+const crowdFreeList = () => [
+  {
+    src: "static/img/crowd/a.jpg",
+    title: "进击的兵长 代练宝宝",
+    sales: "15个挂单出售",
+    gold: 52.222,
+    baseGold: 10,
+    group: "Vallnet Co., Ltd"
+  },
+  {
+    src: "static/img/crowd/item1.jpg",
+    title: "Forza Horizon 代练宝宝 ",
+    sales: "20个挂单出售",
+    gold: 18.000,
+    baseGold: 20,
+    group: "Vallnet Co., Ltd"
+  }
+];
+
 export default {
   components: {
     Navs,
@@ -136,6 +218,7 @@ export default {
       tabItems: tabList(),
       topItem: null,
       crowdItems: [],
+      crowdFreeItems: crowdFreeList(),
       isLoadMore: false
     };
   },
@@ -159,6 +242,7 @@ export default {
         console.log("mine", res.data);
         this.isLoadMore = true;
         if (res.data.errcode == "success") {
+          //this.crowdItems = res.data.data
           this.topItem = res.data.data[0];
           let index = 0;
           res.data.data.forEach(element => {
