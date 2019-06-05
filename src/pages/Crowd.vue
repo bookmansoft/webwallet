@@ -5,7 +5,7 @@
         <tab-item v-for="(item, index) in tabItems" :key="index" @on-item-click="onItemClick">
           <span style="font-size:15px;font-weight:620;">{{item.label}}</span>
         </tab-item>
-      </tab> -->
+      </tab>-->
       <div>
         <div class="crowd-car">
           <img :src="topItem.pic" class="img-top">
@@ -73,18 +73,20 @@
                   <span style="font-size:15px;">{{item.cname}}</span>
                 </p>
                 <p>
-                  <span style="color: coral; font-size:14px;">￥ {{item.price}}</span>
+                  <box gap="10px">
+                    <x-progress :percent="35" :show-cancel="false"></x-progress>
+                  </box>
                 </p>
                 <p>
                   <flexbox>
                     <flexbox-item :span="8">
                       <p>
-                        <span style="color: #888; font-size:13px;">{{item.support}}人支持</span>
+                        <span style="color: coral; font-size:14px;">￥ {{item.price}}</span>
                       </p>
                     </flexbox-item>
                     <flexbox-item :span="4">
                       <p>
-                        <span style="color: #888; font-size:13px;">剩余13天</span>
+                        <span style="color: #888; font-size:13px;">{{item.support}}人支持</span>
                       </p>
                     </flexbox-item>
                   </flexbox>
@@ -94,8 +96,6 @@
           </flexbox>
         </div>
       </div>
-
-
     </div>
 
     <div v-if="!isLoadMore">
@@ -107,7 +107,16 @@
 </template>
 <script>
 //import { XHeader, Group, Cell } from 'vux'
-import { XButton, Tab, TabItem, Flexbox, FlexboxItem, LoadMore } from "vux";
+import {
+  XButton,
+  Tab,
+  TabItem,
+  Flexbox,
+  FlexboxItem,
+  LoadMore,
+  XProgress,
+  Box
+} from "vux";
 import Navs from "@/components/Navs.vue";
 
 const tabList = () => [
@@ -127,7 +136,9 @@ export default {
     TabItem,
     Flexbox,
     FlexboxItem,
-    LoadMore
+    LoadMore,
+    XProgress,
+    Box
   },
   data() {
     return {
