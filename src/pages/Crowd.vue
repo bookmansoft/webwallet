@@ -7,13 +7,33 @@
         </box>
         <!-- todo: 替换为vue专用轮播组件 -->
 
+        <flexbox>
+          <flexbox-item :span="12">
+            <div class="flex-left">
+              <img src="static/img/stock/hot_line.png" style="width:3px;height:13px">
+              <span style="font-size:15px;">热门众筹</span>
+            </div>
+          </flexbox-item>
+        </flexbox>
+
         <div v-for="(item, index) in crowdItems" :key="index" class="crowdItem">
           <div class="crowd-car">
             <img :src="item.large_img_url" class="img-top">
             <flexbox>
               <flexbox-item :span="12">
                 <div class="flex-left">
-                  <span style="font-size:15px;font-weight:590;">{{item.funding_text}}</span>
+                  <span style="font-size:15px;">{{item.funding_text}}</span>
+                </div>
+              </flexbox-item>
+            </flexbox>
+
+            <flexbox>
+              <flexbox-item :span="12">
+                <div class="flex-left">
+                  <span style="font-size:15px;">
+                    <img src="static/img/stock/headimg.png" style="width:22px;height:22px">
+                    土豆先生
+                  </span>
                 </div>
               </flexbox-item>
             </flexbox>
@@ -22,7 +42,8 @@
               <flexbox-item :span="12">
                 <box gap="10px">
                   <x-progress :percent="percent2" :show-cancel="false"></x-progress>
-                </box><!-- 无法设置颜色，需要更换实现方式 -->
+                </box>
+                <!-- 无法设置颜色，需要更换实现方式 -->
               </flexbox-item>
             </flexbox>
 
@@ -42,7 +63,8 @@
               <flexbox-item :span="4">
                 <div class="flex-left">
                   <img src="static/img/stock/stock_shichang.png" style="width:15px;hegith:15px">
-                  <span style="font-size:12px;"
+                  <span
+                    style="font-size:12px;"
                   >￥ {{parseInt(item.funding_done_amount*100/item.funding_target_amount) + '%'}}</span>
                 </div>
               </flexbox-item>
@@ -98,7 +120,7 @@ export default {
     return {
       crowdItems: [],
       isLoadMore: false,
-      percent2: 50,
+      percent2: 50
     };
   },
   methods: {
