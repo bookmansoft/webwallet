@@ -36,14 +36,13 @@
               <flexbox-item :span="4">
                 <div class="flex-left">
                   <img src="static/img/stock/stock_renshu.png" style="width:15px;hegith:15px">
-                  <span style="color:coral; font-size:12px;">￥{{item.supply_people_num}}</span>
+                  <span style="font-size:12px;">￥{{item.supply_people_num}}</span>
                 </div>
               </flexbox-item>
               <flexbox-item :span="4">
                 <div class="flex-left">
                   <img src="static/img/stock/stock_shichang.png" style="width:15px;hegith:15px">
-                  <span
-                    style="color:coral; font-size:12px;"
+                  <span style="font-size:12px;"
                   >￥ {{parseInt(item.funding_done_amount*100/item.funding_target_amount) + '%'}}</span>
                 </div>
               </flexbox-item>
@@ -54,23 +53,6 @@
                     :gradients="['#FF5E3A', '#FF9500']"
                     @click.native="crowdDetail(item, 0)"
                   >立即支持</x-button>
-                </div>
-              </flexbox-item>
-            </flexbox>
-
-            <flexbox style="height:30px;line-height:30px; color:#888; font-size:14px;">
-              <flexbox-item :span="8">
-                <div class="flex-left">
-                  <p>
-                    <span>{{item.support}}人支持</span>
-                  </p>
-                </div>
-              </flexbox-item>
-              <flexbox-item :span="4">
-                <div class="flex-right">
-                  <p>
-                    <span>还剩{{item.remainder}}个</span>
-                  </p>
                 </div>
               </flexbox-item>
             </flexbox>
