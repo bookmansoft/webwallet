@@ -4,7 +4,19 @@
     <div v-if="isLoadMore">
       <div>
         <box gap="18px" style="margin-top:13px">
-          <img src="static/img/stock/banner.png" style="width:100%">
+          <!-- <img src="static/img/stock/banner.png" style="width:100%" /> -->
+          <div class="scroll">
+            <swiper :options="swiperOption" ref="mySwiper">
+              <!-- slides -->
+              <swiper-slide><img src="static/img/stock/banner.png" style="width:100%" /></swiper-slide>
+              <swiper-slide><img src="static/img/stock/banner2.png" style="width:100%" /></swiper-slide>
+              <swiper-slide><img src="static/img/stock/banner3.png" style="width:100%" /></swiper-slide>
+              <!-- Optional controls -->
+              <div class="swiper-pagination" slot="pagination"></div>
+              <div class="swiper-button-prev swiper-button-black" slot="button-prev"></div>
+              <div class="swiper-button-next swiper-button-black" slot="button-next"></div>
+            </swiper>
+          </div>
         </box>
         <!-- todo: 替换为vue专用轮播组件 -->
         <div style="margin-top:-10px">
@@ -22,7 +34,7 @@
             <img src="static/img/stock/ren_qi.png" style="width:100px;height:27px">
           </div>
           <div v-for="(item, index) in crowdItems" :key="index" class="crowdItem">
-            <div class="crowd-car"  v-on:click="crowdDetail(item, 0)">
+            <div class="crowd-car" v-on:click="crowdDetail(item, 0)">
               <img :src="item.large_img_url" class="img-top">
               <flexbox>
                 <flexbox-item :span="12">
@@ -73,15 +85,6 @@
                     >￥ {{parseInt(item.funding_done_amount*100/item.funding_target_amount) + '%'}}</span>
                   </div>
                 </flexbox-item>
-                <!-- <flexbox-item :span="4">
-                  <div class="flex-right">
-                    <x-button
-                      mini
-                      :gradients="['#FF5E3A', '#FF9500']"
-                      @click.native="crowdDetail(item, 0)"
-                    >立即支持</x-button>
-                  </div>
-                </flexbox-item> -->
               </flexbox>
             </div>
           </div>
@@ -108,6 +111,8 @@ import {
   Box
 } from "vux";
 import Navs from "@/components/Navs.vue";
+import { swiper, swiperSlide } from "vue-awesome-swiper";
+import 'swiper/dist/css/swiper.css'  
 
 export default {
   components: {
@@ -119,14 +124,67 @@ export default {
     FlexboxItem,
     LoadMore,
     XProgress,
-    Box
+    Box,
+    swiper,
+    swiperSlide
   },
-  data() {
+  data:function() {
     return {
       crowdItems: [],
       isLoadMore: false,
-      percent2: 50
+      percent2: 50,
+
+      swiperOption: {
+        notNextTick: true,
+        //循环
+        loop: true,
+        //设定初始化时slide的索引
+        initialSlide: 0,
+        //自动播放
+        autoplay: true,
+        // autoplay: {
+        //     delay: 3000,
+        //     stopOnLastSlide: false,
+        //     disableOnInteraction: true,
+        // },
+        // 设置轮播
+        effect: "flip",
+        //滑动速度
+        speed: 800,
+        //滑动方向
+        direction: "horizontal",
+        //小手掌抓取滑动
+        // grabCursor : true,
+        //滑动之后回调函数
+        on: {
+          slideChangeTransitionEnd: function() {
+            // console.log(this.activeIndex);//切换结束时，告诉我现在是第几个slide
+          }
+        },
+        //左右点击
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev"
+        },
+        //分页器设置
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true
+        }
+      },
+
+      swiperSlides: [1, 2, 3, 4]
     };
+  },
+  computed: {  
+    swiper() {  
+       return this.$refs.mySwiper.swiper;  
+    }  
+  }, 
+  mounted: function() {  
+    //可以使用swiper这个对象去使用swiper官网中的那些方法  
+     console.log('这里！！this is current swiper instance object');
+      // this.swiper.slideTo(0, 0, false);
   },
   methods: {
     onItemClick(index) {
@@ -164,6 +222,25 @@ export default {
 </script>
 
 <style scoped>
+h1, h2 {
+  font-weight: normal;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+a {
+  color: #42b983;
+}
+.swiper-slide{
+  height:200px;
+}
+
+
 .crowdItem {
   background-color: white;
   margin-top: 0.4rem;
