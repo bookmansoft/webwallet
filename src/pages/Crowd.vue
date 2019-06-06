@@ -1,3 +1,4 @@
+<!-- 众筹首页 -->
 <template>
   <div>
     <div v-if="isLoadMore">
@@ -96,7 +97,6 @@
   </div>
 </template>
 <script>
-//import { XHeader, Group, Cell } from 'vux'
 import {
   XButton,
   Tab,
