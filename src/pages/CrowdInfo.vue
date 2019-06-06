@@ -32,7 +32,7 @@
           </flexbox-item>
         </flexbox>
 
-        <flexbox style="height:40px;line-height:40px;">
+        <flexbox>
           <flexbox-item :span="4">
             <div class="flex-left">
               <span style="color:coral; font-size:12px;">￥ {{item.stock_money}}</span>
@@ -50,7 +50,7 @@
           </flexbox-item>
         </flexbox>
 
-        <flexbox style="height:40px;line-height:40px;">
+        <flexbox>
           <flexbox-item :span="4">
             <div class="flex-left">
               <span
@@ -66,6 +66,38 @@
           <flexbox-item :span="4">
             <div class="flex-right">
               <span style="color:#999999; font-size:12px;">剩余时间</span>
+            </div>
+          </flexbox-item>
+        </flexbox>
+
+        <flexbox>
+          <flexbox-item :span="12">
+            <div class="flex-left">
+              项目介绍
+            </div>
+          </flexbox-item>
+        </flexbox>
+
+        <flexbox>
+          <flexbox-item :span="12">
+            <div class="flex-left">
+              {{item.funding_project_text}}
+            </div>
+          </flexbox-item>
+        </flexbox>
+
+        <flexbox>
+          <flexbox-item :span="12">
+            <div class="flex-left">
+              游戏简介
+            </div>
+          </flexbox-item>
+        </flexbox>
+
+        <flexbox>
+          <flexbox-item :span="12">
+            <div class="flex-left">
+              {{item.cp_desc}}
             </div>
           </flexbox-item>
         </flexbox>
