@@ -1,11 +1,11 @@
 <!-- 众筹首页 -->
 <template>
-  <div>
+  <div style="background-color:white;margin-top:0px">
     <div v-if="isLoadMore">
       <div>
-        <box gap="18px" style="margin-top:13px">
+        <box gap="18px">
           <!-- <img src="static/img/stock/banner.png" style="width:100%" /> -->
-          <div class="scroll">
+          <div class="scroll"  style="margin-top:3px">
             <swiper :options="swiperOption" ref="mySwiper">
               <!-- slides -->
               <swiper-slide>

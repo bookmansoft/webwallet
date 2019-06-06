@@ -58,7 +58,8 @@ html, body {
   height: 100%;
   width: 100%;
   overflow-x: hidden;
-  background-color: #FAFAFA;
+  // background-color: #FAFAFA;
+  background-color: white;
 }
 #app {
   position: absolute;
