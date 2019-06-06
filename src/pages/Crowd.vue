@@ -151,7 +151,6 @@ export default {
         this.isLoadMore = true;
         if (res.data.total > 0) {
           res.data.list.forEach(element => {
-            //无效：element.percent2=parseInt(item.funding_done_amount*100/item.funding_target_amount);
             this.crowdItems.push(element);
           });
         }

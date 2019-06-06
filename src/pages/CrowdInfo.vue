@@ -2,7 +2,6 @@
 <template>
   <div>
     <div style="margin-top:-0px">
-
       <div class="crowd-car">
         <img :src="item.large_img_url" class="img-top">
         <flexbox>
@@ -36,31 +35,37 @@
         <flexbox style="height:40px;line-height:40px;">
           <flexbox-item :span="4">
             <div class="flex-left">
-              <img src="static/img/stock/stock_jiner.png" style="width:15px;hegith:15px">
               <span style="color:coral; font-size:12px;">￥ {{item.stock_money}}</span>
             </div>
           </flexbox-item>
           <flexbox-item :span="4">
-            <div class="flex-left">
-              <img src="static/img/stock/stock_renshu.png" style="width:15px;hegith:15px">
+            <div class="flex-center">
               <span style="font-size:12px;">￥{{item.supply_people_num}}</span>
             </div>
           </flexbox-item>
           <flexbox-item :span="4">
+            <div class="flex-right">
+              <span style="font-size:12px;">{{item.funding_residue_day}}天</span>
+            </div>
+          </flexbox-item>
+        </flexbox>
+
+        <flexbox style="height:40px;line-height:40px;">
+          <flexbox-item :span="4">
             <div class="flex-left">
-              <img src="static/img/stock/stock_shichang.png" style="width:15px;hegith:15px">
               <span
-                style="font-size:12px;"
-              >￥ {{parseInt(item.funding_done_amount*100/item.funding_target_amount) + '%'}}</span>
+                style="color:#999999; font-size:12px;"
+              >已筹{{parseInt(item.funding_done_amount*100/item.funding_target_amount) + '%'}}</span>
+            </div>
+          </flexbox-item>
+          <flexbox-item :span="4">
+            <div class="flex-center">
+              <span style="color:#999999; font-size:12px;">目标金额</span>
             </div>
           </flexbox-item>
           <flexbox-item :span="4">
             <div class="flex-right">
-              <x-button
-                mini
-                :gradients="['#FF5E3A', '#FF9500']"
-                @click.native="crowdDetail(item, 0)"
-              >立即支持</x-button>
+              <span style="color:#999999; font-size:12px;">剩余时间</span>
             </div>
           </flexbox-item>
         </flexbox>
@@ -100,13 +105,15 @@ export default {
     FlexboxItem,
     Group,
     Divider,
-    Box
+    Box,
+    XProgress
   },
   data() {
     return {
       msg: "众筹",
       headerTitle: "众筹详情",
-      item: null
+      item: null,
+      percent2: 50
     };
   },
   methods: {
@@ -136,15 +143,20 @@ export default {
         user_id: this.GLOBAL.userBase.uid,
         cid: this.item.cid
       };
+      console.log(146,data);
       this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+        console.log("cpAddr", res.data);
         this.cpAddr = res.data.ret.data.addr;
-        console.log("cpAddr", this.cpAddr);
+        console.log(this.cpAddr);
       });
     }
   },
   created() {
     this.item = this.$route.params.item;
     console.log(this.item);
+    this.percent2 = parseInt(
+      (this.item.funding_done_amount * 100) / this.item.funding_target_amount
+    );
     this.userToken();
   }
 };
