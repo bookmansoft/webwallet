@@ -22,7 +22,7 @@
             <img src="static/img/stock/ren_qi.png" style="width:100px;height:27px">
           </div>
           <div v-for="(item, index) in crowdItems" :key="index" class="crowdItem">
-            <div class="crowd-car">
+            <div class="crowd-car"  v-on:click="crowdDetail(item, 0)">
               <img :src="item.large_img_url" class="img-top">
               <flexbox>
                 <flexbox-item :span="12">
@@ -73,7 +73,7 @@
                     >￥ {{parseInt(item.funding_done_amount*100/item.funding_target_amount) + '%'}}</span>
                   </div>
                 </flexbox-item>
-                <flexbox-item :span="4">
+                <!-- <flexbox-item :span="4">
                   <div class="flex-right">
                     <x-button
                       mini
@@ -81,7 +81,7 @@
                       @click.native="crowdDetail(item, 0)"
                     >立即支持</x-button>
                   </div>
-                </flexbox-item>
+                </flexbox-item> -->
               </flexbox>
             </div>
           </div>
@@ -133,6 +133,8 @@ export default {
       console.log(this.tabIndex);
     },
     crowdDetail(item, index) {
+      console.log(136);
+      console.log(item);
       this.$router.push({ name: "CrowdInfo", params: { item: item } });
     },
     crowFreedDetail(item, index) {
