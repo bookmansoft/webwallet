@@ -8,18 +8,24 @@
           <div class="scroll">
             <swiper :options="swiperOption" ref="mySwiper">
               <!-- slides -->
-              <swiper-slide><img src="static/img/stock/banner.png" style="width:100%" /></swiper-slide>
-              <swiper-slide><img src="static/img/stock/banner2.png" style="width:100%" /></swiper-slide>
-              <swiper-slide><img src="static/img/stock/banner3.png" style="width:100%" /></swiper-slide>
+              <swiper-slide>
+                <img src="static/img/stock/banner.png" style="width:100%">
+              </swiper-slide>
+              <swiper-slide>
+                <img src="static/img/stock/banner2.png" style="width:100%">
+              </swiper-slide>
+              <swiper-slide>
+                <img src="static/img/stock/banner3.png" style="width:100%">
+              </swiper-slide>
               <!-- Optional controls -->
-              <div class="swiper-pagination" slot="pagination"></div>
-              <div class="swiper-button-prev swiper-button-black" slot="button-prev"></div>
-              <div class="swiper-button-next swiper-button-black" slot="button-next"></div>
+              <!-- <div class="swiper-pagination" slot="pagination"></div> -->
+              <!-- <div class="swiper-button-prev swiper-button-black" slot="button-prev"></div>
+              <div class="swiper-button-next swiper-button-black" slot="button-next"></div> -->
             </swiper>
           </div>
         </box>
         <!-- todo: 替换为vue专用轮播组件 -->
-        <div style="margin-top:-10px">
+        <div style="margin-top:-40px">
           <flexbox>
             <flexbox-item :span="12">
               <div class="flex-left">
@@ -112,7 +118,7 @@ import {
 } from "vux";
 import Navs from "@/components/Navs.vue";
 import { swiper, swiperSlide } from "vue-awesome-swiper";
-import 'swiper/dist/css/swiper.css'  
+import "swiper/dist/css/swiper.css";
 
 export default {
   components: {
@@ -128,7 +134,7 @@ export default {
     swiper,
     swiperSlide
   },
-  data:function() {
+  data: function() {
     return {
       crowdItems: [],
       isLoadMore: false,
@@ -142,13 +148,11 @@ export default {
         initialSlide: 0,
         //自动播放
         autoplay: true,
-        // autoplay: {
-        //     delay: 3000,
-        //     stopOnLastSlide: false,
-        //     disableOnInteraction: true,
-        // },
         // 设置轮播
-        effect: "flip",
+        // effect: "fade",
+        cubeEffect: {
+          slideShadows: true
+        },
         //滑动速度
         speed: 800,
         //滑动方向
@@ -158,7 +162,7 @@ export default {
         //滑动之后回调函数
         on: {
           slideChangeTransitionEnd: function() {
-            // console.log(this.activeIndex);//切换结束时，告诉我现在是第几个slide
+             console.log(this.activeIndex);//切换结束时，告诉我现在是第几个slide
           }
         },
         //左右点击
@@ -169,6 +173,8 @@ export default {
         //分页器设置
         pagination: {
           el: ".swiper-pagination",
+          type: 'bullets',
+          bulletClass: 'swiper-pagination-bullet',
           clickable: true
         }
       },
@@ -176,15 +182,15 @@ export default {
       swiperSlides: [1, 2, 3, 4]
     };
   },
-  computed: {  
-    swiper() {  
-       return this.$refs.mySwiper.swiper;  
-    }  
-  }, 
-  mounted: function() {  
-    //可以使用swiper这个对象去使用swiper官网中的那些方法  
-     console.log('这里！！this is current swiper instance object');
-      // this.swiper.slideTo(0, 0, false);
+  computed: {
+    swiper() {
+      return this.$refs.mySwiper.swiper;
+    }
+  },
+  mounted: function() {
+    //可以使用swiper这个对象去使用swiper官网中的那些方法
+    console.log("这里！！this is current swiper instance object");
+    // this.swiper.slideTo(0, 0, false);
   },
   methods: {
     onItemClick(index) {
@@ -222,7 +228,8 @@ export default {
 </script>
 
 <style scoped>
-h1, h2 {
+h1,
+h2 {
   font-weight: normal;
 }
 ul {
@@ -236,10 +243,14 @@ li {
 a {
   color: #42b983;
 }
-.swiper-slide{
-  height:200px;
+.swiper-slide {
+  height: 200px;
 }
 
+/* 无效 */
+.swiper-pagination-bullet {
+  color: red; 
+}
 
 .crowdItem {
   background-color: white;
