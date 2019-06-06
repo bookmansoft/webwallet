@@ -72,7 +72,7 @@
 
         <flexbox>
           <flexbox-item :span="12">
-            <div class="flex-left">
+            <div class="flex-left" style="margin-top:20px">
               项目介绍
             </div>
           </flexbox-item>
@@ -80,7 +80,7 @@
 
         <flexbox>
           <flexbox-item :span="12">
-            <div class="flex-left">
+            <div class="flex-left" style="margin-top:20px">
               {{item.funding_project_text}}
             </div>
           </flexbox-item>
@@ -88,7 +88,7 @@
 
         <flexbox>
           <flexbox-item :span="12">
-            <div class="flex-left">
+            <div class="flex-left" style="margin-top:20px">
               游戏简介
             </div>
           </flexbox-item>
@@ -96,7 +96,7 @@
 
         <flexbox>
           <flexbox-item :span="12">
-            <div class="flex-left">
+            <div class="flex-left" style="margin-top:20px">
               {{item.cp_desc}}
             </div>
           </flexbox-item>
