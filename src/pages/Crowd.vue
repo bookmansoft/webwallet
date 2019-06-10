@@ -68,7 +68,7 @@
               <flexbox>
                 <flexbox-item :span="12">
                   <box gap="10px">
-                    <x-progress :percent="percent2" :show-cancel="false"></x-progress>
+                    <XXProgress :percent="percent2" :show-cancel="false"></XXProgress>
                   </box>
                   <!-- 无法设置颜色，需要更换实现方式 -->
                 </flexbox-item>
@@ -121,6 +121,7 @@ import {
   Box
 } from "vux";
 import Navs from "@/components/Navs.vue";
+import XXProgress from "@/components/XXProgress.vue";
 import { swiper, swiperSlide } from "vue-awesome-swiper";
 import "swiper/dist/css/swiper.css";
 
@@ -133,7 +134,7 @@ export default {
     Flexbox,
     FlexboxItem,
     LoadMore,
-    XProgress,
+    XXProgress,
     Box,
     swiper,
     swiperSlide

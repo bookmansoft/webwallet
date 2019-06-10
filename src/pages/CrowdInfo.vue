@@ -30,17 +30,7 @@
         <flexbox>
           <flexbox-item :span="12">
             <box gap="10px">
-              <x-progress :percent="percent2" :show-cancel="false"></x-progress>
-              <table>
-                <tr>
-                  <td width="70%">
-                    <img src="static/img/stock/line1.png" width="100%" :height="6">
-                  </td>
-                  <td width="30%">
-                    <img src="static/img/stock/line2.png" width="100%" :height="6">
-                  </td>
-                </tr>
-              </table>
+              <XXProgress :percent="35" :show-cancel="false"></XXProgress>
             </box>
             <!-- 无法设置颜色，需要更换实现方式 -->
           </flexbox-item>
@@ -128,9 +118,9 @@ import {
   Group,
   Divider,
   Box,
-  XProgress
 } from "vux";
 import Navs from "@/components/Navs.vue";
+import XXProgress from "@/components/XXProgress.vue";
 
 export default {
   components: {
@@ -144,7 +134,7 @@ export default {
     Group,
     Divider,
     Box,
-    XProgress
+    XXProgress,
   },
   data() {
     return {
