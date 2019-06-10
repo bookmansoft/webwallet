@@ -6,7 +6,7 @@
         <img :src="item.large_img_url" class="img-top">
         <flexbox>
           <flexbox-item :span="12">
-            <div class="flex-left" style="margin-top:6px;margin-bottom:8px">
+            <div class="flex-left" style="margin-top:6px;margin-bottom:8px;margin-right:30px">
               <span style="font-size:15px;">{{item.funding_text}}</span>
             </div>
           </flexbox-item>
@@ -14,14 +14,14 @@
 
         <flexbox>
           <flexbox-item :span="1">
-            <div class="flex-left">
+            <div class="flex-left" style="margin-top:4px;">
               <span style="font-size:15px;">
                 <img src="static/img/stock/headimg.png" style="width:22px;height:22px">
               </span>
             </div>
           </flexbox-item>
           <flexbox-item :span="11">
-            <div class="flex-left" style="margin-left:-8px;margin-top:-6px">
+            <div class="flex-left" style="margin-left:-8px;margin-top:-2px">
               <span style="font-size:15px;">土豆先生</span>
             </div>
           </flexbox-item>
@@ -29,8 +29,10 @@
 
         <flexbox>
           <flexbox-item :span="12">
-            <box gap="10px">
+            <box gap="20px">
+              <div style="margin-top:-10px">
               <XXProgress :percent="percent2" :show-cancel="false"></XXProgress>
+              </div>
             </box>
             <!-- 无法设置颜色，需要更换实现方式 -->
           </flexbox-item>
@@ -38,42 +40,49 @@
 
         <flexbox>
           <flexbox-item :span="4">
-            <div class="flex-left">
+            <div class="flex-left" style="margin-top:-10px">
               <span style="color:coral; font-size:12px;">￥ {{item.stock_money}}</span>
             </div>
           </flexbox-item>
           <flexbox-item :span="4">
-            <div class="flex-center">
+            <div class="flex-center" style="margin-top:-10px">
               <span style="font-size:12px;">￥{{item.supply_people_num}}</span>
             </div>
           </flexbox-item>
           <flexbox-item :span="4">
-            <div class="flex-right">
+            <div class="flex-right" style="margin-top:-10px">
               <span style="font-size:12px;">{{item.funding_residue_day}}天</span>
             </div>
           </flexbox-item>
         </flexbox>
-
         <flexbox>
           <flexbox-item :span="4">
-            <div class="flex-left">
+            <div class="flex-left" style="margin-top:-6px">
               <span
                 style="color:#999999; font-size:12px;"
               >已筹{{parseInt(item.funding_done_amount*100/item.funding_target_amount) + '%'}}</span>
             </div>
           </flexbox-item>
           <flexbox-item :span="4">
-            <div class="flex-center">
+            <div class="flex-center" style="margin-top:-6px">
               <span style="color:#999999; font-size:12px;">目标金额</span>
             </div>
           </flexbox-item>
           <flexbox-item :span="4">
-            <div class="flex-right">
+            <div class="flex-right" style="margin-top:-6px">
               <span style="color:#999999; font-size:12px;">剩余时间</span>
             </div>
           </flexbox-item>
         </flexbox>
-
+        <flexbox>
+          <flexbox-item :span="8">
+          </flexbox-item>
+          <flexbox-item :span="4">
+            <div class="flex-right" style="margin-top:15px">
+              <span style="color:#999999; font-size:12px;">105人支持</span>
+            </div>
+          </flexbox-item>
+        </flexbox>
         <flexbox>
           <flexbox-item :span="12">
             <div class="flex-left" style="margin-top:20px">项目介绍</div>
@@ -117,7 +126,7 @@ import {
   FlexboxItem,
   Group,
   Divider,
-  Box,
+  Box
 } from "vux";
 import Navs from "@/components/Navs.vue";
 import XXProgress from "@/components/XXProgress.vue";
@@ -134,7 +143,7 @@ export default {
     Group,
     Divider,
     Box,
-    XXProgress,
+    XXProgress
   },
   data() {
     return {
@@ -191,7 +200,7 @@ export default {
 </script>
 
 <style scoped>
-.crowdItem {
+/* .crowdItem {
   background-color: white;
   margin-top: 0.4rem;
   padding: 0.2rem;
@@ -202,7 +211,7 @@ export default {
   background-color: #f5f5f9;
   border-radius: 4%;
   font-size: 14px;
-}
+} */
 
 .img-game-list {
   width: 75px;
@@ -221,11 +230,11 @@ export default {
 }
 .flex-left {
   text-align: left;
-  padding-left: 15px;
+  padding-left: 20px;
 }
 .flex-right {
   text-align: right;
-  padding-right: 30px;
+  padding-right: 40px;
 }
 .flex-center {
   text-align: center;
