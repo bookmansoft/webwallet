@@ -155,13 +155,13 @@
         <swiper :options="swiperOption" ref="mySwiper">
           <!-- slides -->
           <swiper-slide>
-            <img src="static/img/stock/banner.png" style="width:100%">
+            <img :src="pic_urls[0]" style="width:100%;">
           </swiper-slide>
           <swiper-slide>
-            <img src="static/img/stock/banner2.png" style="width:100%">
+            <img :src="pic_urls[1]" style="width:100%;">
           </swiper-slide>
           <swiper-slide>
-            <img src="static/img/stock/banner3.png" style="width:100%">
+            <img :src="pic_urls[2]" style="width:100%;">
           </swiper-slide>
         </swiper>
       </div>
@@ -259,9 +259,6 @@ export default {
     onBack() {
       this.$router.push({ name: "Crowd" });
     },
-    onItemClick(index) {
-      console.log(this.tabIndex);
-    },
     crowdDetail(item, index) {},
     crowdOrder() {
       this.$router.push({
@@ -280,7 +277,8 @@ export default {
         uid: this.GLOBAL.userBase.uid,
         account: this.GLOBAL.userBase.uid,
         user_id: this.GLOBAL.userBase.uid,
-        cid: this.item.cid
+        cid: this.item.cid,
+        pic_urls: [],//图片数组
       };
       console.log(146, data);
       this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
@@ -293,6 +291,8 @@ export default {
   created() {
     this.item = this.$route.params.item;
     console.log(this.item);
+    // console.log(293,JSON.parse(this.item.pic_urls)[0]);
+    this.pic_urls=JSON.parse(this.item.pic_urls);
     this.percent2 = parseInt(
       (this.item.funding_done_amount * 100) / this.item.funding_target_amount
     );
