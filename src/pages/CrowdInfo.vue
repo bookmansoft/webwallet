@@ -119,6 +119,27 @@
         </flexbox>
 
         <flexbox>
+          <flexbox-item :span="3">
+            <img :src="item.icon_url" style="width:60px;height:60px;margin-top:22px;margin-left:20px;">
+          </flexbox-item>
+          <flexbox-item :span="9">
+            <flexbox orient="vertical" :gutter="10">
+              <flexbox-item :span="2">
+                <span>&nbsp;</span>
+              </flexbox-item>
+              <flexbox-item :span="4">
+                <span style="font-size:14px;font-family:'黑体','Heiti SC','Droidsansfallback';margin-left:-20px;">{{item.cp_text}}</span>
+              </flexbox-item>
+              <flexbox-item :span="4">
+                <span style="font-size:14px;font-family:'黑体','Heiti SC','Droidsansfallback';margin-left:-20px;">LuckChan</span>
+              </flexbox-item>
+              <flexbox-item :span="2">
+              </flexbox-item>
+            </flexbox>
+          </flexbox-item>
+        </flexbox>
+
+        <flexbox>
           <flexbox-item :span="12">
             <div
               class="flex-left"
