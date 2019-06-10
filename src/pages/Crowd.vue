@@ -1,10 +1,9 @@
 <!-- 众筹首页 -->
 <template>
-  <div style="background-color:white;margin-top:0px">
+  <div style="background-color:white;margin-top:-20px">
     <div v-if="isLoadMore">
       <div>
         <box gap="18px">
-          <!-- <img src="static/img/stock/banner.png" style="width:100%" /> -->
           <div class="scroll" style="margin-top:3px">
             <swiper :options="swiperOption" ref="mySwiper">
               <!-- slides -->
@@ -17,14 +16,10 @@
               <swiper-slide>
                 <img src="static/img/stock/banner3.png" style="width:100%">
               </swiper-slide>
-              <!-- Optional controls -->
-              <!-- <div class="swiper-pagination" slot="pagination"></div> -->
-              <!-- <div class="swiper-button-prev swiper-button-black" slot="button-prev"></div>
-              <div class="swiper-button-next swiper-button-black" slot="button-next"></div>-->
             </swiper>
           </div>
         </box>
-        <!-- todo: 替换为vue专用轮播组件 -->
+
         <div style="margin-top:-40px">
           <flexbox>
             <flexbox-item :span="12">
@@ -184,7 +179,7 @@ export default {
         }
       },
 
-      swiperSlides: [1, 2, 3, 4]
+      // swiperSlides: [1, 2, 3, 4]
     };
   },
   computed: {
