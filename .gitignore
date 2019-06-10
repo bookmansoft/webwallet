@@ -73,3 +73,5 @@ typings/
 /src/Global.vue
 /src/Global.vue
 package-lock.json
+dist/
+package-lock.json
