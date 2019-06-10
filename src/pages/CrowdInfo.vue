@@ -6,19 +6,23 @@
         <img :src="item.large_img_url" class="img-top">
         <flexbox>
           <flexbox-item :span="12">
-            <div class="flex-left">
+            <div class="flex-left" style="margin-top:6px;margin-bottom:8px">
               <span style="font-size:15px;">{{item.funding_text}}</span>
             </div>
           </flexbox-item>
         </flexbox>
 
         <flexbox>
-          <flexbox-item :span="12">
+          <flexbox-item :span="1">
             <div class="flex-left">
               <span style="font-size:15px;">
                 <img src="static/img/stock/headimg.png" style="width:22px;height:22px">
-                土豆先生
               </span>
+            </div>
+          </flexbox-item>
+          <flexbox-item :span="11">
+            <div class="flex-left" style="margin-left:-8px;margin-top:-6px">
+              <span style="font-size:15px;">土豆先生</span>
             </div>
           </flexbox-item>
         </flexbox>
@@ -27,6 +31,16 @@
           <flexbox-item :span="12">
             <box gap="10px">
               <x-progress :percent="percent2" :show-cancel="false"></x-progress>
+              <table>
+                <tr>
+                  <td width="70%">
+                    <img src="static/img/stock/line1.png" width="100%" :height="6">
+                  </td>
+                  <td width="30%">
+                    <img src="static/img/stock/line2.png" width="100%" :height="6">
+                  </td>
+                </tr>
+              </table>
             </box>
             <!-- 无法设置颜色，需要更换实现方式 -->
           </flexbox-item>
@@ -72,33 +86,25 @@
 
         <flexbox>
           <flexbox-item :span="12">
-            <div class="flex-left" style="margin-top:20px">
-              项目介绍
-            </div>
+            <div class="flex-left" style="margin-top:20px">项目介绍</div>
           </flexbox-item>
         </flexbox>
 
         <flexbox>
           <flexbox-item :span="12">
-            <div class="flex-left" style="margin-top:20px">
-              {{item.funding_project_text}}
-            </div>
+            <div class="flex-left" style="margin-top:20px">{{item.funding_project_text}}</div>
           </flexbox-item>
         </flexbox>
 
         <flexbox>
           <flexbox-item :span="12">
-            <div class="flex-left" style="margin-top:20px">
-              游戏简介
-            </div>
+            <div class="flex-left" style="margin-top:20px">游戏简介</div>
           </flexbox-item>
         </flexbox>
 
         <flexbox>
           <flexbox-item :span="12">
-            <div class="flex-left" style="margin-top:20px">
-              {{item.cp_desc}}
-            </div>
+            <div class="flex-left" style="margin-top:20px">{{item.cp_desc}}</div>
           </flexbox-item>
         </flexbox>
       </div>
@@ -175,7 +181,7 @@ export default {
         user_id: this.GLOBAL.userBase.uid,
         cid: this.item.cid
       };
-      console.log(146,data);
+      console.log(146, data);
       this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
         console.log("cpAddr", res.data);
         this.cpAddr = res.data.ret.data.addr;

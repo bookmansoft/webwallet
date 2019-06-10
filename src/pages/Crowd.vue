@@ -5,7 +5,7 @@
       <div>
         <box gap="18px">
           <!-- <img src="static/img/stock/banner.png" style="width:100%" /> -->
-          <div class="scroll"  style="margin-top:3px">
+          <div class="scroll" style="margin-top:3px">
             <swiper :options="swiperOption" ref="mySwiper">
               <!-- slides -->
               <swiper-slide>
@@ -20,7 +20,7 @@
               <!-- Optional controls -->
               <!-- <div class="swiper-pagination" slot="pagination"></div> -->
               <!-- <div class="swiper-button-prev swiper-button-black" slot="button-prev"></div>
-              <div class="swiper-button-next swiper-button-black" slot="button-next"></div> -->
+              <div class="swiper-button-next swiper-button-black" slot="button-next"></div>-->
             </swiper>
           </div>
         </box>
@@ -44,19 +44,23 @@
               <img :src="item.large_img_url" class="img-top">
               <flexbox>
                 <flexbox-item :span="12">
-                  <div class="flex-left">
+                  <div class="flex-left" style="margin-top:6px;margin-bottom:8px">
                     <span style="font-size:15px;">{{item.funding_text}}</span>
                   </div>
                 </flexbox-item>
               </flexbox>
 
               <flexbox>
-                <flexbox-item :span="12">
+                <flexbox-item :span="1">
                   <div class="flex-left">
                     <span style="font-size:15px;">
                       <img src="static/img/stock/headimg.png" style="width:22px;height:22px">
-                      土豆先生
                     </span>
+                  </div>
+                </flexbox-item>
+                <flexbox-item :span="11">
+                  <div class="flex-left" style="margin-left:-8px;margin-top:-5px">
+                    <span style="font-size:15px;">土豆先生</span>
                   </div>
                 </flexbox-item>
               </flexbox>
@@ -173,8 +177,8 @@ export default {
         //分页器设置
         pagination: {
           el: ".swiper-pagination",
-          type: 'bullets',
-          bulletClass: 'swiper-pagination-bullet',
+          type: "bullets",
+          bulletClass: "swiper-pagination-bullet",
           clickable: true
         }
       },
@@ -249,7 +253,7 @@ a {
 
 /* 无效 */
 .swiper-pagination-bullet {
-  color: red; 
+  color: red;
 }
 
 .crowdItem {
