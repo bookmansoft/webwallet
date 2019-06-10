@@ -33,7 +33,7 @@ export default {
 }
 </script>
 
-<style lang="less">
-// @import '../../node_modules/vux/src/styles/weui/widget/weui_progress/weui_progress';
+<style scope lang="less">
+// 此处必须是全局样式？
 @import '../../src/style/vux_styles/weui/widget/weui_progress/weui_progress';
 </style>
