@@ -35,7 +35,7 @@
             <img src="static/img/stock/ren_qi.png" style="width:100px;height:27px">
           </div>
           <div v-for="(item, index) in crowdItems" :key="index" class="crowdItem">
-            <div class="crowd-car" v-on:click="crowdDetail(item, 0)">
+            <div style="padding: 10px;" v-on:click="crowdDetail(item, 0)">
               <img :src="item.large_img_url" class="img-top">
               <flexbox>
                 <flexbox-item :span="12">
@@ -174,7 +174,6 @@ export default {
         pagination: {
           el: ".swiper-pagination",
           type: "bullets",
-          bulletClass: "swiper-pagination-bullet",
           clickable: true
         }
       },
@@ -229,29 +228,10 @@ export default {
 
 <style scoped>
 .root {overflow-x:hidden}
-h1,
-h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
 .swiper-slide {
   height: 200px;
 }
 
-/* 无效 */
-.swiper-pagination-bullet {
-  color: red;
-}
 
 .crowdItem {
   background-color: white;
@@ -259,52 +239,9 @@ a {
   padding: 0.2rem;
 }
 
-.crowdItem p {
-  height: 30px;
-  line-height: 30px;
-}
-
-.crowdItem2 {
-  background-color: white;
-  margin-top: 0.4rem;
-  padding: 0.2rem;
-}
-
-.crowdItem2 p {
-  height: 40px;
-  line-height: 40px;
-}
-
-.crowd-car {
-  padding: 10px;
-  /*background-color: white; */
-  /*border-radius: 4%;*/
-}
-
-.img-game-list {
-  width: 75px;
-  height: 75px;
-  border-radius: 12%;
-  margin-left: 3px;
-}
-
-.img-game-list2 {
-  width: 45px;
-  height: 45px;
-  border-radius: 10%;
-  margin-left: 4px;
-}
-
 .img-top {
   width: 100%;
   height: 180px;
-  /*border-radius: 4%;*/
-  /* border-top-left-radius: 1.5em;
-  border-top-right-radius: 1.5em; */
-}
-.imgDemo {
-  width: 100%;
-  height: auto;
 }
 .flex-left {
   text-align: left;

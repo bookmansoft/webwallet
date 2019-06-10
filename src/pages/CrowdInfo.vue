@@ -305,33 +305,9 @@ export default {
 .root {
   overflow-x: hidden;
 }
-/* .crowdItem {
-  background-color: white;
-  margin-top: 0.4rem;
-  margin: 0.2rem;
-}
-
-.crowd-info {
-  margin: 15px;
-  background-color: #f5f5f9;
-  border-radius: 4%;
-  font-size: 14px;
-} */
-
-.img-game-list {
-  width: 75px;
-  height: 75px;
-  border-radius: 12%;
-  margin-left: 3px;
-}
-
 .img-top {
   width: 100%;
   height: 220px;
-}
-.imgDemo {
-  width: 100%;
-  height: auto;
 }
 .flex-left {
   text-align: left;
