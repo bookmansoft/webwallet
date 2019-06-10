@@ -1,6 +1,6 @@
 <!-- 众筹首页 -->
 <template>
-  <div style="background-color:white;margin-top:-20px">
+  <div class="root" style="background-color:white;margin-top:-8px">
     <div v-if="isLoadMore">
       <div>
         <box gap="18px">
@@ -228,6 +228,7 @@ export default {
 </script>
 
 <style scoped>
+.root {overflow-x:hidden}
 h1,
 h2 {
   font-weight: normal;

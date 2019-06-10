@@ -57,6 +57,10 @@ export default {
 html, body {
   height: 100%;
   width: 100%;
+  margin-top:0px;
+  margin-left:0px;
+  margin-bottom: 0px;
+  margin-right:0px;
   overflow-x: hidden;
   // background-color: #FAFAFA;
   background-color: white;

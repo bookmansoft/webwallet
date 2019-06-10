@@ -1,7 +1,7 @@
 <!-- 众筹详情页 -->
 <template>
-  <div>
-    <div style="margin-top:-0px">
+  <div style="margin-top:-0px" class="root">
+    <div>
       <div class="crowd-car">
         <img :src="item.large_img_url" class="img-top">
         <flexbox>
@@ -14,14 +14,14 @@
 
         <flexbox>
           <flexbox-item :span="1">
-            <div class="flex-left" style="margin-top:4px;">
+            <div class="flex-left">
               <span style="font-size:15px;">
                 <img src="static/img/stock/headimg.png" style="width:22px;height:22px">
               </span>
             </div>
           </flexbox-item>
           <flexbox-item :span="11">
-            <div class="flex-left" style="margin-left:-8px;margin-top:-2px">
+            <div class="flex-left" style="margin-left:8px;margin-top:-5px">
               <span style="font-size:15px;">土豆先生</span>
             </div>
           </flexbox-item>
@@ -79,7 +79,7 @@
         <flexbox>
           <flexbox-item :span="8"></flexbox-item>
           <flexbox-item :span="4">
-            <div class="flex-right" style="margin-top:15px;margin-bottom:20px;margin-right:-10px">
+            <div class="flex-right" style="margin-top:15px;margin-bottom:20px;margin-right:30px">
               <span style="color:#999999; font-size:12px;">105人支持</span>
             </div>
           </flexbox-item>
@@ -229,7 +229,7 @@ export default {
           bulletClass: "swiper-pagination-bullet",
           clickable: true
         }
-      },
+      }
 
       // swiperSlides: [1, 2, 3, 4]
     };
@@ -281,14 +281,17 @@ export default {
 </script>
 
 <style scoped>
+.root {
+  overflow-x: hidden;
+}
 /* .crowdItem {
   background-color: white;
   margin-top: 0.4rem;
-  padding: 0.2rem;
+  margin: 0.2rem;
 }
 
 .crowd-info {
-  padding: 15px;
+  margin: 15px;
   background-color: #f5f5f9;
   border-radius: 4%;
   font-size: 14px;
@@ -311,14 +314,14 @@ export default {
 }
 .flex-left {
   text-align: left;
-  padding-left: 20px;
+  margin-left: 20px;
 }
 .flex-right {
   text-align: right;
-  padding-right: 40px;
+  margin-right: 40px;
 }
 .flex-center {
   text-align: center;
-  padding: 5px;
+  margin: 5px;
 }
 </style>
