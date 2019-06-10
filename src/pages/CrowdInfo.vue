@@ -31,7 +31,7 @@
           <flexbox-item :span="12">
             <box gap="20px">
               <div style="margin-top:-10px">
-              <XXProgress :percent="percent2" :show-cancel="false"></XXProgress>
+                <XXProgress :percent="percent2" :show-cancel="false"></XXProgress>
               </div>
             </box>
             <!-- 无法设置颜色，需要更换实现方式 -->
@@ -55,6 +55,7 @@
             </div>
           </flexbox-item>
         </flexbox>
+
         <flexbox>
           <flexbox-item :span="4">
             <div class="flex-left" style="margin-top:-6px">
@@ -74,36 +75,43 @@
             </div>
           </flexbox-item>
         </flexbox>
+
         <flexbox>
-          <flexbox-item :span="8">
-          </flexbox-item>
+          <flexbox-item :span="8"></flexbox-item>
           <flexbox-item :span="4">
-            <div class="flex-right" style="margin-top:15px">
+            <div class="flex-right" style="margin-top:15px;margin-bottom:20px;margin-right:-10px">
               <span style="color:#999999; font-size:12px;">105人支持</span>
             </div>
           </flexbox-item>
         </flexbox>
+
         <flexbox>
           <flexbox-item :span="12">
-            <div class="flex-left" style="margin-top:20px">项目介绍</div>
+            <div style="height:12px;background-color:#f3f3f3"></div>
           </flexbox-item>
         </flexbox>
 
         <flexbox>
           <flexbox-item :span="12">
-            <div class="flex-left" style="margin-top:20px">{{item.funding_project_text}}</div>
+            <div class="flex-left" style="font-size:16px;font-family:'黑体','Heiti SC','Droidsansfallback';margin-top:20px">项目介绍</div>
           </flexbox-item>
         </flexbox>
 
         <flexbox>
           <flexbox-item :span="12">
-            <div class="flex-left" style="margin-top:20px">游戏简介</div>
+            <div class="flex-left" style="font-size:12px;line-height:20px;margin-top:20px;margin-right:18px">{{item.funding_project_text}}</div>
           </flexbox-item>
         </flexbox>
 
         <flexbox>
           <flexbox-item :span="12">
-            <div class="flex-left" style="margin-top:20px">{{item.cp_desc}}</div>
+            <div class="flex-left" style="font-size:16px;font-family:'黑体','Heiti SC','Droidsansfallback';margin-top:28px">游戏简介</div>
+          </flexbox-item>
+        </flexbox>
+
+        <flexbox>
+          <flexbox-item :span="12">
+            <div class="flex-left" style="font-size:12px;line-height:20px;margin-top:20px;margin-right:18px">{{item.cp_desc}}</div>
           </flexbox-item>
         </flexbox>
       </div>
@@ -111,9 +119,10 @@
 
     <navs></navs>
 
-    <box gap="10px 10px">
+    <box gap="20px 10px">
       <x-button :gradients="['#FF5E3A', '#FF9500']" @click.native="crowdOrder()">立即购买</x-button>
     </box>
+    <br/><br/>
   </div>
 </template>
 <script>
