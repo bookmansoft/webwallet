@@ -55,7 +55,7 @@
                 </flexbox-item>
                 <flexbox-item :span="11">
                   <div class="flex-left" style="margin-left:-8px;margin-top:-5px">
-                    <span style="font-size:15px;">土豆先生</span>
+                    <span style="font-size:15px;">{{item.provider}}</span>
                   </div>
                 </flexbox-item>
               </flexbox>
@@ -176,7 +176,7 @@ export default {
           type: "bullets",
           clickable: true
         }
-      },
+      }
 
       // swiperSlides: [1, 2, 3, 4]
     };
@@ -213,8 +213,11 @@ export default {
         console.log("返回结果", res.data);
         this.isLoadMore = true;
         if (res.data.total > 0) {
-          res.data.list.forEach(element => {
-            this.crowdItems.push(element);
+          res.data.list.forEach(item => {
+            this.crowdItems.push(item);
+            this.percent2 = parseInt(
+              (item.funding_done_amount * 100) / item.funding_target_amount
+            );
           });
         }
       });
@@ -227,11 +230,12 @@ export default {
 </script>
 
 <style scoped>
-.root {overflow-x:hidden}
+.root {
+  overflow-x: hidden;
+}
 .swiper-slide {
   height: 200px;
 }
-
 
 .crowdItem {
   background-color: white;
