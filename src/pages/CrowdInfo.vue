@@ -80,7 +80,7 @@
           <flexbox-item :span="8"></flexbox-item>
           <flexbox-item :span="4">
             <div class="flex-right" style="margin-top:15px;margin-bottom:20px;margin-right:30px">
-              <span style="color:#999999; font-size:12px;">105人支持</span>
+              <span style="color:#999999; font-size:12px;">{{item.supply_people_num}}人支持</span>
             </div>
           </flexbox-item>
         </flexbox>
@@ -131,7 +131,7 @@
                 <span style="font-size:14px;font-family:'黑体','Heiti SC','Droidsansfallback';margin-left:-20px;">{{item.cp_text}}</span>
               </flexbox-item>
               <flexbox-item :span="4">
-                <span style="font-size:14px;font-family:'黑体','Heiti SC','Droidsansfallback';margin-left:-20px;">LuckChan</span>
+                <span style="font-size:14px;font-family:'黑体','Heiti SC','Droidsansfallback';margin-left:-20px;">{{item.provider}}</span>
               </flexbox-item>
               <flexbox-item :span="2">
               </flexbox-item>
@@ -167,8 +167,8 @@
       </div>
     </box>
 
-    <box gap="20px 10px">
-      <x-button :gradients="['#FF5E3A', '#FF9500']" @click.native="crowdOrder()">立即购买</x-button>
+    <box gap="0px 0px">
+      <x-button  type="warn" @click.native="crowdOrder()">&yen; 立即支持</x-button>
     </box>
     <br>
     <br>
