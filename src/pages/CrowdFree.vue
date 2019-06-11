@@ -1,11 +1,6 @@
 <template>
   <div>
     <div v-if="isLoadMore">
-      <!-- <tab :line-width="3" custom-bar-width="60px" v-model="tabIndex">
-        <tab-item v-for="(item, index) in tabItems" :key="index" @on-item-click="onItemClick">
-          <span style="font-size:15px;font-weight:620;">{{item.label}}</span>
-        </tab-item>
-      </tab> -->
       <div>
         <div v-for="(item, index) in crowdFreeItems" :key="index" class="crowdItem2">
           <flexbox @click.native="crowFreedDetail(item, index)">
@@ -60,39 +55,6 @@
 import { XButton, Tab, TabItem, Flexbox, FlexboxItem, LoadMore } from "vux";
 import Navs from "@/components/Navs.vue";
 
-const tabList = () => [
-  {
-    label: "众筹大厅"
-  },
-  {
-    label: "自由市场"
-  }
-];
-
-const crowdList = () => [
-  {
-    src: "static/img/crowd/item1.jpg",
-    title: "Forza Horizon 3",
-    desc: "￥ 25元起售",
-    support: "60人支持",
-    remainder: "剩余13天"
-  },
-  {
-    src: "static/img/crowd/item2.jpg",
-    title: "Forza Horizon 3",
-    desc: "￥ 47元起售",
-    support: "52人支持",
-    remainder: "剩余8天"
-  },
-  {
-    src: "static/img/crowd/item3.jpg",
-    title: "Forza Horizon 3",
-    desc: "￥ 47元起售",
-    support: "139人支持",
-    remainder: "剩余5天"
-  }
-];
-
 const crowdFreeList = () => [
   {
     src: "static/img/crowd/a.jpg",
@@ -126,7 +88,6 @@ export default {
     return {
       msg: "众筹",
       tabIndex: 0,
-      tabItems: tabList(),
       topItem: null,
       crowdItems: [],
       crowdFreeItems: crowdFreeList(),
@@ -218,7 +179,6 @@ export default {
 .img-top {
   width: 100%;
   height: 180px;
-  /*border-radius: 4%;*/
   border-top-left-radius: 1.5em;
   border-top-right-radius: 1.5em;
 }
