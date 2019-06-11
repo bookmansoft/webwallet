@@ -12,7 +12,7 @@
                 >
               </div>
             </flexbox-item>
-            <flexbox-item :span="7">
+            <flexbox-item :span="6">
               <div style="margin-top:0px;">
                 <span style="color: #919191; font-size:12px;">{{item.title}}</span>
               </div>
@@ -20,14 +20,16 @@
                 <span style="font-size:15px;">{{item.sales}}</span>
               </div>
             </flexbox-item>
-            <flexbox-item :span="3">
-              <div style="height:24px;margin-top:10px;margin-bottom:-10px">
-                <span style="color: #919191; font-size:12px;line-height:18px">单价/份(千克)</span>
+            <flexbox-item :span="4">
+              <div style="margin-left:10px">
+                <div style="height:24px;margin-top:10px;margin-bottom:-10px;">
+                  <span style="color: #919191; font-size:12px;line-height:18px;">单价/份(千克)</span>
+                </div>
+                <div
+                  style="margin-left:5px;display:block;margin-top:6px;border-radius: 5px;text-align:center;line-height:26px;width:60px;height:26px;background-color:#ff7164;font-size:13px;color:white"
+                >{{item.gold}}</div>
+                <div style="display:block;height:12px"></div>
               </div>
-              <div
-                style="display:block;margin-top:6px;border-radius: 5px;text-align:center;line-height:26px;width:60px;height:26px;background-color:#ff7164;font-size:13px;color:white"
-              >{{item.gold}}</div>
-              <div style="display:block;height:12px"></div>
             </flexbox-item>
           </flexbox>
         </div>
@@ -131,5 +133,9 @@ export default {
 <style scoped>
 .root {
   overflow-x: hidden;
+}
+.flex-right {
+  text-align: right;
+  padding-right: 15px;
 }
 </style>
