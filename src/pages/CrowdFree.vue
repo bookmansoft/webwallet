@@ -59,7 +59,6 @@ const crowdFreeList = () => [
     title: "进击的兵长 代练宝宝",
     sales: "15个挂单出售",
     gold: 52.222,
-    baseGold: 10,
     group: "Vallnet Co., Ltd"
   },
   {
@@ -67,7 +66,6 @@ const crowdFreeList = () => [
     title: "Forza Horizon 代练宝宝 ",
     sales: "20个挂单出售",
     gold: 18.0,
-    baseGold: 20,
     group: "Vallnet Co., Ltd"
   }
 ];
