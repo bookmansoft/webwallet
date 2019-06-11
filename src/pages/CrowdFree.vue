@@ -17,7 +17,7 @@
                 <span style="color: #919191; font-size:12px;">{{item.cp_text}}</span>
               </div>
               <div style="margin-top:6px;">
-                <span style="font-size:15px;">{{item.sell_stock_num}}</span>
+                <span style="font-size:15px;">{{item.sell_stock_num}}单在售</span>
               </div>
             </flexbox-item>
             <flexbox-item :span="4">
@@ -27,7 +27,7 @@
                 </div>
                 <div
                   style="margin-left:5px;display:block;margin-top:6px;border-radius: 5px;text-align:center;line-height:26px;width:60px;height:26px;background-color:#ff7164;font-size:13px;color:white"
-                >{{item.sell_stock_amount}}</div>
+                >{{parseInt(item.sell_stock_amount/100)/1000}}</div>
                 <div style="display:block;height:12px"></div>
               </div>
             </flexbox-item>
@@ -49,7 +49,6 @@
   </div>
 </template>
 <script>
-//import { XHeader, Group, Cell } from 'vux'
 import { XButton, Tab, TabItem, Flexbox, FlexboxItem, LoadMore } from "vux";
 import Navs from "@/components/Navs.vue";
 
@@ -68,61 +67,31 @@ export default {
       msg: "众筹",
       tabIndex: 0,
       topItem: null,
-      crowdItems: [],
-      crowdFreeItems: this.crowdFreeList(),
+      crowdFreeItems: [],
       isLoadMore: false
     };
   },
   methods: {
-    onItemClick(index) {
-      console.log(this.tabIndex);
-    },
-    crowdDetail(item, index) {
-      this.$router.push({ name: "CrowdInfo", params: { item: item } });
-    },
     crowFreedDetail(item, index) {
       this.$router.push({ name: "CrowdFreeInfo", params: { item: item } });
     },
     crowdFreeList() {
-      return [
-        {
-          icon_url: "static/img/crowd/a.jpg",
-          cp_text: "进击的兵长 代练宝宝",
-          sell_stock_num: "15个挂单出售",
-          sell_stock_amount: 52.222
-        },
-        {
-          icon_url: "static/img/crowd/item1.jpg",
-          cp_text: "Forza Horizon 代练宝宝 ",
-          sell_stock_num: "20个挂单出售",
-          sell_stock_amount: 18.0
-        }
-      ];
-    },
-    getStocks() {
       let data = {
-        func: "Stocks",
-        control: "stock",
+        func: "ListRecord",
+        control: "stockbase",
         oemInfo: this.GLOBAL.oemInfo
       };
       this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-        console.log("mine", res.data);
+        console.log("93:", res.data);
         this.isLoadMore = true;
-        if (res.data.errcode == "success") {
-          this.topItem = res.data.data[0];
-          let index = 0;
-          res.data.data.forEach(element => {
-            if (index > 0) {
-              this.crowdItems.push(element);
-            }
-            index++;
-          });
-        }
+        res.data.list.forEach(element => {
+            this.crowdFreeItems.push(element);
+        });
       });
-    }
+    },
   },
   created() {
-    this.getStocks();
+    this.crowdFreeList();
   }
 };
 </script>
