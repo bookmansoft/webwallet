@@ -2,39 +2,38 @@
   <div class="root" style="background-color:white;margin-top:0px">
     <div v-if="isLoadMore">
       <div v-for="(item, index) in crowdFreeItems" :key="index">
-        <flexbox @click.native="crowFreedDetail(item, index)">
-          <flexbox-item :span="2">
-            <div class="flex-demo-left">
-              <img
-                :src="item.src"
-                style="width: 45px;height: 45px;margin-left:17px;border-radius: 10%;"
-              >
-            </div>
-          </flexbox-item>
-          <flexbox-item :span="6">
-            <div style="padding-left:0px;">
-              <p style="height:24px">
-                <span style="color: #919191; font-size:15px;">{{item.title}}</span>
-              </p>
-              <p>
-                <span style="font-size:13px;">{{item.sales}}</span>
-              </p>
-            </div>
-          </flexbox-item>
-          <flexbox-item :span="4">
-            <div style="padding-left:0px;">
-              <p style="height:24px">
-                <span style="color: #919191; font-size:15px;">单价/份(千克)</span>
-              </p>
-              <div style="display:block;border-radius: 5px;text-align:center;line-height:30px;width:60px;height:30px;background-color:#ff7164;font-size:13px;color:white">
-                {{item.gold}}
+        <div style="display:block;margin-top:8px;margin-bottom:8px">
+          <flexbox @click.native="crowFreedDetail(item, index)">
+            <flexbox-item :span="2">
+              <div class="flex-demo-left">
+                <img
+                  :src="item.src"
+                  style="width: 45px;height: 45px;margin-left:17px;border-radius: 10%;"
+                >
               </div>
-            </div>
-          </flexbox-item>
-        </flexbox>
+            </flexbox-item>
+            <flexbox-item :span="7">
+              <div style="margin-top:0px;">
+                <span style="color: #919191; font-size:12px;">{{item.title}}</span>
+              </div>
+              <div style="margin-top:6px;">
+                <span style="font-size:15px;">{{item.sales}}</span>
+              </div>
+            </flexbox-item>
+            <flexbox-item :span="3">
+              <div style="height:24px;margin-top:10px;margin-bottom:-10px">
+                <span style="color: #919191; font-size:12px;line-height:18px">单价/份(千克)</span>
+              </div>
+              <div
+                style="display:block;margin-top:6px;border-radius: 5px;text-align:center;line-height:26px;width:60px;height:26px;background-color:#ff7164;font-size:13px;color:white"
+              >{{item.gold}}</div>
+              <div style="display:block;height:12px"></div>
+            </flexbox-item>
+          </flexbox>
+        </div>
         <flexbox>
           <flexbox-item :span="12">
-            <div style="height:2px;background-color:#f3f3f3"></div>
+            <div style="height:3px;background-color:#f3f3f3"></div>
           </flexbox-item>
         </flexbox>
       </div>
