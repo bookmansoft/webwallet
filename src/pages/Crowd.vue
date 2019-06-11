@@ -65,7 +65,6 @@
                   <box gap="10px">
                     <XXProgress :percent="percent2" :show-cancel="false"></XXProgress>
                   </box>
-                  <!-- 无法设置颜色，需要更换实现方式 -->
                 </flexbox-item>
               </flexbox>
 

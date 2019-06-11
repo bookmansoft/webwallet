@@ -1,45 +1,42 @@
 <template>
-  <div>
+  <div class="root" style="background-color:white;margin-top:0px">
     <div v-if="isLoadMore">
-      <div>
-        <div v-for="(item, index) in crowdFreeItems" :key="index" class="crowdItem2">
-          <flexbox @click.native="crowFreedDetail(item, index)">
-            <flexbox-item :span="2" style="padding:0.1rem;">
-              <div class="flex-demo-left">
-                <img :src="item.src" class="img-game-list2">
+      <div v-for="(item, index) in crowdFreeItems" :key="index">
+        <flexbox @click.native="crowFreedDetail(item, index)">
+          <flexbox-item :span="2">
+            <div class="flex-demo-left">
+              <img
+                :src="item.src"
+                style="width: 45px;height: 45px;margin-left:17px;border-radius: 10%;"
+              >
+            </div>
+          </flexbox-item>
+          <flexbox-item :span="6">
+            <div style="padding-left:0px;">
+              <p style="height:24px">
+                <span style="color: #919191; font-size:15px;">{{item.title}}</span>
+              </p>
+              <p>
+                <span style="font-size:13px;">{{item.sales}}</span>
+              </p>
+            </div>
+          </flexbox-item>
+          <flexbox-item :span="4">
+            <div style="padding-left:0px;">
+              <p style="height:24px">
+                <span style="color: #919191; font-size:15px;">单价/份(千克)</span>
+              </p>
+              <div style="display:block;border-radius: 5px;text-align:center;line-height:30px;width:60px;height:30px;background-color:#ff7164;font-size:13px;color:white">
+                {{item.gold}}
               </div>
-            </flexbox-item>
-            <flexbox-item :span="6">
-              <div style="padding-left:0px;">
-                <p style="height:24px">
-                  <span style="font-size:15px;">{{item.title}}</span>
-                </p>
-                <p>
-                  <flexbox>
-                    <flexbox-item :span="6">
-                      <p>
-                        <span style="color: #888; font-size:13px;">{{item.sales}}</span>
-                      </p>
-                    </flexbox-item>
-                    <flexbox-item :span="6">
-                      <p>
-                        <span style="font-size:13px;">{{item.gold}}</span>
-                      </p>
-                    </flexbox-item>
-                  </flexbox>
-                </p>
-              </div>
-            </flexbox-item>
-            <flexbox-item :span="4">
-              <div style="padding-left:0px;">
-                <p>
-                  <span v-if="item.gold>=item.baseGold" style="color: red; font-size:15px;">+ {{parseInt(item.gold*100/item.baseGold-100)}}%</span>
-                  <span v-if="item.gold<item.baseGold" style="color: blue; font-size:15px;">- {{parseInt(100-item.gold*100/item.baseGold)}}%</span>
-                </p>
-              </div>
-            </flexbox-item>>
-          </flexbox>
-        </div>
+            </div>
+          </flexbox-item>
+        </flexbox>
+        <flexbox>
+          <flexbox-item :span="12">
+            <div style="height:2px;background-color:#f3f3f3"></div>
+          </flexbox-item>
+        </flexbox>
       </div>
     </div>
 
@@ -68,7 +65,7 @@ const crowdFreeList = () => [
     src: "static/img/crowd/item1.jpg",
     title: "Forza Horizon 代练宝宝 ",
     sales: "20个挂单出售",
-    gold: 18.000,
+    gold: 18.0,
     baseGold: 20,
     group: "Vallnet Co., Ltd"
   }
@@ -114,7 +111,6 @@ export default {
         console.log("mine", res.data);
         this.isLoadMore = true;
         if (res.data.errcode == "success") {
-          //this.crowdItems = res.data.data
           this.topItem = res.data.data[0];
           let index = 0;
           res.data.data.forEach(element => {
@@ -134,64 +130,7 @@ export default {
 </script>
 
 <style scoped>
-.crowdItem {
-  background-color: white;
-  margin-top: 0.4rem;
-  padding: 0.2rem;
-}
-
-.crowdItem p {
-  height: 30px;
-  line-height: 30px;
-}
-
-.crowdItem2 {
-  background-color: white;
-  margin-top: 0.4rem;
-  padding: 0.2rem;
-}
-
-.crowdItem2 p {
-  height: 40px;
-  line-height: 40px;
-}
-
-.crowd-car {
-  padding: 10px;
-  /*background-color: white; */
-  /*border-radius: 4%;*/
-}
-
-.img-game-list {
-  width: 75px;
-  height: 75px;
-  border-radius: 12%;
-  margin-left: 3px;
-}
-
-.img-game-list2 {
-  width: 45px;
-  height: 45px;
-  border-radius: 10%;
-  margin-left: 4px;
-}
-
-.img-top {
-  width: 100%;
-  height: 180px;
-  border-top-left-radius: 1.5em;
-  border-top-right-radius: 1.5em;
-}
-.imgDemo {
-  width: 100%;
-  height: auto;
-}
-.flex-left {
-  text-align: left;
-  padding-left: 15px;
-}
-.flex-right {
-  text-align: right;
-  padding-right: 15px;
+.root {
+  overflow-x: hidden;
 }
 </style>
