@@ -22,7 +22,7 @@
           </flexbox-item>
           <flexbox-item :span="11">
             <div class="flex-left" style="margin-left:8px;margin-top:-5px">
-              <span style="font-size:15px;">土豆先生</span>
+              <span style="font-size:15px;">{{item.provider}}</span>
             </div>
           </flexbox-item>
         </flexbox>
