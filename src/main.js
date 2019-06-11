@@ -9,6 +9,7 @@ import { WechatPlugin, AjaxPlugin, AlertPlugin, ToastPlugin, ConfirmPlugin  } fr
 import axios from 'axios'
 import global_ from './Global'
 import utils from './assets/scripts/utils'
+import VueWechatTitle from 'vue-wechat-title'
 
 FastClick.attach(document.body)
 Vue.config.productionTip = false
@@ -18,6 +19,7 @@ Vue.use(AjaxPlugin)
 Vue.use(AlertPlugin)
 Vue.use(ToastPlugin)
 Vue.use(ConfirmPlugin)
+Vue.use(VueWechatTitle)
 
 Vue.prototype.axios = axios
 Vue.prototype.GLOBAL = global_

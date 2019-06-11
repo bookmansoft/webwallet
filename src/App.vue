@@ -6,7 +6,7 @@
     </transition>
     -->
     <view-box ref="viewBox">
-      <router-view></router-view>
+      <router-view v-wechat-title='$route.meta.title'></router-view>
     </view-box>
   </div>
 </template>
@@ -51,14 +51,19 @@ export default {
 </script>
 
 <style lang="less">
-@import '~vux/src/styles/reset.less';
-@import '~vux/src/styles/1px.less';
+// @import '~vux/src/styles/reset.less';
+// @import '~vux/src/styles/1px.less';
 
 html, body {
   height: 100%;
   width: 100%;
+  margin-top:0px;
+  margin-left:0px;
+  margin-bottom: 0px;
+  margin-right:0px;
   overflow-x: hidden;
-  background-color: #FAFAFA;
+  // background-color: #FAFAFA;
+  background-color: white;
 }
 #app {
   position: absolute;
