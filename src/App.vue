@@ -6,7 +6,7 @@
     </transition>
     -->
     <view-box ref="viewBox">
-      <router-view></router-view>
+      <router-view v-wechat-title='$route.meta.title'></router-view>
     </view-box>
   </div>
 </template>
