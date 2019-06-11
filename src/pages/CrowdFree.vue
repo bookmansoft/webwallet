@@ -7,17 +7,17 @@
             <flexbox-item :span="2">
               <div class="flex-demo-left">
                 <img
-                  :src="item.src"
+                  :src="item.icon_url"
                   style="width: 45px;height: 45px;margin-left:17px;border-radius: 10%;"
                 >
               </div>
             </flexbox-item>
             <flexbox-item :span="6">
               <div style="margin-top:0px;">
-                <span style="color: #919191; font-size:12px;">{{item.title}}</span>
+                <span style="color: #919191; font-size:12px;">{{item.cp_text}}</span>
               </div>
               <div style="margin-top:6px;">
-                <span style="font-size:15px;">{{item.sales}}</span>
+                <span style="font-size:15px;">{{item.sell_stock_num}}</span>
               </div>
             </flexbox-item>
             <flexbox-item :span="4">
@@ -27,7 +27,7 @@
                 </div>
                 <div
                   style="margin-left:5px;display:block;margin-top:6px;border-radius: 5px;text-align:center;line-height:26px;width:60px;height:26px;background-color:#ff7164;font-size:13px;color:white"
-                >{{item.gold}}</div>
+                >{{item.sell_stock_amount}}</div>
                 <div style="display:block;height:12px"></div>
               </div>
             </flexbox-item>
@@ -53,23 +53,6 @@
 import { XButton, Tab, TabItem, Flexbox, FlexboxItem, LoadMore } from "vux";
 import Navs from "@/components/Navs.vue";
 
-const crowdFreeList = () => [
-  {
-    src: "static/img/crowd/a.jpg",
-    title: "进击的兵长 代练宝宝",
-    sales: "15个挂单出售",
-    gold: 52.222,
-    group: "Vallnet Co., Ltd"
-  },
-  {
-    src: "static/img/crowd/item1.jpg",
-    title: "Forza Horizon 代练宝宝 ",
-    sales: "20个挂单出售",
-    gold: 18.0,
-    group: "Vallnet Co., Ltd"
-  }
-];
-
 export default {
   components: {
     Navs,
@@ -86,7 +69,7 @@ export default {
       tabIndex: 0,
       topItem: null,
       crowdItems: [],
-      crowdFreeItems: crowdFreeList(),
+      crowdFreeItems: this.crowdFreeList(),
       isLoadMore: false
     };
   },
@@ -99,6 +82,22 @@ export default {
     },
     crowFreedDetail(item, index) {
       this.$router.push({ name: "CrowdFreeInfo", params: { item: item } });
+    },
+    crowdFreeList() {
+      return [
+        {
+          icon_url: "static/img/crowd/a.jpg",
+          cp_text: "进击的兵长 代练宝宝",
+          sell_stock_num: "15个挂单出售",
+          sell_stock_amount: 52.222
+        },
+        {
+          icon_url: "static/img/crowd/item1.jpg",
+          cp_text: "Forza Horizon 代练宝宝 ",
+          sell_stock_num: "20个挂单出售",
+          sell_stock_amount: 18.0
+        }
+      ];
     },
     getStocks() {
       let data = {
