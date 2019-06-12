@@ -73,24 +73,7 @@ export default {
     },
 
     gotoHome() {
-        //this.showPlugin(this.urlParamPath)
-        let that = this
-        this.GLOBAL.initRemote(this.GLOBAL.userBase.uid, function(msg) {
-          console.log('收到消息', msg);
-          if(msg.msgType=='balance.account.client') {
-            console.log('balance.account.client')
-            that.GLOBAL.hasTx = true
-          } else if(msg.msgType=='prop/receive') {
-            console.log('prop/receive')
-            that.GLOBAL.hasProp = true
-          } else if(msg.msgType=='prop/auction') {
-            console.log('prop/auction')
-            that.GLOBAL.hasPropAuction = true
-          }
-        })
-        
         if(this.urlParamPath == null) {
-          // this.$router.push('/home')
           this.$router.push('/crowd')
         } else {
           this.$router.push(this.urlParamPath)
@@ -110,7 +93,8 @@ export default {
     if(!!code) {
       this.GLOBAL.oemInfo.domain = 'authwx';
       this.GLOBAL.oemInfo.openkey = code;
-      let data = {func:'login', control: 'index', oemInfo: this.GLOBAL.oemInfo}
+      let data = {func:'login', oemInfo: this.GLOBAL.oemInfo}
+
       this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
           if(res.data.code == 0) {
               this.GLOBAL.userBase.uid = res.data.id;

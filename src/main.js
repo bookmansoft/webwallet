@@ -7,6 +7,7 @@ import App from './App'
 import Vuex from 'vuex'
 import { WechatPlugin, AjaxPlugin, AlertPlugin, ToastPlugin, ConfirmPlugin  } from 'vux'
 import axios from 'axios'
+//引入连接游戏云的远程连接器
 import global_ from './Global'
 import utils from './assets/scripts/utils'
 import VueWechatTitle from 'vue-wechat-title'

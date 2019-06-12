@@ -171,14 +171,6 @@ export default {
       this.getMine()
       //this.getNotify()
     }
-    console.log('this.GLOBAL.hasTx', this.GLOBAL.hasTx)
-    if(this.GLOBAL.hasTx == true) {
-      this.items1[0].showDot = true
-    }
-    if(this.GLOBAL.hasPropAuction == true) {
-      this.showPluginAuto('您发布的道具已被成功拍卖')
-      this.GLOBAL.hasPropAuction = false
-    }
   }
 }
 </script>

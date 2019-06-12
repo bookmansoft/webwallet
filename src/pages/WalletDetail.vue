@@ -88,7 +88,6 @@ export default {
     setTimeout(()=>{
       this.getTxLogs()
     }, 800) 
-    this.GLOBAL.hasTx = false
   }
 }
 </script>
