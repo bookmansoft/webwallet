@@ -7,7 +7,6 @@ import App from './App'
 import Vuex from 'vuex'
 import { WechatPlugin, AjaxPlugin, AlertPlugin, ToastPlugin, ConfirmPlugin  } from 'vux'
 import axios from 'axios'
-import gamerpc from 'gamerpc'
 import global_ from './Global'
 import utils from './assets/scripts/utils'
 import VueWechatTitle from 'vue-wechat-title'
@@ -23,7 +22,6 @@ Vue.use(ConfirmPlugin)
 Vue.use(VueWechatTitle)
 
 Vue.prototype.axios = axios
-Vue.prototype.gamerpc = gamerpc
 Vue.prototype.GLOBAL = global_
 Vue.prototype.utils = utils
 

@@ -112,7 +112,7 @@ export default {
       this.GLOBAL.oemInfo.openkey = code;
       let data = {func:'login', control: 'index', oemInfo: this.GLOBAL.oemInfo}
       this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-          if(res.data.errcode == 'success') {
+          if(res.data.code == 0) {
               this.GLOBAL.userBase.uid = res.data.id;
               this.GLOBAL.userBase.user_name = res.data.name;
               this.GLOBAL.userBase.openid = res.data.openid;
