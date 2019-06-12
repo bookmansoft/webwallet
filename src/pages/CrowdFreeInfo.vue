@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="root">
     <flexbox>
       <flexbox-item :span="12">
         <div style="height:6px;background-color:#f3f3f3"></div>
@@ -32,7 +32,7 @@
     </flexbox>
     <flexbox>
       <flexbox-item :span="12">
-        <div style="height:12px;background-color:#f3f3f3"></div>
+        <div style="height:8px;background-color:#f3f3f3"></div>
       </flexbox-item>
     </flexbox>
     <flexbox style="margin-top:14px">
@@ -42,23 +42,21 @@
         </div>
       </flexbox-item>
     </flexbox>
-    <div>
-      <flexbox>
-        <flexbox-item :span="5" style="padding:0.3rem;">
-          <p>
-            <span style="color:red; font-size:16px;">1100千克</span>
-          </p>
-        </flexbox-item>
-        <flexbox-item>
-          <p>
-            <span style="color:red; font-size:13px;">↑ +100.000 (+10%)</span>
-          </p>
-        </flexbox-item>
-      </flexbox>
-      <p>
-        <span>分时K线</span>
-      </p>
-    </div>
+    <flexbox style="margin-top:14px">
+      <flexbox-item :span="5">
+        <div style="display:block;margin-left:21px">
+          <span style="color:red; font-size:18px;">1100千克</span>
+        </div>
+      </flexbox-item>
+      <flexbox-item>
+        <div>
+          <span style="color:red; font-size:13px;">↑ +100.000 (+10%)</span>
+        </div>
+      </flexbox-item>
+    </flexbox>
+    <p>
+      <span>分时K线</span>
+    </p>
   </div>
 </template>
 <script>
@@ -96,6 +94,8 @@ export default {
 <style scoped>
 .root {
   overflow-x: hidden;
+  margin-left: 0px;
+  margin-right: 0px;
 }
 .flex-left {
   text-align: left;
