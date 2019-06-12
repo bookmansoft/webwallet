@@ -8,10 +8,7 @@
     <flexbox style="margin-top:14px;margin-bottom:14px;">
       <flexbox-item :span="3">
         <div style="display:block;margin-left:21px;">
-          <img
-            :src="crowdFreeItem.icon_url"
-            style="width:auto;height:auto;max-width:100%;max-height:100%"
-          >
+          <img :src="item.icon_url" style="width:auto;height:auto;max-width:100%;max-height:100%">
         </div>
       </flexbox-item>
       <flexbox-item :span="9">
@@ -19,13 +16,13 @@
           <div>
             <span
               style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';"
-            >{{crowdFreeItem.cp_text}}</span>
+            >{{item.cp_text}}</span>
           </div>
           <div style="height:17px"></div>
           <div>
             <span
               style="color: #888; font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';"
-            >{{crowdFreeItem.provider}}</span>
+            >{{item.provider}}</span>
           </div>
         </div>
       </flexbox-item>
@@ -45,18 +42,25 @@
     <flexbox style="margin-top:14px">
       <flexbox-item :span="5">
         <div style="display:block;margin-left:21px">
-          <span style="color:red; font-size:18px;">1100千克</span>
+          <span style="color:red; font-size:18px;">{{parseInt(item.sell_stock_amount/100)/1000}}千克</span>
         </div>
       </flexbox-item>
       <flexbox-item>
         <div>
-          <span style="color:red; font-size:13px;">↑ +100.000 (+10%)</span>
+          <span
+            v-if="item.sell_stock_amount>=item.base_amount"
+            style="color: red; font-size:13px;"
+          >↑ {{parseInt(item.sell_stock_amount-item.base_amount/100)/1000}} (+ {{parseInt(item.sell_stock_amount*100/item.base_amount-100)}}%)</span>
+          <span
+            v-if="item.sell_stock_amount<item.base_amount"
+            style="color: blue; font-size:13px;"
+          >↓  {{parseInt(item.base_amount-item.sell_stock_amount/100)/1000}}(- {{parseInt(100-item.sell_stock_amount*100/item.base_amount)}}%)</span>
         </div>
       </flexbox-item>
     </flexbox>
-    <p>
-      <span>分时K线</span>
-    </p>
+    <!-- <p>
+      <span>分时K线(用单独的iframe填充)</span>
+    </p>-->
   </div>
 </template>
 <script>
@@ -77,7 +81,7 @@ export default {
   data() {
     return {
       msg: "众筹",
-      crowdFreeItem: null
+      item: null
     };
   },
   methods: {
@@ -86,7 +90,7 @@ export default {
     }
   },
   created() {
-    this.crowdFreeItem = this.$route.params.item;
+    this.item = this.$route.params.item;
   }
 };
 </script>
