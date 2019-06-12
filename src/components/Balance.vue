@@ -45,7 +45,7 @@ export default {
   methods: {
       // 账户余额
       balanceAll() {
-          let data = {func:'BalanceAll', control: 'wallet', uid: this.GLOBAL.userBase.uid, oemInfo: this.GLOBAL.oemInfo}
+          let data = {func:'BalanceAll', control: 'wallet', oemInfo: this.GLOBAL.oemInfo}
           this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
               this.balance.confirmed = this.GLOBAL.formatGameGold(res.data.balance.confirmed)
               this.balance.unconfirmed = this.GLOBAL.formatGameGold(res.data.balance.unconfirmed-res.data.balance.confirmed)

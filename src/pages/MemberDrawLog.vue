@@ -54,7 +54,6 @@ export default {
          let data = {
           func:'VipDrawLog',
           control: 'profile',
-          uid: this.GLOBAL.userBase.uid,
           last: 0,
           oemInfo: this.GLOBAL.oemInfo
         };

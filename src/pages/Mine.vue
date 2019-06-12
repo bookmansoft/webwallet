@@ -93,7 +93,11 @@ export default {
   },
   methods: {
       getUserProfile(){
-          let data = {func:'Info', control: 'profile', uid: this.GLOBAL.userBase.uid, oemInfo: this.GLOBAL.oemInfo}
+          let data = {
+            func:'Info', 
+            control: 'profile', 
+            oemInfo: this.GLOBAL.oemInfo
+          };
           this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
               console.log(res.data)
               if(res.data.profile != null) {
@@ -106,7 +110,7 @@ export default {
           });
       },
       getMine(){
-          let data = {func:'Mine', control: 'profile', uid: this.GLOBAL.userBase.uid, oemInfo: this.GLOBAL.oemInfo}
+          let data = {func:'Mine', control: 'profile', oemInfo: this.GLOBAL.oemInfo}
           this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
               console.log('mine', res.data)
               if(res.data.errcode == 'success' && res.data.mine != null) {
@@ -132,7 +136,7 @@ export default {
           });
       },
       getNotify() {
-          let data = {func:'GetNotify', control: 'wallet', uid: this.GLOBAL.userBase.uid, oemInfo: this.GLOBAL.oemInfo}
+          let data = {func:'GetNotify', control: 'wallet', oemInfo: this.GLOBAL.oemInfo}
           this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
               console.log('GetNotify', res.data)
               if(res.data.errcode == 'success') {

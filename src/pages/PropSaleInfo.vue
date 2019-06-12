@@ -73,7 +73,6 @@ export default {
                 oemInfo: this.GLOBAL.oemInfo,
                 pid: this.propSale.pid,
                 price: this.propSale.bid.fixed,
-                uid: this.GLOBAL.userBase.uid
             };
             this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
                 console.log(res.data);

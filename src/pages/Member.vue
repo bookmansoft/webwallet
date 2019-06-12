@@ -122,7 +122,7 @@ export default {
       },
 
       getMine(){
-          let data = {func:'Mine', control: 'profile', uid: this.GLOBAL.userBase.uid, oemInfo: this.GLOBAL.oemInfo}
+          let data = {func:'Mine', control: 'profile', oemInfo: this.GLOBAL.oemInfo}
           this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
               console.log('mine', res.data)
               if(res.data.errcode == 'success') {
@@ -227,7 +227,6 @@ export default {
         let data = {
           func:'CommonOrderRepay',
           control: 'order',
-          uid: this.GLOBAL.userBase.uid,
           price: parseInt(product.price/100),
           productId: product.value,
           attach: '',

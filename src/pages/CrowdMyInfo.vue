@@ -94,7 +94,6 @@ export default {
             let data = { 
               func:'UserStockLogs', 
               control: 'stock', 
-              uid: this.GLOBAL.userBase.uid,
               cid: this.crowdItem.cid,
               oemInfo: this.GLOBAL.oemInfo
             }

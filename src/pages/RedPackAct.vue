@@ -103,7 +103,7 @@ export default {
       },
 
       getUserRedPackAct(act_id) {
-          let data = {func:'UserRedPackAct', control: 'redact', uid: this.GLOBAL.userBase.uid, act_id: act_id,  oemInfo: this.GLOBAL.oemInfo}
+          let data = {func:'UserRedPackAct', control: 'redact', act_id: act_id,  oemInfo: this.GLOBAL.oemInfo}
           this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
               console.log('UserRedPackAct', res.data)
               if(res.data.errcode=='success') {
@@ -113,7 +113,7 @@ export default {
       },
 
       getUserRedPack(act_id) {
-          let data = {func:'UserRedPack', control: 'redact', uid: this.GLOBAL.userBase.uid, act_id: act_id,  oemInfo: this.GLOBAL.oemInfo}
+          let data = {func:'UserRedPack', control: 'redact', act_id: act_id,  oemInfo: this.GLOBAL.oemInfo}
           this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
               console.log('UserRedPack', res.data)
               if(res.data.errcode=='success') {
@@ -142,7 +142,6 @@ export default {
       userRedPackSend(item) {
           console.log('userRedPackSend', item)
           let data = {func:'UserRedPackSend', control: 'redact', 
-            uid: this.GLOBAL.userBase.uid,
             openid: this.GLOBAL.userBase.openid, 
             id: item.id,
             act_id: item.act_id,

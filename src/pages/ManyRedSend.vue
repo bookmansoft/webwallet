@@ -85,7 +85,6 @@ export default {
       let params = {
         func: "Send",
         control: "manysend",
-        uid: this.GLOBAL.userBase.uid,
         oemInfo: this.GLOBAL.oemInfo,
         total_amount: parseInt(this.total_amount) * 100000,
         total_num: parseInt(this.total_num),

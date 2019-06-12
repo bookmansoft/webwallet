@@ -273,7 +273,6 @@ export default {
         func: "UserToken",
         control: "cp",
         oemInfo: this.GLOBAL.oemInfo,
-        uid: this.GLOBAL.userBase.uid,
         account: this.GLOBAL.userBase.uid,
         user_id: this.GLOBAL.userBase.uid,
         cid: this.item.cid,

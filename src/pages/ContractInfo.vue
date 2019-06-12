@@ -75,7 +75,6 @@ export default {
                 control: 'contract',
                 oemInfo: this.GLOBAL.oemInfo,
                 txid: this.contract.current.hash,
-                uid: this.GLOBAL.userBase.uid
             };
             this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
                 console.log(res.data);

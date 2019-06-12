@@ -52,7 +52,7 @@ export default {
       },
       //获取交易记录
       getTxLogs() {
-          let data = {func:'TxLogs', control: 'wallet', uid: this.GLOBAL.userBase.uid, oemInfo: this.GLOBAL.oemInfo}
+          let data = {func:'TxLogs', control: 'wallet', oemInfo: this.GLOBAL.oemInfo}
           this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
               console.log(res.data);
               for(var i=0; i<res.data.list.length; i++) {

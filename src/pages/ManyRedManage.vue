@@ -166,7 +166,6 @@ export default {
         let params = {
           func: "ListRecord",
           control: "manyreceive",
-          uid: this.GLOBAL.userBase.uid,
           oemInfo: this.GLOBAL.oemInfo,
           receive_uid: this.GLOBAL.userBase.uid,
         };
@@ -177,7 +176,6 @@ export default {
         let params = {
           func: "ListRecord",
           control: "manysend",
-          uid: this.GLOBAL.userBase.uid,
           oemInfo: this.GLOBAL.oemInfo,
           send_uid: this.GLOBAL.userBase.uid,
         };
@@ -202,7 +200,6 @@ export default {
     let params = {
       func: "ListRecord",
       control: "manyreceive",
-      uid: this.GLOBAL.userBase.uid,
       oemInfo: this.GLOBAL.oemInfo
     };
     this.axios.post(this.GLOBAL.apiUrl, params).then(res => {

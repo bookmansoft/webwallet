@@ -46,51 +46,6 @@ export default {
       return null;
     },
 
-    /**
-     * 从 code 获取到 User 信息。如果获取不到，也不会创建。
-     */
-    GetUserFromMapCode(code) {
-        console.log('GetUserFromMapCode', code)
-        let data = {func:'GetUserFromMapCode', control: 'wechat', code: code, oemInfo: this.GLOBAL.oemInfo}
-        this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-            console.log(res.data)
-            if(res.data.errcode == 'success') {
-                let user = res.data.user
-                this.GLOBAL.userBase.uid = user.id
-                this.GLOBAL.userBase.user_name = user.user_name
-                this.GLOBAL.userBase.openid = res.data.openid
-                if(user.id == 0 ) {
-                  console.log("Login.vue 63:此处引导到注册？",res.data.access_token);
-                  // this.$router.push('/user/bind'); //此调用暂时注释，修改为自动注册
-                  this.InitUserFromOpenId(res.data.access_token);//此处不可能再传递code参数了；code只能使用一次。
-                } else {
-                  this.gotoHome()
-                }
-            } else {
-              this.showPlugin('登录失败')
-            }
-        });
-    },
-
-    /**
-     * 
-     */
-    InitUserFromOpenId(access_token) {
-      console.log('InitUserFromOpenId:',access_token)
-      let openid = this.GLOBAL.userBase.openid
-      let data = {func:'InitUserFromOpenId', control: 'wechat', openid: openid,access_token, oemInfo: this.GLOBAL.oemInfo}
-      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-          console.log(res.data)
-          if(res.data.errcode=='success') {
-              this.GLOBAL.userBase.uid = res.data.uid
-              this.gotoHome()
-          } else {
-              this.showPlugin('创建失败')
-          }
-      });
-
-    },
-
     wxAuthCode() {
         console.log('wxAuthod')
         let redirect_uri = this.GLOBAL.siteUri
@@ -145,25 +100,32 @@ export default {
   },
 
   created() {
-    this.urlParamPath = this.utils.getUrlKey('path')
-    let userAgent = this.checkUserAgent()
-    this.GLOBAL.userBase.userAgent = userAgent
-    console.log('userAgent', userAgent)
+    this.urlParamPath = this.utils.getUrlKey('path');
+    let userAgent = this.checkUserAgent();
+    this.GLOBAL.userBase.userAgent = userAgent;
+    console.log('userAgent', userAgent);
 
     //if(userAgent == 1) { 微信浏览器
-    if(this.GLOBAL.userBase.uid == 0) {
-      let code = this.utils.getUrlKey('code')
-      if(code != null) {
-        this.GetUserFromMapCode(code)
-      } else  {
-        this.wxAuthCode()
-      }
-    } else {
-        this.gotoHome()
+    let code = this.utils.getUrlKey('code');
+    if(!!code) {
+      this.GLOBAL.oemInfo.domain = 'authwx';
+      this.GLOBAL.oemInfo.openkey = code;
+      let data = {func:'login', control: 'index', oemInfo: this.GLOBAL.oemInfo}
+      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+          if(res.data.errcode == 'success') {
+              this.GLOBAL.userBase.uid = res.data.id;
+              this.GLOBAL.userBase.user_name = res.data.name;
+              this.GLOBAL.userBase.openid = res.data.openid;
+              this.GLOBAL.oemInfo.token = res.data.token;
+              this.gotoHome();
+          } else {
+            this.showPlugin('登录失败')
+          }
+      });
+    } else  {
+      this.wxAuthCode()
     }
-    
   }
-
 }
 </script>
 <style scoped lang="less">

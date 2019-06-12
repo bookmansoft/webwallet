@@ -144,7 +144,7 @@ export default {
           this.$router.push({ name: 'CrowdFreeInfo', params: { item: item }})
         },
         getUserStocks(){
-            let data = {func:'UserStocks', control: 'stock', uid: this.GLOBAL.userBase.uid, oemInfo: this.GLOBAL.oemInfo}
+            let data = {func:'UserStocks', control: 'stock', oemInfo: this.GLOBAL.oemInfo}
             this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
                 console.log('mine', res.data)
                 this.isLoadMore = true

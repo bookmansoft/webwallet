@@ -34,7 +34,6 @@ import PropOrderPay from '@/pages/PropOrderPay'
 import RedPack from '@/pages/RedPack'
 import RedPackAct from '@/pages/RedPackAct'
 import MyGame from '@/pages/MyGame'
-import UserBind from '@/components/UserBind'
 import Login from '@/components/Login'
 import LuckyWheel from '@/components/luckywheel'
 import ManyRedManage from '@/pages/ManyRedManage';
@@ -81,7 +80,6 @@ export default new Router({
     { path: '/redpack', name: 'RedPack', component: RedPack ,meta:{title:'红包'}},
     { path: '/redpack/act', name: 'RedPackAct', component: RedPackAct ,meta:{title:'红包Act'}},
     { path: '/mygame', name: 'MyGame', component: MyGame ,meta:{title:'我的游戏'}},
-    { path: '/user/bind', name: 'UserBind', component: UserBind ,meta:{title:'用户绑定'}},
     { path: '/login', name: 'Login', component: Login ,meta:{title:'登录'}},
     { path: '/prop/receive', name: 'PropReceive', component: PropReceive ,meta:{title:'道具接收'}},
     { path: '/lucky', name: 'LuckyWheel', component: LuckyWheel ,meta:{title:'幸运大转盘'}},

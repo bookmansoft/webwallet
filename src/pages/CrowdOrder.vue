@@ -88,7 +88,6 @@ export default {
       let data = {
         func:'CommonOrderRepay',
         control: 'order',
-        uid: this.GLOBAL.userBase.uid,
         price: this.crowdItem.price * this.quantity,
         productId: this.crowdItem.id,
         attach: this.crowdItem.cid,
