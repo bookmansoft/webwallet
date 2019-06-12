@@ -73,6 +73,7 @@ export default {
   },
   methods: {
     crowFreedDetail(item, index) {
+      console.log(item);
       this.$router.push({ name: "CrowdFreeInfo", params: { item: item } });
     },
     crowdFreeList() {
