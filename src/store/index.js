@@ -9,6 +9,9 @@ Vue.use(Vuex);
 // 创建store对象
 const store = new Vuex.Store({});
 
+import comment from './comment'
+store.registerModule('comment', comment);
+
 import config from './config'
 store.registerModule('config', config);
 
@@ -35,6 +38,12 @@ store.registerModule('prop', prop);
 
 import propMarket from './propMarket'
 store.registerModule('propMarket', propMarket);
+
+import redpack from './redpack'
+store.registerModule('redpack', redpack);
+
+import rps from './rps'
+store.registerModule('rps', rps);
 
 import rpsReceive from './rpsReceive'
 store.registerModule('rpsReceive', rpsReceive);

@@ -103,7 +103,14 @@ const mod = {
                 draw_count: params.draw_count,
             });
             return res;
-        }
+        },
+        async WechatConfig(context, params) {
+            let res = await remote.fetching({
+                func: "wechat.WechatConfig", 
+                uri: params.uri,
+            });
+            return res;
+        },
     },     
 }
 

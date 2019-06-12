@@ -221,7 +221,7 @@ export default {
         this.$router.push('/redpack/act')
     },
     UserRedPackAdd() {
-        this.remote.fetching({func:'UserRedPackAdd', control: 'redact',
+        this.$store.dispatch('redpack/UserRedPackAdd', {
           act_id: this.redPackAct.id,
           act_name: this.redPackAct.act_name,
           gamegold: 100000,

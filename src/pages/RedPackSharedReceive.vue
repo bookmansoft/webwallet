@@ -84,8 +84,7 @@ export default {
     } else if(!this.userBase.uid) {
       this.$router.push({ name: 'Login', params: { path: `/redpackshared/unpack/${this.$route.params.send_id}` }});
     } else {
-      this.remote.fetching({
-        func: "sharedredpack_receive.Receive",
+      this.$store.dispatch('rps/receive', {
         id: this.$route.params.send_id
       }).then(res => {
         if(res.code == 0) {

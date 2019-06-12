@@ -80,8 +80,7 @@ export default {
   },
   methods: {
     justSend() {
-      this.remote.fetching({
-        func: "sharedredpack.Send",
+      this.$store.dispatch('rps/send', {
         total_amount: parseInt(this.total_amount) * 100000,
         total_num: parseInt(this.total_num),
         wishing: this.wishing

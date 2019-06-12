@@ -91,7 +91,7 @@ export default {
       },
 
       getRedPackAct() {
-          this.remote.fetching({func:'RedPackActCurrent', control: 'redact',}).then(res => {
+          this.$store.dispatch('redpack/RedPackActCurrent', {}).then(res => {
               if(res.code == 0) {
                   this.redPackAct = res.data;
                   this.hasRedAct = true;
@@ -104,7 +104,9 @@ export default {
       },
 
       getUserRedPackAct(act_id) {
-          this.remote.fetching({func:'UserRedPackAct', control: 'redact', act_id: act_id,}).then(res => {
+        this.$store.dispatch('redpack/UserRedPackAct', {
+            act_id: act_id,
+        }).then(res => {
               if(res.code == 0) {
                   this.UserRedPackAct = res.data;
               }
@@ -112,7 +114,9 @@ export default {
       },
 
       getUserRedPack(act_id) {
-          this.remote.fetching({func:'UserRedPack', control: 'redact', act_id: act_id,}).then(res => {
+          this.$store.dispatch('redpack/UserRedPack', {
+              act_id: act_id,
+          }).then(res => {
               if(res.code == 0) {
                   this.userRedPackList = res.data;
               }
@@ -137,7 +141,7 @@ export default {
       },
 
       userRedPackSend(item) {
-          this.remote.fetching({func:'UserRedPackSend', control: 'redact', 
+          this.$store.dispatch('redpack/UserRedPackSend', {
             openid: this.userBase.openid, 
             id: item.id,
             act_id: item.act_id,

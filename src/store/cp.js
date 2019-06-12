@@ -97,6 +97,20 @@ const mod = {
 
             return curPage < context.state.pageMax;
         },
+        async UserToken(context, params) {
+            let res = await remote.fetching({
+                func:'cp.UserToken', 
+                ...params,
+            });
+            return res;
+        },
+        async getProps(context, params) {
+            let res = await remote.fetching({
+                func:'cp.getProps', 
+                ...params,
+            });
+            return res;
+        }
     },     
 }
 

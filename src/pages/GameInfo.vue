@@ -197,9 +197,7 @@ export default {
         return
       }
 
-      this.remote.fetching({
-        func:'GameCommentAdd', 
-        control: 'comments', 
+      this.$store.dispatch('comment/add', {
         openid: this.userBase.openid, 
         uid: this.userBase.uid,
         cid: this.cpInfo.cpid,
@@ -276,8 +274,7 @@ export default {
         url += "&price=" + price + '&notifyurl=' + encodeURI(notifyurl) + '&returl=' + encodeURI(window.location.href) ;
         this.$wechat.miniProgram.navigateTo({ url: url });
         */
-        this.remote.fetching({
-          func:'order.OrderPay', 
+        this.$store.dispatch('wallet/pay', {
           cid: this.cpInfo.cpid,
           sn: `${item.id}-new-${this.randomString(16)}`,
           price: item.props_price,
@@ -301,7 +298,9 @@ export default {
     //获取评论列表
     getCommentList() {
       let cid = this.cpInfo.cpid;
-      this.remote.fetching({func:'GameCommentList', control: 'comments', cid: cid,}).then(res => {
+      this.$store.dispatch('comment/list', {
+        cid: cid,
+      }).then(res => {
           if(res.code == 0) {
             res.data.forEach(element => {
               this.commentsList.push({
@@ -318,7 +317,9 @@ export default {
     },
 
     getCpProps() {
-      this.remote.fetching({func:'cp.getProps', cid: this.cpInfo.cpid}).then(res => {
+      this.$store.dispatch('cp/getProps', {
+        cid: this.cpInfo.cpid,
+      }).then(res => {
         console.log('getProps', res);
         if(res.code == 0) {
           this.cpProps = res.data;
@@ -330,7 +331,9 @@ export default {
         if(this.userBase.uid == 0) {
             return;
         }
-        this.remote.fetching({func:'cp.UserToken', cid: this.cpInfo.cpid}).then(res => {
+        this.store.dispatch('cp/UserToken', {
+          cid: this.cpInfo.cpid,
+        }).then(res => {
           if(res.code == 0) {
             this.cpAddr = res.data;
           }

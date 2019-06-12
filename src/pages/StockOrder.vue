@@ -219,14 +219,11 @@ export default {
       this.$router.push({ name: "CrowdInfo", params: { item: this.item } });
     },
     crowdPay() {
-      this.remote.fetching({
-          func:'stockMgr.auctionStock',
-          params: {
-            addr: this.item.addr,
-            cid: this.item.cid,
-            price: this.item.sell_price,
-            num: this.buyNum,
-          }
+      this.$store.dispatch('stock/auction', {
+          addr: this.item.addr,
+          cid: this.item.cid,
+          price: this.item.sell_price,
+          num: this.buyNum,
       }).then(res => {
           if(res.code == 0) {
             this.$vux.alert.show({

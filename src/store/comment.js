@@ -1,7 +1,8 @@
+import assistant from "../utils/assistant"
 import remote from '../utils/remote'
 
 /**
- * 凭证数据集合
+ * 评论数据集合
  */
 const mod = {
     namespaced: true, //独立命名空间
@@ -10,7 +11,7 @@ const mod = {
      * 状态集
      */
     state: {
-        list: [],           //众筹条目缓存列表
+        list: [],           //缓存列表
         pageMax: 1,         //网络获取的最大页数
     },
     getters: {
@@ -29,6 +30,9 @@ const mod = {
         clear(state) {
             state.list = [];
             state.pageMax = 1;
+        },
+        merge(state, list) {
+            state.list = state.list.concat(list);
         },
         add(state, msg) {
             state.list.push(msg);
@@ -63,7 +67,7 @@ const mod = {
 
             if(curPage < context.state.pageMax) {
                 let res = await remote.fetching({
-                    func: "stockMgr.BidList", 
+                    func: "item.list", 
                     page: curPage+1,
                 });
                 if (res.code == 0) {
@@ -73,34 +77,32 @@ const mod = {
                     }
 
                     let qryPage = Math.min(res.data.total, res.data.page); //数据修复：查询页数不能大于总页数
-                    console.log('stock.pull', res.data.list, curPage, qryPage);
                     if(curPage < qryPage) { //说明获得了新的内容
-                        console.log('stock.pull', res.data.list);
-                        res.data.list.forEach(item => {
-                            context.dispatch('add', item);
-                        });
+                        console.log('packet.pull', res.data.list);
+                        context.commit(
+                            'merge', 
+                            res.data.list.map(item => {
+                                return item;
+                            })
+                        );
                     }
                 }
             }
 
             return curPage < context.state.pageMax;
         },
-        /**
-         * 竞拍凭证
-         * @param {*} context 
-         * @param {*} params 
-         */
-        async auction(context, params) {
+
+        async add(context, params) {
             let res = await remote.fetching({
-                func:'stockMgr.auctionStock',
-                params: params,
+                func:'comments.GameCommentAdd', 
+                ...params,
             });
             return res;
         },
-        async bulletin(context, params) {
+        async list(context, params) {
             let res = await remote.fetching({
-                func: "stockbulletin.Retrieve",
-                cid: params.cid,
+                func:'comments.GameCommentList', 
+                ...params,
             });
             return res;
         }

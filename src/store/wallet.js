@@ -190,9 +190,22 @@ const mod = {
                 }
                 context.commit('mergeLog', res.data.list);
             }
-
             return res;
         },
+        /**
+         * 使用游戏金支付
+         * @param {*} context 
+         * @param {*} params 
+         */
+        async pay(context, params) {
+            let res = await remote.fetching({
+                func:'order.OrderPay', 
+                cid: params.cid,
+                sn: params.sn,
+                price: params.price,
+            });
+            return res;
+        }
     }
 }
 

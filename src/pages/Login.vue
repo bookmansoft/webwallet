@@ -92,7 +92,10 @@ export default {
         }, 911002);
 
         //获取微信令牌
-        let res = await this.remote.fetching({func: "wechat.WechatConfig", uri: this.remote.appConfig.siteUri});
+        let res = await this.$store.dispatch('user/WechatConfig', {
+          uri: this.remote.appConfig.siteUri,
+        });
+
         if (res.code == 0) {
           this.$wechat.config(res.data);
         } else {

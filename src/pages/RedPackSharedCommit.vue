@@ -104,8 +104,7 @@ export default {
 
     let that = this;
     //第一步先获取参数带来的发送包信息
-    this.remote.fetching({
-      func: "sharedredpack.Retrieve",
+    this.$store.dispatch('rps/view', {
       id: this.send_id
     }).then(res => {
       if(res.code == 0) {

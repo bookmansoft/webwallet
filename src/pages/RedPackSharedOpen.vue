@@ -44,8 +44,7 @@ export default {
     } else {
       this.send_id = this.$route.params.send_id;
 
-      this.remote.fetching({
-        func: "sharedredpack.Retrieve",
+      this.$store.dispatch('rps/view', {
         id: this.send_id,
       }).then(res => {
         if(res.code == 0) {

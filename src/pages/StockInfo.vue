@@ -199,8 +199,7 @@ export default {
       });
     },
     stockBulletin(cid) {
-      this.remote.fetching({
-        func: "stockbulletin.Retrieve",
+      this.$store.dispatch('stock/bulletin', {
         cid: cid,
       }).then(res => {
         console.log('stockbulletin item', res.data);
