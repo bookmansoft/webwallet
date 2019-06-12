@@ -61,6 +61,25 @@
     <!-- <p>
       <span>分时K线(用单独的iframe填充)</span>
     </p>-->
+    <flexbox style="margin-top:14px">
+      <flexbox-item :span="12">
+        <div style="display:block;margin-left:21px">
+          <span style="font-size:16px;font-family:'黑体','Heiti SC','Droidsansfallback';">今日交易数据</span>
+        </div>
+      </flexbox-item>
+    </flexbox>
+    <flexbox style="margin-top:14px">
+      <flexbox-item :span="6">
+        <div style="display:block;margin-left:21px">
+          <span style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';">最高成交价：</span>
+        </div>
+      </flexbox-item>
+      <flexbox-item :span="6">
+        <div style="display:block;">
+          <span style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';">成交数量：</span>
+        </div>
+      </flexbox-item>
+    </flexbox>
   </div>
 </template>
 <script>

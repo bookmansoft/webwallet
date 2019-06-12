@@ -12,7 +12,7 @@
                 >
               </div>
             </flexbox-item>
-            <flexbox-item :span="6">
+            <flexbox-item :span="6" style="padding-left:5px">
               <div style="margin-top:0px;">
                 <span style="color: #919191; font-size:12px;">{{item.cp_text}}</span>
               </div>
