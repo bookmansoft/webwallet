@@ -104,12 +104,12 @@ export default {
     };
   },
   methods: {
-    onItemClick(index) {
-      console.log(this.tabIndex);
-    }
+    
   },
   created() {
     this.item = this.$route.params.item;
+    //获取股票行情；在该方法中设置最新的一行记录
+    this.stockBullet();
   }
 };
 </script>
