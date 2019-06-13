@@ -58,56 +58,62 @@
     <!-- 各类回报的区域 -->
     <div style="background-color:white">
       <!-- 无偿回报 -->
-      <flexbox class="cell">
-        <flexbox-item :span="3">
-          <div style="display:block;text-align:left">
-            <span
-              style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100);"
-            >○ 无偿回报</span>
-          </div>
-        </flexbox-item>
-        <flexbox-item :span="5"></flexbox-item>
-        <flexbox-item :span="4">
-          <div style="display:block;text-align:left">
-            <span
-              style="font-size:11px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-            >已支持2次</span>
-          </div>
-        </flexbox-item>
-      </flexbox>
+      <div @click="crowdOrder(0)">
+        <flexbox class="cell">
+          <flexbox-item :span="3">
+            <div style="display:block;text-align:left">
+              <span
+                style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100);"
+              >○ 无偿回报</span>
+            </div>
+          </flexbox-item>
+          <flexbox-item :span="5"></flexbox-item>
+          <flexbox-item :span="4">
+            <div style="display:block;text-align:left">
+              <span
+                style="font-size:11px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+              >已支持2次</span>
+            </div>
+          </flexbox-item>
+        </flexbox>
+      </div>
       <flexbox>
         <flexbox-item :span="12">
           <div style="height:2px;background-color:#f3f3f3"></div>
         </flexbox-item>
       </flexbox>
       <!-- 第1类：50股 -->
-      <flexbox class="cell">
-        <flexbox-item :span="3">
-          <div style="display:block;text-align:left">
-            <span
-              style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100);"
-            >○ ￥50元</span>&nbsp;
-          </div>
-        </flexbox-item>
-        <flexbox-item :span="5"></flexbox-item>
-        <flexbox-item :span="4">
-          <div style="display:block;text-align:left">
-            <span
-              style="font-size:11px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-            >已支持2次</span>
-          </div>
-        </flexbox-item>
-      </flexbox>
-      <flexbox class="content">
-        <flexbox-item :span="12">
-          <div style="display:block;text-align:left;margin-right:50px;">
-            <span
-              style="word-break: normal;font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-            >可爱毛公仔一只 普通毛公仔一只 还有其他各种可爱小饰品由你挑选<br/>
-            游戏金100千克</span>&nbsp;
-          </div>
-        </flexbox-item>
-      </flexbox>
+      <div @click="crowdOrder(1)">
+        <flexbox class="cell">
+          <flexbox-item :span="3">
+            <div style="display:block;text-align:left">
+              <span
+                style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100);"
+              >○ ￥50元</span>&nbsp;
+            </div>
+          </flexbox-item>
+          <flexbox-item :span="5"></flexbox-item>
+          <flexbox-item :span="4">
+            <div style="display:block;text-align:left">
+              <span
+                style="font-size:11px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+              >已支持2次</span>
+            </div>
+          </flexbox-item>
+        </flexbox>
+        <flexbox class="content">
+          <flexbox-item :span="12">
+            <div style="display:block;text-align:left;margin-right:50px;">
+              <span
+                style="word-break: normal;font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+              >
+                可爱毛公仔一只 普通毛公仔一只 还有其他各种可爱小饰品由你挑选
+                <br>游戏金100千克
+              </span>&nbsp;
+            </div>
+          </flexbox-item>
+        </flexbox>
+      </div>
       <flexbox>
         <flexbox-item :span="12">
           <div style="height:2px;background-color:#f3f3f3"></div>
@@ -115,33 +121,37 @@
       </flexbox>
 
       <!-- 第2类：100股 -->
-      <flexbox class="cell">
-        <flexbox-item :span="3">
-          <div style="display:block;text-align:left">
-            <span
-              style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100);"
-            >○ ￥100元</span>&nbsp;
-          </div>
-        </flexbox-item>
-        <flexbox-item :span="5"></flexbox-item>
-        <flexbox-item :span="4">
-          <div style="display:block;text-align:left">
-            <span
-              style="font-size:11px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-            >已支持2次</span>
-          </div>
-        </flexbox-item>
-      </flexbox>
-      <flexbox class="content">
-        <flexbox-item :span="12">
-          <div style="display:block;text-align:left;margin-right:50px;">
-            <span
-              style="word-break: normal;font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-            >可爱毛公仔一只 普通毛公仔一只 还有其他各种可爱小饰品由你挑选<br/>
-            游戏金100千克</span>&nbsp;
-          </div>
-        </flexbox-item>
-      </flexbox>
+      <div @click="crowdOrder(2)">
+        <flexbox class="cell">
+          <flexbox-item :span="3">
+            <div style="display:block;text-align:left">
+              <span
+                style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100);"
+              >○ ￥100元</span>&nbsp;
+            </div>
+          </flexbox-item>
+          <flexbox-item :span="5"></flexbox-item>
+          <flexbox-item :span="4">
+            <div style="display:block;text-align:left">
+              <span
+                style="font-size:11px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+              >已支持2次</span>
+            </div>
+          </flexbox-item>
+        </flexbox>
+        <flexbox class="content">
+          <flexbox-item :span="12">
+            <div style="display:block;text-align:left;margin-right:50px;">
+              <span
+                style="word-break: normal;font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+              >
+                可爱毛公仔一只 普通毛公仔一只 还有其他各种可爱小饰品由你挑选
+                <br>游戏金100千克
+              </span>&nbsp;
+            </div>
+          </flexbox-item>
+        </flexbox>
+      </div>
       <flexbox>
         <flexbox-item :span="12">
           <div style="height:2px;background-color:#f3f3f3"></div>
@@ -149,66 +159,74 @@
       </flexbox>
 
       <!-- 第3类：200股 -->
-      <flexbox class="cell">
-        <flexbox-item :span="3">
-          <div style="display:block;text-align:left">
-            <span
-              style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100);"
-            >○ ￥200元</span>&nbsp;
-          </div>
-        </flexbox-item>
-        <flexbox-item :span="5"></flexbox-item>
-        <flexbox-item :span="4">
-          <div style="display:block;text-align:left">
-            <span
-              style="font-size:11px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-            >已支持22次</span>
-          </div>
-        </flexbox-item>
-      </flexbox>
-      <flexbox class="content">
-        <flexbox-item :span="12">
-          <div style="display:block;text-align:left;margin-right:50px;">
-            <span
-              style="word-break: normal;font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-            >可爱毛公仔一只 普通毛公仔一只 还有其他各种可爱小饰品由你挑选<br/>
-            游戏金100千克</span>&nbsp;
-          </div>
-        </flexbox-item>
-      </flexbox>
+      <div @click="crowdOrder(3)">
+        <flexbox class="cell">
+          <flexbox-item :span="3">
+            <div style="display:block;text-align:left">
+              <span
+                style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100);"
+              >○ ￥200元</span>&nbsp;
+            </div>
+          </flexbox-item>
+          <flexbox-item :span="5"></flexbox-item>
+          <flexbox-item :span="4">
+            <div style="display:block;text-align:left">
+              <span
+                style="font-size:11px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+              >已支持22次</span>
+            </div>
+          </flexbox-item>
+        </flexbox>
+        <flexbox class="content">
+          <flexbox-item :span="12">
+            <div style="display:block;text-align:left;margin-right:50px;">
+              <span
+                style="word-break: normal;font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+              >
+                可爱毛公仔一只 普通毛公仔一只 还有其他各种可爱小饰品由你挑选
+                <br>游戏金100千克
+              </span>&nbsp;
+            </div>
+          </flexbox-item>
+        </flexbox>
+      </div>
       <flexbox>
         <flexbox-item :span="12">
           <div style="height:2px;background-color:#f3f3f3"></div>
         </flexbox-item>
       </flexbox>
       <!-- 第4类：500股 -->
-      <flexbox class="cell">
-        <flexbox-item :span="3">
-          <div style="display:block;text-align:left">
-            <span
-              style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100);"
-            >○ ￥500元</span>&nbsp;
-          </div>
-        </flexbox-item>
-        <flexbox-item :span="5"></flexbox-item>
-        <flexbox-item :span="4">
-          <div style="display:block;text-align:left">
-            <span
-              style="font-size:11px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-            >已支持12次</span>
-          </div>
-        </flexbox-item>
-      </flexbox>
-      <flexbox class="content">
-        <flexbox-item :span="12">
-          <div style="display:block;text-align:left;margin-right:50px;">
-            <span
-              style="word-break: normal;font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-            >可爱毛公仔一只 普通毛公仔一只 还有其他各种可爱小饰品由你挑选<br/>
-            游戏金100千克</span>&nbsp;
-          </div>
-        </flexbox-item>
-      </flexbox>
+      <div @click="crowdOrder(4)">
+        <flexbox class="cell">
+          <flexbox-item :span="3">
+            <div style="display:block;text-align:left">
+              <span
+                style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100);"
+              >○ ￥500元</span>&nbsp;
+            </div>
+          </flexbox-item>
+          <flexbox-item :span="5"></flexbox-item>
+          <flexbox-item :span="4">
+            <div style="display:block;text-align:left">
+              <span
+                style="font-size:11px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+              >已支持12次</span>
+            </div>
+          </flexbox-item>
+        </flexbox>
+        <flexbox class="content">
+          <flexbox-item :span="12">
+            <div style="display:block;text-align:left;margin-right:50px;">
+              <span
+                style="word-break: normal;font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+              >
+                可爱毛公仔一只 普通毛公仔一只 还有其他各种可爱小饰品由你挑选
+                <br>游戏金100千克
+              </span>&nbsp;
+            </div>
+          </flexbox-item>
+        </flexbox>
+      </div>
       <flexbox>
         <flexbox-item :span="12">
           <div style="height:2px;background-color:#f3f3f3"></div>
@@ -241,6 +259,13 @@ export default {
     viewMore() {
       console.log("进入viewMore方法");
       this.flagMore = true;
+    },
+    crowdOrder(payType) {
+      console.log("回报类别:", payType);
+      this.$router.push({
+        name: "CrowdOrder",
+        params: { item: this.item, payType: payType }
+      });
     }
   },
   created() {
