@@ -101,7 +101,7 @@
       </flexbox-item>
     </flexbox>
 
-    <flexbox style="margin-top:14px">
+    <flexbox style="margin-top:14px;">
       <flexbox-item :span="3" style="text-align:right">
         <div style="display:block;margin-left:21px;">
           <span
@@ -129,6 +129,12 @@
             style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
           >{{parseInt(stock_bulletin.total_amount/100)/1000}}千克</span>
         </div>
+      </flexbox-item>
+    </flexbox>
+
+    <flexbox style="margin-top:14px">
+      <flexbox-item :span="12">
+        <div style="height:8px;background-color:#f3f3f3"></div>
       </flexbox-item>
     </flexbox>
 
@@ -189,7 +195,7 @@
         </div>
       </flexbox-item>
     </flexbox>
-    <flexbox style="margin-top:14px">
+    <flexbox style="margin-top:14px;margin-bottom:14px">
       <flexbox-item :span="4" style="text-align:right">
         <div style="display:block;">
           <span
@@ -225,7 +231,7 @@
       <flexbox-item :span="4">
         <div style="display:block;text-align:center;margin-left:21px;">
           <span
-            style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100)"
+            style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69)"
           >单价(千克)</span>
         </div>
       </flexbox-item>
@@ -246,30 +252,31 @@
     </flexbox>
 
     <div v-for="(itemSale, index) in now_sale" :key="index">
-
-    <flexbox style="margin-top:14px">
-      <flexbox-item :span="4">
-        <div style="display:block;text-align:center;margin-left:21px;">
-          <span
-            style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100)"
-          >{{itemSale.price}}</span>
-        </div>
-      </flexbox-item>
-      <flexbox-item :span="4">
-        <div style="display:block;text-align:center;">
-          <span
-            style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-          >{{itemSale.num}}</span>
-        </div>
-      </flexbox-item>
-      <flexbox-item :span="4">
-        <div style="display:block;text-align:center;">
-          <span
-            style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-          >操作</span>
-        </div>
-      </flexbox-item>
-    </flexbox>
+      <flexbox style="margin-top:14px">
+        <flexbox-item :span="4">
+          <div style="display:block;text-align:center;margin-left:21px;">
+            <span
+              style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69)"
+            >{{itemSale.price}}</span>
+          </div>
+        </flexbox-item>
+        <flexbox-item :span="4">
+          <div style="display:block;text-align:center;">
+            <span
+              style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+            >{{itemSale.num}}</span>
+          </div>
+        </flexbox-item>
+        <flexbox-item :span="1">
+        </flexbox-item>
+        <flexbox-item :span="3">
+          <div style="display:block;text-align:center;">
+            <div
+              style="display:block;margin-left:5px;margin-top:6px;border-radius: 25%;text-align:center;line-height:26px;width:50px;height:26px;background-color:#ff7164;font-size:13px;color:white"
+            >购入</div>
+          </div>
+        </flexbox-item>
+      </flexbox>
     </div>
   </div>
 </template>
