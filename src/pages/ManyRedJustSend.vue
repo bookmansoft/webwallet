@@ -81,7 +81,6 @@ export default {
     let params = {
       func: "Retrieve",
       control: "manysend",
-      uid: this.GLOBAL.userBase.uid,
       oemInfo: this.GLOBAL.oemInfo,
       id: this.send_id
     };

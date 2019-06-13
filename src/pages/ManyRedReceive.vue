@@ -132,7 +132,6 @@ export default {
     let params1 = {
       func: "Receive",
       control: "manyreceive",
-      uid: this.GLOBAL.userBase.uid,
       oemInfo: this.GLOBAL.oemInfo,
       id: this.$route.params.send_id
     };
@@ -148,7 +147,6 @@ export default {
     let params2 = {
       func: "ListRecord",
       control: "manyreceive",
-      uid: this.GLOBAL.userBase.uid,
       oemInfo: this.GLOBAL.oemInfo,
       id: this.$route.params.send_id //此处用send_id
     };

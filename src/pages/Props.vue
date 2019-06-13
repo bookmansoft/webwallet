@@ -117,9 +117,7 @@ export default {
 
       // 道具数量
       getPropCount() {
-        let data = { func: 'PropCount', control: 'prop', oemInfo: this.GLOBAL.oemInfo, 
-            uid: this.GLOBAL.userBase.uid
-        };
+        let data = { func: 'PropCount', control: 'prop', oemInfo: this.GLOBAL.oemInfo};
         let that = this;
         that.axios.post(this.GLOBAL.apiUrl, data).then(res => {
             if(res.data.errcode=='success') {
@@ -134,7 +132,6 @@ export default {
       // 发送请求 获取道具
       getProps(page) {
         let data = { func: 'PropList', control: 'prop', oemInfo: this.GLOBAL.oemInfo, 
-            uid: this.GLOBAL.userBase.uid, 
             page: page, 
         };
         let that = this;

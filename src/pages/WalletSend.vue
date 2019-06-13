@@ -79,7 +79,6 @@ export default {
           control: 'wallet',
           addr: this.address,
           amount: this.GLOBAL.gameGoldOrigin(this.number),
-          uid: this.GLOBAL.userBase.uid,
           oemInfo: this.GLOBAL.oemInfo
         };
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {

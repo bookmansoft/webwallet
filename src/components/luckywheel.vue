@@ -216,7 +216,6 @@ export default {
     },
     UserRedPackAdd() {
         let data = {func:'UserRedPackAdd', control: 'redact', oemInfo: this.GLOBAL.oemInfo,
-          uid: this.GLOBAL.userBase.uid, 
           act_id: this.redPackAct.id,
           act_name: this.redPackAct.act_name,
           gamegold: 100000,

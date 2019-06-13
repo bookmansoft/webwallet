@@ -46,51 +46,6 @@ export default {
       return null;
     },
 
-    /**
-     * 从 code 获取到 User 信息。如果获取不到，也不会创建。
-     */
-    GetUserFromMapCode(code) {
-        console.log('GetUserFromMapCode', code)
-        let data = {func:'GetUserFromMapCode', control: 'wechat', code: code, oemInfo: this.GLOBAL.oemInfo}
-        this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-            console.log(res.data)
-            if(res.data.errcode == 'success') {
-                let user = res.data.user
-                this.GLOBAL.userBase.uid = user.id
-                this.GLOBAL.userBase.user_name = user.user_name
-                this.GLOBAL.userBase.openid = res.data.openid
-                if(user.id == 0 ) {
-                  console.log("Login.vue 63:此处引导到注册？",res.data.access_token);
-                  // this.$router.push('/user/bind'); //此调用暂时注释，修改为自动注册
-                  this.InitUserFromOpenId(res.data.access_token);//此处不可能再传递code参数了；code只能使用一次。
-                } else {
-                  this.gotoHome()
-                }
-            } else {
-              this.showPlugin('登录失败')
-            }
-        });
-    },
-
-    /**
-     * 
-     */
-    InitUserFromOpenId(access_token) {
-      console.log('InitUserFromOpenId:',access_token)
-      let openid = this.GLOBAL.userBase.openid
-      let data = {func:'InitUserFromOpenId', control: 'wechat', openid: openid,access_token, oemInfo: this.GLOBAL.oemInfo}
-      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-          console.log(res.data)
-          if(res.data.errcode=='success') {
-              this.GLOBAL.userBase.uid = res.data.uid
-              this.gotoHome()
-          } else {
-              this.showPlugin('创建失败')
-          }
-      });
-
-    },
-
     wxAuthCode() {
         console.log('wxAuthod')
         let redirect_uri = this.GLOBAL.siteUri
@@ -118,24 +73,7 @@ export default {
     },
 
     gotoHome() {
-        //this.showPlugin(this.urlParamPath)
-        let that = this
-        this.GLOBAL.initRemote(this.GLOBAL.userBase.uid, function(msg) {
-          console.log('收到消息', msg);
-          if(msg.msgType=='balance.account.client') {
-            console.log('balance.account.client')
-            that.GLOBAL.hasTx = true
-          } else if(msg.msgType=='prop/receive') {
-            console.log('prop/receive')
-            that.GLOBAL.hasProp = true
-          } else if(msg.msgType=='prop/auction') {
-            console.log('prop/auction')
-            that.GLOBAL.hasPropAuction = true
-          }
-        })
-        
         if(this.urlParamPath == null) {
-          // this.$router.push('/home')
           this.$router.push('/crowd')
         } else {
           this.$router.push(this.urlParamPath)
@@ -145,25 +83,76 @@ export default {
   },
 
   created() {
-    this.urlParamPath = this.utils.getUrlKey('path')
-    let userAgent = this.checkUserAgent()
-    this.GLOBAL.userBase.userAgent = userAgent
-    console.log('userAgent', userAgent)
+    this.urlParamPath = this.utils.getUrlKey('path');
+    let userAgent = this.checkUserAgent();
+    this.GLOBAL.userBase.userAgent = userAgent;
+    console.log('userAgent', userAgent);
 
     //if(userAgent == 1) { 微信浏览器
-    if(this.GLOBAL.userBase.uid == 0) {
-      let code = this.utils.getUrlKey('code')
-      if(code != null) {
-        this.GetUserFromMapCode(code)
-      } else  {
-        this.wxAuthCode()
-      }
-    } else {
-        this.gotoHome()
-    }
-    
-  }
+    let code = this.utils.getUrlKey('code');
+    if(!!code) {
+      this.GLOBAL.oemInfo = this.GLOBAL.oemInfo || {};
+      this.GLOBAL.oemInfo.domain = 'authwx';
+      this.GLOBAL.oemInfo.openkey = code;
+      let data = {func:'login', oemInfo: this.GLOBAL.oemInfo}
 
+      //#region Modified by liub 2019.06.13
+
+      //原先的写法 - Start
+      // this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+      //     if(res.status == 200 && res.data.code == 0) {
+      //         let ret = res.data.data;
+      //         this.GLOBAL.userBase.uid = ret.id;
+      //         this.GLOBAL.userBase.user_name = ret.name;
+      //         this.GLOBAL.userBase.openid = ret.openid;
+      //         this.GLOBAL.oemInfo.openid = ret.openid;
+      //         this.GLOBAL.oemInfo.token = ret.token;
+      //         this.gotoHome();
+      //     } else {
+      //       this.showPlugin('登录失败')
+      //     }
+      // });
+      //原先的写法 - End
+
+      //新的写法 - Start
+      //创建连接器对象
+      let remote = new toolkit.gameconn({
+          "UrlHead": "http",
+          "webserver": { 
+              "host": "127.0.0.1",
+              "port": 9901
+          },
+      });
+
+      //设置用户基本信息
+      remote.setUserInfo({
+          domain: 'authwx',
+          openkey: code,
+      }, remote.CommStatus.reqLb);
+
+      remote.login().then(() => {
+          if(remote.status.check(remote.CommStatus.logined)) {
+            this.GLOBAL.userBase.uid = remote.userInfo.id;
+            this.GLOBAL.userBase.user_name = remote.userInfo.name;
+            this.GLOBAL.userBase.openid = remote.userInfo.openid;
+
+            this.GLOBAL.oemInfo.openid = remote.userInfo.openid;
+            this.GLOBAL.oemInfo.token = remote.userInfo.token;
+
+            this.gotoHome();
+          } else {
+            this.showPlugin('登录失败')
+          }
+      }).catch(e=>{
+        console.log(e);
+      });
+      //新的写法 - End
+
+      //#endregion
+    } else  {
+      this.wxAuthCode()
+    }
+  }
 }
 </script>
 <style scoped lang="less">

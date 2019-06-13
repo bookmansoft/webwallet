@@ -26,8 +26,12 @@ const colorListLength = 20
 const oemInfo = { token: '9bcf8939a9c96e14700b2209463af411' }
 // const apiUrl = 'http://h5.gamegold.xin:9101/index.html'
 // const siteUri = 'http://h5.gamegold.xin'
-const apiUrl = 'http://test.gamegold.xin:9101/index.html';  //服务端是否可以本地调试非常可疑
+const apiUrl = 'http://test.gamegold.xin:9101/index.html';
 const siteUri = 'http://test.gamegold.xin'
+
+const UrlHead = 'http'
+const Host = 'test.gamegold.xin'
+const Port = 9901
 
 const gameGoldUnit = '千克'
 
@@ -37,11 +41,6 @@ var games = []
 var cplist = []
 var cpCount = 0
 var vipGetNotifyTime = 0
-var remote = null
-var hasMsg = false
-var hasProp = false
-var hasTx = false
-var hasPropAuction = false
 
 function getRandColor () {
   var tem = Math.round(Math.random() * colorListLength)
@@ -114,50 +113,12 @@ function checkAddr(value) {
     }
 }
 
-async function initRemote(uid, callback) {
-  console.log("从未使用的连接器？");
-  // //创建连接器对象
-  // remote = new toolkit.gameconn(
-  //   // CommMode = {
-  //   //     ws: "webSocket",    //Web Socket
-  //   //     get: "get",         //HTTP GET
-  //   //     post: "post",       //HTTP POST
-  //   // }
-  //   toolkit.gameconn.CommMode.ws,      //连接方式
-  //   {
-  //     "UrlHead": "http",              //协议选择: http/https
-  //     "webserver": {
-  //       "host": "h5.gamegold.xin",        //远程主机地址
-  //       "port": 9901                //远程主机端口
-  //     },
-  //     "auth": {
-  //       "openid": "18681223392",    //用户标识
-  //       "openkey": "18681223392",   //和用户标识关联的用户令牌
-  //       "domain": "tx.IOS",         //用户所在的域，tx是提供登录验证服务的厂商类别，IOS是该厂商下的服务器组别
-  //     }
-  //   }
-  // )
-  
-  // let msg = await remote.login({openid: uid});
-  // console.log('msg', msg)
-  // if(remote.isSuccess(msg)) { 
-  //     await remote.watch(msg => {
-  //         if(callback) {
-  //           callback(msg)
-  //         }
-  //     }, '9999')
-  //     //.fetching({func: "test.notify", id: uid});
-  // }
-
-}
-
 export default
 {
   colorList, colorListLength, getRandColor,
   apiUrl, siteUri, oemInfo,
-  formatGameGold, gameGoldOrigin, gameGoldUnit, initRemote,
+  formatGameGold, gameGoldOrigin, gameGoldUnit,
   myAlert, formatDateStr, checkAddr,
-  userBase, userProfile, games, cplist, cpCount, vipGetNotifyTime,
-  remote, hasMsg, hasProp, hasTx, hasPropAuction
+  userBase, userProfile, games, cplist, cpCount, vipGetNotifyTime
 }
 </script>

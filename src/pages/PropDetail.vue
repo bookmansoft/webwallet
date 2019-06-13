@@ -175,7 +175,6 @@ export default {
           func: 'PropSale', control: 'prop', oemInfo: this.GLOBAL.oemInfo,
           pid: prop.pid,
           fixedPrice: amount,
-          uid: this.GLOBAL.userBase.uid
         };
         console.log(data.index);
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
@@ -252,7 +251,6 @@ export default {
         pid: prop.pid,
         txid: prop.current.hash,
         index: prop.current.index,
-        uid: this.GLOBAL.userBase.uid
       };
       this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
           var rep = res.data;

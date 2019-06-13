@@ -92,7 +92,6 @@ export default {
             let data = {
                 func:'StockSale',
                 control: 'stock',
-                uid: this.GLOBAL.userBase.uid,
                 cid: this.crowdItem.cid,
                 price: this.price,
                 quantity: this.quantity,

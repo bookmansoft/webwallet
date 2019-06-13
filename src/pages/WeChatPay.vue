@@ -61,7 +61,6 @@ export default {
             func:'UnifiedOrder',
             control: 'wechat',
             appId: 'wx4a5e9d7ae34ad4b4',
-            uid: this.GLOBAL.userBase.uid,
             tradeId: this.tradeId,
             openid: this.GLOBAL.userBase.openid,
             price: this.order.order_num*100,
@@ -123,7 +122,6 @@ export default {
         let that = this
         let data = {
             func: 'OrderPayResutl',         //action
-            uid: this.GLOBAL.userBase.uid,
             tradeId: this.tradeId,
             status: 1,
             msg: 'success',

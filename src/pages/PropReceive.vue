@@ -74,7 +74,6 @@ export default {
       var data = {
         func: 'PropReceive', control: 'prop', oemInfo: this.GLOBAL.oemInfo,
         raw: this.prop.raw,
-        uid: this.GLOBAL.userBase.uid
       };
       this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
           var rep = res.data;

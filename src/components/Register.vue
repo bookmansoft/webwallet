@@ -61,7 +61,7 @@ export default {
           username: this.mobile,
           type: 1
         }
-        this.axios.post(this.apiUrl+'/user/vfcode', data).then(res => {
+        this.axios.post(this.GLOBAL.apiUrl+'/user/vfcode', data).then(res => {
           console.log(res.data)
           if(res.data.code == 0) {
               this.vfcode = res.data.verify_code

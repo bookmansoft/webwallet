@@ -187,7 +187,6 @@ export default {
          let data = {
           func:'VipDraw',
           control: 'profile',
-          uid: this.GLOBAL.userBase.uid,
           draw_count: draw_count,
           oemInfo: this.GLOBAL.oemInfo
         };
@@ -210,7 +209,6 @@ export default {
          let data = {
           func:'VipDrawLog',
           control: 'profile',
-          uid: this.GLOBAL.userBase.uid,
           last: 1,
           oemInfo: this.GLOBAL.oemInfo
         };

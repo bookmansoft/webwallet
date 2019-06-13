@@ -324,7 +324,6 @@ export default {
           func:'OrderPay', 
           control: 'order', 
           cid: this.cpItem.cid, 
-          user_id: this.GLOBAL.userBase.uid,
           sn: order_sn,
           price: this.GLOBAL.gameGoldOrigin(item.props_price),
           account: this.GLOBAL.userBase.uid,
@@ -391,7 +390,6 @@ export default {
             return
         }
         let data = {func:'UserToken', control: 'cp', oemInfo: this.GLOBAL.oemInfo,
-            uid: this.GLOBAL.userBase.uid,
             account: this.GLOBAL.userBase.uid, 
             user_id: this.GLOBAL.userBase.uid,
             cid: this.cpItem.cid
