@@ -76,7 +76,7 @@
       </flexbox-item>
       <flexbox-item :span="3">
         <div style="display:block;">
-          <span style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);">{{history_text[0]}}</span>
+          <span style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);">{{parseInt(stock_bulletin.stock_high/100)/1000}}千克</span>
         </div>
       </flexbox-item>
       <flexbox-item :span="3" style="text-align:right">
@@ -86,7 +86,7 @@
       </flexbox-item>
       <flexbox-item :span="3">
         <div style="display:block;">
-          <span style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);">{{history_text[2]}}</span>
+          <span style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);">{{stock_bulletin.total_num}}</span>
         </div>
       </flexbox-item>
     </flexbox>
@@ -99,7 +99,7 @@
       </flexbox-item>
       <flexbox-item :span="3">
         <div style="display:block;">
-          <span style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);">{{history_text[1]}}</span>
+          <span style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);">{{parseInt(stock_bulletin.stock_low/100)/1000}}千克</span>
         </div>
       </flexbox-item>
       <flexbox-item :span="3" style="text-align:right">
@@ -109,7 +109,7 @@
       </flexbox-item>
       <flexbox-item :span="3">
         <div style="display:block;">
-          <span style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);">{{history_text[3]}}</span>
+          <span style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);">{{parseInt(stock_bulletin.total_amount/100)/1000}}千克</span>
         </div>
       </flexbox-item>
     </flexbox>
@@ -202,12 +202,27 @@ export default {
   data() {
     return {
       msg: "众筹",
-      item: null,
-      history_text: null,
-      now_sale: null
+      item: {},
+      history_text: {},
+      now_sale: {},
+      stock_bulletin: {},
     };
   },
-  methods: {},
+  methods: {
+    stockBulletin(cid) {
+      let data = {
+        func: "ListRecord",
+        control: "stockbulletin",
+        oemInfo: this.GLOBAL.oemInfo,
+        cid: cid
+      };
+      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+        console.log("220:", res.data.list[0]);
+        this.stock_bulletin=res.data.list[0];
+      });
+    },
+
+  },
   created() {
     this.item = this.$route.params.item;
     //历史绩效数据
@@ -218,7 +233,8 @@ export default {
     console.log(136, this.now_sale);
 
     //获取股票行情；在该方法中设置最新的一行记录
-    // this.stockBullet();
+    console.log(this.item.cid);
+    this.stockBulletin(this.item.cid);
   }
 };
 </script>
