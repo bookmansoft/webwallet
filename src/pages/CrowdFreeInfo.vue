@@ -340,12 +340,4 @@ export default {
   margin-left: 0px;
   margin-right: 0px;
 }
-.flex-left {
-  text-align: left;
-  padding-left: 15px;
-}
-.flex-right {
-  text-align: right;
-  padding-right: 15px;
-}
 </style>
