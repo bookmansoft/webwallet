@@ -64,29 +64,39 @@
     <flexbox style="margin-top:14px">
       <flexbox-item :span="12">
         <div style="display:block;margin-left:21px">
-          <span style="font-size:16px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight: bold;color:rgb(50,58,69);">今日交易数据</span>
+          <span
+            style="font-size:16px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight: bold;color:rgb(50,58,69);"
+          >今日交易数据</span>
         </div>
       </flexbox-item>
     </flexbox>
     <flexbox style="margin-top:14px">
       <flexbox-item :span="3" style="text-align:right">
         <div style="display:block;margin-left:21px;">
-          <span style="text-align:right;font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100)">最高成交价：</span>
+          <span
+            style="text-align:right;font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100)"
+          >最高成交价：</span>
         </div>
       </flexbox-item>
       <flexbox-item :span="3">
         <div style="display:block;">
-          <span style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);">{{parseInt(stock_bulletin.stock_high/100)/1000}}千克</span>
+          <span
+            style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+          >{{parseInt(stock_bulletin.stock_high/100)/1000}}千克</span>
         </div>
       </flexbox-item>
       <flexbox-item :span="3" style="text-align:right">
         <div style="display:block;">
-          <span style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);">成交数量：</span>
+          <span
+            style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+          >成交数量：</span>
         </div>
       </flexbox-item>
       <flexbox-item :span="3">
         <div style="display:block;">
-          <span style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);">{{stock_bulletin.total_num}}</span>
+          <span
+            style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+          >{{stock_bulletin.total_num}}</span>
         </div>
       </flexbox-item>
     </flexbox>
@@ -94,94 +104,173 @@
     <flexbox style="margin-top:14px">
       <flexbox-item :span="3" style="text-align:right">
         <div style="display:block;margin-left:21px;">
-          <span style="text-align:right;font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(0,128,0)">最低成交价：</span>
+          <span
+            style="text-align:right;font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(0,128,0)"
+          >最低成交价：</span>
         </div>
       </flexbox-item>
       <flexbox-item :span="3">
         <div style="display:block;">
-          <span style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);">{{parseInt(stock_bulletin.stock_low/100)/1000}}千克</span>
+          <span
+            style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+          >{{parseInt(stock_bulletin.stock_low/100)/1000}}千克</span>
         </div>
       </flexbox-item>
       <flexbox-item :span="3" style="text-align:right">
         <div style="display:block;">
-          <span style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);">成交金额：</span>
+          <span
+            style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+          >成交金额：</span>
         </div>
       </flexbox-item>
       <flexbox-item :span="3">
         <div style="display:block;">
-          <span style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);">{{parseInt(stock_bulletin.total_amount/100)/1000}}千克</span>
+          <span
+            style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+          >{{parseInt(stock_bulletin.total_amount/100)/1000}}千克</span>
         </div>
       </flexbox-item>
     </flexbox>
-
 
     <flexbox style="margin-top:14px">
       <flexbox-item :span="12">
         <div style="display:block;margin-left:21px">
-          <span style="font-size:16px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight: bold;color:rgb(50,58,69);">历史绩效数据</span>
+          <span
+            style="font-size:16px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight: bold;color:rgb(50,58,69);"
+          >历史绩效数据</span>
         </div>
       </flexbox-item>
     </flexbox>
     <flexbox style="margin-top:14px">
       <flexbox-item :span="4" style="text-align:right">
         <div style="display:block;margin-left:21px;">
-          <span style="text-align:right;font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100);">持续分红时间：</span>
+          <span
+            style="text-align:right;font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100);"
+          >持续分红时间：</span>
         </div>
       </flexbox-item>
       <flexbox-item :span="8">
         <div style="display:block;">
-          <span style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100);">{{history_text[0]}}</span>
+          <span
+            style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100);"
+          >{{history_text[0]}}</span>
         </div>
       </flexbox-item>
     </flexbox>
     <flexbox style="margin-top:14px">
       <flexbox-item :span="4" style="text-align:right">
         <div style="display:block;">
-          <span style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100);">累计分红：</span>
+          <span
+            style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100);"
+          >累计分红：</span>
         </div>
       </flexbox-item>
       <flexbox-item :span="8">
         <div style="display:block;">
-          <span style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100);">{{history_text[1]}}</span>
+          <span
+            style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100);"
+          >{{history_text[1]}}</span>
         </div>
       </flexbox-item>
     </flexbox>
     <flexbox style="margin-top:14px">
       <flexbox-item :span="4" style="text-align:right">
         <div style="display:block;margin-left:21px;">
-          <span style="text-align:right;font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);">流通元宝总数：</span>
+          <span
+            style="text-align:right;font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+          >流通元宝总数：</span>
         </div>
       </flexbox-item>
       <flexbox-item :span="8">
         <div style="display:block;">
-          <span style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);">{{history_text[2]}}</span>
+          <span
+            style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+          >{{history_text[2]}}</span>
         </div>
       </flexbox-item>
     </flexbox>
     <flexbox style="margin-top:14px">
       <flexbox-item :span="4" style="text-align:right">
         <div style="display:block;">
-          <span style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);">每个收益：</span>
+          <span
+            style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+          >每个收益：</span>
         </div>
       </flexbox-item>
       <flexbox-item :span="8">
         <div style="display:block;">
-          <span style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);">{{history_text[3]}}</span>
+          <span
+            style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+          >{{history_text[3]}}</span>
         </div>
       </flexbox-item>
     </flexbox>
-
-
-
-
-
-
 
     <flexbox>
       <flexbox-item :span="12">
         <div style="height:8px;background-color:#f3f3f3"></div>
       </flexbox-item>
     </flexbox>
+
+    <flexbox style="margin-top:14px">
+      <flexbox-item :span="12">
+        <div style="display:block;margin-left:21px">
+          <span
+            style="font-size:16px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight: bold;color:rgb(50,58,69);"
+          >最新出售列表</span>
+        </div>
+      </flexbox-item>
+    </flexbox>
+    <flexbox style="margin-top:14px">
+      <flexbox-item :span="4">
+        <div style="display:block;text-align:center;margin-left:21px;">
+          <span
+            style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100)"
+          >单价(千克)</span>
+        </div>
+      </flexbox-item>
+      <flexbox-item :span="4">
+        <div style="display:block;text-align:center;">
+          <span
+            style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+          >数量(个)</span>
+        </div>
+      </flexbox-item>
+      <flexbox-item :span="4">
+        <div style="display:block;text-align:center;">
+          <span
+            style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+          >操作</span>
+        </div>
+      </flexbox-item>
+    </flexbox>
+
+    <div v-for="(itemSale, index) in now_sale" :key="index">
+
+    <flexbox style="margin-top:14px">
+      <flexbox-item :span="4">
+        <div style="display:block;text-align:center;margin-left:21px;">
+          <span
+            style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100)"
+          >{{itemSale.price}}</span>
+        </div>
+      </flexbox-item>
+      <flexbox-item :span="4">
+        <div style="display:block;text-align:center;">
+          <span
+            style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+          >{{itemSale.num}}</span>
+        </div>
+      </flexbox-item>
+      <flexbox-item :span="4">
+        <div style="display:block;text-align:center;">
+          <span
+            style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+          >操作</span>
+        </div>
+      </flexbox-item>
+    </flexbox>
+    </div>
   </div>
 </template>
 <script>
@@ -205,7 +294,7 @@ export default {
       item: {},
       history_text: {},
       now_sale: {},
-      stock_bulletin: {},
+      stock_bulletin: {}
     };
   },
   methods: {
@@ -218,10 +307,9 @@ export default {
       };
       this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
         console.log("220:", res.data.list[0]);
-        this.stock_bulletin=res.data.list[0];
+        this.stock_bulletin = res.data.list[0];
       });
-    },
-
+    }
   },
   created() {
     this.item = this.$route.params.item;
