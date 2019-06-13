@@ -91,21 +91,64 @@ export default {
     //if(userAgent == 1) { 微信浏览器
     let code = this.utils.getUrlKey('code');
     if(!!code) {
+      this.GLOBAL.oemInfo = this.GLOBAL.oemInfo || {};
       this.GLOBAL.oemInfo.domain = 'authwx';
       this.GLOBAL.oemInfo.openkey = code;
       let data = {func:'login', oemInfo: this.GLOBAL.oemInfo}
 
-      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-          if(res.data.code == 0) {
-              this.GLOBAL.userBase.uid = res.data.id;
-              this.GLOBAL.userBase.user_name = res.data.name;
-              this.GLOBAL.userBase.openid = res.data.openid;
-              this.GLOBAL.oemInfo.token = res.data.token;
-              this.gotoHome();
+      //#region Modified by liub 2019.06.13
+
+      //原先的写法 - Start
+      // this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+      //     if(res.status == 200 && res.data.code == 0) {
+      //         let ret = res.data.data;
+      //         this.GLOBAL.userBase.uid = ret.id;
+      //         this.GLOBAL.userBase.user_name = ret.name;
+      //         this.GLOBAL.userBase.openid = ret.openid;
+      //         this.GLOBAL.oemInfo.openid = ret.openid;
+      //         this.GLOBAL.oemInfo.token = ret.token;
+      //         this.gotoHome();
+      //     } else {
+      //       this.showPlugin('登录失败')
+      //     }
+      // });
+      //原先的写法 - End
+
+      //新的写法 - Start
+      //创建连接器对象
+      let remote = new toolkit.gameconn({
+          "UrlHead": "http",
+          "webserver": { 
+              "host": "127.0.0.1",
+              "port": 9901
+          },
+      });
+
+      //设置用户基本信息
+      remote.setUserInfo({
+          domain: 'authwx',
+          openkey: code,
+      }, remote.CommStatus.reqLb);
+
+      remote.login().then(() => {
+          if(remote.status.check(remote.CommStatus.logined)) {
+            this.GLOBAL.userBase.uid = remote.userInfo.id;
+            this.GLOBAL.userBase.user_name = remote.userInfo.name;
+            this.GLOBAL.userBase.openid = remote.userInfo.openid;
+
+            this.GLOBAL.oemInfo.openid = remote.userInfo.openid;
+            this.GLOBAL.oemInfo.token = remote.userInfo.token;
+
+            this.gotoHome();
           } else {
             this.showPlugin('登录失败')
           }
+      }).catch(e=>{
+        console.log(e);
       });
+      //新的写法 - End
+
+      //#endregion
     } else  {
       this.wxAuthCode()
     }
