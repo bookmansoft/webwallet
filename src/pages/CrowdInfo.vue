@@ -167,7 +167,7 @@
     </box>
 
     <box gap="0px 0px">
-      <x-button  type="warn" @click.native="crowdOrder()">&yen; 立即支持</x-button>
+      <x-button  type="warn" @click.native="crowdPrePay()">&yen; 立即支持</x-button>
     </box>
     <br>
     <br>
@@ -259,9 +259,15 @@ export default {
       this.$router.push({ name: "Crowd" });
     },
     crowdDetail(item, index) {},
-    crowdOrder() {
+    // crowdOrder() {
+    //   this.$router.push({
+    //     name: "CrowdOrder",
+    //     params: { item: this.item }
+    //   });
+    // },
+    crowdPrePay() {
       this.$router.push({
-        name: "CrowdOrder",
+        name: "CrowdPrePay",
         params: { item: this.item }
       });
     },

@@ -11,6 +11,7 @@ import CrowdFreeInfo from '@/pages/CrowdFreeInfo'
 import CrowdMy from '@/pages/CrowdMy'
 import CrowdMyInfo from '@/pages/CrowdMyInfo'
 import CrowdMySale from '@/pages/CrowdMySale'
+import CrowdPrePay from '@/pages/CrowdPrePay'
 import Mine from '@/pages/Mine'
 import Wallet from '@/pages/Wallet'
 import WalletSend from '@/pages/WalletSend'
@@ -57,6 +58,7 @@ export default new Router({
     { path: '/crowd/free/info', name: 'CrowdFreeInfo', component: CrowdFreeInfo ,meta:{title:'游戏元宝信息-百谷王游戏金链'}},
     { path: '/crowd/my/info', name: 'CrowdMyInfo', component: CrowdMyInfo ,meta:{title:'我的游戏元宝'}},
     { path: '/crowd/my/sale', name: 'CrowdMySale', component: CrowdMySale ,meta:{title:'挂单出售中'}},
+    { path: '/crowd/prePay', name: 'CrowdPrePay', component: CrowdPrePay ,meta:{title:'选择回报'}},
     { path: '/my/stock', name: 'CrowdMy', component: CrowdMy ,meta:{title:'CrowdMy'}},
     { path: '/mine', name: 'Mine', component: Mine ,meta:{title:'我的'}},
     { path: '/wallet', name: 'Wallet', component: Wallet ,meta:{title:'钱包'}},
