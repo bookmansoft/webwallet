@@ -142,9 +142,11 @@
           <flexbox-item :span="4"></flexbox-item>
           <flexbox-item :span="3">
             <div style="display:block;text-align:right">
+              <img src="static/img/stock/order/minus.png" style="width:14px;height:14px">
               <span
-                style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-              >选择输入框</span>
+                style="font-size:14px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+              >&nbsp;1&nbsp;
+              </span><img src="static/img/stock/order/plus.png" style="width:14px;height:14px">
             </div>
           </flexbox-item>
           <flexbox-item :span="2"></flexbox-item>
