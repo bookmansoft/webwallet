@@ -120,11 +120,12 @@
             </div>
           </flexbox-item>
           <flexbox-item :span="4"></flexbox-item>
-          <flexbox-item :span="3">
-            <div style="display:block;text-align:right">
+          <flexbox-item :span="1"></flexbox-item>
+          <flexbox-item :span="2">
+            <div style="display:block;text-align:center">
               <span
                 style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-              >input框</span>
+              >￥<input type="text" style="width:30px" v-model="payYuanValue" @keyup="onPayYuan"/></span>
             </div>
           </flexbox-item>
           <flexbox-item :span="2"></flexbox-item>
@@ -160,6 +161,25 @@
           <flexbox-item :span="2"></flexbox-item>
         </flexbox>
       </div>
+      <!-- 关键信息：支付总额 -->
+        <flexbox class="cell">
+          <flexbox-item :span="3">
+            <div style="display:block;text-align:left">
+              <span
+                style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+              >支付总额：</span>
+            </div>
+          </flexbox-item>
+          <flexbox-item :span="4"></flexbox-item>
+          <flexbox-item :span="3">
+            <div style="display:block;text-align:right">
+              <span
+                style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+              >￥100</span>
+            </div>
+          </flexbox-item>
+          <flexbox-item :span="2"></flexbox-item>
+        </flexbox>
 
       <flexbox>
         <flexbox-item :span="12">
@@ -289,10 +309,14 @@ export default {
 
       item: {},
       payType: {}, //支付类型
-      buyNum: 1 //购买数量，预设为1
+      buyNum: 1, //购买数量，预设为1
+      payYuanValue:1 //捐赠金额，预设为1
     };
   },
   methods: {
+    onPayYuan() {
+      console.log(317,this.payYuanValue);
+    },
     onBuyNumChange(value) {
       this.buyNum = this.buyNum + value;
       if (this.buyNum < 1) {
