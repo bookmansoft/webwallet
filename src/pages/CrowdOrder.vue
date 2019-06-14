@@ -140,20 +140,26 @@
             </div>
           </flexbox-item>
           <flexbox-item :span="4"></flexbox-item>
-          <flexbox-item :span="3">
-            <div style="display:block;text-align:right">
+          <flexbox-item :span="1">
+            <div style="display:block;text-align:right" @click="onBuyNumChange(-1)">
               <img src="static/img/stock/order/minus.png" style="width:14px;height:14px">
+            </div>
+          </flexbox-item>
+          <flexbox-item :span="1">
+            <div style="display:block;text-align:center">
               <span
                 style="font-size:14px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-              >&nbsp;1&nbsp;
-              </span><img src="static/img/stock/order/plus.png" style="width:14px;height:14px">
+              >&nbsp;{{buyNum}}&nbsp;</span>
+            </div>
+          </flexbox-item>
+          <flexbox-item :span="1">
+            <div style="display:block;text-align:left" @click="onBuyNumChange(1)">
+              <img src="static/img/stock/order/plus.png" style="width:14px;height:14px">
             </div>
           </flexbox-item>
           <flexbox-item :span="2"></flexbox-item>
         </flexbox>
       </div>
-
-
 
       <flexbox>
         <flexbox-item :span="12">
@@ -168,95 +174,138 @@
       </flexbox>
     </div>
 
-      <div style="background-color: #f5f5f9; padding: 12px;">
-          <div style="background-color: white; padding: 15px;">
-            <flexbox>
-                <flexbox-item :span="3" class="flex-left">
-                    <img src="static/img/crowd/gift.png" style="width:80px; height:80px" />
-                </flexbox-item>
-                <flexbox-item :span="9" class="flex-left">
-                    <p><span style="font-size:17px;">进击的兵长 代练宝宝</span></p>
-                    <br/>
-                    <p><span style="color:coral; font-size:16px;">￥{{item.price}}</span></p>
-                </flexbox-item>
-            </flexbox>
-            <br/>
-            <flexbox>
-                <flexbox-item :span="5" class="flex-left">
-                    <p><span style="font-size:17px;">购买数量</span></p>
-                </flexbox-item>
-                <flexbox-item class="flex-right">
-                    <p><inline-x-number width="50px" v-model="quantity"></inline-x-number></p>
-                </flexbox-item>
-            </flexbox>
-          </div>
+    <div style="background-color: #f5f5f9; padding: 12px;">
+      <div style="background-color: white; padding: 15px;">
+        <flexbox>
+          <flexbox-item :span="3" class="flex-left">
+            <img src="static/img/crowd/gift.png" style="width:80px; height:80px">
+          </flexbox-item>
+          <flexbox-item :span="9" class="flex-left">
+            <p>
+              <span style="font-size:17px;">进击的兵长 代练宝宝</span>
+            </p>
+            <br>
+            <p>
+              <span style="color:coral; font-size:16px;">￥{{item.price}}</span>
+            </p>
+          </flexbox-item>
+        </flexbox>
+        <br>
+        <flexbox>
+          <flexbox-item :span="5" class="flex-left">
+            <p>
+              <span style="font-size:17px;">购买数量</span>
+            </p>
+          </flexbox-item>
+          <flexbox-item class="flex-right">
+            <p>
+              <inline-x-number width="50px" v-model="quantity"></inline-x-number>
+            </p>
+          </flexbox-item>
+        </flexbox>
       </div>
-      <div style="background-color: #f5f5f9; padding: 0px 0px 0px 0px">
-          <div style="padding: 0px 12px 0px 12px">
-                <group>
-                <cell :is-link="true" value="微信支付">
-                  <span slot="title">
-                    <span style="vertical-align:middle;">支付方式</span>
-                  </span>
-                </cell>
-                <cell :is-link="true" value="无可用">
-                  <span slot="title">
-                    <span style="vertical-align:middle;">优惠券</span>
-                  </span>
-                </cell>
-              </group>
+    </div>
+    <div style="background-color: #f5f5f9; padding: 0px 0px 0px 0px">
+      <div style="padding: 0px 12px 0px 12px">
+        <group>
+          <cell :is-link="true" value="微信支付">
+            <span slot="title">
+              <span style="vertical-align:middle;">支付方式</span>
+            </span>
+          </cell>
+          <cell :is-link="true" value="无可用">
+            <span slot="title">
+              <span style="vertical-align:middle;">优惠券</span>
+            </span>
+          </cell>
+        </group>
 
-              <group>
-                <cell :is-link="true" :value="item.price*quantity+'元'">
-                  <span slot="title">
-                    <span style="vertical-align:middle;">商品金额</span>
-                  </span>
-                </cell>
-              </group>
-
-          </div>
+        <group>
+          <cell :is-link="true" :value="item.price*quantity+'元'">
+            <span slot="title">
+              <span style="vertical-align:middle;">商品金额</span>
+            </span>
+          </cell>
+        </group>
       </div>
-      <div>
-        <br/>
-        <box gap="10px 10px">
-            <x-button :gradients="['#FF5E3A', '#FF9500']" @click.native="crowdPay()" v-bind:show-loading="showLoading">去支付</x-button>
-        </box>
-      </div>
+    </div>
+    <div>
+      <br>
+      <box gap="10px 10px">
+        <x-button
+          :gradients="['#FF5E3A', '#FF9500']"
+          @click.native="crowdPay()"
+          v-bind:show-loading="showLoading"
+        >去支付</x-button>
+      </box>
+    </div>
   </div>
-  
 </template>
 <script>
 //import { XHeader, Group, Cell } from 'vux'
-import { XButton, XHeader, Tab, TabItem, Flexbox, FlexboxItem, Group, Divider, Box, InlineXNumber, Cell, CellBox, CellFormPreview, Badge } from 'vux'
-import Navs from '@/components/Navs.vue'
+import {
+  XButton,
+  XHeader,
+  Tab,
+  TabItem,
+  Flexbox,
+  FlexboxItem,
+  Group,
+  Divider,
+  Box,
+  InlineXNumber,
+  Cell,
+  CellBox,
+  CellFormPreview,
+  Badge
+} from "vux";
+import Navs from "@/components/Navs.vue";
 
 export default {
   components: {
-    Navs, Tab, XButton, XHeader, TabItem, Flexbox, FlexboxItem, Group, Divider, Box, InlineXNumber, Cell, CellBox, CellFormPreview, Badge
+    Navs,
+    Tab,
+    XButton,
+    XHeader,
+    TabItem,
+    Flexbox,
+    FlexboxItem,
+    Group,
+    Divider,
+    Box,
+    InlineXNumber,
+    Cell,
+    CellBox,
+    CellFormPreview,
+    Badge
   },
-  data () {
+  data() {
     return {
-      msg: '众筹',
-      headerTitle: '众筹购买',
+      msg: "众筹",
+      headerTitle: "众筹购买",
       tabIndex: 0,
       quantity: 1,
       showLoading: false,
 
-      item:{},
-      payType:{}
-    }
+      item: {},
+      payType: {}, //支付类型
+      buyNum: 1 //购买数量，预设为1
+    };
   },
   methods: {
-    onItemClick(index) {
-      console.log(this.tabIndex)
+    onBuyNumChange(value) {
+      this.buyNum = this.buyNum + value;
+      if (this.buyNum < 1) {
+        this.buyNum = 1;
+      }
     },
     onBack() {
-      this.$router.push({ name: 'CrowdInfo', params: {item: this.item }})
+      this.$router.push({ name: "CrowdInfo", params: { item: this.item } });
     },
     orderRePay() {
       let data = {
-        func:'CommonOrderRepay',
-        control: 'order',
+        func: "CommonOrderRepay",
+        control: "order",
         price: this.item.price * this.quantity,
         productId: this.item.id,
         attach: this.item.cid,
@@ -264,35 +313,40 @@ export default {
         productIntro: this.item.cname,
         oemInfo: this.GLOBAL.oemInfo
       };
-      console.log('order', data)
+      console.log("order", data);
       this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-          console.log(res.data);
-          if(res.data.errcode='success') {
-            //this.orderPay(res.data.tradeId)
-            setTimeout(() => {
-              this.showLoading = false
-              this.$router.push({name:'WeChatPay', params: {order: res.data.order, tradeId: res.data.tradeId, retPath: '/my/stock'}})
-            }, 1500);
-            
-          }
-      });       
+        console.log(res.data);
+        if ((res.data.errcode = "success")) {
+          //this.orderPay(res.data.tradeId)
+          setTimeout(() => {
+            this.showLoading = false;
+            this.$router.push({
+              name: "WeChatPay",
+              params: {
+                order: res.data.order,
+                tradeId: res.data.tradeId,
+                retPath: "/my/stock"
+              }
+            });
+          }, 1500);
+        }
+      });
     },
     crowdPay() {
-      this.showLoading = true
-      this.orderRePay()
+      this.showLoading = true;
+      this.orderRePay();
     }
   },
-  
+
   created() {
     this.payType = this.$route.params.payType;
     this.item = this.$route.params.item;
-    if(!!!this.item) {
-      this.$router.push({name:'Crowd'})
+    if (!!!this.item) {
+      this.$router.push({ name: "Crowd" });
     }
-    console.log('该元素 item', this.item)
+    console.log("该元素 item", this.item);
   }
-
-}
+};
 </script>
 
 <style scoped>
@@ -322,23 +376,23 @@ export default {
 
 .crowd-info {
   padding: 15px;
-  background-color: #f5f5f9; 
+  background-color: #f5f5f9;
   border-radius: 4%;
   font-size: 14px;
 }
 
 .img-game-list {
-    width: 75px;
-    height: 75px;
-    border-radius: 12%;
-    margin-left: 3px;
+  width: 75px;
+  height: 75px;
+  border-radius: 12%;
+  margin-left: 3px;
 }
 
 .img-top {
-  width:100%;
-  height:220px;
+  width: 100%;
+  height: 220px;
   /*border-radius: 4%;*/
-  /*border-top-left-radius:1.5em;*/ 
+  /*border-top-left-radius:1.5em;*/
   /*border-top-right-radius:1.5em; */
 }
 .imgDemo {
