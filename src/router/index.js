@@ -53,7 +53,7 @@ export default new Router({
     { path: '/crowd', name: 'Crowd', component: Crowd,meta:{title:'众筹-百谷王游戏金链'} },
     { path: '/crowdFree', name: 'CrowdFree', component: CrowdFree,meta:{title:'自由市场'} },
     { path: '/crowd/info', name: 'CrowdInfo', component: CrowdInfo ,meta:{title:'众筹详情-百谷王游戏金链'}},
-    { path: '/crowd/order', name: 'CrowdOrder', component: CrowdOrder ,meta:{title:'众筹订单'}},
+    { path: '/crowd/order', name: 'CrowdOrder', component: CrowdOrder ,meta:{title:'确认订单'}},
     { path: '/crowd/pay', name: 'CrowdPay', component: CrowdPay ,meta:{title:'众筹订单支付'}},
     { path: '/crowd/free/info', name: 'CrowdFreeInfo', component: CrowdFreeInfo ,meta:{title:'游戏元宝信息-百谷王游戏金链'}},
     { path: '/crowd/my/info', name: 'CrowdMyInfo', component: CrowdMyInfo ,meta:{title:'我的游戏元宝'}},

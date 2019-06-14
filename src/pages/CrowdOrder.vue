@@ -1,6 +1,171 @@
 <template>
-  <div>
-      <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
+  <div class="root">
+    <div style="background-color:#f3f3f3">
+      <flexbox>
+        <flexbox-item :span="12">
+          <div style="height:6px;"></div>
+        </flexbox-item>
+      </flexbox>
+    </div>
+    <div style="background-color:white">
+      <!-- 回报档 -->
+      <div v-if="payType==0">
+        <flexbox class="cell">
+          <flexbox-item :span="3">
+            <div style="display:block;text-align:left">
+              <span
+                style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+              >回报档：</span>
+            </div>
+          </flexbox-item>
+          <flexbox-item :span="4"></flexbox-item>
+          <flexbox-item :span="3">
+            <div style="display:block;text-align:right">
+              <span
+                style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+              >无偿支持</span>
+            </div>
+          </flexbox-item>
+          <flexbox-item :span="2"></flexbox-item>
+        </flexbox>
+      </div>
+      <div v-if="payType==1">
+        <flexbox class="cell">
+          <flexbox-item :span="3">
+            <div style="display:block;text-align:left">
+              <span
+                style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+              >回报档：</span>
+            </div>
+          </flexbox-item>
+          <flexbox-item :span="4"></flexbox-item>
+          <flexbox-item :span="3">
+            <div style="display:block;text-align:right">
+              <span
+                style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+              >￥50</span>
+            </div>
+          </flexbox-item>
+          <flexbox-item :span="2"></flexbox-item>
+        </flexbox>
+      </div>
+      <div v-if="payType==2">
+        <flexbox class="cell">
+          <flexbox-item :span="3">
+            <div style="display:block;text-align:left">
+              <span
+                style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+              >回报档：</span>
+            </div>
+          </flexbox-item>
+          <flexbox-item :span="4"></flexbox-item>
+          <flexbox-item :span="3">
+            <div style="display:block;text-align:right">
+              <span
+                style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+              >￥100</span>
+            </div>
+          </flexbox-item>
+          <flexbox-item :span="2"></flexbox-item>
+        </flexbox>
+      </div>
+      <div v-if="payType==3">
+        <flexbox class="cell">
+          <flexbox-item :span="3">
+            <div style="display:block;text-align:left">
+              <span
+                style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+              >回报档：</span>
+            </div>
+          </flexbox-item>
+          <flexbox-item :span="4"></flexbox-item>
+          <flexbox-item :span="3">
+            <div style="display:block;text-align:right">
+              <span
+                style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+              >￥200</span>
+            </div>
+          </flexbox-item>
+          <flexbox-item :span="2"></flexbox-item>
+        </flexbox>
+      </div>
+      <div v-if="payType==4">
+        <flexbox class="cell">
+          <flexbox-item :span="3">
+            <div style="display:block;text-align:left">
+              <span
+                style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+              >回报档：</span>
+            </div>
+          </flexbox-item>
+          <flexbox-item :span="4"></flexbox-item>
+          <flexbox-item :span="3">
+            <div style="display:block;text-align:right">
+              <span
+                style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+              >￥500</span>
+            </div>
+          </flexbox-item>
+          <flexbox-item :span="2"></flexbox-item>
+        </flexbox>
+      </div>
+      <!-- 购买数量及打赏金额 -->
+      <div v-if="payType==0">
+        <flexbox class="cell">
+          <flexbox-item :span="3">
+            <div style="display:block;text-align:left">
+              <span
+                style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+              >打赏金额：</span>
+            </div>
+          </flexbox-item>
+          <flexbox-item :span="4"></flexbox-item>
+          <flexbox-item :span="3">
+            <div style="display:block;text-align:right">
+              <span
+                style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+              >input框</span>
+            </div>
+          </flexbox-item>
+          <flexbox-item :span="2"></flexbox-item>
+        </flexbox>
+      </div>
+      <div v-if="payType!=0">
+        <flexbox class="cell">
+          <flexbox-item :span="3">
+            <div style="display:block;text-align:left">
+              <span
+                style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+              >购买数量：</span>
+            </div>
+          </flexbox-item>
+          <flexbox-item :span="4"></flexbox-item>
+          <flexbox-item :span="3">
+            <div style="display:block;text-align:right">
+              <span
+                style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+              >选择输入框</span>
+            </div>
+          </flexbox-item>
+          <flexbox-item :span="2"></flexbox-item>
+        </flexbox>
+      </div>
+
+
+
+      <flexbox>
+        <flexbox-item :span="12">
+          <div style="height:2px;background-color:#f3f3f3"></div>
+        </flexbox-item>
+      </flexbox>
+
+      <flexbox>
+        <flexbox-item :span="12">
+          <div style="height:2px;background-color:#f3f3f3"></div>
+        </flexbox-item>
+      </flexbox>
+    </div>
+
       <div style="background-color: #f5f5f9; padding: 12px;">
           <div style="background-color: white; padding: 15px;">
             <flexbox>
@@ -10,7 +175,7 @@
                 <flexbox-item :span="9" class="flex-left">
                     <p><span style="font-size:17px;">进击的兵长 代练宝宝</span></p>
                     <br/>
-                    <p><span style="color:coral; font-size:16px;">￥{{crowdItem.price}}</span></p>
+                    <p><span style="color:coral; font-size:16px;">￥{{item.price}}</span></p>
                 </flexbox-item>
             </flexbox>
             <br/>
@@ -40,7 +205,7 @@
               </group>
 
               <group>
-                <cell :is-link="true" :value="crowdItem.price*quantity+'元'">
+                <cell :is-link="true" :value="item.price*quantity+'元'">
                   <span slot="title">
                     <span style="vertical-align:middle;">商品金额</span>
                   </span>
@@ -72,9 +237,11 @@ export default {
       msg: '众筹',
       headerTitle: '众筹购买',
       tabIndex: 0,
-      crowdItem: null,
       quantity: 1,
-      showLoading: false
+      showLoading: false,
+
+      item:{},
+      payType:{}
     }
   },
   methods: {
@@ -82,17 +249,17 @@ export default {
       console.log(this.tabIndex)
     },
     onBack() {
-      this.$router.push({ name: 'CrowdInfo', params: {item: this.crowdItem }})
+      this.$router.push({ name: 'CrowdInfo', params: {item: this.item }})
     },
     orderRePay() {
       let data = {
         func:'CommonOrderRepay',
         control: 'order',
-        price: this.crowdItem.price * this.quantity,
-        productId: this.crowdItem.id,
-        attach: this.crowdItem.cid,
+        price: this.item.price * this.quantity,
+        productId: this.item.id,
+        attach: this.item.cid,
         quantity: this.quantity,
-        productIntro: this.crowdItem.cname,
+        productIntro: this.item.cname,
         oemInfo: this.GLOBAL.oemInfo
       };
       console.log('order', data)
@@ -115,17 +282,36 @@ export default {
   },
   
   created() {
-    this.crowdItem = this.$route.params.item
-    if(!!!this.crowdItem) {
+    this.payType = this.$route.params.payType;
+    this.item = this.$route.params.item;
+    if(!!!this.item) {
       this.$router.push({name:'Crowd'})
     }
-    console.log('crowdItem', this.crowdItem)
+    console.log('该元素 item', this.item)
   }
 
 }
 </script>
 
 <style scoped>
+.root {
+  overflow-x: hidden;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+.cell {
+  margin-left: 25px;
+  margin-right: 5px;
+  margin-top: 25px;
+  margin-bottom: 20px;
+}
+.content {
+  margin-left: 25px;
+  margin-right: 25px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
 .crowdItem {
   background-color: white;
   margin-top: 0.4rem;
