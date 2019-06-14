@@ -158,8 +158,8 @@
         </flexbox-item>
       </flexbox>
 
-      <!-- 第3类：200股 -->
-      <div @click="crowdOrder(3)">
+      <!-- 第3类：200股，payType：4 -->
+      <div @click="crowdOrder(4)">
         <flexbox class="cell">
           <flexbox-item :span="3">
             <div style="display:block;text-align:left">
@@ -195,8 +195,8 @@
           <div style="height:2px;background-color:#f3f3f3"></div>
         </flexbox-item>
       </flexbox>
-      <!-- 第4类：500股 -->
-      <div @click="crowdOrder(4)">
+      <!-- 第4类：500股，payType:10 -->
+      <div @click="crowdOrder(10)">
         <flexbox class="cell">
           <flexbox-item :span="3">
             <div style="display:block;text-align:left">

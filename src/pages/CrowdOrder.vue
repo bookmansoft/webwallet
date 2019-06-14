@@ -29,7 +29,7 @@
           <flexbox-item :span="2"></flexbox-item>
         </flexbox>
       </div>
-      <div v-if="payType==1">
+      <div v-if="payType==1 || payType==2 || payType==4 || payType==10">
         <flexbox class="cell">
           <flexbox-item :span="3">
             <div style="display:block;text-align:left">
@@ -43,67 +43,7 @@
             <div style="display:block;text-align:right">
               <span
                 style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-              >￥50</span>
-            </div>
-          </flexbox-item>
-          <flexbox-item :span="2"></flexbox-item>
-        </flexbox>
-      </div>
-      <div v-if="payType==2">
-        <flexbox class="cell">
-          <flexbox-item :span="3">
-            <div style="display:block;text-align:left">
-              <span
-                style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-              >回报档：</span>
-            </div>
-          </flexbox-item>
-          <flexbox-item :span="4"></flexbox-item>
-          <flexbox-item :span="3">
-            <div style="display:block;text-align:right">
-              <span
-                style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-              >￥100</span>
-            </div>
-          </flexbox-item>
-          <flexbox-item :span="2"></flexbox-item>
-        </flexbox>
-      </div>
-      <div v-if="payType==3">
-        <flexbox class="cell">
-          <flexbox-item :span="3">
-            <div style="display:block;text-align:left">
-              <span
-                style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-              >回报档：</span>
-            </div>
-          </flexbox-item>
-          <flexbox-item :span="4"></flexbox-item>
-          <flexbox-item :span="3">
-            <div style="display:block;text-align:right">
-              <span
-                style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-              >￥200</span>
-            </div>
-          </flexbox-item>
-          <flexbox-item :span="2"></flexbox-item>
-        </flexbox>
-      </div>
-      <div v-if="payType==4">
-        <flexbox class="cell">
-          <flexbox-item :span="3">
-            <div style="display:block;text-align:left">
-              <span
-                style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-              >回报档：</span>
-            </div>
-          </flexbox-item>
-          <flexbox-item :span="4"></flexbox-item>
-          <flexbox-item :span="3">
-            <div style="display:block;text-align:right">
-              <span
-                style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-              >￥500</span>
+              >￥{{this.payType*this.baseMultiple}}</span>
             </div>
           </flexbox-item>
           <flexbox-item :span="2"></flexbox-item>
@@ -175,7 +115,7 @@
             <div style="display:block;text-align:right">
               <span
                 style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-              >￥100</span>
+              >￥{{realPay}}</span>
             </div>
           </flexbox-item>
           <flexbox-item :span="2"></flexbox-item>
@@ -307,21 +247,25 @@ export default {
       quantity: 1,
       showLoading: false,
 
+      baseMultiple:50,//基数,不同的众筹可能是不同的，根据传入的参数决定
       item: {},
       payType: {}, //支付类型
       buyNum: 1, //购买数量，预设为1
-      payYuanValue:1 //捐赠金额，预设为1
+      payYuanValue:1, //捐赠金额，预设为1
+      realPay:1,//支付总额
     };
   },
   methods: {
     onPayYuan() {
       console.log(317,this.payYuanValue);
+      this.realPay=this.payYuanValue;
     },
     onBuyNumChange(value) {
       this.buyNum = this.buyNum + value;
       if (this.buyNum < 1) {
         this.buyNum = 1;
       }
+      this.realPay=this.buyNum*this.payType*this.baseMultiple;//payType是倍数，分别为1,2,5,10倍;
     },
     onBack() {
       this.$router.push({ name: "CrowdInfo", params: { item: this.item } });
