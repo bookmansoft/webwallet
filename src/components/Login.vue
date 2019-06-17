@@ -120,17 +120,16 @@ export default {
           "UrlHead": "http",
           "webserver": { 
               "host": "127.0.0.1",
+              "authPort": 9601,           //签证主机端口
               "port": 9901
           },
       });
 
       //设置用户基本信息
-      remote.setUserInfo({
+      remote.login({
           domain: 'authwx',
           openkey: code,
-      }, remote.CommStatus.reqLb);
-
-      remote.login().then(() => {
+      }).then(() => {
           if(remote.status.check(remote.CommStatus.logined)) {
             this.GLOBAL.userBase.uid = remote.userInfo.id;
             this.GLOBAL.userBase.user_name = remote.userInfo.name;
