@@ -140,16 +140,19 @@ export default {
 
             this.gotoHome();
           } else {
-            this.showPlugin('登录失败')
+            console.log('登录失败');
+            setTimeout(()=>{ this.wxAuthCode(); }, 1000);
           }
       }).catch(e=>{
         console.log(e);
+        setTimeout(()=>{ this.wxAuthCode(); }, 1000);
       });
       //新的写法 - End
 
       //#endregion
     } else  {
-      this.wxAuthCode()
+      //todo 这里似乎可以借助cookie的作用，加快用户登录流程
+      this.wxAuthCode();
     }
   }
 }
