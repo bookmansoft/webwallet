@@ -339,7 +339,20 @@ export default {
     },
     crowdPay() {
       this.showLoading = true;
-      this.orderRePay();
+      // this.orderRePay();//暂时关闭支付方法
+      let iNum=parseInt(Math.random()*1);//0-2的整数，以后是3，暂时设置成1
+      switch (iNum) {
+        case 0:
+          this.$router.push({name:"BuySuccess"});
+          break;
+        case 1:
+          this.$router.push({name:"BuyFail"});
+          break;
+        case 2:
+          this.$router.push({name:"PaySuccess"});
+          break;
+      }
+      
     }
   },
 

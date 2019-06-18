@@ -44,6 +44,14 @@ import ManyRedJustSend from '@/pages/ManyRedJustSend';
 import ManyRedReceive from '@/pages/ManyRedReceive';
 import ManyRedUnpack from '@/pages/ManyRedUnpack';
 
+import BuySuccess from '@/pages/BuySuccess';
+// import BuyFail from '@/pages/BuyFail';
+// import PaySuccess from '@/pages/PaySuccess';
+// import HouseAddress from '@/pages/HouseAddress';
+// import HouseAddressAdd from '@/pages/HouseAddressAdd';
+
+
+
 Vue.use(Router)
 
 export default new Router({
@@ -61,6 +69,13 @@ export default new Router({
     { path: '/crowd/my/info', name: 'CrowdMyInfo', component: CrowdMyInfo ,meta:{title:'我的游戏元宝'}},
     { path: '/crowd/my/sale', name: 'CrowdMySale', component: CrowdMySale ,meta:{title:'挂单出售中'}},
     { path: '/crowd/prePay', name: 'CrowdPrePay', component: CrowdPrePay ,meta:{title:'选择回报'}},
+
+    { path: '/crowd/BuySuccess', name: 'BuySuccess', component: BuySuccess ,meta:{title:'购买成功'}},
+    // { path: '/crowd/BuyFail', name: 'BuyFail', component: BuyFail ,meta:{title:' 购买失败'}},
+    // { path: '/crowd/PaySuccess', name: 'PaySuccess', component: PaySuccess ,meta:{title:'支付成功'}},
+    // { path: '/crowd/HouseAddress', name: 'HouseAddress', component: HouseAddress ,meta:{title:'收货地址'}},
+    // { path: '/crowd/HouseAddressAdd', name: 'HouseAddressAdd', component: HouseAddressAdd ,meta:{title:'添加收货地址'}},
+
     { path: '/my/stock', name: 'CrowdMy', component: CrowdMy ,meta:{title:'CrowdMy'}},
     { path: '/mine', name: 'Mine', component: Mine ,meta:{title:'我的'}},
     { path: '/wallet', name: 'Wallet', component: Wallet ,meta:{title:'钱包'}},
