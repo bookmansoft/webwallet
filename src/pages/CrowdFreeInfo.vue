@@ -273,6 +273,7 @@
           <div style="display:block;text-align:center;">
             <div
               style="display:block;margin-left:5px;margin-top:6px;border-radius: 25%;text-align:center;line-height:26px;width:50px;height:26px;background-color:#ff7164;font-size:13px;color:white"
+              @click="crowdFreeOrder()"
             >购入</div>
           </div>
         </flexbox-item>
@@ -305,6 +306,12 @@ export default {
     };
   },
   methods: {
+    crowdFreeOrder() {
+      this.$router.push({
+        name: "CrowdFreeOrder",
+        params: { item: this.item }
+      });
+    },
     stockBulletin(cid) {
       let data = {
         func: "ListRecord",
