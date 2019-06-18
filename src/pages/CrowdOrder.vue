@@ -212,13 +212,15 @@
     </div>
     <br>
     <div>
-      <flexbox style="margin:0px;padding:0px;border-style:outset none none none;border-width:1px;">
-        <flexbox-item :span="7" >
-          <label style="color:rgb(72,93,172);" >&yen; 100</label>
+      <flexbox style="margin:0px;padding:0px;border-style:outset none outset none;border-width:1px;">
+        <flexbox-item :span="7">
+          <div  style="width:100%;height:100%;align:center;text-align:center">
+          <label style="font-weight:bold;font-size:16px;color:rgb(255,113,101);" >&yen; 100</label>
+          </div>
         </flexbox-item>
         <flexbox-item :span="5">
           <x-button
-            style="border-radius:0px;"
+            style="border-radius:0px;background-color:rgb(255,113,101)"
             type="warn"
             @click.native="crowdPay()"
             v-bind:show-loading="showLoading"
