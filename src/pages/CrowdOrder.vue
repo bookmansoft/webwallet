@@ -212,10 +212,12 @@
     </div>
     <br>
     <div>
-      <flexbox style="margin:0px;padding:0px;border-style:outset none outset none;border-width:1px;">
+      <flexbox
+        style="margin:0px;padding:0px;border-style:outset none outset none;border-width:1px;"
+      >
         <flexbox-item :span="7">
-          <div  style="width:100%;height:100%;align:center;text-align:center">
-          <label style="font-weight:bold;font-size:16px;color:rgb(255,113,101);" >&yen; 100</label>
+          <div style="width:100%;height:100%;align:center;text-align:center">
+            <label style="font-weight:bold;font-size:16px;color:rgb(255,113,101);">&yen; {{realPay}}</label>
           </div>
         </flexbox-item>
         <flexbox-item :span="5">
@@ -348,6 +350,12 @@ export default {
       this.$router.push({ name: "Crowd" });
     }
     console.log("该元素 item", this.item);
+    //初始化
+    if (this.payType == 0) {
+      this.realPay = this.payYuanValue;
+    } else {
+      this.realPay = this.buyNum * this.payType * this.baseMultiple; //payType是倍数，分别为1,2,5,10倍;
+    }
   }
 };
 </script>
