@@ -157,7 +157,7 @@
     </div>
 
     <!-- 免责协议区 -->
-    <div style="background-color:white">
+    <div style="margin-right:15px;background-color:white">
       <flexbox>
         <flexbox-item :span="12">
           <div style="height:40px;"></div>
@@ -168,7 +168,7 @@
           <div style="margin-left:25px;height:40px;">
             <span
               style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(50,58,69);"
-            > 免责协议：</span>
+            >免责协议：</span>
           </div>
         </flexbox-item>
       </flexbox>
@@ -177,7 +177,7 @@
           <div style="margin-left:25px;">
             <span
               style="font-size:14px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(50,58,69);"
-            >1、您参与众筹是支持创意变为现实的过程，而不是直接的商品交易，因此存在一定风险。请您根据自己的判断选择，支持众筹项目。</span>
+            >1、点击“确认支付”，即表明您已阅并同意《支持者协议》、《法律声明及隐私权政策-项目众筹》，并自愿承担众筹风险。</span>
           </div>
         </flexbox-item>
       </flexbox>
@@ -210,17 +210,21 @@
         </flexbox-item>
       </flexbox>
     </div>
-
-
+    <br>
     <div>
-      <br>
-      <box gap="10px 10px">
-        <x-button
-          :gradients="['#FF5E3A', '#FF9500']"
-          @click.native="crowdPay()"
-          v-bind:show-loading="showLoading"
-        >去支付</x-button>
-      </box>
+      <flexbox style="margin:0px;padding:0px;border-style:outset none none none;border-width:1px;">
+        <flexbox-item :span="7" >
+          <label style="color:rgb(72,93,172);" >&yen; 100</label>
+        </flexbox-item>
+        <flexbox-item :span="5">
+          <x-button
+            style="border-radius:0px;"
+            type="warn"
+            @click.native="crowdPay()"
+            v-bind:show-loading="showLoading"
+          >确认支付</x-button>
+        </flexbox-item>
+      </flexbox>
     </div>
   </div>
 </template>
@@ -275,10 +279,16 @@ export default {
       payType: {}, //支付类型
       buyNum: 1, //购买数量，预设为1
       payYuanValue: 1, //捐赠金额，预设为1
-      realPay: 1 //支付总额
+      realPay: 1, //支付总额
+
+      flagMore: false
     };
   },
   methods: {
+    viewMore() {
+      console.log("进入viewMore方法");
+      this.flagMore = true;
+    },
     onPayYuan() {
       console.log(317, this.payYuanValue);
       this.realPay = this.payYuanValue;

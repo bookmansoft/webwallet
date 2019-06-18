@@ -31,7 +31,7 @@
           </flexbox>
         </div>
         <div style="margin-top:-30px">
-          <div class="flex-left" style="position: relative;top:47px;left:-5px">
+          <div class="flex-left" style="position: relative;top:45px;left:-5px">
             <img src="static/img/stock/ren_qi.png" style="width:100px;height:27px">
           </div>
           <div v-for="(item, index) in crowdItems" :key="index" class="crowdItem">
