@@ -11,7 +11,7 @@
       <!-- 内容区 -->
       <flexbox class="content">
         <flexbox-item :span="2"></flexbox-item>
-        <flexbox-item :span="2">
+        <flexbox-item :span="1">
           <div style="display:block;padding:2px">
             <img
               src="static/img/stock/pay/buysuccess.png"
@@ -26,7 +26,7 @@
             >购买成功！</span>
           </div>
         </flexbox-item>
-        <flexbox-item :span="3"></flexbox-item>
+        <flexbox-item :span="4"></flexbox-item>
       </flexbox>
 
       <flexbox>

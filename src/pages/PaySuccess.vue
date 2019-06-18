@@ -11,7 +11,7 @@
       <!-- 内容区 -->
       <flexbox class="content">
         <flexbox-item :span="2"></flexbox-item>
-        <flexbox-item :span="2">
+        <flexbox-item :span="1">
           <div style="display:block;padding:2px">
             <img
               src="static/img/stock/pay/buysuccess.png"
@@ -23,10 +23,23 @@
           <div style="display:block;margin-left:5px;line-height:30px">
             <span
               style="font-size:21px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100);"
-            >购买成功！</span>
+            >支付成功！</span>
           </div>
         </flexbox-item>
-        <flexbox-item :span="3"></flexbox-item>
+        <flexbox-item :span="4"></flexbox-item>
+      </flexbox>
+
+      <flexbox style="margin-top:20px;margin-bottom:40px">
+        <flexbox-item :span="4"></flexbox-item>
+        <flexbox-item :span="4">
+          <div align="ceter" style="display:block;padding:2px">
+            <img
+              src="static/img/stock/pay/paysuccess.png"
+              style="width:auto;height:auto;max-width:100%;max-height:100%"
+            >
+          </div>
+        </flexbox-item>
+        <flexbox-item :span="4"></flexbox-item>
       </flexbox>
 
       <flexbox>
@@ -34,36 +47,22 @@
         <flexbox-item :span="10">
           <div style="display:block;margin-left:10px;margin-right:10px">
             <span style="font-size:14px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(163,163,163);">
-              宝箱将送到您的钱包地址，如遇网络波动可能会有延迟，敬请谅解。
+              恭喜您获得一份神秘大礼，选择收货地址，我们会将神秘大礼送到您选择的地址。
             </span>
           </div>
         </flexbox-item>
         <flexbox-item :span="1"></flexbox-item>
       </flexbox>
 
-      <flexbox style="margin-top:60px">
+      <flexbox style="margin-top:40px">
         <flexbox-item :span="1"></flexbox-item>
         <flexbox-item :span="10">
           <div style="display:block;margin-left:10px;margin-right:20px">
           <x-button
             style="border-radius:5px;background-color:rgb(255,113,101)"
             type="warn"
-            @click.native="viewBox()"
-          >查看我的宝箱</x-button>
-          </div>
-        </flexbox-item>
-        <flexbox-item :span="1"></flexbox-item>
-      </flexbox>
-      <flexbox style="margin-top:20px">
-        <flexbox-item :span="1"></flexbox-item>
-        <flexbox-item :span="10">
-          <div style="display:block;margin-left:10px;margin-right:20px">
-          <x-button
-            plain
-            style="border-radius:5px;color:rgb(255,113,101)"
-            type="warn"
-            @click.native="viewBox()"
-          >返回众筹列表</x-button>
+            @click.native="houseAddress()"
+          >选择收货地址</x-button>
           </div>
         </flexbox-item>
         <flexbox-item :span="1"></flexbox-item>
@@ -111,7 +110,12 @@ export default {
   data() {
     return {};
   },
-  methods: {},
+  methods: {
+    houseAddress() {
+      this.$router.push({ name: "HouseAddress"});
+    }
+
+  },
 
   created() {}
 };
