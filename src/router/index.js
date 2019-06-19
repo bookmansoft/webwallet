@@ -12,6 +12,7 @@ import CrowdMy from '@/pages/CrowdMy'
 import CrowdMyInfo from '@/pages/CrowdMyInfo'
 import CrowdMySale from '@/pages/CrowdMySale'
 import CrowdPrePay from '@/pages/CrowdPrePay'
+import CrowdFreeOrder from '@/pages/CrowdFreeOrder'
 import Mine from '@/pages/Mine'
 import Wallet from '@/pages/Wallet'
 import WalletSend from '@/pages/WalletSend'
@@ -43,6 +44,14 @@ import ManyRedJustSend from '@/pages/ManyRedJustSend';
 import ManyRedReceive from '@/pages/ManyRedReceive';
 import ManyRedUnpack from '@/pages/ManyRedUnpack';
 
+import BuySuccess from '@/pages/BuySuccess';
+import BuyFail from '@/pages/BuyFail';
+import PaySuccess from '@/pages/PaySuccess';
+import HouseAddress from '@/pages/HouseAddress';
+import HouseAddressAdd from '@/pages/HouseAddressAdd';
+
+
+
 Vue.use(Router)
 
 export default new Router({
@@ -54,11 +63,19 @@ export default new Router({
     { path: '/crowdFree', name: 'CrowdFree', component: CrowdFree,meta:{title:'自由市场'} },
     { path: '/crowd/info', name: 'CrowdInfo', component: CrowdInfo ,meta:{title:'众筹详情-百谷王游戏金链'}},
     { path: '/crowd/order', name: 'CrowdOrder', component: CrowdOrder ,meta:{title:'确认订单'}},
+    { path: '/crowd/freeOrder', name: 'CrowdFreeOrder', component: CrowdFreeOrder ,meta:{title:'自由市场-确认订单'}},
     { path: '/crowd/pay', name: 'CrowdPay', component: CrowdPay ,meta:{title:'众筹订单支付'}},
     { path: '/crowd/free/info', name: 'CrowdFreeInfo', component: CrowdFreeInfo ,meta:{title:'游戏元宝信息-百谷王游戏金链'}},
     { path: '/crowd/my/info', name: 'CrowdMyInfo', component: CrowdMyInfo ,meta:{title:'我的游戏元宝'}},
     { path: '/crowd/my/sale', name: 'CrowdMySale', component: CrowdMySale ,meta:{title:'挂单出售中'}},
     { path: '/crowd/prePay', name: 'CrowdPrePay', component: CrowdPrePay ,meta:{title:'选择回报'}},
+
+    { path: '/crowd/BuySuccess', name: 'BuySuccess', component: BuySuccess ,meta:{title:'购买成功'}},
+    { path: '/crowd/BuyFail', name: 'BuyFail', component: BuyFail ,meta:{title:' 购买失败'}},
+    { path: '/crowd/PaySuccess', name: 'PaySuccess', component: PaySuccess ,meta:{title:'支付成功'}},
+    { path: '/crowd/HouseAddress', name: 'HouseAddress', component: HouseAddress ,meta:{title:'收货地址'}},
+    { path: '/crowd/HouseAddressAdd', name: 'HouseAddressAdd', component: HouseAddressAdd ,meta:{title:'添加收货地址'}},
+
     { path: '/my/stock', name: 'CrowdMy', component: CrowdMy ,meta:{title:'CrowdMy'}},
     { path: '/mine', name: 'Mine', component: Mine ,meta:{title:'我的'}},
     { path: '/wallet', name: 'Wallet', component: Wallet ,meta:{title:'钱包'}},

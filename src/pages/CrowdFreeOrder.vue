@@ -9,72 +9,27 @@
     </div>
     <div style="background-color:white">
       <!-- 回报档 -->
-      <div v-if="payType==0">
+      <div>
         <flexbox class="cell">
           <flexbox-item :span="3">
-            <div style="display:block;text-align:left">
-              <span
-                style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-              >回报档：</span>
+            <div style="display:block;padding:8px">
+              <img src="static/img/stock/orderfree/head.png" style="width:auto;height:auto;max-width:100%;max-height:100%">
             </div>
           </flexbox-item>
-          <flexbox-item :span="4"></flexbox-item>
-          <flexbox-item :span="3">
-            <div style="display:block;text-align:right">
+          <flexbox-item :span="9">
+            <div style="display:block;margin-left:5px;line-height:30px">
               <span
-                style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-              >无偿支持</span>
+                style="font-size:16px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+              >进击的兵长 百宝箱</span><br />
+              <span
+                style="font-size:16px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100);"
+              >  {{price}}千克</span>
             </div>
           </flexbox-item>
-          <flexbox-item :span="2"></flexbox-item>
-        </flexbox>
-      </div>
-      <div v-if="payType==1 || payType==2 || payType==4 || payType==10">
-        <flexbox class="cell">
-          <flexbox-item :span="3">
-            <div style="display:block;text-align:left">
-              <span
-                style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-              >回报档：</span>
-            </div>
-          </flexbox-item>
-          <flexbox-item :span="4"></flexbox-item>
-          <flexbox-item :span="3">
-            <div style="display:block;text-align:right">
-              <span
-                style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-              >￥{{this.payType*this.baseMultiple}}</span>
-            </div>
-          </flexbox-item>
-          <flexbox-item :span="2"></flexbox-item>
         </flexbox>
       </div>
       <!-- 购买数量及打赏金额 -->
-      <div v-if="payType==0">
-        <flexbox class="cell">
-          <flexbox-item :span="3">
-            <div style="display:block;text-align:left">
-              <span
-                style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-              >打赏金额：</span>
-            </div>
-          </flexbox-item>
-          <flexbox-item :span="4"></flexbox-item>
-          <flexbox-item :span="1"></flexbox-item>
-          <flexbox-item :span="2">
-            <div style="display:block;text-align:center">
-              <span
-                style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-              >
-                ￥
-                <input type="text" style="width:30px" v-model="payYuanValue" @keyup="onPayYuan">
-              </span>
-            </div>
-          </flexbox-item>
-          <flexbox-item :span="2"></flexbox-item>
-        </flexbox>
-      </div>
-      <div v-if="payType!=0">
+      <div>
         <flexbox class="cell">
           <flexbox-item :span="3">
             <div style="display:block;text-align:left">
@@ -110,7 +65,7 @@
           <div style="display:block;text-align:left">
             <span
               style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-            >支付总额：</span>
+            >商品总金额：</span>
           </div>
         </flexbox-item>
         <flexbox-item :span="4"></flexbox-item>
@@ -118,7 +73,7 @@
           <div style="display:block;text-align:right">
             <span
               style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-            >￥{{realPay}}</span>
+            >{{realPay}}千克</span>
           </div>
         </flexbox-item>
         <flexbox-item :span="2"></flexbox-item>
@@ -132,15 +87,15 @@
 
       <!-- 支付方式：微信支付 -->
       <flexbox class="cell">
-        <flexbox-item :span="3">
+        <flexbox-item :span="4">
           <div style="display:block;text-align:left;">
-            <img src="static/img/stock/order/wechat_logo.png" style="width:22px;height:19px">
+            <img src="static/img/stock/orderfree/buy.png" style="width:22px;height:19px">
             <span
               style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);vertical-align:top;"
-            >微信支付</span>
+            >游戏金支付</span>
           </div>
         </flexbox-item>
-        <flexbox-item :span="4"></flexbox-item>
+        <flexbox-item :span="3"></flexbox-item>
         <flexbox-item :span="3">
           <div style="display:block;text-align:right">
             <img src="static/img/stock/order/wechat_ok.png" style="width:14px;height:14px">
@@ -212,12 +167,10 @@
     </div>
     <br>
     <div>
-      <flexbox
-        style="margin:0px;padding:0px;border-style:outset none outset none;border-width:1px;"
-      >
+      <flexbox style="margin:0px;padding:0px;border-style:outset none outset none;border-width:1px;">
         <flexbox-item :span="7">
-          <div style="width:100%;height:100%;align:center;text-align:center">
-            <label style="font-weight:bold;font-size:16px;color:rgb(255,113,101);">&yen; {{realPay}}</label>
+          <div  style="width:100%;height:100%;align:center;text-align:center">
+          <label style="font-weight:bold;font-size:16px;color:rgb(255,113,101);" >{{realPay}}千克</label>
           </div>
         </flexbox-item>
         <flexbox-item :span="5">
@@ -278,12 +231,11 @@ export default {
       quantity: 1,
       showLoading: false,
 
-      baseMultiple: 50, //基数,不同的众筹可能是不同的，根据传入的参数决定
+
       item: {},
-      payType: {}, //支付类型
+      price: 10,
       buyNum: 1, //购买数量，预设为1
-      payYuanValue: 1, //捐赠金额，预设为1
-      realPay: 1, //支付总额
+      realPay: 10, //支付总额
 
       flagMore: false
     };
@@ -302,7 +254,7 @@ export default {
       if (this.buyNum < 1) {
         this.buyNum = 1;
       }
-      this.realPay = this.buyNum * this.payType * this.baseMultiple; //payType是倍数，分别为1,2,5,10倍;
+      this.realPay = this.buyNum * this.price; //price是单价;
     },
     onBack() {
       this.$router.push({ name: "CrowdInfo", params: { item: this.item } });
@@ -339,36 +291,16 @@ export default {
     },
     crowdPay() {
       this.showLoading = true;
-      // this.orderRePay();//暂时关闭支付方法
-      let iNum=2;//parseInt(Math.random()*3);//0-2的整数
-      switch (iNum) {
-        case 0:
-          this.$router.push({name:"BuySuccess"});
-          break;
-        case 1:
-          this.$router.push({name:"BuyFail"});
-          break;
-        case 2:
-          this.$router.push({name:"PaySuccess"});
-          break;
-      }
-      
+      this.orderRePay();
     }
   },
 
   created() {
-    this.payType = this.$route.params.payType;
     this.item = this.$route.params.item;
     if (!!!this.item) {
       this.$router.push({ name: "Crowd" });
     }
     console.log("该元素 item", this.item);
-    //初始化
-    if (this.payType == 0) {
-      this.realPay = this.payYuanValue;
-    } else {
-      this.realPay = this.buyNum * this.payType * this.baseMultiple; //payType是倍数，分别为1,2,5,10倍;
-    }
   }
 };
 </script>

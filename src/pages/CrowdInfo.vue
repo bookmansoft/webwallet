@@ -127,10 +127,10 @@
                 <span>&nbsp;</span>
               </flexbox-item>
               <flexbox-item :span="4">
-                <span style="font-size:14px;font-family:'黑体','Heiti SC','Droidsansfallback';margin-left:-20px;">{{item.cp_text}}</span>
+                <span style="font-size:14px;font-family:'黑体','Heiti SC','Droidsansfallback';margin-left:-10px;">{{item.cp_text}}</span>
               </flexbox-item>
               <flexbox-item :span="4">
-                <span style="font-size:14px;font-family:'黑体','Heiti SC','Droidsansfallback';margin-left:-20px;">{{item.provider}}</span>
+                <span style="font-size:14px;font-family:'黑体','Heiti SC','Droidsansfallback';margin-left:-10px;">{{item.provider}}</span>
               </flexbox-item>
               <flexbox-item :span="2">
               </flexbox-item>
@@ -167,7 +167,7 @@
     </box>
 
     <box gap="0px 0px">
-      <x-button  type="warn" @click.native="crowdPrePay()">&yen; 立即支持</x-button>
+      <x-button  style="border-radius:0px;" type="warn" @click.native="crowdPrePay()">&yen; 立即支持</x-button>
     </box>
     <br>
     <br>

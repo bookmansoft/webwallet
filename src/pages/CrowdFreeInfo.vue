@@ -71,14 +71,14 @@
       </flexbox-item>
     </flexbox>
     <flexbox style="margin-top:14px">
-      <flexbox-item :span="3" style="text-align:right">
-        <div style="display:block;margin-left:21px;">
+      <flexbox-item :span="4" style="text-align:right">
+        <div style="display:block;">
           <span
             style="text-align:right;font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100)"
           >最高成交价：</span>
         </div>
       </flexbox-item>
-      <flexbox-item :span="3">
+      <flexbox-item :span="2">
         <div style="display:block;">
           <span
             style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
@@ -102,14 +102,14 @@
     </flexbox>
 
     <flexbox style="margin-top:14px;">
-      <flexbox-item :span="3" style="text-align:right">
+      <flexbox-item :span="4" style="text-align:right">
         <div style="display:block;margin-left:21px;">
           <span
             style="text-align:right;font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(0,128,0)"
           >最低成交价：</span>
         </div>
       </flexbox-item>
-      <flexbox-item :span="3">
+      <flexbox-item :span="2">
         <div style="display:block;">
           <span
             style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
@@ -273,6 +273,7 @@
           <div style="display:block;text-align:center;">
             <div
               style="display:block;margin-left:5px;margin-top:6px;border-radius: 25%;text-align:center;line-height:26px;width:50px;height:26px;background-color:#ff7164;font-size:13px;color:white"
+              @click="crowdFreeOrder()"
             >购入</div>
           </div>
         </flexbox-item>
@@ -305,6 +306,12 @@ export default {
     };
   },
   methods: {
+    crowdFreeOrder() {
+      this.$router.push({
+        name: "CrowdFreeOrder",
+        params: { item: this.item }
+      });
+    },
     stockBulletin(cid) {
       let data = {
         func: "ListRecord",
