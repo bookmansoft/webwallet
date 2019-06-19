@@ -47,7 +47,7 @@ import ManyRedUnpack from '@/pages/ManyRedUnpack';
 import BuySuccess from '@/pages/BuySuccess';
 import BuyFail from '@/pages/BuyFail';
 import PaySuccess from '@/pages/PaySuccess';
-// import HouseAddress from '@/pages/HouseAddress';
+import HouseAddress from '@/pages/HouseAddress';
 // import HouseAddressAdd from '@/pages/HouseAddressAdd';
 
 
@@ -73,7 +73,7 @@ export default new Router({
     { path: '/crowd/BuySuccess', name: 'BuySuccess', component: BuySuccess ,meta:{title:'购买成功'}},
     { path: '/crowd/BuyFail', name: 'BuyFail', component: BuyFail ,meta:{title:' 购买失败'}},
     { path: '/crowd/PaySuccess', name: 'PaySuccess', component: PaySuccess ,meta:{title:'支付成功'}},
-    // { path: '/crowd/HouseAddress', name: 'HouseAddress', component: HouseAddress ,meta:{title:'收货地址'}},
+    { path: '/crowd/HouseAddress', name: 'HouseAddress', component: HouseAddress ,meta:{title:'收货地址'}},
     // { path: '/crowd/HouseAddressAdd', name: 'HouseAddressAdd', component: HouseAddressAdd ,meta:{title:'添加收货地址'}},
 
     { path: '/my/stock', name: 'CrowdMy', component: CrowdMy ,meta:{title:'CrowdMy'}},
