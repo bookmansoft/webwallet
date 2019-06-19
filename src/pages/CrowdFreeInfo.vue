@@ -71,14 +71,14 @@
       </flexbox-item>
     </flexbox>
     <flexbox style="margin-top:14px">
-      <flexbox-item :span="3" style="text-align:right">
-        <div style="display:block;margin-left:21px;">
+      <flexbox-item :span="4" style="text-align:right">
+        <div style="display:block;">
           <span
             style="text-align:right;font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100)"
           >最高成交价：</span>
         </div>
       </flexbox-item>
-      <flexbox-item :span="3">
+      <flexbox-item :span="2">
         <div style="display:block;">
           <span
             style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
@@ -102,14 +102,14 @@
     </flexbox>
 
     <flexbox style="margin-top:14px;">
-      <flexbox-item :span="3" style="text-align:right">
+      <flexbox-item :span="4" style="text-align:right">
         <div style="display:block;margin-left:21px;">
           <span
             style="text-align:right;font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(0,128,0)"
           >最低成交价：</span>
         </div>
       </flexbox-item>
-      <flexbox-item :span="3">
+      <flexbox-item :span="2">
         <div style="display:block;">
           <span
             style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
