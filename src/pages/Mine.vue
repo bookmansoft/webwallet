@@ -1,5 +1,19 @@
 <template>
   <div class="root" style="background-color:white;">
+    <div style="position:absolute;width:100%;margin-top:60px">
+      <div align="center">
+        <!-- 相对于父容器定位 -->
+        <div style="display:block">
+          <img src="static/img/stock/mine/head.png" style="width:61px;height:61px;">
+        </div>
+        <div style="display:block">
+          <span
+            style="font-size:18px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(255,255,255);"
+          >王小明</span>
+        </div>
+      </div>
+    </div>
+    <!-- 正常代码区域 -->
     <div style="display:block" class="nospace">
       <img
         src="static/img/stock/mine/top.png"
@@ -8,17 +22,11 @@
     </div>
     <flexbox :gutter="0" class="nospace" style="margin-top:-3px;margin-bottom:-3px">
       <flexbox-item :span="5">
-        <img
-          src="static/img/stock/mine/left.png"
-          style="width:auto;height:200px;max-width:100%;"
-        >
+        <img src="static/img/stock/mine/left.png" style="width:auto;height:150px;max-width:100%;">
       </flexbox-item>
       <flexbox-item :span="2"></flexbox-item>
       <flexbox-item :span="5">
-        <img
-          src="static/img/stock/mine/right.png"
-          style="width:auto;height:200px;max-width:100%;"
-        >
+        <img src="static/img/stock/mine/right.png" style="width:auto;height:150px;max-width:100%;">
       </flexbox-item>
     </flexbox>
 
