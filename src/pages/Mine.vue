@@ -1,14 +1,38 @@
 <template>
-  <div style="margin-top:-20px">
-      <scroller
-        height="-100"
-        lock-x
-        scrollbar-y
-        ref="scroller"
-
+  <div class="root" style="background-color:white;">
+    <div style="display:block" class="nospace">
+      <img
+        src="static/img/stock/mine/top.png"
+        style="width:auto;height:auto;max-width:100%;max-height:100%"
       >
-        <div>
-    <group>
+    </div>
+    <flexbox :gutter="0" class="nospace" style="margin-top:-3px;margin-bottom:-3px">
+      <flexbox-item :span="5">
+        <img
+          src="static/img/stock/mine/left.png"
+          style="width:auto;height:200px;max-width:100%;"
+        >
+      </flexbox-item>
+      <flexbox-item :span="2"></flexbox-item>
+      <flexbox-item :span="5">
+        <img
+          src="static/img/stock/mine/right.png"
+          style="width:auto;height:200px;max-width:100%;"
+        >
+      </flexbox-item>
+    </flexbox>
+
+    <div style="display:block" class="nospace">
+      <img
+        src="static/img/stock/mine/bottom.png"
+        style="width:auto;height:auto;max-width:100%;max-height:100%"
+      >
+    </div>
+
+    <navs></navs>
+  </div>
+</template>
+    <!-- <group>
       <flexbox style="padding:5px;margin-top:5px">
         <flexbox-item :span="4">
           <div class="flex-demo-left">
@@ -45,185 +69,235 @@
         </span>
         <img slot="icon" width="20" style="display:block;margin-right:5px;" :src="item.img">
       </cell>
-    </group>
-        </div>
-      </scroller>
-
-
-    <br/>
-    <navs></navs>
-  </div>
-</template>
+    </group> -->
 <script>
-import Navs from '@/components/Navs.vue'
-import {     Scroller,Cell, CellBox, CellFormPreview, Group, Badge, Flexbox, FlexboxItem } from 'vux'
+import Navs from "@/components/Navs.vue";
+import {
+  Scroller,
+  Cell,
+  CellBox,
+  CellFormPreview,
+  Group,
+  Badge,
+  Flexbox,
+  FlexboxItem
+} from "vux";
 
 const getItems0 = () => [
-  {title: '会员', is_link: true, img: 'static/img/icon1/4.png', badge: 0, link: '/member', value: '', showDot: false},
-  {title: '红包活动', is_link: true, img: 'static/img/icon3/market3.png', badge: 0, link: '/redpack/act', value: '限时抽红包', showDot: false}
-]
+  {
+    title: "会员",
+    is_link: true,
+    img: "static/img/icon1/4.png",
+    badge: 0,
+    link: "/member",
+    value: "",
+    showDot: false
+  },
+  {
+    title: "红包活动",
+    is_link: true,
+    img: "static/img/icon3/market3.png",
+    badge: 0,
+    link: "/redpack/act",
+    value: "限时抽红包",
+    showDot: false
+  }
+];
 const getItems1 = () => [
-  {title: '我的钱包', is_link: true, img: 'static/img/mine/wallet.png', badge: 0, link: {path:'/wallet'}, value: '', showDot: false},
-  {title: '我的道具', is_link: true, img: 'static/img/mine/prop.png', badge: 0, link: {path:'/props'}, value: '', showDot: false},
-  {title: '我的消息', is_link: true, img: 'static/img/mine/msg.png', badge: 0, link: {path:'/message'}, value: '', showDot: false},
+  {
+    title: "我的钱包",
+    is_link: true,
+    img: "static/img/mine/wallet.png",
+    badge: 0,
+    link: { path: "/wallet" },
+    value: "",
+    showDot: false
+  },
+  {
+    title: "我的道具",
+    is_link: true,
+    img: "static/img/mine/prop.png",
+    badge: 0,
+    link: { path: "/props" },
+    value: "",
+    showDot: false
+  },
+  {
+    title: "我的消息",
+    is_link: true,
+    img: "static/img/mine/msg.png",
+    badge: 0,
+    link: { path: "/message" },
+    value: "",
+    showDot: false
+  },
   // {title: '我的交易', is_link: true, img: 'static/img/mine/trans.png', badge: 0, link: {path:'/wallet/detail'}, value: '', showDot: false},
-  {title: '我的游戏', is_link: true, img: 'static/img/mine/game.png', badge: 0, link: {path:'/mygame'}, value: '', showDot: false},
-  {title: '我的代练宝宝', is_link: true, img: 'static/img/mine/stock.png', badge: 0, link: {path:'/my/stock'}, value: '', showDot: false}
-]
+  {
+    title: "我的游戏",
+    is_link: true,
+    img: "static/img/mine/game.png",
+    badge: 0,
+    link: { path: "/mygame" },
+    value: "",
+    showDot: false
+  },
+  {
+    title: "我的代练宝宝",
+    is_link: true,
+    img: "static/img/mine/stock.png",
+    badge: 0,
+    link: { path: "/my/stock" },
+    value: "",
+    showDot: false
+  }
+];
 const getItems2 = () => [
   /*{title: '使用条款', is_link: true, img: 'static/img/icon1/3.png', badge: 0, link: ''},*/
   /*{title: '红包测试', is_link: true, img: 'static/img/mine/about.png', badge: 0, link: {path:'/redpack'}, value: ''},*/
-  {title: '关于我们', is_link: true, img: 'static/img/mine/about.png', badge: 0, link: {path:'/about'}, value: ''}
-]
+  {
+    title: "关于我们",
+    is_link: true,
+    img: "static/img/mine/about.png",
+    badge: 0,
+    link: { path: "/about" },
+    value: ""
+  }
+];
 export default {
   components: {
-    Scroller,Navs, Cell, CellBox, CellFormPreview, Group, Badge, Flexbox, FlexboxItem
+    Scroller,
+    Navs,
+    Cell,
+    CellBox,
+    CellFormPreview,
+    Group,
+    Badge,
+    Flexbox,
+    FlexboxItem
   },
-  data () {
+  data() {
     return {
       items0: getItems0(),
       items1: getItems1(),
       items2: getItems2(),
       hasProfile: false,
       userProfile: {
-        nick: '未登录',
-        avatar: 'static/img/icon3/mine1.png'
+        nick: "未登录",
+        avatar: "static/img/icon3/mine1.png"
       }
-    }
+    };
   },
   methods: {
-      getUserProfile(){
-          let data = {
-            func:'Info', 
-            control: 'profile', 
-            oemInfo: this.GLOBAL.oemInfo
-          };
-          this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-              console.log(res.data)
-              if(res.data.profile != null) {
-                  this.GLOBAL.propCount = res.data.profile.current_prop_count
-                  this.GLOBAL.userProfile = res.data.profile
-                  this.userProfile = res.data.profile
-                  this.hasProfile = true
-                  this.getMine()
-              } 
-          });
-      },
-      getMine(){
-          let data = {func:'Mine', control: 'profile', oemInfo: this.GLOBAL.oemInfo}
-          this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-              console.log('mine', res.data)
-              if(res.data.errcode == 'success' && res.data.mine != null) {
-                  let mine = res.data.mine
-                  let vip = mine.vip
-                  if(vip != null && vip.vip_level>0) {
-                    this.items0[0].value = '产币加速中' //'未提' + this.GLOBAL.formatGameGold(mine.vip_usable_count) + '千克'
-                    this.items0[0].img = 'static/img/member/Vip' + vip.vip_level + '.png'
-                    let current_time = parseInt(new Date().getTime() / 1000);
-                    if(this.GLOBAL.formatGameGold(vip.vip_usable_count) >= 10) {
-                      this.items0[0].showDot = true
-                    } else {
-                      this.items0[0].showDot = false
-                    }
+    getUserProfile() {
+      let data = {
+        func: "Info",
+        control: "profile",
+        oemInfo: this.GLOBAL.oemInfo
+      };
+      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+        console.log(res.data);
+        if (res.data.profile != null) {
+          this.GLOBAL.propCount = res.data.profile.current_prop_count;
+          this.GLOBAL.userProfile = res.data.profile;
+          this.userProfile = res.data.profile;
+          this.hasProfile = true;
+          this.getMine();
+        }
+      });
+    },
+    getMine() {
+      let data = {
+        func: "Mine",
+        control: "profile",
+        oemInfo: this.GLOBAL.oemInfo
+      };
+      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+        console.log("mine", res.data);
+        if (res.data.errcode == "success" && res.data.mine != null) {
+          let mine = res.data.mine;
+          let vip = mine.vip;
+          if (vip != null && vip.vip_level > 0) {
+            this.items0[0].value = "产币加速中"; //'未提' + this.GLOBAL.formatGameGold(mine.vip_usable_count) + '千克'
+            this.items0[0].img =
+              "static/img/member/Vip" + vip.vip_level + ".png";
+            let current_time = parseInt(new Date().getTime() / 1000);
+            if (this.GLOBAL.formatGameGold(vip.vip_usable_count) >= 10) {
+              this.items0[0].showDot = true;
+            } else {
+              this.items0[0].showDot = false;
+            }
+          }
+          if (mine.current_prop_count > mine.prop_count) {
+            this.items1[1].badge = mine.current_prop_count - mine.prop_count;
+          }
+          this.GLOBAL.userProfile.mine = mine;
+        }
+        this.getNotify();
+      });
+    },
+    getNotify() {
+      let data = {
+        func: "GetNotify",
+        control: "wallet",
+        oemInfo: this.GLOBAL.oemInfo
+      };
+      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+        console.log("GetNotify", res.data);
+        if (res.data.errcode == "success") {
+          if (res.data.count > 0) {
+            this.items1[2].badge = res.data.count;
+            this.items1[2].value = "有待支付订单";
+          }
+        }
+      });
+    },
+    showPlugin(msg) {
+      this.$vux.alert.show({
+        title: "提示",
+        content: msg
+      });
+    },
 
-                  } 
-                  if(mine.current_prop_count > mine.prop_count) {
-                    this.items1[1].badge = mine.current_prop_count - mine.prop_count
-                  }
-                  this.GLOBAL.userProfile.mine = mine
-              }
-              this.getNotify()
-          });
-      },
-      getNotify() {
-          let data = {func:'GetNotify', control: 'wallet', oemInfo: this.GLOBAL.oemInfo}
-          this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-              console.log('GetNotify', res.data)
-              if(res.data.errcode == 'success') {
-                if(res.data.count > 0) {
-                  this.items1[2].badge = res.data.count
-                  this.items1[2].value = '有待支付订单'
-                }
-              }
-          })
-      },
-      showPlugin(msg) {
-        this.$vux.alert.show({
-          title: '提示',
-          content: msg
-        })
-      },
-
-      showPluginAuto(msg) {
-        this.showPlugin(msg)
-        setTimeout(() => {
-          this.$vux.alert.hide()
-        }, 3000)
-      },
+    showPluginAuto(msg) {
+      this.showPlugin(msg);
+      setTimeout(() => {
+        this.$vux.alert.hide();
+      }, 3000);
+    }
   },
   created() {
-    console.log('this.GLOBAL.userProfile', this.GLOBAL.userProfile)
-    console.log('this.GLOBAL.openid', this.GLOBAL.userBase.openid)
-    if(this.GLOBAL.userProfile == null) {
-      this.getUserProfile()
-    } else {
-      this.userProfile = this.GLOBAL.userProfile
-      this.getMine()
-      //this.getNotify()
-    }
+    // console.log('this.GLOBAL.userProfile', this.GLOBAL.userProfile)
+    // console.log('this.GLOBAL.openid', this.GLOBAL.userBase.openid)
+    // if(this.GLOBAL.userProfile == null) {
+    //   this.getUserProfile()
+    // } else {
+    //   this.userProfile = this.GLOBAL.userProfile
+    //   this.getMine()
+    //   //this.getNotify()
+    // }
   }
-}
+};
 </script>
 <style lang="less" scoped>
-
-.vux-1px { 
-  border: 1px solid #ffffff;
-  box-shadow: 0 0 1px 0 #ffffff;
-  &::before{
-    border-radius: 1px;
-    box-shadow: 0 0 1px 0 #ffffff;
-    border: 1px solid #ffffff;
-  }
-
+.root {
+  overflow-x: hidden;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
-
-.sub-item {
-  color: #888;
-}
-
-.weui-group {
-  border-top:none;
-}
-
-.slide {
-  padding: 0 20px;
-  overflow: hidden;
-  max-height: 0;
-  transition: max-height .5s cubic-bezier(0, 1, 0, 1) -.1s;
-}
-
-.animate {
-  max-height: 9999px;
-  transition-timing-function: cubic-bezier(0.5, 0, 1, 0);
-  transition-delay: 0s;
-}
-
-.avatar {
-    width: 5rem;
-    height: 5rem;
-    /*border-radius: 50%;*/
-}
-
-.flex-demo-left {
-  text-align: center;
-  color: #fff;
-  border-radius: 4px;
-  background-clip: padding-box;
-}
-
-.flex-demo-right {
-  text-align: left;
-  border-radius: 4px;
-  background-clip: padding-box;
+.nospace {
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 </style>
