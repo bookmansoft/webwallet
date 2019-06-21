@@ -200,6 +200,10 @@ export default {
       });
     },
     sendGamegold() {
+      if (true) {
+        this.$router.push("/crowd/SendConfirm");
+      }
+
       if (this.chenkSend() == false) {
         return;
       }
