@@ -8,7 +8,7 @@
       </flexbox>
     </div>
     <div style="background-color:white;">
-      <flexbox>
+      <flexbox :gutter="0">
         <flexbox-item :span="1"></flexbox-item>
         <flexbox-item :span="10">
           <flexbox class="content underline">

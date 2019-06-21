@@ -14,6 +14,7 @@ import CrowdMySale from '@/pages/CrowdMySale'
 import CrowdPrePay from '@/pages/CrowdPrePay'
 import CrowdFreeOrder from '@/pages/CrowdFreeOrder'
 import Mine from '@/pages/Mine'
+import MyWallet from '@/pages/MyWallet'
 import Wallet from '@/pages/Wallet'
 import WalletSend from '@/pages/WalletSend'
 import WalletReceive from '@/pages/WalletReceive'
@@ -78,6 +79,7 @@ export default new Router({
 
     { path: '/my/stock', name: 'CrowdMy', component: CrowdMy ,meta:{title:'CrowdMy'}},
     { path: '/mine', name: 'Mine', component: Mine ,meta:{title:'我的'}},
+    { path: '/mywallet', name: 'MyWallet', component: MyWallet ,meta:{title:'我的钱包'}},
     { path: '/wallet', name: 'Wallet', component: Wallet ,meta:{title:'钱包'}},
     { path: '/wallet/send', name: 'WalletSend', component: WalletSend ,meta:{title:'转账'}},
     { path: '/wallet/receive', name: 'WalletReceive', component: WalletReceive ,meta:{title:'接受转账'}},
