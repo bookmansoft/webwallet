@@ -34,10 +34,10 @@
         </div>
       </flexbox-item>
       <flexbox-item :span="2">
-        <div style="display:block" align="center">
+        <div style="display:block" align="center" @click="send">
           <img src="static/img/stock/mywallet/send.png" style="width:32px;height:32px;">
         </div>
-        <div style="display:block" align="center">
+        <div style="display:block" align="center" @click="send">
           <span
             style="font-size:12px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(51,51,51);"
           >发送</span>
@@ -62,6 +62,7 @@
         <div style="display:block" align="center">
           <span
             style="font-size:12px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(51,51,51);"
+            
           >发红包</span>
         </div>
       </flexbox-item>
@@ -181,7 +182,10 @@ export default {
     };
   },
   methods: {
- 
+    send() {
+      console.log("send");
+      this.$router.push({ name: "WalletSend" });
+    }
   },
   created() {
 
