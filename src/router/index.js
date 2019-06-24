@@ -54,6 +54,8 @@ import SendSuccess from '@/pages/SendSuccess';
 import SendFail from '@/pages/SendFail';
 import SendConfirm from '@/pages/SendConfirm';
 
+import TransList from '@/pages/TransList';
+
 
 
 Vue.use(Router)
@@ -78,6 +80,8 @@ export default new Router({
     { path: '/crowd/SendFail', name: 'SendFail', component: SendFail ,meta:{title:' 发送失败'}},
     { path: '/crowd/SendConfirm', name: 'SendConfirm', component: SendConfirm ,meta:{title:'发送确认'}},
 
+    { path: '/crowd/TransList', name: 'TransList', component: TransList ,meta:{title:'交易清单'}},
+
     { path: '/crowd/BuySuccess', name: 'BuySuccess', component: BuySuccess ,meta:{title:'购买成功'}},
     { path: '/crowd/BuyFail', name: 'BuyFail', component: BuyFail ,meta:{title:' 购买失败'}},
     { path: '/crowd/PaySuccess', name: 'PaySuccess', component: PaySuccess ,meta:{title:'支付成功'}},
@@ -90,8 +94,8 @@ export default new Router({
     { path: '/wallet', name: 'Wallet', component: Wallet ,meta:{title:'钱包'}},
     { path: '/wallet/send', name: 'WalletSend', component: WalletSend ,meta:{title:'转账'}},
     { path: '/wallet/receive', name: 'WalletReceive', component: WalletReceive ,meta:{title:'接受转账'}},
-    { path: '/wallet/trans', name: 'WalletTrans', component: WalletTrans ,meta:{title:'转账交易查询'}},
-    { path: '/wallet/detail', name: 'WalletDetail', component: WalletDetail ,meta:{title:'转账交易详情'}},
+    { path: '/wallet/trans', name: 'WalletTrans', component: WalletTrans ,meta:{title:'交易对'}},
+    { path: '/wallet/detail', name: 'WalletDetail', component: WalletDetail ,meta:{title:'交易流水'}},
     { path: '/props', name: 'Props', component: Props ,meta:{title:'道具'}},
     { path: '/member', name: 'Member', component: Member ,meta:{title:'成员'}},
     { path: '/game/info', name: 'GameInfo', component: GameInfo ,meta:{title:'游戏信息'}},

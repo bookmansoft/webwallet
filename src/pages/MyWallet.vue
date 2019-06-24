@@ -62,7 +62,6 @@
         <div style="display:block" align="center">
           <span
             style="font-size:12px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(51,51,51);"
-            
           >发红包</span>
         </div>
       </flexbox-item>
@@ -80,39 +79,40 @@
       >
     </div>
 
-
-
-
     <div style="background-color:white;">
       <flexbox :gutter="0">
         <flexbox-item :span="1"></flexbox-item>
         <flexbox-item :span="10">
           <flexbox class="content underline">
-            <flexbox-item :span="12">
-            </flexbox-item>
+            <flexbox-item :span="12"></flexbox-item>
           </flexbox>
-          <flexbox class="content underline">
-            <flexbox-item :span="1">
-              <img src="static/img/stock/mywallet/list1.png" style="width:20px;height:25px;">
-            </flexbox-item>
-            <flexbox-item :span="3">
-              <div style="display:block;margin-top:-8px">
-                <span
-                  style="font-size:16px;line-height:25px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-                >收支明细</span>
-              </div>
-            </flexbox-item>
-            <flexbox-item :span="7">
-              <div style="display:block;">
-              </div>
-            </flexbox-item>
-            <flexbox-item :span="1">
-              <div style="display:block;">
-                <img src="static/img/stock/mywallet/arrow.png" style="width:7px;height:13px;">
-              </div>
-            </flexbox-item>
-          </flexbox>
-
+          <div @click="transList">
+            <flexbox class="content underline">
+              <flexbox-item :span="1">
+                <img
+                  src="static/img/stock/mywallet/list1.png"
+                  style="width:20px;height:25px;"
+                  @click="transList"
+                >
+              </flexbox-item>
+              <flexbox-item :span="3">
+                <div style="display:block;margin-top:-8px">
+                  <span
+                    style="font-size:16px;line-height:25px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+                    @click="transList"
+                  >收支明细</span>
+                </div>
+              </flexbox-item>
+              <flexbox-item :span="7">
+                <div style="display:block;"></div>
+              </flexbox-item>
+              <flexbox-item :span="1">
+                <div style="display:block;">
+                  <img src="static/img/stock/mywallet/arrow.png" style="width:7px;height:13px;">
+                </div>
+              </flexbox-item>
+            </flexbox>
+          </div>
           <flexbox class="content underline">
             <flexbox-item :span="1">
               <img src="static/img/stock/mywallet/list2.png" style="width:21px;height:22px;">
@@ -125,8 +125,7 @@
               </div>
             </flexbox-item>
             <flexbox-item :span="7">
-              <div style="display:block;">
-              </div>
+              <div style="display:block;"></div>
             </flexbox-item>
             <flexbox-item :span="1">
               <div style="display:block;">
@@ -134,18 +133,11 @@
               </div>
             </flexbox-item>
           </flexbox>
-
-
-
         </flexbox-item>
         <flexbox-item :span="1"></flexbox-item>
       </flexbox>
       <!-- 内容区 -->
     </div>
-
-
-
-
 
     <!-- <navs></navs> -->
   </div>
@@ -163,7 +155,6 @@ import {
   FlexboxItem
 } from "vux";
 
-
 export default {
   components: {
     Scroller,
@@ -177,19 +168,19 @@ export default {
     FlexboxItem
   },
   data() {
-    return {
-
-    };
+    return {};
   },
   methods: {
     send() {
       console.log("send");
       this.$router.push({ name: "WalletSend" });
+    },
+    transList() {
+      console.log("transList");
+      this.$router.push({ name: "TransList" });
     }
   },
-  created() {
-
-  }
+  created() {}
 };
 </script>
 <style lang="less" scoped>
@@ -219,7 +210,7 @@ export default {
   margin-right: 0px;
   margin-top: 10px;
   margin-bottom: 10px;
-  line-height: 60px
+  line-height: 60px;
 }
 .underline {
   border-style: solid;
