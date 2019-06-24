@@ -59,25 +59,6 @@
           <flexbox-item :span="2"></flexbox-item>
         </flexbox>
       </div>
-      <!-- 关键信息：支付总额 -->
-      <flexbox class="cell">
-        <flexbox-item :span="3">
-          <div style="display:block;text-align:left">
-            <span
-              style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-            >商品总金额：</span>
-          </div>
-        </flexbox-item>
-        <flexbox-item :span="4"></flexbox-item>
-        <flexbox-item :span="3">
-          <div style="display:block;text-align:right">
-            <span
-              style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-            >{{realPay}}千克</span>
-          </div>
-        </flexbox-item>
-        <flexbox-item :span="2"></flexbox-item>
-      </flexbox>
 
       <flexbox>
         <flexbox-item :span="12">
@@ -108,6 +89,26 @@
         <flexbox-item :span="12">
           <div style="height:2px;background-color:#f3f3f3"></div>
         </flexbox-item>
+      </flexbox>
+
+      <!-- 关键信息：支付总额 -->
+      <flexbox class="cell">
+        <flexbox-item :span="3">
+          <div style="display:block;text-align:left">
+            <span
+              style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+            >商品总金额：</span>
+          </div>
+        </flexbox-item>
+        <flexbox-item :span="4"></flexbox-item>
+        <flexbox-item :span="3">
+          <div style="display:block;text-align:right">
+            <span
+              style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
+            >{{realPay}}千克</span>
+          </div>
+        </flexbox-item>
+        <flexbox-item :span="2"></flexbox-item>
       </flexbox>
     </div>
 
@@ -291,7 +292,16 @@ export default {
     },
     crowdPay() {
       this.showLoading = true;
-      this.orderRePay();
+      let iNum=parseInt(Math.random()*2);//0-1的整数
+      switch (iNum) {
+        case 0:
+          this.$router.push({name:"BuySuccess"});
+          break;
+        case 1:
+          this.$router.push({name:"BuyFail"});
+          break;
+      }
+      // this.orderRePay();
     }
   },
 
