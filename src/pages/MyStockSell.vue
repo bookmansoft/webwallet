@@ -52,7 +52,7 @@
       </flexbox>
     </div>
 
-    <div style="display:block;margin-top:8px;margin-bottom:8px">
+    <div style="display:block;margin-top:8px;margin-bottom:8px"  @click="myStockSellDetail">
       <flexbox :gutter="0">
         <flexbox-item :span="2">
           <div class="flex-demo-left">
@@ -96,7 +96,7 @@
       </flexbox-item>
     </flexbox>
 
-    <div style="display:block;margin-top:8px;margin-bottom:8px">
+    <div style="display:block;margin-top:8px;margin-bottom:8px" @click="myStockSellDetail">
       <flexbox :gutter="0">
         <flexbox-item :span="2">
           <div class="flex-demo-left">
@@ -128,7 +128,7 @@
               <span style=" font-size:12px;">1200</span>
             </div>
             <div style="margin-top:6px;">
-              <span style="color: #919191;font-size:12px;">已售20个</span>
+              <span style="color: #919191;font-size:12px;">已售320个</span>
             </div>
           </div>
         </flexbox-item>
@@ -166,6 +166,9 @@ export default {
   methods: {
     myStock() {
       this.$router.push({ name: "MyStock" });
+    },
+    myStockSellDetail() {
+      this.$router.push({ name: "MyStockSellDetail" });
     }
   },
   created() {}
