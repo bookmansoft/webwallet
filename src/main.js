@@ -25,6 +25,17 @@ Vue.prototype.axios = axios
 Vue.prototype.GLOBAL = global_
 Vue.prototype.utils = utils
 
+//创建连接器对象
+const remote = new toolkit.gameconn({
+  "UrlHead": "http",
+  "webserver": { 
+      "host": "127.0.0.1",
+      "authPort": 9601,           //签证主机端口
+      "port": 9901
+  },
+});
+Vue.prototype.remote = remote
+
 /* eslint-disable no-new */
 new Vue({
   router,

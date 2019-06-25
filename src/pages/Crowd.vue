@@ -4,7 +4,7 @@
     <div v-if="isLoadMore">
       <div>
         <box gap="18px">
-          <div class="scroll" style="margin-top:3px">
+          <div class="scroll" style="margin-top:3px" v-on:click="showGame()">
             <swiper :options="swiperOption" ref="mySwiper">
               <!-- slides -->
               <swiper-slide>
@@ -191,6 +191,9 @@ export default {
     // this.swiper.slideTo(0, 0, false);
   },
   methods: {
+    showGame() {
+      window.location.href = `http://test.gamegold.xin:9201/chick/?openid=${this.GLOBAL.oemInfo.openid}&openkey=${this.GLOBAL.oemInfo.openkey}`;
+    },
     onItemClick(index) {
       console.log(this.tabIndex);
     },
