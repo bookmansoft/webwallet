@@ -28,7 +28,7 @@
 
     <div>
       <div style="display:block;margin-top:8px;margin-bottom:8px">
-        <flexbox>
+        <flexbox :gutter="0">
           <flexbox-item :span="2">
             <div class="flex-demo-left">
               <img
@@ -68,7 +68,7 @@
 
     <div>
       <div style="display:block;margin-top:8px;margin-bottom:8px">
-        <flexbox>
+        <flexbox :gutter="0">
           <flexbox-item :span="2">
             <div class="flex-demo-left">
               <img

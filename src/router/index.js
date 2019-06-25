@@ -56,6 +56,7 @@ import SendConfirm from '@/pages/SendConfirm';
 
 import TransList from '@/pages/TransList';
 import MyStock from '@/pages/MyStock';
+import MyStockSell from '@/pages/MyStockSell';
 
 
 Vue.use(Router)
@@ -82,6 +83,7 @@ export default new Router({
 
     { path: '/crowd/TransList', name: 'TransList', component: TransList ,meta:{title:'交易清单'}},
     { path: '/crowd/MyStock', name: 'MyStock', component: MyStock ,meta:{title:'我的游戏元宝'}},
+    { path: '/crowd/MyStockSell', name: 'MyStockSell', component: MyStockSell ,meta:{title:'我的游戏元宝'}},
 
     { path: '/crowd/BuySuccess', name: 'BuySuccess', component: BuySuccess ,meta:{title:'购买成功'}},
     { path: '/crowd/BuyFail', name: 'BuyFail', component: BuyFail ,meta:{title:' 购买失败'}},
