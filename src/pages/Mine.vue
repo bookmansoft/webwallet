@@ -36,7 +36,7 @@
       </flexbox-item>
       <flexbox-item :span="1"></flexbox-item>
       <flexbox-item :span="2">
-        <div style="display:block" align="center">
+        <div style="display:block" align="center" @click="mystock()">
           <img src="static/img/stock/mine/dingding.png" style="width:51px;height:56px;">
         </div>
       </flexbox-item>
@@ -221,6 +221,9 @@ export default {
   methods: {
     mywallet() {
       this.$router.push({ name: "MyWallet" });
+    },
+    mystock() {
+      this.$router.push({ name: "MyStock" });
     },
     getUserProfile() {
       let data = {
