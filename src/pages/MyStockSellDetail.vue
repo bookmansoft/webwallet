@@ -8,7 +8,10 @@
     <flexbox style="margin-top:14px;margin-bottom:14px;">
       <flexbox-item :span="3">
         <div style="display:block;margin-left:21px;">
-          <img :src="item.icon_url" style="width:auto;height:auto;max-width:100%;max-height:100%">
+            <img
+              src="http://114.116.148.48:9701/image/1/icon_img.jpg"
+              style="width: 45px;height: 45px;margin-left:17px;border-radius: 10%;"
+            >
         </div>
       </flexbox-item>
       <flexbox-item :span="9">
@@ -16,13 +19,13 @@
           <div>
             <span
               style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';"
-            >{{item.cp_text}}</span>
+            >孤胆车神</span>
           </div>
           <div style="height:17px"></div>
           <div>
             <span
               style="color: #888; font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';"
-            >{{item.provider}}</span>
+            >魔芋工作室</span>
           </div>
         </div>
       </flexbox-item>
@@ -42,19 +45,15 @@
     <flexbox style="margin-top:14px">
       <flexbox-item :span="5">
         <div style="display:block;margin-left:21px">
-          <span style="color:red; font-size:18px;">{{parseInt(item.sell_stock_amount/100)/1000}}千克</span>
+          <span style="color:red; font-size:18px;">2100千克</span>
         </div>
       </flexbox-item>
       <flexbox-item>
         <div>
           <span
-            v-if="item.sell_stock_amount>=item.base_amount"
             style="color: red; font-size:13px;"
-          >↑ {{parseInt(item.sell_stock_amount-item.base_amount/100)/1000}} (+ {{parseInt(item.sell_stock_amount*100/item.base_amount-100)}}%)</span>
-          <span
-            v-if="item.sell_stock_amount<item.base_amount"
-            style="color: blue; font-size:13px;"
-          >↓ {{parseInt(item.base_amount-item.sell_stock_amount/100)/1000}}(- {{parseInt(100-item.sell_stock_amount*100/item.base_amount)}}%)</span>
+          >↑ 500(+ 20%)</span>
+
         </div>
       </flexbox-item>
     </flexbox>
@@ -82,7 +81,7 @@
         <div style="display:block;">
           <span
             style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-          >{{parseInt(stock_bulletin.stock_high/100)/1000}}千克</span>
+          >86千克</span>
         </div>
       </flexbox-item>
       <flexbox-item :span="3" style="text-align:right">
@@ -96,7 +95,7 @@
         <div style="display:block;">
           <span
             style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-          >{{stock_bulletin.total_num}}</span>
+          >2000</span>
         </div>
       </flexbox-item>
     </flexbox>
@@ -113,7 +112,7 @@
         <div style="display:block;">
           <span
             style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-          >{{parseInt(stock_bulletin.stock_low/100)/1000}}千克</span>
+          >50千克</span>
         </div>
       </flexbox-item>
       <flexbox-item :span="3" style="text-align:right">
@@ -127,7 +126,7 @@
         <div style="display:block;">
           <span
             style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-          >{{parseInt(stock_bulletin.total_amount/100)/1000}}千克</span>
+          >2100千克</span>
         </div>
       </flexbox-item>
     </flexbox>
@@ -159,7 +158,7 @@
         <div style="display:block;">
           <span
             style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100);"
-          >{{history_text[0]}}</span>
+          >2222</span>
         </div>
       </flexbox-item>
     </flexbox>
@@ -175,7 +174,7 @@
         <div style="display:block;">
           <span
             style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100);"
-          >{{history_text[1]}}</span>
+          >5500</span>
         </div>
       </flexbox-item>
     </flexbox>
@@ -191,7 +190,7 @@
         <div style="display:block;">
           <span
             style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-          >{{history_text[2]}}</span>
+          >1200</span>
         </div>
       </flexbox-item>
     </flexbox>
@@ -207,7 +206,7 @@
         <div style="display:block;">
           <span
             style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-          >{{history_text[3]}}</span>
+          >420</span>
         </div>
       </flexbox-item>
     </flexbox>
@@ -257,14 +256,14 @@
           <div style="display:block;text-align:center;margin-left:21px;">
             <span
               style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69)"
-            >{{itemSale.price}}</span>
+            >12</span>
           </div>
         </flexbox-item>
         <flexbox-item :span="4">
           <div style="display:block;text-align:center;">
             <span
               style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-            >{{itemSale.num}}</span>
+            >25</span>
           </div>
         </flexbox-item>
         <flexbox-item :span="1">
@@ -273,7 +272,6 @@
           <div style="display:block;text-align:center;">
             <div
               style="display:block;margin-left:5px;margin-top:6px;border-radius: 15px;text-align:center;line-height:26px;width:50px;height:26px;background-color:#ff7164;font-size:13px;color:white"
-              @click="crowdFreeOrder()"
             >购入</div>
           </div>
         </flexbox-item>
@@ -298,45 +296,14 @@ export default {
   },
   data() {
     return {
-      msg: "众筹",
-      item: {},
-      history_text: {},
-      now_sale: {},
-      stock_bulletin: {}
+
     };
   },
   methods: {
-    crowdFreeOrder() {
-      this.$router.push({
-        name: "CrowdFreeOrder",
-        params: { item: this.item }
-      });
-    },
-    stockBulletin(cid) {
-      let data = {
-        func: "ListRecord",
-        control: "stockbulletin",
-        oemInfo: this.GLOBAL.oemInfo,
-        cid: cid
-      };
-      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-        console.log("220:", res.data.list[0]);
-        this.stock_bulletin = res.data.list[0];
-      });
-    }
+
   },
   created() {
-    this.item = this.$route.params.item;
-    //历史绩效数据
-    this.history_text = eval(this.item.history_text);
-    console.log(133, this.history_text);
-    //最新出售列表数据
-    this.now_sale = eval(this.item.now_sale);
-    console.log(136, this.now_sale);
 
-    //获取股票行情；在该方法中设置最新的一行记录
-    console.log(this.item.cid);
-    this.stockBulletin(this.item.cid);
   }
 };
 </script>
