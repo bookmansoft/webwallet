@@ -36,7 +36,6 @@ const Port = 9901
 const gameGoldUnit = '千克'
 
 var userBase = {userAgent: 0, uid: 0, user_name: null, openid: null}
-var userProfile = null
 var games = []
 var cplist = []
 var cpCount = 0
@@ -113,12 +112,13 @@ function checkAddr(value) {
     }
 }
 
+//输出全局数据仓库
 export default
 {
   colorList, colorListLength, getRandColor,
   apiUrl, siteUri, oemInfo,
   formatGameGold, gameGoldOrigin, gameGoldUnit,
   myAlert, formatDateStr, checkAddr,
-  userBase, userProfile, games, cplist, cpCount, vipGetNotifyTime
+  userBase, games, cplist, cpCount, vipGetNotifyTime
 }
 </script>

@@ -74,7 +74,6 @@ export default {
       headerTitle: '红包活动',
       hasRedAct: null,
       code: null,
-      wxopenid: null,
       redPackAct: null,
       userRedPackList: [],
       UserRedPackAct: null,
@@ -172,11 +171,10 @@ export default {
       
   },
   created() {
-    if(!!!this.GLOBAL.userProfile) {
-        this.$router.push('/mine')
-        console.log('goto route mine')      
+    if(!this.GLOBAL.userBase.uid) {
+        this.$router.push('/login');
     } else {
-        this.getRedPackAct()
+        this.getRedPackAct();
     }
   }
 

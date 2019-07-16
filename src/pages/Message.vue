@@ -38,7 +38,7 @@ export default {
   components: {
     XHeader, XButton, Flexbox, FlexboxItem, Group, Panel, LoadMore, NoData
   },
-  props: [
+    props: [
     'mine'
   ],
   data () {
@@ -95,10 +95,10 @@ export default {
     }
   },
   created() {
-    if(this.GLOBAL.userProfile == null) {
-      this.$router.push('/mine')
+    if(!this.GLOBAL.userBase.uid) {
+      this.$router.push('/login');
     }
-    this.getNotify()
+    this.getNotify();
   }
 }
 </script>

@@ -294,8 +294,11 @@ export default {
   },
   created() {
     this.item = this.$route.params.item;
+    if(!this.item) {
+      this.$router.push("/mine")
+    }
+
     console.log(this.item);
-    // console.log(293,JSON.parse(this.item.pic_urls)[0]);
     this.pic_urls=JSON.parse(this.item.pic_urls);
     this.percent2 = parseInt(
       (this.item.funding_done_amount * 100) / this.item.funding_target_amount

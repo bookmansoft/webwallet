@@ -70,10 +70,10 @@ export default {
     }
   },
   created() {
-    if(this.GLOBAL.userProfile == null) {
-      this.$router.push('/mine')
+    if(!this.GLOBAL.userBase.uid) {
+      this.$router.push('/login');
     }
-    this.getDrawLog()
+    this.getDrawLog();
   }
 }
 </script>

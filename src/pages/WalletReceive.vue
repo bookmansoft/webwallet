@@ -60,11 +60,10 @@ export default {
 
   },
   created() {
-    console.log('this.GLOBAL.userProfile', this.GLOBAL.userProfile)
-    if(this.GLOBAL.userProfile == null) {
-      this.$router.push('/mine')
+    if(!this.GLOBAL.userBase.uid) {
+      this.$router.push('/login');
     } else {
-      this.address = this.GLOBAL.userProfile.block_addr
+      this.address = this.GLOBAL.userBase.block_addr;
     }
   }
 }

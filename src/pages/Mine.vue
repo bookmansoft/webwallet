@@ -67,9 +67,9 @@
       <flexbox style="padding:5px;margin-top:5px">
         <flexbox-item :span="4">
           <div class="flex-demo-left">
-            <img :src="userProfile.avatar_uri " class="avatar" />
+            <img :src="userBase.avatar_uri " class="avatar" />
           </div></flexbox-item>
-        <flexbox-item><div class="flex-demo-right"><span>{{userProfile.nick}}</span></div></flexbox-item>
+        <flexbox-item><div class="flex-demo-right"><span>{{userBase.nickname}}</span></div></flexbox-item>
       </flexbox>
     </group>
     <group>
@@ -211,11 +211,7 @@ export default {
       items0: getItems0(),
       items1: getItems1(),
       items2: getItems2(),
-      hasProfile: false,
-      userProfile: {
-        nick: "未登录",
-        avatar: "static/img/icon3/mine1.png"
-      }
+      userBase: null,
     };
   },
   methods: {
@@ -225,54 +221,22 @@ export default {
     mystock() {
       this.$router.push({ name: "MyStock" });
     },
-    getUserProfile() {
-      let data = {
-        func: "Info",
-        control: "profile",
-        oemInfo: this.GLOBAL.oemInfo
-      };
-      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-        console.log(res.data);
-        if (res.data.profile != null) {
-          this.GLOBAL.propCount = res.data.profile.current_prop_count;
-          this.GLOBAL.userProfile = res.data.profile;
-          this.userProfile = res.data.profile;
-          this.hasProfile = true;
-          this.getMine();
-        }
-      });
-    },
-    getMine() {
-      let data = {
-        func: "Mine",
-        control: "profile",
-        oemInfo: this.GLOBAL.oemInfo
-      };
-      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-        console.log("mine", res.data);
-        if (res.data.errcode == "success" && res.data.mine != null) {
-          let mine = res.data.mine;
-          let vip = mine.vip;
-          if (vip != null && vip.vip_level > 0) {
-            this.items0[0].value = "产币加速中"; //'未提' + this.GLOBAL.formatGameGold(mine.vip_usable_count) + '千克'
-            this.items0[0].img =
-              "static/img/member/Vip" + vip.vip_level + ".png";
-            let current_time = parseInt(new Date().getTime() / 1000);
-            if (this.GLOBAL.formatGameGold(vip.vip_usable_count) >= 10) {
-              this.items0[0].showDot = true;
-            } else {
-              this.items0[0].showDot = false;
-            }
-          }
-          if (mine.current_prop_count > mine.prop_count) {
-            this.items1[1].badge = mine.current_prop_count - mine.prop_count;
-          }
-          this.GLOBAL.userProfile.mine = mine;
-        }
-        this.getNotify();
-      });
-    },
     getNotify() {
+      if (!!this.userBase && this.userBase.vip_level > 0) {
+        this.items0[0].value = "产币加速中"; //'未提' + this.GLOBAL.formatGameGold(this.userBase.vip_usable_count) + '千克'
+        this.items0[0].img =
+          "static/img/member/Vip" + this.userBase.vip_level + ".png";
+        let current_time = parseInt(new Date().getTime() / 1000);
+        if (this.GLOBAL.formatGameGold(this.userBase.vip_usable_count) >= 10) {
+          this.items0[0].showDot = true;
+        } else {
+          this.items0[0].showDot = false;
+        }
+      }
+      if (this.userBase.current_prop_count > this.userBase.prop_count) {
+        this.items1[1].badge = this.userBase.current_prop_count - this.userBase.prop_count;
+      }
+
       let data = {
         func: "GetNotify",
         control: "wallet",
@@ -303,15 +267,12 @@ export default {
     }
   },
   created() {
-    // console.log('this.GLOBAL.userProfile', this.GLOBAL.userProfile)
-    // console.log('this.GLOBAL.openid', this.GLOBAL.userBase.openid)
-    // if(this.GLOBAL.userProfile == null) {
-    //   this.getUserProfile()
-    // } else {
-    //   this.userProfile = this.GLOBAL.userProfile
-    //   this.getMine()
-    //   //this.getNotify()
-    // }
+    if(!this.GLOBAL.userBase.uid) {
+      this.$router.push('/login');
+    } else {
+      this.userBase = this.GLOBAL.userBase;
+      this.getNotify();
+    }
   }
 };
 </script>

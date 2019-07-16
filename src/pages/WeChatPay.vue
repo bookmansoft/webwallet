@@ -12,7 +12,7 @@
             <cell title="价格" :value="order.order_num"></cell>
          </group>
          <div style="padding:15px;">
-            <x-button @click.native="jsSDK()" type="primary" v-bind:show-loading="showLoading"> 确定支付</x-button>
+            <x-button @click.native="jsSDK()" type="primary" v-bind:show-loading="showLoading">确定支付</x-button>
          </div>
        </div>
        <div v-else>
@@ -26,7 +26,6 @@
 <script>
 import { InlineLoading, Cell, Group, XButton, Msg  } from 'vux'
 import { setTimeout } from 'timers';
-//import { setTimeout } from 'timers';
 
 export default {
   components: {
@@ -121,7 +120,7 @@ export default {
     orderNotify() {
         let that = this
         let data = {
-            func: 'OrderPayResutl',         //action
+            func: 'OrderPayResult',         //action
             tradeId: this.tradeId,
             status: 1,
             msg: 'success',
@@ -144,8 +143,11 @@ export default {
   },
 
   created() {
-    console.log('created')
-    if(this.GLOBAL.userBase.uid == 0 || this.$route.params.tradeId == null) {
+    if(!this.GLOBAL.userBase.uid) {
+      this.$router.push('/login');
+    }
+
+    if(this.$route.params.tradeId == null) {
       this.$router.push('/mine')
     }
 

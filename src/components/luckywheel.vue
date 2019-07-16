@@ -239,7 +239,7 @@ export default {
 .lucky-wheel {
   width: 100%;
   height: 31.5625rem;
-  background: rgb(252, 207, 133) url("https://mini.gamegold.xin/gg-wechat-client/img/lucky/color_pillar.png") no-repeat
+  background: rgb(252, 207, 133) url("../assets/img/color_pillar.png") no-repeat
     center bottom;
   background-size: 100%;
   padding-top: 1.5625rem;
@@ -247,7 +247,7 @@ export default {
 .lucky-title {
   width: 100%;
   height: 8.125rem;
-  background: url("https://mini.gamegold.xin/gg-wechat-client/img/lucky/lucky_title.png") no-repeat center top;
+  background: url("../assets/img/lucky_title.png") no-repeat center top;
   background-size: 100%;
 }
 .wheel-main {
@@ -259,7 +259,7 @@ export default {
 .wheel-bg {
   width: 18.4375rem;
   height: 18.4375rem;
-  background: url("https://mini.gamegold.xin/gg-wechat-client/img/lucky/draw_wheel.png") no-repeat center top;
+  background: url("../assets/img/draw_wheel.png") no-repeat center top;
   background-size: 100%;
   color: #fff;
   font-weight: 500;
@@ -281,7 +281,7 @@ export default {
 .wheel-pointer {
   width: 5.3125rem;
   height: 5.3125rem;
-  background: url("https://mini.gamegold.xin/gg-wechat-client/img/lucky/draw_btn.png") no-repeat center top;
+  background: url("../assets/img/draw_btn.png") no-repeat center top;
   background-size: 100%;
   transform-origin: center 60%;
 }

@@ -156,7 +156,6 @@ export default {
         gameWexQrcode: 'http://mini.gamegold.xin/wxopen/test',
         // 游戏道具图标
         cpProps:[],
-        userProfile: null,
         imagelistbrowse: {
           type: Array,
           default: [],
@@ -226,8 +225,8 @@ export default {
         uid: this.GLOBAL.uid,
         cid: this.cpItem.cid,
         reply_id: 0,
-        nick: this.GLOBAL.userProfile.nick,
-        avatar_url: this.GLOBAL.userProfile.avatar_uri,
+        nick: this.GLOBAL.userBase.nickname,
+        avatar_url: this.GLOBAL.userBase.avatar_uri,
         title: '',
         content: this.msgInput
       }
@@ -302,9 +301,7 @@ export default {
     },
 
     buyProp(item) {
-        //this.showPlugin('暂未开放，请稍后再来')
-        //return
-        if(this.cpAddr == '' || this.GLOBAL.userBase.uid == 0) {
+        if(this.cpAddr == '' || !this.GLOBAL.userBase.uid) {
             return;
         }
 

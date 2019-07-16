@@ -121,25 +121,6 @@ export default {
         this.$router.push('/mine')
       },
 
-      getMine(){
-          let data = {func:'Mine', control: 'profile', oemInfo: this.GLOBAL.oemInfo}
-          this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-              console.log('mine', res.data)
-              if(res.data.errcode == 'success') {
-                let vip = res.data.mine.vip
-                if(!!vip) {
-                  this.mine = vip
-                  let btnIndex = 0
-                  if(vip.vip_level == 0 || vip.is_expired == 1) {
-                    btnIndex = 0
-                  } else {
-                    btnIndex = vip.vip_level - 1
-                  }
-                  this.vipSelect(this.btnItems[btnIndex], btnIndex)
-                }
-              } 
-          });
-      },
       getBaseFee(vip_level) {
           if(vip_level == 1) {
             return '(￥6)'
@@ -176,11 +157,9 @@ export default {
           this.vipDescItems[index].price = allFee
           let k = allFee / 100
           return '(￥' + parseFloat(k.toFixed(2)) + ')'
-
         } else {
           return ''
         }
-        
       },
 
       vipSelect(item, index) {
@@ -259,12 +238,19 @@ export default {
       },
   },
   created() {
-    if(this.GLOBAL.userProfile == null || this.GLOBAL.uid == 0) {
-      this.$router.push('/mine')
+    if(!this.GLOBAL.userBase.uid) {
+      this.$router.push('/login');
     }
   },
   mounted() {
-    this.getMine()
+    this.mine = this.GLOBAL.userBase;
+    let btnIndex = 0;
+    if(!this.mine.vip_level || this.mine.is_expired == 1) {
+      btnIndex = 0;
+    } else {
+      btnIndex = this.mine.vip_level - 1;
+    }
+    this.vipSelect(this.btnItems[btnIndex], btnIndex);
   }
 }
 </script>

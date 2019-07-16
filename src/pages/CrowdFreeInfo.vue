@@ -327,15 +327,23 @@ export default {
   },
   created() {
     this.item = this.$route.params.item;
+    if(!this.item) {
+      this.$router.push('/mine');
+    }
+
     //历史绩效数据
-    this.history_text = eval(this.item.history_text);
-    console.log(133, this.history_text);
+    this.history_text = this.item.history_text;
+    if(typeof this.history_text == 'string') {
+      this.history_text = JSON.parse(this.history_text) || {};
+    }
+    console.log('history_text', this.history_text);
     //最新出售列表数据
-    this.now_sale = eval(this.item.now_sale);
-    console.log(136, this.now_sale);
+    this.now_sale = this.item.now_sale;
+    if(typeof this.now_sale == 'string') {
+      this.now_sale = JSON.parse(this.now_sale);
+    }
 
     //获取股票行情；在该方法中设置最新的一行记录
-    console.log(this.item.cid);
     this.stockBulletin(this.item.cid);
   }
 };

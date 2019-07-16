@@ -193,14 +193,14 @@ export default {
         this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
             console.log('vipDraw', res.data);
             if(res.data.errcode='success') {
-              this.percent = 0
-              this.doStart = false
-              this.mine.vip_usable_count = this.mine.vip_usable_count - draw_count
-              this.gold = this.GLOBAL.formatGameGold(this.mine.vip_usable_count )
-              this.doStart = true
-              this.drawLog.unshift(res.data.ret)
-              this.showPluginAuto('提币成功')
-              this.doCircle()
+              this.percent = 0;
+              this.doStart = false;
+              this.mine.vip_usable_count = this.mine.vip_usable_count - draw_count;
+              this.gold = this.GLOBAL.formatGameGold(this.mine.vip_usable_count.vip_usable_count );
+              this.doStart = true;
+              this.drawLog.unshift(res.data.ret);
+              this.showPluginAuto('提币成功');
+              this.doCircle();
             }
         });  
     },

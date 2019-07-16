@@ -1,4 +1,4 @@
-// 选择回报，及支付的前一页
+<!-- 选择回报，及支付的前一页 -->
 <template>
   <div class="root">
     <div style="background-color:#f3f3f3">

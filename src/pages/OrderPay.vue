@@ -101,26 +101,22 @@ export default {
   },
 
   beforeDestroy() {
-    this.isDestroy = true
-    console.log('beforeDestroy')
   },
   destroyed() {
     this.isDestroy = true
-    console.log('destroyed')
   },
   created() {
-    console.log('created')
-    if(this.GLOBAL.userProfile == null) {
-      this.$router.push('/mine')
-    }
-
-    if(this.$route.params.tradeId == null) {
-      this.$router.push('/member/join')
+    if(!this.GLOBAL.userBase.uid) {
+      this.$router.push('/login');
     } else {
-      this.tradeId = this.$route.params.tradeId
-      setTimeout(()=> {
-        this.getOrderStatus()
-      }, 1500)
+      if(this.$route.params.tradeId == null) {
+        this.$router.push('/member/join')
+      } else {
+        this.tradeId = this.$route.params.tradeId
+        setTimeout(()=> {
+          this.getOrderStatus()
+        }, 1500)
+      }
     }
   }
 }

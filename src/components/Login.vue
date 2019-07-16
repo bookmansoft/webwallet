@@ -47,18 +47,12 @@ export default {
     },
 
     wxAuthCode() {
-        console.log('wxAuthod')
         let redirect_uri = this.GLOBAL.siteUri
         if (location.search.indexOf("?") == 0 && location.search.indexOf("=") > 1) {
-          //arrSource = location.search.substring(1, this.location.search.length)
           redirect_uri = redirect_uri + location.search
         }
         console.log('redirect_uri', redirect_uri)
-        redirect_uri = encodeURIComponent(redirect_uri)
-        // let url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4a5e9d7ae34ad4b4'
-        // url += '&redirect_uri='+redirect_uri+'&response_type=code&scope=snsapi_base&state=1#wechat_redirect'
-        let url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4a5e9d7ae34ad4b4'
-        url += '&redirect_uri='+redirect_uri+'&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect'
+        let url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4a5e9d7ae34ad4b4&redirect_uri=${encodeURIComponent(redirect_uri)}&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect`;
         window.location.href = url
     },
 
@@ -82,18 +76,20 @@ export default {
 
     afterLogin() {
       if(this.remote.status.check(this.remote.CommStatus.logined)) {
+        //#region 登录成功后，客户端缓存的、供客户端显性调用的认证信息对象
         this.GLOBAL.userBase.uid = this.remote.userInfo.id;
         this.GLOBAL.userBase.user_name = this.remote.userInfo.name;
         this.GLOBAL.userBase.openid = this.remote.userInfo.openid;
+        //#endregion
 
+        //#region RPC调用所依赖的认证信息对象，客户端代码不会显性引用
         this.GLOBAL.oemInfo = this.GLOBAL.oemInfo || {};
         this.GLOBAL.oemInfo.domain = this.remote.userInfo.domain;
         this.GLOBAL.oemInfo.openid = this.remote.userInfo.openid;
         this.GLOBAL.oemInfo.openkey = this.remote.userInfo.openkey;
         this.GLOBAL.oemInfo.token = this.remote.userInfo.token;
-
-        //打印登录信息
-        console.log(this.GLOBAL.oemInfo);
+        console.log('logined', this.GLOBAL.oemInfo);
+        //#endregion
 
         this.gotoHome();
       } else {
@@ -112,7 +108,6 @@ export default {
     this.urlParamPath = this.utils.getUrlKey('path');
     let userAgent = this.checkUserAgent();
     this.GLOBAL.userBase.userAgent = userAgent;
-    console.log('userAgent', userAgent);
 
     //#region Modified by liub 2019.06.13
     try {

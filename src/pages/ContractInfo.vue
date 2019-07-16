@@ -91,9 +91,10 @@ export default {
         
     },
     created() {
-        if(!!this.$route.params.contract) {
-            this.contract = this.$route.params.contract
+        if(!this.$route.params.contract) {
+            this.$router.push('/mine');
         }
+        this.contract = this.$route.params.contract
     }
 }
 </script>

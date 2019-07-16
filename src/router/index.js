@@ -63,10 +63,24 @@ import MyStockSellDetail from '@/pages/MyStockSellDetail';
 Vue.use(Router)
 
 export default new Router({
+  // mode: 'history',
+  // base: __dirname,
   routes: [
     { path:'/', redirect:'Login' },
+    { path: '/login', name: 'Login', component: Login ,meta:{title:'登录'}},
     { path: '/home', name: 'Home', component: Home,meta:{title:'游戏金链'} },
+    { path: '/about', name: 'About', component: About ,meta:{title:'关于我们'}},
+    { path: '/member', name: 'Member', component: Member ,meta:{title:'成员'}},
+    { path: '/member/draw/log', name: 'MemberDrawLog', component: MemberDrawLog ,meta:{title:'成员画图日志'}},
+    { path: '/mine', name: 'Mine', component: Mine ,meta:{title:'我的'}},
+    { path: '/mywallet', name: 'MyWallet', component: MyWallet ,meta:{title:'我的钱包'}},
+    { path: '/mygame', name: 'MyGame', component: MyGame ,meta:{title:'我的游戏'}},
+    { path: '/my/stock', name: 'CrowdMy', component: CrowdMy ,meta:{title:'CrowdMy'}},
+
+    { path: '/message', name: 'Message', component: Message ,meta:{title:'消息'}},
+
     { path: '/market', name: 'Market', component: Market,meta:{title:'Market'} },
+
     { path: '/crowd', name: 'Crowd', component: Crowd,meta:{title:'众筹-百谷王游戏金链'} },
     { path: '/crowdFree', name: 'CrowdFree', component: CrowdFree,meta:{title:'自由市场'} },
     { path: '/crowd/info', name: 'CrowdInfo', component: CrowdInfo ,meta:{title:'众筹详情-百谷王游戏金链'}},
@@ -77,50 +91,44 @@ export default new Router({
     { path: '/crowd/my/info', name: 'CrowdMyInfo', component: CrowdMyInfo ,meta:{title:'我的游戏元宝'}},
     { path: '/crowd/my/sale', name: 'CrowdMySale', component: CrowdMySale ,meta:{title:'挂单出售中'}},
     { path: '/crowd/prePay', name: 'CrowdPrePay', component: CrowdPrePay ,meta:{title:'选择回报'}},
-
     { path: '/crowd/SendSuccess', name: 'SendSuccess', component: SendSuccess ,meta:{title:'发送成功'}},
     { path: '/crowd/SendFail', name: 'SendFail', component: SendFail ,meta:{title:' 发送失败'}},
     { path: '/crowd/SendConfirm', name: 'SendConfirm', component: SendConfirm ,meta:{title:'发送确认'}},
-
     { path: '/crowd/TransList', name: 'TransList', component: TransList ,meta:{title:'交易清单'}},
     { path: '/crowd/MyStock', name: 'MyStock', component: MyStock ,meta:{title:'我的游戏元宝'}},
     { path: '/crowd/MyStockSell', name: 'MyStockSell', component: MyStockSell ,meta:{title:'我的游戏元宝'}},
     { path: '/crowd/MyStockSellDetail', name: 'MyStockSellDetail', component: MyStockSellDetail ,meta:{title:'我的游戏元宝详情'}},
-    
-
     { path: '/crowd/BuySuccess', name: 'BuySuccess', component: BuySuccess ,meta:{title:'购买成功'}},
     { path: '/crowd/BuyFail', name: 'BuyFail', component: BuyFail ,meta:{title:' 购买失败'}},
     { path: '/crowd/PaySuccess', name: 'PaySuccess', component: PaySuccess ,meta:{title:'支付成功'}},
     { path: '/crowd/HouseAddress', name: 'HouseAddress', component: HouseAddress ,meta:{title:'收货地址'}},
     { path: '/crowd/HouseAddressAdd', name: 'HouseAddressAdd', component: HouseAddressAdd ,meta:{title:'添加收货地址'}},
 
-    { path: '/my/stock', name: 'CrowdMy', component: CrowdMy ,meta:{title:'CrowdMy'}},
-    { path: '/mine', name: 'Mine', component: Mine ,meta:{title:'我的'}},
-    { path: '/mywallet', name: 'MyWallet', component: MyWallet ,meta:{title:'我的钱包'}},
     { path: '/wallet', name: 'Wallet', component: Wallet ,meta:{title:'钱包'}},
     { path: '/wallet/send', name: 'WalletSend', component: WalletSend ,meta:{title:'转账'}},
     { path: '/wallet/receive', name: 'WalletReceive', component: WalletReceive ,meta:{title:'接受转账'}},
     { path: '/wallet/trans', name: 'WalletTrans', component: WalletTrans ,meta:{title:'交易对'}},
     { path: '/wallet/detail', name: 'WalletDetail', component: WalletDetail ,meta:{title:'交易流水'}},
+
     { path: '/props', name: 'Props', component: Props ,meta:{title:'道具'}},
-    { path: '/member', name: 'Member', component: Member ,meta:{title:'成员'}},
+    { path: '/prop/detail', name: 'PropDetail', component: PropDetail ,meta:{title:'道具详情'}},
+    { path: '/prop/receive', name: 'PropReceive', component: PropReceive ,meta:{title:'道具接收'}},
+    { path: '/prop/order/pay', name: 'PropOrderPay', component: PropOrderPay ,meta:{title:'道具订单支付'}},
+    { path: '/prop/sale/info', name: 'PropSaleInfo', component: PropSaleInfo ,meta:{title:'道具销售'}},
+
     { path: '/game/info', name: 'GameInfo', component: GameInfo ,meta:{title:'游戏信息'}},
     { path: '/game/intro', name: 'GameIntro', component: GameIntro ,meta:{title:'游戏Intro'}},
-    { path: '/prop/detail', name: 'PropDetail', component: PropDetail ,meta:{title:'道具详情'}},
+
     { path: '/contract/info', name: 'ContractInfo', component: ContractInfo ,meta:{title:'交易对信息'}},
-    { path: '/prop/sale/info', name: 'PropSaleInfo', component: PropSaleInfo ,meta:{title:'道具销售'}},
-    { path: '/about', name: 'About', component: About ,meta:{title:'关于我们'}},
+
     { path: '/order/pay', name: 'OrderPay', component: OrderPay ,meta:{title:'订单支付'}},
     { path: '/wechat/pay', name: 'WeChatPay', component: WeChatPay ,meta:{title:'微信支付'}},
-    { path: '/member/draw/log', name: 'MemberDrawLog', component: MemberDrawLog ,meta:{title:'成员画图日志'}},
-    { path: '/message', name: 'Message', component: Message ,meta:{title:'消息'}},
-    { path: '/prop/order/pay', name: 'PropOrderPay', component: PropOrderPay ,meta:{title:'道具订单支付'}},
+
+    { path: '/lucky', name: 'LuckyWheel', component: LuckyWheel ,meta:{title:'幸运大转盘'}},
+
     { path: '/redpack', name: 'RedPack', component: RedPack ,meta:{title:'红包'}},
     { path: '/redpack/act', name: 'RedPackAct', component: RedPackAct ,meta:{title:'红包Act'}},
-    { path: '/mygame', name: 'MyGame', component: MyGame ,meta:{title:'我的游戏'}},
-    { path: '/login', name: 'Login', component: Login ,meta:{title:'登录'}},
-    { path: '/prop/receive', name: 'PropReceive', component: PropReceive ,meta:{title:'道具接收'}},
-    { path: '/lucky', name: 'LuckyWheel', component: LuckyWheel ,meta:{title:'幸运大转盘'}},
+
     { path: '/manyRed/manage',name:'ManyRedManage',component:ManyRedManage,meta:{title:'多人红包管理'}},
     { path: '/manyRed/send',name:'ManyRedSend',component:ManyRedSend,meta:{title:'多人红包发送'}},
     { path: '/manyRed/justSend/:send_id',name:'ManyRedJustSend',component:ManyRedJustSend,meta:{title:'多人红包-即将发送'}},
