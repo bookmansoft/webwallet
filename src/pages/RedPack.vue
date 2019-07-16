@@ -1,15 +1,17 @@
 <template>
   <div>
     <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
-    <group title="红包测试">
-        <div style="padding:15px;"><p>{{version}}</p></div>
+    <group title="红包管理">
+        <div style="padding:15px;">
+          <x-button type="primary" @click.native="wheel">抽红包</x-button>
+        </div>
     </group>
     <group v-if="retMsg!=null">
         <div style="padding:15px;"><p>{{retMsg}}</p></div>
     </group>
     <group label-width="3.5em" label-margin-right="2em" label-align="right">
         <div style="padding:15px;">
-        <x-button type="primary" @click.native="sendRedPack">发一个红包试试</x-button>
+          <x-button type="primary" @click.native="sendRedPack">发红包</x-button>
         </div>
     </group>
   </div>
@@ -23,7 +25,6 @@ export default {
   },
   data () {
     return {
-      version: '领一个红包',
       headerTitle: '抢红包',
       retMsg: null
     }
@@ -31,6 +32,9 @@ export default {
   methods: {
       onBack() {
         this.$router.go(-1);
+      },
+      wheel(){
+        this.$router.push('/redPack/act');
       },
       sendRedPack() {
           let data = {func:'SendRecPack', control: 'wechat', oemInfo: this.GLOBAL.oemInfo}

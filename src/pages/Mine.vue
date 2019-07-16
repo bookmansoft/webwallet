@@ -10,18 +10,13 @@
           <img src="static/img/stock/mine/star.png" style="width:61px;height:61px;">
         </div>
         <div style="display:block">
-          <span
-            style="font-size:18px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(255,255,255);"
-          >王小明</span>
+          <span style="font-size:18px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(255,255,255);">王小明</span>
         </div>
       </div>
     </div>
     <!-- 正常代码区域 -->
     <div style="display:block" class="nospace">
-      <img
-        src="static/img/stock/mine/top.png"
-        style="width:auto;height:auto;max-width:100%;max-height:100%"
-      >
+      <img src="static/img/stock/mine/top.png" style="width:auto;height:auto;max-width:100%;max-height:100%">
     </div>
     <flexbox :gutter="0" class="nospace" style="margin-top:-3px;margin-bottom:-3px">
       <flexbox-item :span="2">
@@ -42,7 +37,7 @@
       </flexbox-item>
       <flexbox-item :span="1"></flexbox-item>
       <flexbox-item :span="2">
-        <div style="display:block" align="center">
+        <div style="display:block" align="center" @click="about()">
           <img src="static/img/stock/mine/about.png" style="width:51px;height:56px;">
         </div>
       </flexbox-item>
@@ -220,6 +215,9 @@ export default {
     },
     mystock() {
       this.$router.push({ name: "MyStock" });
+    },
+    about() {
+      this.$router.push({ name: "About" });
     },
     getNotify() {
       if (!!this.userBase && this.userBase.vip_level > 0) {

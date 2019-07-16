@@ -113,7 +113,7 @@ export default {
   },
   methods: {
     viewBox() {
-      this.$router.push("/crowd/SendConfirm");
+      this.$router.push("/wallet");
     }
   },
 

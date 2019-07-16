@@ -4,19 +4,13 @@
       <div align="center">
         <!-- 相对于父容器定位 -->
         <div style="display:block;">
-          <span
-            style="font-size:14px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,255,255);"
-          >钱包余额(千克)</span>
+          <span style="font-size:14px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,255,255);">钱包余额(千克)</span>
         </div>
         <div style="display:block;margin-top:10px">
-          <span
-            style="font-size:32px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(255,255,255);"
-          >100.000</span>
+          <span style="font-size:32px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(255,255,255);">{{balance.confirmed}}</span>
         </div>
         <div style="display:block;margin-top:15px">
-          <span
-            style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,255,255);"
-          >未入账 +30.000</span>
+          <span style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,255,255);">未入账 {{balance.unconfirmed}}</span>
         </div>
       </div>
     </div>
@@ -38,31 +32,25 @@
           <img src="static/img/stock/mywallet/send.png" style="width:32px;height:32px;">
         </div>
         <div style="display:block" align="center" @click="send">
-          <span
-            style="font-size:12px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(51,51,51);"
-          >发送</span>
+          <span style="font-size:12px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(51,51,51);">发送</span>
         </div>
       </flexbox-item>
       <flexbox-item :span="1"></flexbox-item>
       <flexbox-item :span="2">
-        <div style="display:block" align="center">
+        <div style="display:block" align="center" @click="receive">
           <img src="static/img/stock/mywallet/receive.png" style="width:32px;height:32px;">
         </div>
-        <div style="display:block" align="center">
-          <span
-            style="font-size:12px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(51,51,51);"
-          >接收</span>
+        <div style="display:block" align="center" @click="receive">
+          <span style="font-size:12px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(51,51,51);">接收</span>
         </div>
       </flexbox-item>
       <flexbox-item :span="1"></flexbox-item>
       <flexbox-item :span="2">
-        <div style="display:block" align="center">
+        <div style="display:block" align="center" @click='sendPack'>
           <img src="static/img/stock/mywallet/red.png" style="width:30px;height:32px;">
         </div>
-        <div style="display:block" align="center">
-          <span
-            style="font-size:12px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(51,51,51);"
-          >发红包</span>
+        <div style="display:block" align="center" @click='sendPack'>
+          <span style="font-size:12px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(51,51,51);">发红包</span>
         </div>
       </flexbox-item>
       <flexbox-item :span="2">
@@ -73,10 +61,7 @@
     </flexbox>
 
     <div style="display:block" class="nospace">
-      <img
-        src="static/img/stock/mywallet/bottom.png"
-        style="width:auto;height:auto;max-width:100%;max-height:100%"
-      >
+      <img src="static/img/stock/mywallet/bottom.png" style="width:auto;height:auto;max-width:100%;max-height:100%">
     </div>
 
     <div style="background-color:white;">
@@ -168,19 +153,51 @@ export default {
     FlexboxItem
   },
   data() {
-    return {};
+    return {
+      mine: {},
+      balance: {
+        confirmed: 0,
+        unconfirmed: 0
+      },
+    };
   },
   methods: {
+    /**
+     * 账户余额
+     */
+    balanceAll() {
+        let data = {func:'BalanceAll', control: 'wallet', oemInfo: this.GLOBAL.oemInfo}
+        this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+            this.balance.confirmed = this.GLOBAL.formatGameGold(res.data.balance.confirmed)
+            this.balance.unconfirmed = this.GLOBAL.formatGameGold(res.data.balance.unconfirmed-res.data.balance.confirmed)
+            this.doStart = true
+        }).catch(res => {
+            console.log(res)
+        })
+    },
     send() {
-      console.log("send");
       this.$router.push({ name: "WalletSend" });
+    },
+    sendPack() {
+      this.$router.push('/redPack');
+    },
+    receive() {
+      this.$router.push('/wallet/receive');
     },
     transList() {
       console.log("transList");
       this.$router.push({ name: "TransList" });
     }
   },
-  created() {}
+  created() {
+    if(!this.GLOBAL.userBase.uid) {
+      this.$router.push('/login');
+    }
+    this.balanceAll();
+  },
+  mounted() {
+    this.mine = this.GLOBAL.userBase;
+  }
 };
 </script>
 <style lang="less" scoped>

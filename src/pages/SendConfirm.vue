@@ -13,14 +13,10 @@
         </flexbox-item>
         <flexbox-item :span="10">
           <div style="display:block">
-            <span
-              style="font-size:16px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(50,58,69);"
-            >本次发送</span>
+            <span style="font-size:16px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(50,58,69);">本次发送</span>
           </div>
           <div style="display:block">
-            <span
-              style="font-size:22px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(50,58,69);"
-            >100.000千克</span>
+            <span style="font-size:22px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(50,58,69);">{{sender.amount}}千克</span>
           </div>
         </flexbox-item>
         <flexbox-item :span="1">
@@ -34,21 +30,15 @@
           </flexbox-item>
         </flexbox>
       </div>
-
-
-       <flexbox class="content">
+      <flexbox class="content">
         <flexbox-item :span="1">
         </flexbox-item>
         <flexbox-item :span="10">
           <div style="display:block">
-            <span
-              style="font-size:14px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(190,190,190);"
-            >本次手续费</span>
+            <span style="font-size:14px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(190,190,190);">本次手续费</span>
           </div>
           <div style="display:block">
-            <span
-              style="font-size:18px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(190,190,190);"
-            >0.002千克</span>
+            <span style="font-size:18px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(190,190,190);">{{sender.fee}}千克</span>
           </div>
         </flexbox-item>
         <flexbox-item :span="1">
@@ -68,14 +58,10 @@
         </flexbox-item>
         <flexbox-item :span="10">
           <div style="display:block">
-            <span
-              style="font-size:16px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(50,58,69);"
-            >发送到</span>
+            <span style="font-size:16px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(50,58,69);">发送到</span>
           </div>
           <div style="display:block">
-            <span
-              style="font-size:16px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(50,58,69);"
-            >tb001gEdQ32PWKKP01OTR32orsQ32gEdQ6</span>
+            <span style="font-size:16px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(50,58,69);">{{sender.address}}</span>
           </div>
         </flexbox-item>
         <flexbox-item :span="1">
@@ -140,20 +126,48 @@ export default {
     Badge
   },
   data() {
-    return {};
+    return {
+      sender: {
+        amount: 0,
+        actAmount: 0,
+        fee: 0,
+        address: '',
+      },
+    };
   },
   methods: {
     sendGamegold() {
-      let index = parseInt(Math.random() * 2);
-      if (index == 0) {
-        this.$router.push("/crowd/SendSuccess");
-      } else {
-        this.$router.push("/crowd/SendFail");
-      }
+      let data = {
+        func: "TxSend",
+        control: "wallet",
+        addr: this.sender.address,
+        amount: this.sender.actAmount,
+        oemInfo: this.GLOBAL.oemInfo
+      };
+      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+        let that = this;
+        if (res.data.ret == null) {
+          this.GLOBAL.myAlert(
+            this.$vux.alert,
+            "发送失败，请确认接收地址是否正确"
+          );
+        } else {
+          this.GLOBAL.myAlert(this.$vux.alert, "发送成功", null, function() {
+            that.$router.push("/wallet/detail");
+          });
+        }
+      });
     }
   },
 
-  created() {}
+  created() {
+    this.sender = {
+      amount : this.$route.params.amount,
+      actAmount: this.GLOBAL.gameGoldOrigin(this.$route.params.amount),
+      fee: this.$route.params.fee,
+      address: this.$route.params.address,
+    };
+  }
 };
 </script>
 

@@ -46,12 +46,12 @@ export default {
         this.$router.push('/wallet')
       },
       transPub() {
-        if(this.chenkSend() == false) {
+        if(this.checkSend() == false) {
           return
         }
         this.contractCreate()
       },
-      chenkSend() {
+      checkSend() {
         const confirmed = this.$refs.balance.getConfirmed()
         let sendGold = !!this.number ? this.number : 0
         let btcGold = !!this.btc ? this.btc : 0

@@ -109,6 +109,14 @@ export default new Router({
     { path: '/wallet/receive', name: 'WalletReceive', component: WalletReceive ,meta:{title:'接受转账'}},
     { path: '/wallet/trans', name: 'WalletTrans', component: WalletTrans ,meta:{title:'交易对'}},
     { path: '/wallet/detail', name: 'WalletDetail', component: WalletDetail ,meta:{title:'交易流水'}},
+    { path: '/redpack', name: 'RedPack', component: RedPack ,meta:{title:'红包'}},
+    { path: '/redpack/act', name: 'RedPackAct', component: RedPackAct ,meta:{title:'红包Act'}},
+
+    { path: '/manyRed/manage',name:'ManyRedManage',component:ManyRedManage,meta:{title:'多人红包管理'}},
+    { path: '/manyRed/send',name:'ManyRedSend',component:ManyRedSend,meta:{title:'多人红包发送'}},
+    { path: '/manyRed/justSend/:send_id',name:'ManyRedJustSend',component:ManyRedJustSend,meta:{title:'多人红包-即将发送'}},
+    { path: '/manyRed/receive/:send_id',name:'ManyRedReceive',component:ManyRedReceive,meta:{title:'多人红包接收'}},
+    { path: '/manyRed/unpack/:send_id',name:'ManyRedUnpack',component:ManyRedUnpack,meta:{title:'打开多人红包'}},
 
     { path: '/props', name: 'Props', component: Props ,meta:{title:'道具'}},
     { path: '/prop/detail', name: 'PropDetail', component: PropDetail ,meta:{title:'道具详情'}},
@@ -125,14 +133,5 @@ export default new Router({
     { path: '/wechat/pay', name: 'WeChatPay', component: WeChatPay ,meta:{title:'微信支付'}},
 
     { path: '/lucky', name: 'LuckyWheel', component: LuckyWheel ,meta:{title:'幸运大转盘'}},
-
-    { path: '/redpack', name: 'RedPack', component: RedPack ,meta:{title:'红包'}},
-    { path: '/redpack/act', name: 'RedPackAct', component: RedPackAct ,meta:{title:'红包Act'}},
-
-    { path: '/manyRed/manage',name:'ManyRedManage',component:ManyRedManage,meta:{title:'多人红包管理'}},
-    { path: '/manyRed/send',name:'ManyRedSend',component:ManyRedSend,meta:{title:'多人红包发送'}},
-    { path: '/manyRed/justSend/:send_id',name:'ManyRedJustSend',component:ManyRedJustSend,meta:{title:'多人红包-即将发送'}},
-    { path: '/manyRed/receive/:send_id',name:'ManyRedReceive',component:ManyRedReceive,meta:{title:'多人红包接收'}},
-    { path: '/manyRed/unpack/:send_id',name:'ManyRedUnpack',component:ManyRedUnpack,meta:{title:'打开多人红包'}},
   ]
 })

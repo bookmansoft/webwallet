@@ -77,9 +77,11 @@ export default {
     afterLogin() {
       if(this.remote.status.check(this.remote.CommStatus.logined)) {
         //#region 登录成功后，客户端缓存的、供客户端显性调用的认证信息对象
+        this.GLOBAL.userBase = this.remote.userInfo;
         this.GLOBAL.userBase.uid = this.remote.userInfo.id;
         this.GLOBAL.userBase.user_name = this.remote.userInfo.name;
-        this.GLOBAL.userBase.openid = this.remote.userInfo.openid;
+        this.GLOBAL.userBase.nickname = this.remote.userInfo.name;
+        console.log('after login', this.GLOBAL.userBase);
         //#endregion
 
         //#region RPC调用所依赖的认证信息对象，客户端代码不会显性引用
@@ -128,14 +130,13 @@ export default {
           //登录验证
           await this.remote.setUserInfo({openkey: openkey, token: token}).getToken();
         } else {
-          throw new Error('lack auth info');
+          setTimeout(()=>{ this.wxAuthCode(); }, 2000); //发生错误时，两秒后跳回微信授权页面，重新拉取授权码
         }
       }
       //执行登录操作后续检验工作
       this.afterLogin();
     } catch(e) {
       console.log(e);
-      setTimeout(()=>{ this.wxAuthCode(); }, 2000); //发生错误时，两秒后跳回微信授权页面，重新拉取授权码
     }
     //#endregion
   }

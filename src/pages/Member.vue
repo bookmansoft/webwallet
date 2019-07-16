@@ -33,7 +33,6 @@
           <span>{{btnTitle + btnTitleFee}}</span>
         </x-button>
     </div>
-
   </div>
 </template>
 

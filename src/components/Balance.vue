@@ -43,24 +43,33 @@ export default {
     }
   },
   methods: {
-      // 账户余额
-      balanceAll() {
-          let data = {func:'BalanceAll', control: 'wallet', oemInfo: this.GLOBAL.oemInfo}
-          this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-              this.balance.confirmed = this.GLOBAL.formatGameGold(res.data.balance.confirmed)
-              this.balance.unconfirmed = this.GLOBAL.formatGameGold(res.data.balance.unconfirmed-res.data.balance.confirmed)
-              //this.balance.unconfirmed = this.balance.unconfirmed - this.balance.confirmed
-              this.doStart = true
-          }).catch(res => {
-              console.log(res)
-          })
-      },
-      getConfirmed() {
-        return this.balance.confirmed
-      },
-      getUnConfirmed() {
-        return this.balance.unconfirmed
-      }
+    /**
+     * 账户余额
+     */
+    balanceAll() {
+        let data = {func:'BalanceAll', control: 'wallet', oemInfo: this.GLOBAL.oemInfo}
+        this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+            this.balance.confirmed = this.GLOBAL.formatGameGold(res.data.balance.confirmed)
+            this.balance.unconfirmed = this.GLOBAL.formatGameGold(res.data.balance.unconfirmed-res.data.balance.confirmed)
+            this.doStart = true;
+
+            //#region 缓存到全局变量中
+            this.GLOBAL.userBase.balance = {
+              confirmed: this.balance.confirmed,
+              unconfirmed: this.balance.unconfirmed,
+            };
+            
+            //#endregion
+        }).catch(res => {
+            console.log(res)
+        })
+    },
+    getConfirmed() {
+      return this.balance.confirmed
+    },
+    getUnConfirmed() {
+      return this.balance.unconfirmed
+    }
   },
   created() {
       this.balanceAll()

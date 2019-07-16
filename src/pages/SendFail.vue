@@ -45,12 +45,7 @@
         <flexbox-item :span="1"></flexbox-item>
         <flexbox-item :span="10">
           <div style="display:block;margin-left:10px;margin-right:20px">
-          <x-button
-            plain
-            style="border-radius:5px;color:rgb(255,113,101)"
-            type="warn"
-            @click.native="viewBox()"
-          >返回钱包</x-button>
+          <x-button plain style="border-radius:5px;color:rgb(255,113,101)" type="warn" @click.native="viewBox()">返回钱包</x-button>
           </div>
         </flexbox-item>
         <flexbox-item :span="1"></flexbox-item>
@@ -99,9 +94,8 @@ export default {
     return {};
   },
   methods: {
-
     viewBox() {
-      this.$router.push("/crowd/SendConfirm");
+      this.$router.push("/wallet");
     }
   },
 

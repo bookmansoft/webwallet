@@ -11,9 +11,7 @@
       <flexbox :gutter="0" class="content">
         <flexbox-item :span="1"></flexbox-item>
         <flexbox-item :span="9">
-          <span
-            style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(50,58,69);"
-          >接收人地址</span>
+          <span style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(50,58,69);">接收人地址</span>
         </flexbox-item>
         <flexbox-item :span="1">
           <div style="display:block;padding-left:10px;" @click="wxScanCode">
@@ -33,8 +31,8 @@
           :rows="2"
           name="address"
           ref="address"
-          placeholder="输入地址"
           v-model="address"
+          placeholder="输入地址"
           required
           style="border-style: solid;border-width: 1px;border-color:#888888;width:80%;line-height:20px"
         ></x-textarea>
@@ -45,9 +43,7 @@
       <flexbox :gutter="0" class="content">
         <flexbox-item :span="1"></flexbox-item>
         <flexbox-item :span="10">
-          <span
-            style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(50,58,69);"
-          >发送金额（千克）</span>
+          <span style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(50,58,69);">发送金额（千克）</span>
         </flexbox-item>
         <flexbox-item :span="1"></flexbox-item>
       </flexbox>
@@ -55,7 +51,7 @@
       <flexbox :gutter="0" class="content">
         <flexbox-item :span="1"></flexbox-item>
         <flexbox-item :span="11">
-        <x-input title="" required placeholder="请输入游戏金金额" style="border-style: solid;border-width: 1px;border-color:#888888;width:80%;line-height:20px"></x-input>
+          <x-input name="number" v-model="number" ref="number" title="" required placeholder="请输入发送金额" style="border-style: solid;border-width: 1px;border-color:#888888;width:80%;line-height:20px"></x-input>
         </flexbox-item>
         <flexbox-item :span="1"></flexbox-item>
       </flexbox>
@@ -63,12 +59,8 @@
       <flexbox :gutter="0" class="content">
         <flexbox-item :span="1"></flexbox-item>
         <flexbox-item :span="10">
-          <span
-            style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(154,154,154);"
-          >可用余额</span>
-          <span
-            style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(50,58,69);"
-          >100.123千克</span>
+          <span style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(154,154,154);">可用余额</span>
+          <balance ref="balance"></balance>
         </flexbox-item>
         <flexbox-item :span="1"></flexbox-item>
       </flexbox>
@@ -158,7 +150,8 @@ export default {
       msg1: "输入地址或者扫描地址二维码",
       msg2: "输入游戏金数量",
       address: "",
-      number: ""
+      number: "",
+      mine: {},
     };
   },
   methods: {
@@ -200,37 +193,17 @@ export default {
       });
     },
     sendGamegold() {
-      if (true) {
-        this.$router.push("/crowd/SendConfirm");
-      }
-
-      if (this.chenkSend() == false) {
+      if (this.checkSend() == false) {
         return;
       }
-      let data = {
-        func: "TxSend",
-        control: "wallet",
-        addr: this.address,
-        amount: this.GLOBAL.gameGoldOrigin(this.number),
-        oemInfo: this.GLOBAL.oemInfo
-      };
-      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-        console.log(res.data);
-        let that = this;
-        if (res.data.ret == null) {
-          this.GLOBAL.myAlert(
-            this.$vux.alert,
-            "发送失败，请确认接收地址是否正确"
-          );
-        } else {
-          this.GLOBAL.myAlert(this.$vux.alert, "发送成功", null, function() {
-            that.$router.push("/wallet/detail");
-          });
-        }
-      });
+      this.$router.push({name: 'SendConfirm', params: {
+        address: this.address,
+        amount: this.number,
+        fee: 0,
+      }});
     },
-    chenkSend() {
-      const confirmed = this.$refs.balance.getConfirmed();
+    checkSend() {
+      const confirmed = this.mine.balance.confirmed;
       let sendGold = !!this.number ? this.number : 0;
       if (this.address == "") {
         this.GLOBAL.myAlert(this.$vux.alert, "请输入地址");
@@ -251,6 +224,7 @@ export default {
   },
   created() {
     this.getWxConfig();
+    this.mine = this.GLOBAL.userBase;
   }
 };
 </script>
