@@ -137,16 +137,14 @@ export default {
   },
   methods: {
     sendGamegold() {
-      let data = {
+      this.remote.fetching({
         func: "TxSend",
         control: "wallet",
         addr: this.sender.address,
         amount: this.sender.actAmount,
-        oemInfo: this.GLOBAL.oemInfo
-      };
-      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
+      }).then(res => {
         let that = this;
-        if (res.data.ret == null) {
+        if (res.code != 0) {
           this.GLOBAL.myAlert(
             this.$vux.alert,
             "发送失败，请确认接收地址是否正确"

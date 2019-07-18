@@ -52,9 +52,7 @@ export default {
       },
       //获取交易记录
       getTxLogs() {
-          let data = {func:'TxLogs', control: 'wallet', oemInfo: this.GLOBAL.oemInfo}
-          this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-              console.log(res.data);
+          this.remote.fetching({func:'TxLogs', control: 'wallet',}).then(res => {
               for(var i=0; i<res.data.list.length; i++) {
                   var item = res.data.list[i];
                   if(item.amount != 0) {
@@ -78,8 +76,8 @@ export default {
                   });
               }
               this.isLoadMore = true
-          }).catch(res => {
-              console.log(res);
+          }).catch(e => {
+              console.log(e);
               this.isLoadMore = true
           })
       }

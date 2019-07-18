@@ -89,19 +89,14 @@ export default {
                 this.showPlugin("请输入出售价格")
                 return
             }
-            let data = {
+            this.remote.fetching({
                 func:'StockSale',
                 control: 'stock',
                 cid: this.crowdItem.cid,
                 price: this.price,
                 quantity: this.quantity,
-                oemInfo: this.GLOBAL.oemInfo
-            };
-            console.log('StockSale', data)
-            this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-                console.log(res.data);
-                if(res.data.errcode='success') {
-                    //this.orderPay(res.data.tradeId)
+            }).then(res => {
+                if(res.code == 0) {
                     setTimeout(() => {
                         this.showLoading = false
                         this.$router.push({ name: 'CrowdMy'})

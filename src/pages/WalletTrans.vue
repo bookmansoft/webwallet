@@ -77,27 +77,23 @@ export default {
       },
       // 发送请求 获取数据
       contractCreate() {
-          let data = {
-            //  ntype, num, btc, addr
+          this.remote.fetching({
             func:'ContractCreate', 
             control: 'contract',
-            oemInfo: this.GLOBAL.oemInfo,
             ntype: 1,
             num: this.GLOBAL.gameGoldOrigin(this.number),
             btc: this.btc * 100000000,
             addr: this.address,
-          };
-          this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-            console.log(res.data);
-            if (res.data.ret == null) {
+          }).then(res => {
+            if (res.code != 0) {
                 this.GLOBAL.myAlert(this.$vux.alert, "发布失败，请确认BTC接收地址是否正确");
             } else {
                 this.GLOBAL.myAlert(this.$vux.alert, '发布成功', null, function() {
                 that.$router.push('/wallet/detail')
               })
             }
-          }).catch(res => {
-              console.log(res);
+          }).catch(e => {
+              console.log(e);
           })
       }
   },

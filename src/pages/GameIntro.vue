@@ -88,10 +88,10 @@ export default {
 
     getWxConfig() {
         const url = location.href.split("#")[0];
-        let data = {func:'WechatConfig', control: 'wechat', url: url, oemInfo: this.GLOBAL.oemInfo}
-        this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-            console.log(res.data);
-            this.$wechat.config(res.data.wxconfig)
+        this.remote.fetching({func:'WechatConfig', control: 'wechat', url: url}).then(res => {
+          if(res.code == 0) {
+            this.$wechat.config(res.data);
+          }
         }).catch(res => {
             console.log(res);
         })
@@ -163,29 +163,27 @@ export default {
         this.cpInfo.proplist.forEach(element => {
             //从cp获取资源
             let url = encodeURI(this.cpItem.url + '/prop/' + element.id)
-            let data = {func:'GetCpProxy', control: 'cp', url: url, oemInfo: this.GLOBAL.oemInfo} 
-            this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-              if(res.data.hasOwnProperty('result')) {
-                let item = res.data.result
-                item.props_price = this.GLOBAL.formatGameGold(item.props_price)
-                this.cpProps.push(item)
-              }
+            this.remote.fetching({func:'GetCpProxy', control: 'cp', url: url,}).then(res => {
+                let item = res.data;
+                item.props_price = this.GLOBAL.formatGameGold(item.props_price);
+                this.cpProps.push(item);
             })        
         });
     },
 
     userToken() {
-        if(this.GLOBAL.openid == '') {
-            return
+        if(!this.GLOBAL.openid) {
+            return;
         }
-        let data = {func:'UserToken', control: 'cp', oemInfo: this.GLOBAL.oemInfo,
-            openid: this.GLOBAL.openid, 
-            uid: this.GLOBAL.openid,
-            cid: this.cpItem.cid
-        }
-        this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-            //console.log(res.data)
-            this.cpAddr = res.data.ret.data.addr
+        this.remote.fetching({
+          func:'UserToken', control: 'cp', 
+          openid: this.GLOBAL.openid, 
+          uid: this.GLOBAL.openid,
+          cid: this.cpItem.cid
+        }).then(res => {
+          if(res.code == 0) {
+            this.cpAddr = res.data.data.addr;
+          }
         });
     }
   },

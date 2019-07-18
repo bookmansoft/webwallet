@@ -70,22 +70,19 @@ export default {
             })
         },
         contractPromise() {
-            let data = {
+            this.remote.fetching({
                 func:'ContractPromise', 
                 control: 'contract',
-                oemInfo: this.GLOBAL.oemInfo,
                 txid: this.contract.current.hash,
-            };
-            this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-                console.log(res.data);
-                if(res.data.errcode='success') {
+            }).then(res => {
+                if(res.code == 0) {
                     this.showPluginAuto('该笔交易对签署成功!')
                     this.$router.go(-1);
                 } else {
                     this.showPluginAuto('该笔交易对签署失败!')
                 }
-            }).catch(res => {
-                console.log(res);
+            }).catch(e => {
+                console.log(e);
             });
         }
         

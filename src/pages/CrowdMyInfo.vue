@@ -91,16 +91,13 @@ export default {
           this.$router.push({ name: 'CrowdMySale', params: { item: this.crowdItem }})
         },
         getUserStockLogs(){
-            let data = { 
+            this.remote.fetching({ 
               func:'UserStockLogs', 
               control: 'stock', 
               cid: this.crowdItem.cid,
-              oemInfo: this.GLOBAL.oemInfo
-            }
-            this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-                console.log('UserStockLogs', res.data)
-                if(res.data.errcode == 'success') {
-                    this.userStockLogs = res.data.data
+            }).then(res => {
+                if(res.code == 0) {
+                    this.userStockLogs = res.data;
                 }
             });
         },

@@ -67,16 +67,13 @@ export default {
             })
         },
         propBuy() {
-            let data = {
+            this.remote.fetching({
                 func:'PropBuy', 
                 control: 'prop',
-                oemInfo: this.GLOBAL.oemInfo,
                 pid: this.propSale.pid,
                 price: this.propSale.bid.fixed,
-            };
-            this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-                console.log(res.data);
-                if(res.data.errcode='success') {
+            }).then(res => {
+                if(res.code == 0) {
                     this.showPluginAuto('道具交易成功!')
                     this.$router.go(-1);
                 } else {

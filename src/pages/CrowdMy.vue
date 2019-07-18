@@ -144,11 +144,9 @@ export default {
           this.$router.push({ name: 'CrowdFreeInfo', params: { item: item }})
         },
         getUserStocks(){
-            let data = {func:'UserStocks', control: 'stock', oemInfo: this.GLOBAL.oemInfo}
-            this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-                console.log('UserStocks', res.data)
-                this.isLoadMore = true
-                this.crowdItems = res.data.data
+            this.remote.fetching({func:'UserStocks', control: 'stock'}).then(res => {
+                this.isLoadMore = true;
+                this.crowdItems = res.data;
             });
         },
   },

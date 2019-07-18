@@ -40,19 +40,16 @@ export default {
   },
   methods: {
     getOrderStatus() {
-        let data = {
+      this.remote.fetching({
         func:'OrderStatus',
         control: 'order',
         uid: this.GLOBAL.uid,
         tradeId: this.tradeId,
         openid: this.GLOBAL.openid,
-        oemInfo: this.GLOBAL.oemInfo
-      };
-      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-          if(res.data.errcode=='success') {
-            console.log('getOrderStatus', res.data.order);
+      }).then(res => {
+          if(res.code == 0) {
             this.title = '支付中...'
-            this.order = res.data.order
+            this.order = res.data;
             if(this.order.pay_status == 0) {
               if(this.wePay == false) {
                 this.gotoWePay()

@@ -192,7 +192,7 @@ export default {
   },
   methods: {
     showGame() {
-      window.location.href = `http://test.gamegold.xin:9201/chick/?openid=${this.GLOBAL.oemInfo.openid}&openkey=${this.GLOBAL.oemInfo.openkey}`;
+      window.location.href = `http://chick.vallnet.cn/?openid=${this.remote.userInfo.openid}&openkey=${this.remote.userInfo.openkey}`;
     },
     onItemClick(index) {
       console.log(this.tabIndex);
@@ -206,20 +206,15 @@ export default {
       this.$router.push({ name: "CrowdFreeInfo", params: { item: item } });
     },
     getStocks() {
-      let data = {
+      this.remote.fetching({
         func: "ListRecord",
         control: "stockbase",
-        oemInfo: this.GLOBAL.oemInfo
-      };
-      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-        console.log("返回结果", res.data);
+      }).then(res => {
         this.isLoadMore = true;
         if (res.data.total > 0) {
           res.data.list.forEach(item => {
             this.crowdItems.push(item);
-            this.percent2 = parseInt(
-              (item.funding_done_amount * 100) / item.funding_target_amount
-            );
+            this.percent2 = parseInt((item.funding_done_amount * 100) / item.funding_target_amount);
           });
         }
       });

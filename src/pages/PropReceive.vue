@@ -68,17 +68,14 @@ export default {
     propRec() {
       if(!this.prop.hasOwnProperty('raw')) {
         this.showPlugin('无效的道具分享')
-        return
+        return;
       }
 
-      var data = {
-        func: 'PropReceive', control: 'prop', oemInfo: this.GLOBAL.oemInfo,
+      this.remote.fetching({
+        func: 'PropReceive', control: 'prop', 
         raw: this.prop.raw,
-      };
-      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-          var rep = res.data;
-          console.log("donate " + rep);
-          if(rep.errcode == 'success') { 
+      }).then(res => {
+          if(res.code == 0) { 
             this.showPlugin('道具已成功接收')
             setTimeout(()=>{
               this.$router.push('/props')

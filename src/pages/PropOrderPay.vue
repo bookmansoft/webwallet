@@ -67,20 +67,19 @@ export default {
         return
       }
 
-      let data = {func:'NotifyOrderPay', control: 'wallet', oemInfo: this.GLOBAL.oemInfo,
+      this.remote.fetching({func:'NotifyOrderPay', control: 'wallet',
         openid: this.GLOBAL.openid,
         sn: this.data.sn,
-      }
-      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-          console.log(res.data)
-          if(res.data.errcode=='success') {
+      }).then(res => {
+          if(res.code == 0) {
             this.showPluginAuto('支付成功')
           } else {
             this.showPluginAuto('支付异常')
           }
+          
           setTimeout(() => {
               this.$router.push('/Message')
-          }, 2000)
+          }, 2000);
       });
     }
   },

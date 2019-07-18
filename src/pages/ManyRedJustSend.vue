@@ -78,15 +78,12 @@ export default {
     this.send_id = this.$route.params.send_id;
     let that = this.send_id;
     //第一步先获取参数带来的发送包信息
-    let params = {
+    this.remote.fetching({
       func: "Retrieve",
       control: "manysend",
-      oemInfo: this.GLOBAL.oemInfo,
       id: this.send_id
-    };
-    console.log("84:", params);
-    this.axios.post(this.GLOBAL.apiUrl, params).then(res => {
-      this.sendData = res.data.data;
+    }).then(res => {
+      this.sendData = res.data;
       console.log("红包组信息:", this.sendData);
       let sendDataWishing = this.sendData.wishing;
       let sendDataSendNickName = this.sendData.send_nickname;
@@ -114,19 +111,13 @@ export default {
 
     //获取配置信息
     let url = location.href.split("#")[0]; //"http://h5.gamegold.xin/#/manyRed/justSend";
-    console.log("WechatConfig:" + url);
-    let data = {
+    this.remote.fetching({
       func: "WechatConfig",
       control: "wechat",
-      oemInfo: this.GLOBAL.oemInfo,
-      url: url
-    };
-    //alert(data);
-    this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-      //alert(res.data);
-      if (res.data.errcode == "success") {
-        console.log("wxconfig::" + JSON.stringify(res.data.wxconfig));
-        wx.config(res.data.wxconfig);
+      url: url,
+    }).then(res => {
+      if (res.code == 0) {
+        wx.config(res.data);
       } else {
         console.log("获取WechatConfig信息失败");
       }

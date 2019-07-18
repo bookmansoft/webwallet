@@ -81,16 +81,7 @@ export default {
         this.GLOBAL.userBase.uid = this.remote.userInfo.id;
         this.GLOBAL.userBase.user_name = this.remote.userInfo.name;
         this.GLOBAL.userBase.nickname = this.remote.userInfo.name;
-        console.log('after login', this.GLOBAL.userBase);
-        //#endregion
-
-        //#region RPC调用所依赖的认证信息对象，客户端代码不会显性引用
-        this.GLOBAL.oemInfo = this.GLOBAL.oemInfo || {};
-        this.GLOBAL.oemInfo.domain = this.remote.userInfo.domain;
-        this.GLOBAL.oemInfo.openid = this.remote.userInfo.openid;
-        this.GLOBAL.oemInfo.openkey = this.remote.userInfo.openkey;
-        this.GLOBAL.oemInfo.token = this.remote.userInfo.token;
-        console.log('logined', this.GLOBAL.oemInfo);
+        console.log('after login', this.GLOBAL.userBase, this.remote.userInfo);
         //#endregion
 
         this.gotoHome();

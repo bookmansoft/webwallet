@@ -215,16 +215,14 @@ export default {
         this.$router.push('/redpack/act')
     },
     UserRedPackAdd() {
-        let data = {func:'UserRedPackAdd', control: 'redact', oemInfo: this.GLOBAL.oemInfo,
+        this.remote.fetching({func:'UserRedPackAdd', control: 'redact',
           act_id: this.redPackAct.id,
           act_name: this.redPackAct.act_name,
           gamegold: 100000,
           amount: 200
-        }
-        this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-            console.log('UserRedPackAdd', res.data)
-            if(res.data.errcode=='success') {
-                
+        }).then(res => {
+            console.log('UserRedPackAdd', res.data);
+            if(res.code == 'success') {
             }
         });
     },

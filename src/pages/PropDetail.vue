@@ -132,10 +132,8 @@ export default {
         let prop = this.prop;
         console.log('propFound', prop);
 				console.log(prop.current.hash);
-				var data = {func: 'PropFound', control: 'prop', oemInfo: this.GLOBAL.oemInfo, pid: prop.pid};
-        this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-          console.log(res.data);
-          if(res.data.errcode='success') {
+        this.remote.fetching({func: 'PropFound', control: 'prop', pid: prop.pid}).then(res => {
+          if(res.code == 0) {
               this.showPluginAuto('道具已被成功熔铸!')
               this.$router.go(-1)
           } else {
@@ -171,15 +169,12 @@ export default {
       let prop = this.prop;
         console.log(prop);
         console.log(prop.current.hash);
-        var data = {
-          func: 'PropSale', control: 'prop', oemInfo: this.GLOBAL.oemInfo,
+        this.remote.fetching({
+          func: 'PropSale', control: 'prop',
           pid: prop.pid,
           fixedPrice: amount,
-        };
-        console.log(data.index);
-        this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-          console.log(res.data);
-          if(res.data.errcode='success') {
+        }).then(res => {
+          if(res.code == 0) {
               this.showPluginAuto('道具已发布到交易市场!')
           } else {
               this.showPluginAuto('道具出售失败!')
@@ -189,12 +184,12 @@ export default {
 
     getWxConfig() {
       const url = location.href.split("#")[0];
-      let data = {func:'WechatConfig', control: 'wechat', url: url, oemInfo: this.GLOBAL.oemInfo}
-      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-          console.log(res.data);
-          this.$wechat.config(res.data.wxconfig)
-      }).catch(res => {
-          console.log(res);
+      this.remote.fetching({func:'WechatConfig', control: 'wechat', url: url,}).then(res => {
+        if(res.code == 0) {
+          this.$wechat.config(res.data);
+        }
+      }).catch(e => {
+          console.log(e);
       })
     },
 
@@ -242,31 +237,27 @@ export default {
     // 分享好友
     propShare() {
       if(this.propShareIcon == '') {
-        return
+        return;
       }
       
       let prop = this.prop;
-      var data = {
-        func: 'PropDonate', control: 'prop', oemInfo: this.GLOBAL.oemInfo,
+      this.remote.fetching({
+        func: 'PropDonate', control: 'prop',
         pid: prop.pid,
         txid: prop.current.hash,
         index: prop.current.index,
-      };
-      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-          var rep = res.data;
-          console.log("donate " + rep);
-          if(rep.errcode == 'success') { 
+      }).then(res => {
+          if(res.code == 0) { 
             /*
-            var url = "/pages/prop/index?openid=" + data.openid + "&pid=" + prop.pid + "&prop_name=" + prop.result.props_name;
-            url += "&txid=" + prop.current.rev + "&prop_icon=" + prop.result.large_icon + "&act=send&raw=" + rep.ret.raw;
-            console.log("url " + url);
-            this.$wechat.miniProgram.navigateTo({ url: url });
+              var url = "/pages/prop/index?openid=" + data.openid + "&pid=" + prop.pid + "&prop_name=" + prop.result.props_name;
+              url += "&txid=" + prop.current.rev + "&prop_icon=" + prop.result.large_icon + "&act=send&raw=" + rep.ret.raw;
+              console.log("url " + url);
+              this.$wechat.miniProgram.navigateTo({ url: url });
             */
-             console.log('raw', rep.ret.raw)
              this.showPlugin('点击右上角分享')
-             this.wxReady(prop, rep.ret.raw)
+             this.wxReady(prop, res.data.raw);
           } else {
-            this.showPlugin('道具熔铸失败！')
+            this.showPlugin('道具捐赠失败！')
           }
       });
     },

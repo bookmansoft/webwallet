@@ -200,9 +200,9 @@ export default {
         let product = this.vipDescItems[this.vipDescIndex]
         if(this.mine.vip_level > 0 && this.mine.is_expired == 0 && product.value < this.mine.vip_level) {
             this.showPluginAuto('不能降级，当前已经是'+ product.label)
-            return
+            return;
         }
-        let data = {
+        this.remote.fetching({
           func:'CommonOrderRepay',
           control: 'order',
           price: parseInt(product.price/100),
@@ -210,13 +210,8 @@ export default {
           attach: '',
           quantity: 1,
           productIntro: '游戏金'+product.label,
-          oemInfo: this.GLOBAL.oemInfo
-        };
-        console.log('order', data)
-        this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-            console.log(res.data);
-            if(res.data.errcode='success') {
-              //this.orderPay(res.data.tradeId)
+        }).then(res => {
+            if(res.code == 0) {
               this.$router.push({name:'WeChatPay', params: {order: res.data.order, tradeId: res.data.tradeId, retPath: '/member'}})
             }
         });       

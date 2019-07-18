@@ -47,16 +47,16 @@ export default {
   methods: {
     getWxConfig() {
         const url = location.href.split("#")[0]
-        let data = {func:'WechatConfig', control: 'wechat', url: url, oemInfo: this.GLOBAL.oemInfo}
-        this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-            console.log(res.data)
-            this.$wechat.config(res.data.wxconfig)
+        this.remote.fetching({func:'WechatConfig', control: 'wechat', url: url,}).then(res => {
+            if(res.code == 0) {
+                this.$wechat.config(res.data);
+            }
         }).catch(res => {
             console.log(res)
         })
     },
     unifiedOrder() {
-        let data = {
+        this.remote.fetching({
             func:'UnifiedOrder',
             control: 'wechat',
             appId: 'wx4a5e9d7ae34ad4b4',
@@ -64,15 +64,11 @@ export default {
             openid: this.GLOBAL.userBase.openid,
             price: this.order.order_num*100,
             productInfo: this.order.product_info,
-            oemInfo: this.GLOBAL.oemInfo
-        }
-        this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-            console.log(res.data)
-            if(res.data.errcode=='success') {
-                this.orderParams = res.data.unifiedOrder
-                console.log(this.orderParams)
-                this.orderPre = false
-                //this.jsSDK(unifiedOrder)
+        }).then(res => {
+            if(res.code == 0) {
+                this.orderParams = res.data.unifiedOrder;
+                this.orderPre = false;
+                //this.jsSDK(unifiedOrder);
             }
         })   
     },
@@ -118,17 +114,15 @@ export default {
     },
 
     orderNotify() {
-        let that = this
-        let data = {
+        let that = this;
+        this.remote.fetching({
             func: 'OrderPayResult',         //action
             tradeId: this.tradeId,
             status: 1,
             msg: 'success',
             control: 'order',               //控制器
-            oemInfo: this.GLOBAL.oemInfo
-        }
-        this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-            if(res.data.errcode=='success') {
+        }).then(res => {
+            if(res.code == 0) {
                 setTimeout(()=>{
                     if(!!that.retPath) {
                         that.$router.push(that.retPath)

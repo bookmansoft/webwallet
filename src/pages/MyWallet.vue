@@ -166,11 +166,14 @@ export default {
      * 账户余额
      */
     balanceAll() {
-        let data = {func:'BalanceAll', control: 'wallet', oemInfo: this.GLOBAL.oemInfo}
-        this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-            this.balance.confirmed = this.GLOBAL.formatGameGold(res.data.balance.confirmed)
-            this.balance.unconfirmed = this.GLOBAL.formatGameGold(res.data.balance.unconfirmed-res.data.balance.confirmed)
+        this.remote.fetching({func:'BalanceAll', control: 'wallet',}).then(res => {
+          if(res.code == 0) {
+            this.balance.confirmed = this.GLOBAL.formatGameGold(res.data.confirmed)
+            this.balance.unconfirmed = this.GLOBAL.formatGameGold(res.data.unconfirmed-res.data.confirmed)
             this.doStart = true
+          } else {
+            throw Error(`${res.code}:${res.msg}`);
+          }
         }).catch(res => {
             console.log(res)
         })

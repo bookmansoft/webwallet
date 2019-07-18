@@ -46,14 +46,13 @@ export default {
     methods: {
         // 获取发布数据
         getContractList() {
-            let data = {func:'ContractList', control: 'contract', oemInfo: this.GLOBAL.oemInfo};
-            this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-                console.log(res.data)
-                this.contractList = res.data.ret
-                this.isLoadMore = true
-            }).catch(res => {
-                console.log(res)
-                this.isLoadMore = true
+            this.remote.fetching({func:'ContractList', control: 'contract',}).then(res => {
+                if(res.code == 0) {
+                    this.contractList = res.data;
+                    this.isLoadMore = true;
+                }
+            }).catch(e => {
+                this.isLoadMore = true;
             })
         },
         contracInfo(item, index) {

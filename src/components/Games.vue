@@ -162,17 +162,13 @@ export default {
     },
     //获取CP列表
     getCpList(page, num) {
-      let data = {
-        func: "List",
+      this.remote.fetching({
+        func: "List", 
         control: "cp",
         page: page,
         num: num,
-        oemInfo: this.GLOBAL.oemInfo
-      };
-      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-        console.log("getCpList", res.data);
-        if (res.data.errcode == "success") {
-          //console.log('getCpList', res.data)
+      }).then(res => {
+        if (res.code == 0) {
           //清空
           if (this.GLOBAL.cplist.length > 0) {
             this.GLOBAL.cplist.splice(0, this.GLOBAL.cplist.length);
@@ -181,21 +177,17 @@ export default {
             this.gameList.splice(0, this.gameList.length);
           }
           //填充
-          let cpList = res.data.cp.list;
+          let cpList = res.data.list;
           cpList.forEach(cpItem => {
             if (this.cpFilter.indexOf(cpItem.cid) == -1) {
               //从cp获取资源
               let url = encodeURI(cpItem.url);
-              let data = {
+              this.remote.fetching({
                 func: "GetCpProxy",
                 control: "cp",
                 url: url,
-                oemInfo: this.GLOBAL.oemInfo
-              };
-              this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-                //console.log(res.data)
-                if (res.data.hasOwnProperty("result")) {
-                  let result = res.data.result;
+              }).then(res => {
+                  let result = res.data;
                   if (result.hasOwnProperty("game")) {
                     let game = result.game;
                     this.GLOBAL.cplist.push({
@@ -204,7 +196,6 @@ export default {
                     });
                     this.fillGame(game);
                   }
-                }
               });
             }
           });
@@ -228,16 +219,10 @@ export default {
 
     //获取CP数量
     getCpCount(page, num) {
-      let data = {
-        func: "CpCount",
-        control: "cp",
-        oemInfo: this.GLOBAL.oemInfo
-      };
-      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-        if (res.data.errcode == "success") {
-          console.log("getCpCount", res.data.cp_count);
-          if (res.data.cp_count > this.GLOBAL.cpCount) {
-            this.GLOBAL.cpCount = res.data.cp_count;
+      this.remote.fetching({func: "CpCount", control: "cp"}).then(res => {
+        if (res.code == 0) {
+          if (res.data > this.GLOBAL.cpCount) {
+            this.GLOBAL.cpCount = res.data;
             this.getCpList(1, 10000);
           }
         }

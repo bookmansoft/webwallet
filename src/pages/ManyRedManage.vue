@@ -163,23 +163,19 @@ export default {
       this.tabIndex = index;
       // 我领取的
       if (index == 0) {
-        let params = {
+        this.remote.fetching({
           func: "ListRecord",
           control: "manyreceive",
-          oemInfo: this.GLOBAL.oemInfo,
           receive_uid: this.GLOBAL.userBase.uid,
-        };
-        this.axios.post(this.GLOBAL.apiUrl, params).then(res => {
+        }).then(res => {
           this.receiveData = res.data.list;
         });
       } else if (index == 1) {  //我发出的
-        let params = {
+        this.remote.fetching({
           func: "ListRecord",
           control: "manysend",
-          oemInfo: this.GLOBAL.oemInfo,
           send_uid: this.GLOBAL.userBase.uid,
-        };
-        this.axios.post(this.GLOBAL.apiUrl, params).then(res => {
+        }).then(res => {
           this.sendData = res.data.list;
         });
       }
@@ -197,12 +193,10 @@ export default {
     },
   },
   created: function() {
-    let params = {
+    this.remote.fetching({
       func: "ListRecord",
       control: "manyreceive",
-      oemInfo: this.GLOBAL.oemInfo
-    };
-    this.axios.post(this.GLOBAL.apiUrl, params).then(res => {
+    }).then(res => {
       this.receiveData = res.data.list;
     });
   }

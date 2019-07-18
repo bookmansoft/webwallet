@@ -87,12 +87,10 @@ export default {
       },
 
       getRedPackAct() {
-          let data = {func:'RedPackActCurrent', control: 'redact', oemInfo: this.GLOBAL.oemInfo}
-          this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-              console.log(res.data)
-              if(res.data.errcode=='success') {
-                  this.redPackAct = res.data.data
-                  this.hasRedAct = true
+          this.remote.fetching({func:'RedPackActCurrent', control: 'redact',}).then(res => {
+              if(res.code == 0) {
+                  this.redPackAct = res.data;
+                  this.hasRedAct = true;
                   this.getUserRedPackAct(this.redPackAct.id)
                   this.getUserRedPack(this.redPackAct.id)
               } else {
@@ -102,21 +100,17 @@ export default {
       },
 
       getUserRedPackAct(act_id) {
-          let data = {func:'UserRedPackAct', control: 'redact', act_id: act_id,  oemInfo: this.GLOBAL.oemInfo}
-          this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-              console.log('UserRedPackAct', res.data)
-              if(res.data.errcode=='success') {
-                  this.UserRedPackAct = res.data.data
+          this.remote.fetching({func:'UserRedPackAct', control: 'redact', act_id: act_id,}).then(res => {
+              if(res.code == 0) {
+                  this.UserRedPackAct = res.data;
               }
           });
       },
 
       getUserRedPack(act_id) {
-          let data = {func:'UserRedPack', control: 'redact', act_id: act_id,  oemInfo: this.GLOBAL.oemInfo}
-          this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-              console.log('UserRedPack', res.data)
-              if(res.data.errcode=='success') {
-                  this.userRedPackList = res.data.data
+          this.remote.fetching({func:'UserRedPack', control: 'redact', act_id: act_id,}).then(res => {
+              if(res.code == 0) {
+                  this.userRedPackList = res.data;
               }
           });
       },
@@ -139,17 +133,12 @@ export default {
       },
 
       userRedPackSend(item) {
-          console.log('userRedPackSend', item)
-          let data = {func:'UserRedPackSend', control: 'redact', 
+          this.remote.fetching({func:'UserRedPackSend', control: 'redact', 
             openid: this.GLOBAL.userBase.openid, 
             id: item.id,
             act_id: item.act_id,
-            oemInfo: this.GLOBAL.oemInfo
-          }
-
-          this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-              console.log('UserRedPackSend', res.data)
-              if(res.data.errcode=='success') {
+          }).then(res => {
+              if(res.code == 0) {
                   this.showPlugin('红包已领取，请注意查收微信红包')
                   for(var i=0; i<this.userRedPackList.length; i++) {
                       if(this.userRedPackList[i].id == item.id) {

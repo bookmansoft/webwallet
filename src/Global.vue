@@ -1,4 +1,18 @@
 <script type="text/javascript">
+//#region 通讯设置
+const UrlHead = 'http';
+const Host = 'test.gamegold.xin'; // 'crm.vallnet.cn'
+const siteUri = `${UrlHead}://${Host}`;
+const remote = new toolkit.gameconn({
+  "UrlHead": UrlHead,
+  "webserver": { 
+      "host": Host,
+      "authPort": 9601,           //签证主机端口
+      "port": 9901
+  },
+});
+//#endregion
+
 const colorList = [
   '#F9F900',
   '#6FB7B7',
@@ -22,20 +36,13 @@ const colorList = [
   '#ADADAD'
 ]
 
-const colorListLength = 20
-const oemInfo = { token: '9bcf8939a9c96e14700b2209463af411' }
-// const apiUrl = 'http://h5.gamegold.xin:9101/index.html'
-// const siteUri = 'http://h5.gamegold.xin'
-const apiUrl = 'http://test.gamegold.xin:9101/index.html';
-const siteUri = 'http://test.gamegold.xin'
-
-const UrlHead = 'http'
-const Host = 'test.gamegold.xin'
-const Port = 9901
+const colorListLength = 20;
 
 const gameGoldUnit = '千克'
 
+//存储认证信息的对象
 var userBase = {userAgent: 0, uid: 0, user_name: null, openid: null}
+
 var games = []
 var cplist = []
 var cpCount = 0
@@ -115,10 +122,8 @@ function checkAddr(value) {
 //输出全局数据仓库
 export default
 {
-  colorList, colorListLength, getRandColor,
-  apiUrl, siteUri, oemInfo,
-  formatGameGold, gameGoldOrigin, gameGoldUnit,
-  myAlert, formatDateStr, checkAddr,
-  userBase, games, cplist, cpCount, vipGetNotifyTime
+  colorList, colorListLength, getRandColor, siteUri,
+  formatGameGold, gameGoldOrigin, gameGoldUnit, myAlert, formatDateStr, 
+  checkAddr, userBase, games, cplist, cpCount, vipGetNotifyTime, remote
 }
 </script>

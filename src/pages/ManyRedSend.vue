@@ -78,22 +78,17 @@ export default {
   },
   methods: {
     onItemClick(index) {
-      // console.log(this.tabIndex);
     },
 
     justSend() {
-      let params = {
+      this.remote.fetching({
         func: "Send",
         control: "manysend",
-        oemInfo: this.GLOBAL.oemInfo,
         total_amount: parseInt(this.total_amount) * 100000,
         total_num: parseInt(this.total_num),
         wishing: this.wishing
-        // modify_date: new Date().getTime()/1000,
-      };
-      this.axios.post(this.GLOBAL.apiUrl, params).then(res => {
-        //alert(JSON.stringify(res.data));
-        this.send_id = res.data.data;
+      }).then(res => {
+        this.send_id = res.data;
         this.$router.push("/manyRed/justSend/" + this.send_id);
       });
     }

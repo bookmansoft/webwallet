@@ -127,32 +127,13 @@ export default {
 
   },
   created: function() {
-    // alert(this.$route.params.send_id);
-    //获取发送的信息
-    let params1 = {
+    this.remote.fetching({
       func: "Receive",
       control: "manyreceive",
-      oemInfo: this.GLOBAL.oemInfo,
       id: this.$route.params.send_id
-    };
-
-    console.log("ManyRedReceive.vue 140:",params1);
-
-    this.axios.post(this.GLOBAL.apiUrl, params1).then(res => {
-      this.sendData = res.data.data;
+    }).then(res => {
+      this.sendData = res.data;
       console.log("ManyRedReceive.vue 144:",this.sendData);
-    });
-
-    //获取接收列表--可能不再需要了
-    let params2 = {
-      func: "ListRecord",
-      control: "manyreceive",
-      oemInfo: this.GLOBAL.oemInfo,
-      id: this.$route.params.send_id //此处用send_id
-    };
-    this.axios.post(this.GLOBAL.apiUrl, params2).then(res => {
-      this.receiveData = res.data.list;
-      
     });
   }
 };

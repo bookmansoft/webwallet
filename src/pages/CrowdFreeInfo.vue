@@ -313,14 +313,11 @@ export default {
       });
     },
     stockBulletin(cid) {
-      let data = {
+      this.remote.fetching({
         func: "ListRecord",
         control: "stockbulletin",
-        oemInfo: this.GLOBAL.oemInfo,
         cid: cid
-      };
-      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-        console.log("220:", res.data.list[0]);
+      }).then(res => {
         this.stock_bulletin = res.data.list[0];
       });
     }

@@ -261,7 +261,7 @@ export default {
       this.$router.push({ name: "CrowdInfo", params: { item: this.item } });
     },
     orderRePay() {
-      let data = {
+      this.remote.fetching({
         func: "CommonOrderRepay",
         control: "order",
         price: this.item.price * this.quantity,
@@ -269,13 +269,8 @@ export default {
         attach: this.item.cid,
         quantity: this.quantity,
         productIntro: this.item.cname,
-        oemInfo: this.GLOBAL.oemInfo
-      };
-      console.log("order", data);
-      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-        console.log(res.data);
-        if ((res.data.errcode = "success")) {
-          //this.orderPay(res.data.tradeId)
+      }).then(res => {
+        if ((res.code == 0)) {
           setTimeout(() => {
             this.showLoading = false;
             this.$router.push({

@@ -6,7 +6,6 @@ import router from './router/index'
 import App from './App'
 import Vuex from 'vuex'
 import { WechatPlugin, AjaxPlugin, AlertPlugin, ToastPlugin, ConfirmPlugin  } from 'vux'
-import axios from 'axios'
 import global_ from './Global'
 import utils from './assets/scripts/utils'
 import VueWechatTitle from 'vue-wechat-title'
@@ -21,20 +20,10 @@ Vue.use(ToastPlugin)
 Vue.use(ConfirmPlugin)
 Vue.use(VueWechatTitle)
 
-Vue.prototype.axios = axios
 Vue.prototype.GLOBAL = global_
 Vue.prototype.utils = utils
 
-//创建连接器对象
-const remote = new toolkit.gameconn({
-  "UrlHead": "http",
-  "webserver": { 
-      "host": "127.0.0.1",
-      "authPort": 9601,           //签证主机端口
-      "port": 9901
-  },
-});
-Vue.prototype.remote = remote
+Vue.prototype.remote = global_.remote;
 
 /* eslint-disable no-new */
 new Vue({

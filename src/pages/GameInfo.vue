@@ -217,11 +217,10 @@ export default {
         return
       }
 
-      let data = {
+      this.remote.fetching({
         func:'GameCommentAdd', 
         control: 'comments', 
         openid: this.GLOBAL.openid, 
-        oemInfo: this.GLOBAL.oemInfo,
         uid: this.GLOBAL.uid,
         cid: this.cpItem.cid,
         reply_id: 0,
@@ -229,11 +228,8 @@ export default {
         avatar_url: this.GLOBAL.userBase.avatar_uri,
         title: '',
         content: this.msgInput
-      }
-
-      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-          console.log(res.data)
-          if(res.data.errcode == "success") {
+      }).then(res => {
+          if(res.code == 0) {
              this.$vux.toast.show({text: '评论已发布'})
              let current_time = parseInt(new Date().getTime() / 1000)
              this.commentsList.push({
@@ -252,10 +248,8 @@ export default {
 
     getWxConfig() {
         const url = location.href.split("#")[0];
-        let data = {func:'WechatConfig', control: 'wechat', url: url, oemInfo: this.GLOBAL.oemInfo}
-        this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-            console.log(res.data);
-            this.$wechat.config(res.data.wxconfig)
+        this.remote.fetching({func:'WechatConfig', control: 'wechat', url: url}).then(res => {
+            this.$wechat.config(res.data);
         }).catch(res => {
             console.log(res);
         })
@@ -317,18 +311,15 @@ export default {
         this.$wechat.miniProgram.navigateTo({ url: url });
         */
         let order_sn = item.id + '-new-' + this.randomString(16)
-        let data = {
+        this.remote.fetching({
           func:'OrderPay', 
           control: 'order', 
           cid: this.cpItem.cid, 
           sn: order_sn,
           price: this.GLOBAL.gameGoldOrigin(item.props_price),
           account: this.GLOBAL.userBase.uid,
-          oemInfo: this.GLOBAL.oemInfo
-        }
-        this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-            console.log(res.data)
-            if(res.data.errcode == 'success') {
+        }).then(res => {
+            if(res.code == 0) {
               this.showPlugin('道具已购买成功')
             } else {
               this.showPlugin('你的游戏金余额不足')
@@ -346,13 +337,10 @@ export default {
     
     //获取评论列表列表
     getCommentList() {
-      let cid = this.cpItem.cid
-      console.log('cid', cid)
-      let data = {func:'GameCommentList', control: 'comments', cid: cid, oemInfo: this.GLOBAL.oemInfo}
-      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-          console.log(res.data)
-          if(res.data.errcode == 'success') {
-            res.data.data.forEach(element => {
+      let cid = this.cpItem.cid;
+      this.remote.fetching({func:'GameCommentList', control: 'comments', cid: cid,}).then(res => {
+          if(res.code == 0) {
+            res.data.forEach(element => {
               this.commentsList.push({
                 avatar: element.avatar_url,
                 nick: element.nick,
@@ -361,7 +349,7 @@ export default {
                 create_at: element.create_at,
               })
             });
-            this.sortCommentList()
+            this.sortCommentList();
           }
       })
     },
@@ -371,30 +359,27 @@ export default {
         this.cpInfo.proplist.forEach(element => {
             //从cp获取资源
             let url = encodeURI(this.cpItem.url + '/prop/' + element.id)
-            let data = {func:'GetCpProxy', control: 'cp', url: url, oemInfo: this.GLOBAL.oemInfo} 
-            this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-              if(res.data.hasOwnProperty('result')) {
-                let item = res.data.result
+            this.remote.fetching({func:'GetCpProxy', control: 'cp', url: url,}).then(res => {
+                let item = res.data;
                 item.props_price = this.GLOBAL.formatGameGold(item.props_price)
                 this.cpProps.push(item)
-              }
             })        
         });
     },
 
     userToken() {
         if(this.GLOBAL.uid == 0) {
-            return
+            return;
         }
-        let data = {func:'UserToken', control: 'cp', oemInfo: this.GLOBAL.oemInfo,
-            account: this.GLOBAL.userBase.uid, 
-            user_id: this.GLOBAL.userBase.uid,
-            cid: this.cpItem.cid
-        }
-        this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-            //console.log(res.data)
-            this.cpAddr = res.data.ret.data.addr
-            console.log('cpAddr', this.cpAddr)
+        this.remote.fetching({
+          func:'UserToken', control: 'cp',
+          account: this.GLOBAL.userBase.uid, 
+          user_id: this.GLOBAL.userBase.uid,
+          cid: this.cpItem.cid,
+        }).then(res => {
+          if(res.code == 0) {
+            this.cpAddr = res.data.data.addr;
+          }
         });
     },
 

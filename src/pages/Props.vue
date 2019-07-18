@@ -117,28 +117,24 @@ export default {
 
       // 道具数量
       getPropCount() {
-        let data = { func: 'PropCount', control: 'prop', oemInfo: this.GLOBAL.oemInfo};
         let that = this;
-        that.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-            if(res.data.errcode=='success') {
+        this.remote.fetching({func: 'PropCount', control: 'prop',}).then(res => {
+            if(res.code == 0) {
                if(res.data.count > 0) {
-                 that.getProps(that.PageIndex)
+                 that.getProps(that.PageIndex);
                }
-               that.groupTitle = '道具数量：'+res.data.count
+               that.groupTitle = '道具数量：' + res.data.count;
             }
         })
       },
 
       // 发送请求 获取道具
       getProps(page) {
-        let data = { func: 'PropList', control: 'prop', oemInfo: this.GLOBAL.oemInfo, 
-            page: page, 
-        };
         let that = this;
-        that.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-            console.log(res.data)
-            if(res.data.errcode=='success') {
-              //console.log('props.length', res.data.props.length)  
+        this.remote.fetching({ func: 'PropList', control: 'prop', 
+            page: page, 
+        }).then(res => {
+            if(res.code == 0) {
               that.groupTitle = '道具数量：'+ res.data.count
               that.PageIndex++
               if(res.data.props.length >0 ) {
@@ -169,16 +165,13 @@ export default {
       },
 
       getPropFromCp(prop) {
-          console.log('prop', prop)
           let url = encodeURI(prop.cp.url + '/prop/' + prop.oid)
-          let data = {func:'GetCpProxy', control: 'cp', url: url, oemInfo: this.GLOBAL.oemInfo} 
-          this.axios.post(this.GLOBAL.apiUrl, data).then(resProxy => {
-              if(resProxy.data.hasOwnProperty('result')) {
-                  let propResult = resProxy.data.result
-                  prop.result = propResult
-                  prop.desc = '价格：' + this.GLOBAL.formatGameGold(propResult.props_price) + '千克',
-                  this.propList.push(prop)
-              }
+          this.remote.fetching({func:'GetCpProxy', control: 'cp', url: url,}).then(resProxy => {
+            if(resProxy.code == 0) {
+              prop.result = resProxy.data;
+              prop.desc = '价格：' + this.GLOBAL.formatGameGold(prop.result.props_price) + '千克',
+              this.propList.push(prop)
+            }
           }) 
       },
 

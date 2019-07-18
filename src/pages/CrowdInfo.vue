@@ -275,20 +275,15 @@ export default {
       if (this.GLOBAL.uid == 0) {
         return;
       }
-      let data = {
+      this.remote.fetching({
         func: "UserToken",
         control: "cp",
-        oemInfo: this.GLOBAL.oemInfo,
         account: this.GLOBAL.userBase.uid,
         user_id: this.GLOBAL.userBase.uid,
         cid: this.item.cid,
         pic_urls: [],//图片数组
-      };
-      console.log(146, data);
-      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-        console.log("cpAddr", res.data);
-        this.cpAddr = res.data.ret.data.addr;
-        console.log(this.cpAddr);
+      }).then(res => {
+        this.cpAddr = res.data.data.addr;
       });
     }
   },

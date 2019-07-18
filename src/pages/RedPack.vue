@@ -37,11 +37,9 @@ export default {
         this.$router.push('/redPack/act');
       },
       sendRedPack() {
-          let data = {func:'SendRecPack', control: 'wechat', oemInfo: this.GLOBAL.oemInfo}
-          this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-              console.log(res.data)
-              if(res.data.errcode=='success') {
-                  this.retMsg = res.data.ret
+          this.remote.fetching({func:'SendRecPack', control: 'wechat',}).then(res => {
+              if(res.code == 0) {
+                  this.retMsg = res.data;
               }
           });
       },

@@ -59,21 +59,17 @@ export default {
       this.$router.push({ name: 'PropOrderPay', params: { data: item }})
     },
     getNotify() {
-         let data = {
+        this.remote.fetching({
           func:'NotifyList',
           control: 'wallet',
           uid: this.GLOBAL.uid,
           openid: this.GLOBAL.openid,
           last: 0,
-          oemInfo: this.GLOBAL.oemInfo
-        };
-        this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-            console.log(res.data);
-            if(res.data.errcode='success') {
-                //this.notifys = res.data.notifys
-                this.notifyCount = res.data.notifys.length
+        }).then(res => {
+            if(res.code == 0) {
+                this.notifyCount = res.data.length;
                 this.title = '共' + this.notifyCount + '条消息'
-                res.data.notifys.forEach(element => {
+                res.data.forEach(element => {
                   let item = element
                   if(item.status != 3) {
                     item.statusLabel = '未处理'
@@ -83,13 +79,12 @@ export default {
                     item.payEnable = 0
                   }
                   item.contentType = '订单支付请求'
-                  this.notifys.push(item)
-                  //this.notifys.push(item)
+                  this.notifys.push(item);
                 });
             }
             this.isLoadMore = true
-        }).catch(res => {
-            console.log(res)
+        }).catch(e => {
+            console.log(e);
             this.isLoadMore = true
         });  
     }

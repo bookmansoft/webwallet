@@ -77,13 +77,10 @@ export default {
       this.$router.push({ name: "CrowdFreeInfo", params: { item: item } });
     },
     crowdFreeList() {
-      let data = {
+      this.remote.fetching({
         func: "ListRecord",
         control: "stockbase",
-        oemInfo: this.GLOBAL.oemInfo
-      };
-      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-        console.log("93:", res.data);
+      }).then(res => {
         this.isLoadMore = true;
         res.data.list.forEach(element => {
             this.crowdFreeItems.push(element);

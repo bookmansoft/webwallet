@@ -51,20 +51,18 @@ export default {
         this.$router.go(-1)
     },
     getDrawLog() {
-         let data = {
+        this.remote.fetching({
           func:'VipDrawLog',
           control: 'profile',
           last: 0,
-          oemInfo: this.GLOBAL.oemInfo
-        };
-        this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-            console.log(res.data);
-            if(res.data.errcode='success') {
-                this.drawLog = res.data.ret
-                res.data.ret.forEach(element => {
-                    this.drawCount += element.draw_count
+        }).then(res => {
+            if(res.code == 0) {
+                this.drawLog = res.data;
+
+                this.drawLog.forEach(element => {
+                    this.drawCount += element.draw_count;
                 });
-                this.title = '累计提取' + this.drawLog.length + '次，共' + this.GLOBAL.formatGameGold(this.drawCount) + '千克'
+                this.title = '累计提取' + this.drawLog.length + '次，共' + this.GLOBAL.formatGameGold(this.drawCount) + '千克';
             }
         });  
     }

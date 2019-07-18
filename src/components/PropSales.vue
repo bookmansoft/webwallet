@@ -45,18 +45,15 @@ export default {
     methods: {
         // 获取发布数据
         PropListMarket() {
-            let data = {func:'PropListMarket', control: 'prop', oemInfo: this.GLOBAL.oemInfo};
-            this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-                console.log(res.data);
-                //this.propList = res.data.ret;
-                if(res.data.errcode='success') {
-                    res.data.ret.forEach(element => {
+            this.remote.fetching({func:'PropListMarket', control: 'prop'}).then(res => {
+                if(res.code == 0) {
+                    res.data.forEach(element => {
                         this.getCpById(element)
                     });
                 }
                 this.isLoadMore = true
-            }).catch(res => {
-                console.log(res);
+            }).catch(e => {
+                console.log(e);
                 this.isLoadMore = true
             })
         },
@@ -66,27 +63,22 @@ export default {
         },
 
         getCpById(marketProp) {
-            let data = {func:'ById', control: 'cp', cid: marketProp.cid, oemInfo: this.GLOBAL.oemInfo};
-            this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-                console.log('cp', res.data)
-                if(res.data.errcode='success') {
-                    let url = res.data.result.url
-                    this.getPropFromCp(marketProp, url)
+            this.remote.fetching({func:'ById', control: 'cp', cid: marketProp.cid}).then(res => {
+                if(res.code == 0) {
+                    this.getPropFromCp(marketProp, res.data.url);
                 }
             })
         },
 
         getPropFromCp(marketProp, cpurl) {
-          let url = encodeURI(cpurl + '/prop/' + marketProp.oid)
-          let data = {func:'GetCpProxy', control: 'cp', url: url, oemInfo: this.GLOBAL.oemInfo} 
-          this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-              if(res.data.hasOwnProperty('result')) {
-                  marketProp.result = res.data.result
-                  this.propList.push(marketProp)
+          let url = encodeURI(cpurl + '/prop/' + marketProp.oid);
+          this.remote.fetching({func:'GetCpProxy', control: 'cp', url: url,}).then(res => {
+              if(res.code == 0) {
+                marketProp.result = res.data;
+                this.propList.push(marketProp);
               }
-        })
-
-      },
+          });
+        },
     },
     created() {
         this.PropListMarket();

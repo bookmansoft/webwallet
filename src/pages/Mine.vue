@@ -235,14 +235,11 @@ export default {
         this.items1[1].badge = this.userBase.current_prop_count - this.userBase.prop_count;
       }
 
-      let data = {
+      this.remote.fetching({
         func: "GetNotify",
         control: "wallet",
-        oemInfo: this.GLOBAL.oemInfo
-      };
-      this.axios.post(this.GLOBAL.apiUrl, data).then(res => {
-        console.log("GetNotify", res.data);
-        if (res.data.errcode == "success") {
+      }).then(res => {
+        if (res.code == 0) {
           if (res.data.count > 0) {
             this.items1[2].badge = res.data.count;
             this.items1[2].value = "有待支付订单";

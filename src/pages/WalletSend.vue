@@ -160,21 +160,17 @@ export default {
     },
     getWxConfig() {
       const url = location.href.split("#")[0];
-      let data = {
+      this.remote.fetching({
         func: "WechatConfig",
         control: "wechat",
         url: url,
-        oemInfo: this.GLOBAL.oemInfo
-      };
-      this.axios
-        .post(this.GLOBAL.apiUrl, data)
-        .then(res => {
-          console.log(res.data);
-          this.$wechat.config(res.data.wxconfig);
-        })
-        .catch(res => {
-          console.log(res);
-        });
+      }).then(res => {
+        if(res.code == 0) {
+          this.$wechat.config(res.data);
+        }
+      }).catch(res => {
+        console.log(res);
+      });
     },
     // 调用摄像头
     wxScanCode() {
