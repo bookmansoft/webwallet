@@ -4,21 +4,17 @@
       <div slot="content" class="card-demo-flex card-demo-content01">
         <div class="vux-1px-r">
           <span>
-            <!--
-            <countup :end-val="balance.confirmed" :duration="1" :start="doStart" :decimals=3></countup>
-            -->
-            {{balance.confirmed}}
-            {{this.GLOBAL.gameGoldUnit}}
-          </span><br/>已确认
+            <!-- <countup :end-val="balance.confirmed" :duration="1" :start="doStart" :decimals=3></countup> -->
+            {{balance.confirmed}}{{this.GLOBAL.gameGoldUnit}}
+          </span>
+          <br/>已确认
         </div>
         <div class="vux-1px-r">
-           <span>
-             <!--
-             <countup :end-val="balance.unconfirmed" :duration="1" :start="doStart" :decimals=3></countup>
-             -->
-            {{balance.unconfirmed}}
-            {{this.GLOBAL.gameGoldUnit}}
-          </span><br/>未确认
+          <span>
+             <!-- <countup :end-val="balance.unconfirmed" :duration="1" :start="doStart" :decimals=3></countup> -->
+            {{balance.unconfirmed}}{{this.GLOBAL.gameGoldUnit}}
+          </span>
+          <br/>未确认
         </div>
       </div>
     </card>
@@ -43,35 +39,33 @@ export default {
     }
   },
   methods: {
-    /**
-     * 账户余额
-     */
-    balanceAll() {
-        this.remote.fetching({func:'BalanceAll', control: 'wallet'}).then(res => {
-            this.balance.confirmed = this.GLOBAL.formatGameGold(res.data.confirmed)
-            this.balance.unconfirmed = this.GLOBAL.formatGameGold(res.data.unconfirmed-res.data.confirmed)
-            this.doStart = true;
-
-            //#region 缓存到全局变量中
-            this.GLOBAL.userBase.balance = {
-              confirmed: this.balance.confirmed,
-              unconfirmed: this.balance.unconfirmed,
-            };
-            //#endregion
-        }).catch(res => {
-            console.log(res)
-        })
-    },
     getConfirmed() {
       return this.balance.confirmed
     },
     getUnConfirmed() {
       return this.balance.unconfirmed
+    },
+    balanceChanged(info) {
+      console.log('balance changed', info);
+      this.GLOBAL.userBase.confirmed = info.confirmed;
+      this.GLOBAL.userBase.unconfirmed = info.unconfirmed;
+
+      this.balance = {
+        confirmed: this.GLOBAL.formatGameGold(this.GLOBAL.userBase.confirmed),
+        unconfirmed: this.GLOBAL.formatGameGold(this.GLOBAL.userBase.unconfirmed - this.GLOBAL.userBase.confirmed),
+      }
     }
   },
-  created() {
-      this.balanceAll()
-  }
+  mounted() {
+    //#region 根据全局数据仓库更新state，再通过消息订阅感知后续变化
+    this.balanceChanged({confirmed: this.GLOBAL.userBase.confirmed, unconfirmed: this.GLOBAL.userBase.unconfirmed});
+    this.remote.watch(this.balanceChanged, 911001);
+    //#endregion
+  },
+  beforeDestroy() {
+    //不再监听事件，也为了避免不当持有造成的内存泄漏
+    delete this.remote.notifyHandles[911001];
+  },
 }
 </script>
 

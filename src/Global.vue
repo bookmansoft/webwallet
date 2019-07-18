@@ -1,7 +1,7 @@
 <script type="text/javascript">
 //#region 通讯设置
 const UrlHead = 'http';
-const Host = 'test.gamegold.xin'; // 'crm.vallnet.cn'
+const Host = 'wallet.vallnet.cn';
 const siteUri = `${UrlHead}://${Host}`;
 const remote = new toolkit.gameconn({
   "UrlHead": UrlHead,
@@ -11,6 +11,8 @@ const remote = new toolkit.gameconn({
       "port": 9901
   },
 });
+remote.setmode(remote.CommMode.ws);
+
 //#endregion
 
 const colorList = [

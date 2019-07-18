@@ -162,22 +162,6 @@ export default {
     };
   },
   methods: {
-    /**
-     * 账户余额
-     */
-    balanceAll() {
-        this.remote.fetching({func:'BalanceAll', control: 'wallet',}).then(res => {
-          if(res.code == 0) {
-            this.balance.confirmed = this.GLOBAL.formatGameGold(res.data.confirmed)
-            this.balance.unconfirmed = this.GLOBAL.formatGameGold(res.data.unconfirmed-res.data.confirmed)
-            this.doStart = true
-          } else {
-            throw Error(`${res.code}:${res.msg}`);
-          }
-        }).catch(res => {
-            console.log(res)
-        })
-    },
     send() {
       this.$router.push({ name: "WalletSend" });
     },
@@ -190,17 +174,35 @@ export default {
     transList() {
       console.log("transList");
       this.$router.push({ name: "TransList" });
+    },
+    balanceChanged(info) {
+      console.log('balance changed', info);
+      this.GLOBAL.userBase.confirmed = info.confirmed;
+      this.GLOBAL.userBase.unconfirmed = info.unconfirmed;
+
+      this.balance = {
+        confirmed: this.GLOBAL.formatGameGold(this.GLOBAL.userBase.confirmed),
+        unconfirmed: this.GLOBAL.formatGameGold(this.GLOBAL.userBase.unconfirmed - this.GLOBAL.userBase.confirmed),
+      }
     }
   },
   created() {
     if(!this.GLOBAL.userBase.uid) {
       this.$router.push('/login');
     }
-    this.balanceAll();
   },
   mounted() {
     this.mine = this.GLOBAL.userBase;
-  }
+
+    //#region 根据全局数据仓库更新state，再通过消息订阅感知后续变化
+    this.balanceChanged({confirmed: this.GLOBAL.userBase.confirmed, unconfirmed: this.GLOBAL.userBase.unconfirmed});
+    this.remote.watch(this.balanceChanged, 911001);
+    //#endregion
+  },
+  beforeDestroy() {
+    //不再监听事件，也为了避免不当持有造成的内存泄漏
+    delete this.remote.notifyHandles[911001];
+  },
 };
 </script>
 <style lang="less" scoped>

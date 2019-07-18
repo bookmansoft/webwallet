@@ -5,7 +5,7 @@
     <box gap="8px 8px">
         <group title="接收二维码">
             <div style="text-align:center;padding: 20px 0px 20px 0px">
-                <qrcode :value="address" type="img"></qrcode>
+                <qrcode :value="address" type="img" @click.native="getAddress()"></qrcode>
             </div>
         </group>
         <group title="接收地址">
@@ -46,7 +46,7 @@ export default {
           text: () => text
         })
         clipboard.on('success', e => {  
-            // 释放内存  
+          // 释放内存  
           this.$vux.toast.show({text: '已复制到剪贴板'})
           clipboard.destroy()  
         })  
@@ -57,7 +57,13 @@ export default {
           clipboard.destroy()  
         })  
       },
-
+      getAddress() {
+        this.remote.fetching({func:'AddressCreate', control: 'wallet',}).then(res => {
+            if(res.code == 0) {
+              this.address = res.data;
+            }
+        })
+      },
   },
   created() {
     if(!this.GLOBAL.userBase.uid) {

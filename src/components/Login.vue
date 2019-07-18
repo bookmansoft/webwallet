@@ -81,7 +81,7 @@ export default {
         this.GLOBAL.userBase.uid = this.remote.userInfo.id;
         this.GLOBAL.userBase.user_name = this.remote.userInfo.name;
         this.GLOBAL.userBase.nickname = this.remote.userInfo.name;
-        console.log('after login', this.GLOBAL.userBase, this.remote.userInfo);
+        console.log('after login', this.GLOBAL.userBase);
         //#endregion
 
         this.gotoHome();
