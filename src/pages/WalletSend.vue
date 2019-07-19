@@ -163,13 +163,14 @@ export default {
       this.remote.fetching({
         func: "WechatConfig",
         control: "wechat",
-        url: url,
+        uri: url,
       }).then(res => {
+        console.log('getWxConfig', res);
         if(res.code == 0) {
           this.$wechat.config(res.data);
         }
       }).catch(res => {
-        console.log(res);
+        console.log('getWxConfig', res);
       });
     },
     // 调用摄像头

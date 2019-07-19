@@ -47,7 +47,7 @@ export default {
   methods: {
     getWxConfig() {
         const url = location.href.split("#")[0]
-        this.remote.fetching({func:'WechatConfig', control: 'wechat', url: url,}).then(res => {
+        this.remote.fetching({func:'WechatConfig', control: 'wechat', uri: url,}).then(res => {
             if(res.code == 0) {
                 this.$wechat.config(res.data);
             }

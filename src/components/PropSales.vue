@@ -72,7 +72,7 @@ export default {
 
         getPropFromCp(marketProp, cpurl) {
           let url = encodeURI(cpurl + '/prop/' + marketProp.oid);
-          this.remote.fetching({func:'GetCpProxy', control: 'cp', url: url,}).then(res => {
+          this.remote.fetching({func:'GetCpProxy', control: 'cp', uri: url,}).then(res => {
               if(res.code == 0) {
                 marketProp.result = res.data;
                 this.propList.push(marketProp);

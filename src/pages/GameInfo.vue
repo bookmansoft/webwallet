@@ -248,7 +248,7 @@ export default {
 
     getWxConfig() {
         const url = location.href.split("#")[0];
-        this.remote.fetching({func:'WechatConfig', control: 'wechat', url: url}).then(res => {
+        this.remote.fetching({func:'WechatConfig', control: 'wechat', uri: url}).then(res => {
             this.$wechat.config(res.data);
         }).catch(res => {
             console.log(res);
@@ -359,7 +359,7 @@ export default {
         this.cpInfo.proplist.forEach(element => {
             //从cp获取资源
             let url = encodeURI(this.cpItem.url + '/prop/' + element.id)
-            this.remote.fetching({func:'GetCpProxy', control: 'cp', url: url,}).then(res => {
+            this.remote.fetching({func:'GetCpProxy', control: 'cp', uri: url,}).then(res => {
                 let item = res.data;
                 item.props_price = this.GLOBAL.formatGameGold(item.props_price)
                 this.cpProps.push(item)

@@ -114,7 +114,7 @@ export default {
     this.remote.fetching({
       func: "WechatConfig",
       control: "wechat",
-      url: url,
+      uri: url,
     }).then(res => {
       if (res.code == 0) {
         wx.config(res.data);

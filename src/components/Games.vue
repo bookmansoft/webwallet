@@ -185,7 +185,7 @@ export default {
               this.remote.fetching({
                 func: "GetCpProxy",
                 control: "cp",
-                url: url,
+                uri: url,
               }).then(res => {
                   let result = res.data;
                   if (result.hasOwnProperty("game")) {
