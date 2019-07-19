@@ -200,7 +200,7 @@ export default {
       }});
     },
     checkSend() {
-      const confirmed = this.mine.balance.confirmed;
+      const confirmed = this.mine.confirmed;
       let sendGold = !!this.number ? this.number : 0;
       if (this.address == "") {
         this.GLOBAL.myAlert(this.$vux.alert, "请输入地址");
