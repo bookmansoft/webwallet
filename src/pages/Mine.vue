@@ -4,13 +4,13 @@
       <div align="center">
         <!-- 相对于父容器定位 -->
         <div style="display:block;postion:relative">
-          <img src="static/img/stock/mine/head.png" style="width:61px;height:61px;">
+          <img :src="userBase.avatar_uri" style="width:61px;height:61px;">
         </div>
         <div style="display:block;postion:relative;margin-top:-61px">
           <img src="static/img/stock/mine/star.png" style="width:61px;height:61px;">
         </div>
         <div style="display:block">
-          <span style="font-size:18px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(255,255,255);">王小明</span>
+          <span style="font-size:18px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(255,255,255);">{{this.userBase.name}}</span>
         </div>
       </div>
     </div>
@@ -266,6 +266,7 @@ export default {
       this.$router.push('/login');
     } else {
       this.userBase = this.GLOBAL.userBase;
+      console.log(this.userBase.avatar_uri);
       this.getNotify();
     }
   }

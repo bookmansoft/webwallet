@@ -116,11 +116,11 @@ export default {
     orderNotify() {
         let that = this;
         this.remote.fetching({
+            control: 'order',               //控制器
             func: 'OrderPayResult',         //action
             tradeId: this.tradeId,
             status: 1,
             msg: 'success',
-            control: 'order',               //控制器
         }).then(res => {
             if(res.code == 0) {
                 setTimeout(()=>{

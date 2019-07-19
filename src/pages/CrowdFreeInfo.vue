@@ -58,9 +58,6 @@
         </div>
       </flexbox-item>
     </flexbox>
-    <!-- <p>
-      <span>分时K线(用单独的iframe填充)</span>
-    </p>-->
     <flexbox style="margin-top:14px">
       <flexbox-item :span="12">
         <div style="display:block;margin-left:21px">

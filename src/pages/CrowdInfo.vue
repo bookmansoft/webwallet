@@ -259,33 +259,12 @@ export default {
       this.$router.push({ name: "Crowd" });
     },
     crowdDetail(item, index) {},
-    // crowdOrder() {
-    //   this.$router.push({
-    //     name: "CrowdOrder",
-    //     params: { item: this.item }
-    //   });
-    // },
     crowdPrePay() {
       this.$router.push({
         name: "CrowdPrePay",
         params: { item: this.item }
       });
     },
-    userToken() {
-      if (this.GLOBAL.uid == 0) {
-        return;
-      }
-      this.remote.fetching({
-        func: "UserToken",
-        control: "cp",
-        account: this.GLOBAL.userBase.uid,
-        user_id: this.GLOBAL.userBase.uid,
-        cid: this.item.cid,
-        pic_urls: [],//图片数组
-      }).then(res => {
-        this.cpAddr = res.data.data.addr;
-      });
-    }
   },
   created() {
     this.item = this.$route.params.item;
@@ -293,12 +272,11 @@ export default {
       this.$router.push("/mine")
     }
 
-    console.log(this.item);
+    console.log('crowdInfo', this.item);
     this.pic_urls=JSON.parse(this.item.pic_urls);
     this.percent2 = parseInt(
       (this.item.funding_done_amount * 100) / this.item.funding_target_amount
     );
-    this.userToken();
   }
 };
 </script>

@@ -175,14 +175,9 @@ export default {
         if(!this.GLOBAL.openid) {
             return;
         }
-        this.remote.fetching({
-          func:'UserToken', control: 'cp', 
-          openid: this.GLOBAL.openid, 
-          uid: this.GLOBAL.openid,
-          cid: this.cpItem.cid
-        }).then(res => {
+        this.remote.fetching({func:'UserToken', control: 'cp', cid: this.cpItem.cid}).then(res => {
           if(res.code == 0) {
-            this.cpAddr = res.data.data.addr;
+            this.cpAddr = res.data;
           }
         });
     }
@@ -196,10 +191,10 @@ export default {
         this.cpItem = this.$route.params.cpItem
         this.gameInfo = this.cpInfo.game
         this.gameInfo.publishTime = this.getTime(this.gameInfo.publish_time)
-        this.getCpProps()
-        this.userToken()
+        this.getCpProps();
+        this.userToken();
     }
-    this.getWxConfig()
+    this.getWxConfig();
   }
 };
 </script>

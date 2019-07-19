@@ -282,8 +282,11 @@ export default {
     },
 
     gotoGame() {
-      this.showPlugin('暂未开放，请稍后再来')
-      return
+      this.showPlugin('暂未开放，请稍后再来');
+      return;
+
+      //window.location.href = `http://chick.vallnet.cn/?openid=${this.remote.userInfo.openid}&openkey=${this.remote.userInfo.openkey}`;
+
       let cname = this.cpItem.name
       let cid = this.cpItem.cid
       let addr = this.cpAddr
@@ -371,20 +374,14 @@ export default {
         if(this.GLOBAL.uid == 0) {
             return;
         }
-        this.remote.fetching({
-          func:'UserToken', control: 'cp',
-          account: this.GLOBAL.userBase.uid, 
-          user_id: this.GLOBAL.userBase.uid,
-          cid: this.cpItem.cid,
-        }).then(res => {
+        this.remote.fetching({func:'UserToken', control: 'cp', cid: this.cpItem.cid}).then(res => {
           if(res.code == 0) {
-            this.cpAddr = res.data.data.addr;
+            this.cpAddr = res.data;
           }
         });
     },
 
     test2() {
-      alert("ok");
       this.$wechat.getLocation({
           type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
           success: function (res) {

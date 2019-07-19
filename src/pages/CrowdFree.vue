@@ -3,7 +3,7 @@
     <div v-if="isLoadMore">
       <div v-for="(item, index) in crowdFreeItems" :key="index">
         <div style="display:block;margin-top:8px;margin-bottom:8px">
-          <flexbox @click.native="crowFreedDetail(item, index)">
+          <flexbox @click.native="crowFreeDetail(item, index)">
             <flexbox-item :span="2">
               <div class="flex-demo-left">
                 <img
@@ -72,7 +72,7 @@ export default {
     };
   },
   methods: {
-    crowFreedDetail(item, index) {
+    crowFreeDetail(item, index) {
       console.log(item);
       this.$router.push({ name: "CrowdFreeInfo", params: { item: item } });
     },
