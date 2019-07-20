@@ -1,21 +1,21 @@
 <template>
   <div>
-    <div v-if="isLoadMore && gameList.length > 0">
+    <div v-if="isLoadMore">
       <scroller
         v-model="scrollerStatus"
         height="-100"
         lock-x
         scrollbar-y
         ref="scroller"
-        :bounce="isbounce"
-        :use-pulldown="showDown"
-        :use-pullup="false"
+        :bounce="true"
+        :use-pulldown="true"
         :pulldown-config="downobj"
         @on-pulldown-loading="selPullDown"
+        :use-pullup="true"
+        :pullup-config="upobj"
+        @on-pullup-loading="selPullUp"
       >
         <div>
-          <!--<swiper style="margin-top:0.6rem;" :list="hotList" v-model="hotListIndex" @on-index-change="hotListOnIndexChange"></swiper>-->
-          <!--<panel header="热门游戏" :list="gameList" type="5" @on-img-error="onImgError"></panel>-->
           <div style="height:5px;"></div>
           <div style="background-color: white">
             <div style="padding:10px 10px 0px 10px;">
@@ -58,7 +58,7 @@
       </scroller>
       <br>
     </div>
-    <div v-if="isLoadMore && gameList.length == 0">
+    <div v-if="isLoadMore && gameList.length==0 && showNoData==true">
       <no-data src="static/img/default/no-games.png"></no-data>
     </div>
     <div v-if="!isLoadMore">
@@ -83,41 +83,45 @@ export default {
   name: "Games",
   components: {
     Scroller,
+    NoData,
     Swiper,
     Group,
     LoadMore,
     Panel,
     Flexbox,
     FlexboxItem,
-    NoData
   },
   data() {
     return {
-      isShow: true, //是否显示scroller,第一次请求数据过程中隐藏插件，不隐藏的时候会显示“请上拉刷新数据”的字样，不好看
-      showloading: false,
-      textloading: "加载中",
-      showDown: true,
-      isbounce: true,
-      lists: [],
       downobj: {
-        content: "请下拉刷新数据",
+        content: "下拉刷新数据...",
+        downContent: "下拉刷新数据...",
+        upContent: "释放刷新数据",
+        loadingContent: "加载中...",
         pullUpHeight: 50,
         height: 40,
         autoRefresh: false,
-        downContent: "请下拉刷新数据",
-        upContent: "请下拉刷新数据",
-        loadingContent: "加载中...",
         clsPrefix: "xs-plugin-pulldown-"
       },
-
+      upobj: {
+        content: "向上滑动获取更多数据...",
+        upContent: "向上滑动获取更多数据...",
+        downContent: "释放获取数据",
+        loadingContent: "加载中...",
+        pullUpHeight: 50,
+        height: 40,
+        autoRefresh: false,
+        clsPrefix: "xs-plugin-pullup-"
+      },
       scrollerStatus: {
         pullupStatus: "default"
       },
 
       gameList: [],
+      curPage: 0,
       isLoadMore: false,
-      // isLoadMore: true,
-      hotListIndex: 0,
+      showNoData: false,
+      isActive: false,
       recommendGame: {
         gameTitle: "奔跑的悟空",
         src: "static/img/game/game-3.jpg",
@@ -125,153 +129,135 @@ export default {
       },
       cpFilter: [
         "xxxxxxxx-game-gold-boss-xxxxxxxxxxxx",
-        "eb9d03c0-0ff9-11e9-a575-21541098fe6c",
-        "324febe0-1246-11e9-865d-67171db95497",
-        "b0a7c550-10b9-11e9-be28-7bc3b258896e"
       ]
     };
   },
-  activated() {
-    this.$refs.scroller.reset();
+  mounted() {
+    this.isActive = true;
+  },
+  beforeDestroy() {
+    this.isActive = false;
   },
   methods: {
     selPullDown() {
-      console.log("selPullDown");
-      this.getNewsList(false);
-    },
-    getNewsList(isEmpty) {
-      let that = this;
-      setTimeout(() => {
-        that.scrollerReset();
-      }, 1500);
-    },
+      this.showNoData = false;
 
-    scrollerReset() {
-      this.$refs.scroller.donePulldown();
-      this.$refs.scroller.reset({ top: 0 });
-    },
-    hotListOnIndexChange(index) {
-      this.hotListIndex = index;
-    },
-    infinite(done) {
-      console.log("infinite");
-      this.$refs.myScroller.resize();
+      //用户选择下拉刷新，清除本地数据，重新拉取
+      this.getCpList(1, true);
       setTimeout(() => {
-        this.$refs.scroller.finishInfinite(2);
-      });
+        this.showNoData = true;
+        if(this.isActive) {
+          this.$refs.scroller.donePulldown();
+          this.$refs.scroller.reset({ top: 0 });
+        }
+      }, 1000);
     },
-    //获取CP列表
-    getCpList(page, num) {
-      this.remote.fetching({
-        func: "List", 
-        control: "cp",
-        page: page,
-        num: num,
-      }).then(res => {
-        if (res.code == 0) {
-          //清空
-          if (this.GLOBAL.cplist.length > 0) {
-            this.GLOBAL.cplist.splice(0, this.GLOBAL.cplist.length);
+    selPullUp() {
+      this.showNoData = false;
+
+      //用户选择上滑获取新数据，更新当前页码
+      this.getCpList(this.curPage+1);
+      setTimeout(() => {
+        this.showNoData = true;
+        if(this.isActive) {
+          this.$refs.scroller.donePullup();
+        }
+      }, 1000);
+    },
+    /**
+     * 获取列表, page 请求的页码 flash 强制更新
+     */
+    getCpList(page, flash) {
+      console.log(`query page: ${page}`);
+      if(!!flash) {
+        this.GLOBAL.cplist = [];
+        this.gameList = [];
+        this.curPage = 0;
+      }
+
+      let curPage = (this.gameList.length/10)|0 + 1;
+      if(this.gameList.length%10==0) {
+        curPage--;
+      }
+      if(curPage < page) {
+        let totalPage = (this.GLOBAL.cplist.length/10)|0 + 1;
+        if(this.GLOBAL.cplist.length%10==0) {
+          totalPage--;
+        }
+
+        if(totalPage > page) {
+          this.curPage++;
+
+          let idx = 0;
+          for(let element of this.GLOBAL.cplist) {
+            if(idx < (page-1)*10) continue;
+            if(idx > page*10) break;
+
+            let game = element.cpInfo.game;
+            this.gameList.push({
+              src: game.small_img_url,
+              title: game.game_title,
+              desc: game.provider
+            });
+
+            idx++;
           }
-          if (this.gameList.length > 0) {
-            this.gameList.splice(0, this.gameList.length);
-          }
-          //填充
-          let cpList = res.data.list;
-          cpList.forEach(cpItem => {
-            if (this.cpFilter.indexOf(cpItem.cid) == -1) {
-              //从cp获取资源
-              let url = encodeURI(cpItem.url);
-              this.remote.fetching({
-                func: "GetCpProxy",
-                control: "cp",
-                uri: url,
-              }).then(res => {
-                  let result = res.data;
-                  if (result.hasOwnProperty("game")) {
-                    let game = result.game;
-                    this.GLOBAL.cplist.push({
-                      cpItem: cpItem,
-                      cpInfo: result
+          this.isLoadMore = true;
+        } else {
+          this.remote.fetching({
+            func: "List", 
+            control: "cp",
+            page: page,
+          }).then(res => {
+            if (res.code == 0) {
+              let qryPage = Math.min(res.data.cur, res.data.page); //数据修复：查询页数不能大于总页数
+              if(this.curPage < qryPage) {
+                this.curPage = qryPage;
+
+                res.data.list.forEach(cpItem => {
+                  if (this.cpFilter.indexOf(cpItem.cid) == -1) {
+                    //从cp获取资源
+                    this.remote.get(encodeURI(`${cpItem.url}/${cpItem.name}`)).then(res => {
+                        if (!!res.game) {
+                          let game = res.game;
+                          this.GLOBAL.cplist.push({
+                            cpItem: cpItem,
+                            cpInfo: res,
+                          });
+                          this.gameList.push({
+                            src: game.small_img_url,
+                            title: game.game_title,
+                            desc: game.provider
+                          });
+                        }
                     });
-                    this.fillGame(game);
                   }
-              });
+                });
+              } else {
+                //没有新的数据了，禁止继续下拉
+                this.scrollerStatus.pullupStatus = 'disabled';
+              }
+
+              setTimeout(() => {
+                this.isLoadMore = true;
+              }, 500);
             }
           });
         }
-        setTimeout(() => {
-          this.isLoadMore = true;
-        }, 500);
-      });
+      }
     },
-
     gotoCpInfo(item, index) {
       console.log("goto cp info", index);
       let cpInfo = this.GLOBAL.cplist[index].cpInfo;
       let cpItem = this.GLOBAL.cplist[index].cpItem;
-      //this.$router.push({ name: 'GameIntro', params: { cpInfo: cpInfo, cpItem: cpItem }})
       this.$router.push({
         name: "GameInfo",
         params: { cpInfo: cpInfo, cpItem: cpItem }
       });
     },
-
-    //获取CP数量
-    getCpCount(page, num) {
-      this.remote.fetching({func: "CpCount", control: "cp"}).then(res => {
-        if (res.code == 0) {
-          if (res.data > this.GLOBAL.cpCount) {
-            this.GLOBAL.cpCount = res.data;
-            this.getCpList(1, 10000);
-          }
-        }
-      });
-    },
-
-    getCpListFromLocal() {
-      try {
-        this.gameList.splice(0, this.gameList);
-        this.GLOBAL.cplist.forEach(element => {
-          let game = element.cpInfo.game;
-          this.fillGame(game);
-        });
-      } catch (ex) {
-        console.log(255,ex);
-      }
-    },
-
-    //填充视图列表
-    fillGame(game) {
-      if (
-        game != null &&
-        game.hasOwnProperty("small_img_url") &&
-        game.hasOwnProperty("game_title") &&
-        game.hasOwnProperty("provider")
-      ) {
-        this.gameList.push({
-          src: game.small_img_url,
-          title: game.game_title,
-          desc: game.provider
-        });
-      }
-    },
-
-    onImgError(item, $event) {
-      console.log(item, $event);
-    }
   },
   created() {
-    if (this.GLOBAL.cplist.length > 0) {
-      this.getCpListFromLocal();
-      this.isLoadMore = true;
-    } else {
-      this.isShow = true;
-      this.getCpList(1, 10000);
-    }
-    /* 
-    this.getCpCount()
-    */
+    this.getCpList(1);
   }
 };
 </script>

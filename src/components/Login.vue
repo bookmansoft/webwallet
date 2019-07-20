@@ -68,7 +68,7 @@ export default {
 
     gotoHome() {
         if(this.urlParamPath == null) {
-          this.$router.push('/crowd')
+          this.$router.push('/home')
         } else {
           this.$router.push(this.urlParamPath)
         }

@@ -40,7 +40,6 @@ export default {
     methods: {
         // 获取发布数据
         onBack() {
-            //this.$router.push('/home')
             this.$router.go(-1);
         },
         showPlugin(msg) {

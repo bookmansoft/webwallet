@@ -159,14 +159,12 @@ export default {
     },
 
     getCpProps() {
-        this.cpProps.splice(0, this.cpProps.length)
+        this.cpProps.splice(0, this.cpProps.length);
         this.cpInfo.proplist.forEach(element => {
             //从cp获取资源
-            let url = encodeURI(this.cpItem.url + '/prop/' + element.id)
-            this.remote.fetching({func:'GetCpProxy', control: 'cp', uri: url,}).then(res => {
-                let item = res.data;
-                item.props_price = this.GLOBAL.formatGameGold(item.props_price);
-                this.cpProps.push(item);
+            this.remote.get(encodeURI(this.cpItem.url + '/prop/' + element.id)).then(res => {
+                res.props_price = this.GLOBAL.formatGameGold(res.props_price);
+                this.cpProps.push(res);
             })        
         });
     },

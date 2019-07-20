@@ -47,7 +47,7 @@ var userBase = {userAgent: 0, uid: 0, user_name: null, openid: null}
 
 var games = []
 var cplist = []
-var cpCount = 0
+var crowdlist = []
 var vipGetNotifyTime = 0
 
 function getRandColor () {
@@ -126,6 +126,6 @@ export default
 {
   colorList, colorListLength, getRandColor, siteUri,
   formatGameGold, gameGoldOrigin, gameGoldUnit, myAlert, formatDateStr, 
-  checkAddr, userBase, games, cplist, cpCount, vipGetNotifyTime, remote
+  checkAddr, userBase, games, cplist, crowdlist, vipGetNotifyTime, remote
 }
 </script>

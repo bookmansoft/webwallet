@@ -165,13 +165,10 @@ export default {
       },
 
       getPropFromCp(prop) {
-          let url = encodeURI(prop.cp.url + '/prop/' + prop.oid)
-          this.remote.fetching({func:'GetCpProxy', control: 'cp', uri: url,}).then(resProxy => {
-            if(resProxy.code == 0) {
-              prop.result = resProxy.data;
-              prop.desc = '价格：' + this.GLOBAL.formatGameGold(prop.result.props_price) + '千克',
-              this.propList.push(prop)
-            }
+          this.remote.get(encodeURI(prop.cp.url + '/prop/' + prop.oid)).then(res => {
+            prop.result = res;
+            prop.desc = `价格：${this.GLOBAL.formatGameGold(prop.result.props_price)} 千克`;
+            this.propList.push(prop);
           }) 
       },
 
