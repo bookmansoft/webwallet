@@ -79,7 +79,7 @@ export default {
     crowdFreeList() {
       this.remote.fetching({
         func: "ListRecord",
-        control: "stockbase",
+        control: "stock",
       }).then(res => {
         this.isLoadMore = true;
         res.data.list.forEach(element => {

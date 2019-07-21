@@ -242,7 +242,7 @@ export default {
         } else {
           this.remote.fetching({
             func: "ListRecord", 
-            control: "stockbase",
+            control: "stock",
             page: page,
           }).then(res => {
             if (res.code == 0) {
@@ -258,7 +258,6 @@ export default {
                 //没有新的数据了，禁止继续下拉
                 this.scrollerStatus.pullupStatus = 'disabled';
               }
-
 
               setTimeout(() => {
                 this.isLoadMore = true;

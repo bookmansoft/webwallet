@@ -167,7 +167,7 @@
     </box>
 
     <box gap="0px 0px">
-      <x-button  style="border-radius:0px;" type="warn" @click.native="crowdPrePay()">&yen; 立即支持</x-button>
+      <x-button  style="border-radius:0px;" type="warn" @click.native="crowdPrePay()">立即支持</x-button>
     </box>
     <br>
     <br>
