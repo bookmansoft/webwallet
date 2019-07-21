@@ -47,7 +47,7 @@ export default {
   methods: {
     getWxConfig() {
         const url = location.href.split("#")[0]
-        this.remote.fetching({func:'WechatConfig', control: 'wechat', uri: url,}).then(res => {
+        this.remote.fetching({func:'wechat.WechatConfig', uri: url,}).then(res => {
             if(res.code == 0) {
                 this.$wechat.config(res.data);
             }
@@ -55,10 +55,12 @@ export default {
             console.log(res)
         })
     },
+    /**
+     * 从微信的统一下单接口获取prepay_id
+     */
     unifiedOrder() {
         this.remote.fetching({
-            func:'UnifiedOrder',
-            control: 'wechat',
+            func:'wechat.UnifiedOrder',
             appId: 'wx4a5e9d7ae34ad4b4',
             tradeId: this.tradeId,
             openid: this.GLOBAL.userBase.openid,
@@ -68,7 +70,6 @@ export default {
             if(res.code == 0) {
                 this.orderParams = res.data.unifiedOrder;
                 this.orderPre = false;
-                //this.jsSDK(unifiedOrder);
             }
         })   
     },
@@ -97,7 +98,7 @@ export default {
                 'timeStamp': params.timeStamp, // 时间戳，自1970年以来的秒数
                 'nonceStr': params.nonceStr, // 随机串
                 'package': params.package,
-                'signType': params.signType, // 微信签名方式：
+                'signType': params.signType, // 微信签名方式
                 'paySign': params.paySign // 微信签名
             },
             function (res) {
@@ -116,8 +117,7 @@ export default {
     orderNotify() {
         let that = this;
         this.remote.fetching({
-            control: 'order',               //控制器
-            func: 'OrderPayResult',         //action
+            func: 'order.OrderPayResult',
             tradeId: this.tradeId,
             status: 1,
             msg: 'success',

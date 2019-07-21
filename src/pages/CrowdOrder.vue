@@ -213,11 +213,11 @@ export default {
     crowdPay() {
       this.showLoading = true;
       this.remote.fetching({
-        func: "CommonOrderRepay",
+        func: "CrowdPurchase",
         control: "order",
-        cid: this.item.cid,
-        type: this.payType,
-        quantity: this.quantity,
+        cid: this.item.cid,       //CP编码
+        type: this.payType,       //众筹项目编号，索引到配置表'crowd'中的项目，类似商品编号
+        quantity: this.quantity,  //众筹项目数量
       }).then(res => {
         if (res.code == 0) {
           setTimeout(() => {
@@ -231,7 +231,11 @@ export default {
               }
             });
           }, 1500);
+        } else {
+          console.log('crowdPay error', res.code);
         }
+      }).catch(e=>{
+        console.log('crowdPay error', e);
       });
     }
   },
