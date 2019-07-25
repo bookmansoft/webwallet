@@ -2,7 +2,6 @@
 //#region 通讯设置
 const UrlHead = 'http';
 const Host = 'wallet.vallnet.cn';
-const siteUri = `${UrlHead}://${Host}`;
 const remote = new toolkit.gameconn({
   "UrlHead": UrlHead,
   "webserver": { 
@@ -12,8 +11,13 @@ const remote = new toolkit.gameconn({
   },
 });
 remote.setmode(remote.CommMode.ws);
-
 //#endregion
+
+//APP设置
+const appConfig = {
+  appid: 'wx4a5e9d7ae34ad4b4',      //此项配置必须和服务端保持一致
+  siteUri: `${UrlHead}://${Host}`,
+}
 
 const colorList = [
   '#F9F900',
@@ -79,12 +83,18 @@ function getRandColor () {
   return colorList[tem]
 }
 
-function formatGameGold(v) {
+/**
+ * 尘转换为公斤
+ */
+function toGamegoldKg(v) {
   let k = v / 100000
   return parseFloat(k.toFixed(3))
 }
 
-function gameGoldOrigin(v) {
+/**
+ * 公斤转换为尘
+ */
+function toGamegoldOrigin(v) {
   return v * 100000
 }
 
@@ -148,8 +158,8 @@ function checkAddr(value) {
 //输出全局数据仓库
 export default
 {
-  colorList, colorListLength, getRandColor, siteUri, ConfigMgr,
-  formatGameGold, gameGoldOrigin, gameGoldUnit, myAlert, formatDateStr, 
+  colorList, colorListLength, getRandColor, appConfig, ConfigMgr,
+  toGamegoldKg, toGamegoldOrigin, gameGoldUnit, myAlert, formatDateStr, 
   checkAddr, userBase, games, cplist, crowdlist, vipGetNotifyTime, remote
 }
 </script>

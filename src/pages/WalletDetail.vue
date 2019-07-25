@@ -62,10 +62,10 @@ export default {
                       item.title = this.GLOBAL.formatDateStr(new Date(item.time*1000), 'MM-dd HH:mm:ss');
                       if(item.category=='receive') {
                         item.img = 'static/img/wallet/rec.png'
-                        item.desc = '接收 ' + this.GLOBAL.formatGameGold(item.amount * 10000 * 10000) + '千克'
+                        item.desc = '接收 ' + this.GLOBAL.toGamegoldKg(item.amount * 10000 * 10000) + '千克'
                       } else {
                         item.img = 'static/img/wallet/send.png'
-                        item.desc = '发送 ' + this.GLOBAL.formatGameGold(item.amount * 10000 * 10000) + '千克'
+                        item.desc = '发送 ' + this.GLOBAL.toGamegoldKg(item.amount * 10000 * 10000) + '千克'
                       }
                       this.items.push(item);
                   }

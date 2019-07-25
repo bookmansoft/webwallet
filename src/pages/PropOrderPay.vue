@@ -100,7 +100,7 @@ export default {
       })
       this.data.list.push({
         label: '价格',
-        value: this.GLOBAL.formatGameGold(obj.price) + '千克'
+        value: this.GLOBAL.toGamegoldKg(obj.price) + '千克'
       })
     } else {
       this.$router.push('/Message')

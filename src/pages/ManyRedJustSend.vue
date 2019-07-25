@@ -39,7 +39,6 @@ import {
   Alert,
   TransferDomDirective as TransferDom
 } from "vux";
-import wx from "weixin-js-sdk";
 
 export default {
   directives: {
@@ -76,7 +75,8 @@ export default {
 
   created: function() {
     this.send_id = this.$route.params.send_id;
-    let that = this.send_id;
+
+    let that = this;
     //第一步先获取参数带来的发送包信息
     this.remote.fetching({
       func: "Retrieve",
@@ -87,16 +87,14 @@ export default {
       console.log("红包组信息:", this.sendData);
       let sendDataWishing = this.sendData.wishing;
       let sendDataSendNickName = this.sendData.send_nickname;
-      //配置成的处理方法
-      wx.ready(function() {
-        console.log("wx ready ok!!!");
-        console.log("http://h5.gamegold.xin/?path=/manyRed/unpack/" + that);
+
+      this.$wechat.ready(function() {
         //发送给朋友
-        wx.onMenuShareAppMessage({
+        that.$wechat.onMenuShareAppMessage({
           title: "[游戏金红包]" + sendDataWishing + "！", // 分享标题
           desc: "来自" + sendDataSendNickName + "的游戏金红包", // 分享描述
-          link: "http://h5.gamegold.xin/?path=/manyRed/unpack/" + that, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-          imgUrl: "http://h5.gamegold.xin/static/img/manyRed/redpacketsmall.jpg", // 分享图标
+          link: `${this.GLOBAL.appConfig.siteUri}?path=/manyRed/unpack/${that.send_id}`, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+          imgUrl: `${this.GLOBAL.appConfig.siteUri}static/img/manyRed/redpacketsmall.jpg`, // 分享图标
           success: function() {
             console.log("微信分享设置成功");
             // 设置成功
@@ -105,22 +103,7 @@ export default {
             console.log("失败了：" + JSON.stringify(res));
           }
         });
-        console.log("走过了设置程序");
       });
-    });
-
-    //获取配置信息
-    let url = location.href.split("#")[0]; //"http://h5.gamegold.xin/#/manyRed/justSend";
-    this.remote.fetching({
-      func: "WechatConfig",
-      control: "wechat",
-      uri: url,
-    }).then(res => {
-      if (res.code == 0) {
-        wx.config(res.data);
-      } else {
-        console.log("获取WechatConfig信息失败");
-      }
     });
   }
 };

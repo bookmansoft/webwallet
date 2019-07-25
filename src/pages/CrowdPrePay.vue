@@ -107,9 +107,10 @@ export default {
       this.flagMore = true;
     },
     crowdOrder(payType) {
+      this.item.payType = payType;
       this.$router.push({
         name: "CrowdOrder",
-        params: { item: this.item, payType: payType }
+        params: { item: this.item },
       });
     }
   },

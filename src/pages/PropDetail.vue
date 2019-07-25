@@ -153,7 +153,7 @@ export default {
                 if(that.checkRate(value)==false) {
                     that.showPluginAuto('请输入一个有效的出售价格')
                 } else {
-                    let amount = that.GLOBAL.gameGoldOrigin(value)
+                    let amount = that.GLOBAL.toGamegoldOrigin(value)
                     that.propSale(amount)
                 }
             }
@@ -182,58 +182,6 @@ export default {
         });
     },
 
-    getWxConfig() {
-      const url = location.href.split("#")[0];
-      this.remote.fetching({func:'WechatConfig', control: 'wechat', uri: url,}).then(res => {
-        if(res.code == 0) {
-          this.$wechat.config(res.data);
-        }
-      }).catch(e => {
-          console.log(e);
-      })
-    },
-
-    wxReady(prop, raw) {
-      let that = this
-      that.$wechat.ready(function () {   //需在用户可能点击分享按钮前就先调用
-          //分享给朋友
-          let title = '游戏金道具分享'
-          let desc = prop.result.props_name //'T10自行反坦克车'
-          let link = that.GLOBAL.siteUri + '/?path=/prop/receive'
-          let imgUrl = prop.result.large_icon // 'http://114.116.148.48:9701/image/3/prop_large_icon.jpg' //prop.result.large_icon
-          let params = JSON.stringify({
-            title: title,
-            desc: desc,
-            imgUrl: imgUrl,
-            raw: raw
-          })
-          link = link + '&prop=' + params
-          console.log(link)
-          that.$wechat.onMenuShareAppMessage({ 
-              title: title, // 分享标题
-              desc: desc, // 分享描述
-              link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-              imgUrl: imgUrl, // 分享图标
-              success: function () {
-                // 设置成功
-                //alert('设置成功')
-              },
-              fail: function() {
-                //alert('设置失败')
-              }
-          })
-          //分享到朋友圈
-          that.$wechat.onMenuShareTimeline({
-              title: title, // 分享标题
-              link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-              imgUrl: imgUrl, // 分享图标
-              success: function () {
-              // 用户点击了分享后执行的回调函数
-              }
-          })
-      });
-    },
-    
     // 分享好友
     propShare() {
       if(this.propShareIcon == '') {
@@ -254,8 +202,44 @@ export default {
               console.log("url " + url);
               this.$wechat.miniProgram.navigateTo({ url: url });
             */
-             this.showPlugin('点击右上角分享')
-             this.wxReady(prop, res.data.raw);
+            this.showPlugin('点击右上角分享');
+            let that = this;
+            this.$wechat.ready(function () {   //需在用户可能点击分享按钮前就先调用
+                //分享给朋友
+                let title = '游戏金道具分享'
+                let desc = prop.result.props_name //'T10自行反坦克车'
+                let link = that.GLOBAL.appConfig.siteUri + '/?path=/prop/receive'
+                let imgUrl = prop.result.large_icon // 'http://114.116.148.48:9701/image/3/prop_large_icon.jpg' //prop.result.large_icon
+                let params = JSON.stringify({
+                  title: title,
+                  desc: desc,
+                  imgUrl: imgUrl,
+                  raw: res.data.raw,
+                })
+                link = link + '&prop=' + params;
+                that.$wechat.onMenuShareAppMessage({ 
+                    title: title, // 分享标题
+                    desc: desc, // 分享描述
+                    link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                    imgUrl: imgUrl, // 分享图标
+                    success: function () {
+                      // 设置成功
+                      //alert('设置成功')
+                    },
+                    fail: function() {
+                      //alert('设置失败')
+                    }
+                })
+                //分享到朋友圈
+                that.$wechat.onMenuShareTimeline({
+                    title: title, // 分享标题
+                    link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                    imgUrl: imgUrl, // 分享图标
+                    success: function () {
+                    // 用户点击了分享后执行的回调函数
+                    }
+                })
+            });
           } else {
             this.showPlugin('道具捐赠失败！')
           }
@@ -267,14 +251,11 @@ export default {
     if(!!!this.$route.params.prop) {
         this.$router.push('/props')
     } else {
-        this.prop = this.$route.params.prop
-        //this.wxReady(this.prop)
-        console.log('this.prop', this.prop.result.more_icon)
-        this.propShareIcon = this.prop.result.large_icon
+        this.prop = this.$route.params.prop;
+        this.propShareIcon = this.prop.result.large_icon;
         this.prop.result.more_icon.forEach( item => {
-             this.propIcons.push(item)
+             this.propIcons.push(item);
         });
-        this.getWxConfig()
     }
   }
 };

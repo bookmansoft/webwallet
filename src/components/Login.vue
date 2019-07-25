@@ -46,16 +46,6 @@ export default {
       return null;
     },
 
-    wxAuthCode() {
-        let redirect_uri = this.GLOBAL.siteUri
-        if (location.search.indexOf("?") == 0 && location.search.indexOf("=") > 1) {
-          redirect_uri = redirect_uri + location.search
-        }
-        console.log('redirect_uri', redirect_uri)
-        let url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4a5e9d7ae34ad4b4&redirect_uri=${encodeURIComponent(redirect_uri)}&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect`;
-        window.location.href = url
-    },
-
     isValidPath(path) {
       this.$router.options.routes.forEach(element => {
         console.log(element.path)
@@ -74,16 +64,24 @@ export default {
         }
     },
 
-    afterLogin() {
+    async afterLogin() {
       if(this.remote.status.check(this.remote.CommStatus.logined)) {
         //#region 登录成功后，客户端缓存的、供客户端显性调用的认证信息对象
         this.GLOBAL.userBase = this.remote.userInfo;
         this.GLOBAL.userBase.uid = this.remote.userInfo.id;
         this.GLOBAL.userBase.user_name = this.remote.userInfo.name;
         this.GLOBAL.userBase.nickname = this.remote.userInfo.name;
-        console.log('after login', this.GLOBAL.userBase);
         //#endregion
 
+        //获取微信令牌
+        let res = await this.remote.fetching({func: "wechat.WechatConfig", uri: this.GLOBAL.appConfig.siteUri});
+        if (res.code == 0) {
+          this.$wechat.config(res.data);
+        } else {
+          throw new Error(`WechatConfig Error: ${res.code}`);
+        }
+
+        console.log('after login', this.GLOBAL.userBase);
         this.gotoHome();
       } else {
         throw(new Error('登录失败'));
@@ -121,9 +119,18 @@ export default {
           //登录验证
           await this.remote.setUserInfo({openkey: openkey, token: token}).getToken();
         } else {
-          setTimeout(()=>{ this.wxAuthCode(); }, 2000); //发生错误时，两秒后跳回微信授权页面，重新拉取授权码
+          setTimeout(()=>{ 
+            let redirect_uri = this.GLOBAL.appConfig.siteUri;
+            if (location.search.indexOf("?") == 0 && location.search.indexOf("=") > 1) {
+              redirect_uri = redirect_uri + location.search;
+            }
+            let url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${this.GLOBAL.appConfig.appid}&redirect_uri=${encodeURIComponent(redirect_uri)}&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect`;
+            window.location.href = url;
+          }, 2000); //发生错误时，两秒后跳回微信授权页面，重新拉取授权码
+          return;
         }
       }
+
       //执行登录操作后续检验工作
       this.afterLogin();
     } catch(e) {

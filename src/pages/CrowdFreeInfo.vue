@@ -1,3 +1,4 @@
+<!-- 众筹自由市场详情页 -->
 <template>
   <div class="root">
     <flexbox>

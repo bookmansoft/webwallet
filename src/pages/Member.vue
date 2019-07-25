@@ -1,3 +1,4 @@
+<!-- VIP会员页面 --> 
 <template>
   <div>
     <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
@@ -192,29 +193,21 @@ export default {
         this.btnTitleFee = this.getFee(select_vip, index)
       },
 
-      orderPay(tradeId) {   
-        this.$router.push({name:'OrderPay', params: {tradeId: tradeId}})
-      },
-
       orderRePay() {
-        let product = this.vipDescItems[this.vipDescIndex]
+        let product = this.vipDescItems[this.vipDescIndex];
         if(this.mine.vip_level > 0 && this.mine.is_expired == 0 && product.value < this.mine.vip_level) {
             this.showPluginAuto('不能降级，当前已经是'+ product.label)
             return;
         }
-        this.remote.fetching({
-          func:'CommonOrderRepay',
-          control: 'order',
-          price: parseInt(product.price/100),
-          productId: product.value,
-          attach: '',
-          quantity: 1,
-          productIntro: '游戏金'+product.label,
-        }).then(res => {
-            if(res.code == 0) {
-              this.$router.push({name:'WeChatPay', params: {order: res.data.order, tradeId: res.data.tradeId, retPath: '/member'}})
-            }
-        });       
+
+        this.$router.push({name:'WeChatPay', params: {
+          order: {
+            type:'vip',
+            id: product.value,
+            num: 1,
+          },
+          retPath: '/member',
+        }});
       },
 
       showPlugin(msg) {

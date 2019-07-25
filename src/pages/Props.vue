@@ -167,7 +167,7 @@ export default {
       getPropFromCp(prop) {
           this.remote.get(encodeURI(prop.cp.url + '/prop/' + prop.oid)).then(res => {
             prop.result = res;
-            prop.desc = `价格：${this.GLOBAL.formatGameGold(prop.result.props_price)} 千克`;
+            prop.desc = `价格：${this.GLOBAL.toGamegoldKg(prop.result.props_price)} 千克`;
             this.propList.push(prop);
           }) 
       },

@@ -51,8 +51,8 @@ export default {
       this.GLOBAL.userBase.unconfirmed = info.unconfirmed;
 
       this.balance = {
-        confirmed: this.GLOBAL.formatGameGold(this.GLOBAL.userBase.confirmed),
-        unconfirmed: this.GLOBAL.formatGameGold(this.GLOBAL.userBase.unconfirmed - this.GLOBAL.userBase.confirmed),
+        confirmed: this.GLOBAL.toGamegoldKg(this.GLOBAL.userBase.confirmed),
+        unconfirmed: this.GLOBAL.toGamegoldKg(this.GLOBAL.userBase.unconfirmed - this.GLOBAL.userBase.confirmed),
       }
     }
   },

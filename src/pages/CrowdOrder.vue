@@ -205,37 +205,25 @@ export default {
       if (this.quantity < 1) {
         this.quantity = 1;
       }
-      this.realPay = this.quantity * this.crowdConfig[this.payType].price;
+      this.realPay = this.quantity * this.crowdConfig[this.item.payType].price;
     },
     onBack() {
       this.$router.push({ name: "CrowdInfo", params: { item: this.item } });
     },
     crowdPay() {
-      this.showLoading = true;
-      this.remote.fetching({
-        func: "CrowdPurchase",
-        control: "order",
-        cid: this.item.cid,       //CP编码
-        type: this.payType,       //众筹项目编号，索引到配置表'crowd'中的项目，类似商品编号
-        quantity: this.quantity,  //众筹项目数量
-      }).then(res => {
-        if (res.code == 0) {
-          setTimeout(() => {
-            this.showLoading = false;
-            this.$router.push({
-              name: "WeChatPay",
-              params: {
-                order: res.data.order,
-                tradeId: res.data.tradeId,
-                retPath: "/my/stock"
-              }
-            });
-          }, 1500);
-        } else {
-          console.log('crowdPay error', res.code);
+      this.$router.push({
+        name: "WeChatPay",
+        params: {
+          order: {
+            type: 'crowd',          //商品分类
+            id: this.item.payType,  //众筹项目编号，索引到配置表'crowd'中的项目，类似商品编号
+            cid: this.item.cid,     //CP编码
+            num: this.quantity,     //众筹数量
+            price: this.realPay,
+            desc: this.crowdConfig[this.item.payType].desc,
+          },
+          retPath: "/my/stock"
         }
-      }).catch(e=>{
-        console.log('crowdPay error', e);
       });
     }
   },
@@ -248,9 +236,8 @@ export default {
     this.item = this.$route.params.item;
     this.GLOBAL.ConfigMgr.get('crowd', (err, config) =>{
       if(!err) {
-        this.payType = this.$route.params.payType || 0;
         this.crowdConfig = config;
-        this.realPay = this.quantity * this.crowdConfig[this.payType].price;
+        this.realPay = this.quantity * this.crowdConfig[this.item.payType].price;
       }
     });
   }

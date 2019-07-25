@@ -86,17 +86,6 @@ export default {
         return time
     },
 
-    getWxConfig() {
-        const url = location.href.split("#")[0];
-        this.remote.fetching({func:'WechatConfig', control: 'wechat', uri: url}).then(res => {
-          if(res.code == 0) {
-            this.$wechat.config(res.data);
-          }
-        }).catch(res => {
-            console.log(res);
-        })
-    },
-
     previewImage: function(e) {
         let that = this
         let current = this.image
@@ -135,11 +124,9 @@ export default {
       let gameUrl = this.gameInfo.large_img_url
       /*
       let gameUrl = 'https://mini.gamegold.xin/proxy/cp01/index.html?' + cname + '/' + addr
-      console.log('gameUrl', gameUrl)
       window.location.href = gameUrl
       */
       const url = "/pages/test/test?cid=" + cid + "&addr=" + addr + "&game=" + game + "&gameUrl=" + gameUrl;
-      //wx.miniProgram.navigateTo({ url: url });
       this.$wechat.miniProgram.navigateTo({ url: url })
     },
 
@@ -151,7 +138,7 @@ export default {
         let uid = this.GLOBAL.openid
         let notifyurl = this.GLOBAL.apiUrl
         let order_sn = item.id + '-new-' + this.randomString(16)
-        let price = this.GLOBAL.gameGoldOrigin(item.props_price)
+        let price = this.GLOBAL.toGamegoldOrigin(item.props_price)
         var url = "/pages/order/order?cid=" + cid + "&uid=" + uid + "&sn=" + order_sn;
         url += "&price=" + price + '&notifyurl=' + encodeURI(notifyurl) + '&returl=' + encodeURI(window.location.href) ;
         console.log(url);
@@ -163,7 +150,7 @@ export default {
         this.cpInfo.proplist.forEach(element => {
             //从cp获取资源
             this.remote.get(encodeURI(this.cpItem.url + '/prop/' + element.id)).then(res => {
-                res.props_price = this.GLOBAL.formatGameGold(res.props_price);
+                res.props_price = this.GLOBAL.toGamegoldKg(res.props_price);
                 this.cpProps.push(res);
             })        
         });
@@ -192,7 +179,6 @@ export default {
         this.getCpProps();
         this.userToken();
     }
-    this.getWxConfig();
   }
 };
 </script>

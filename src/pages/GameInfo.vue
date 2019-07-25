@@ -207,7 +207,6 @@ export default {
     },
     gotoLogin() {
         const url = "/pages/login/login";
-        //wx.miniProgram.navigateTo({ url: url });
         this.$wechat.miniProgram.navigateTo({ url: url })
     },
 
@@ -246,15 +245,6 @@ export default {
       })
     },
 
-    getWxConfig() {
-        const url = location.href.split("#")[0];
-        this.remote.fetching({func:'WechatConfig', control: 'wechat', uri: url}).then(res => {
-            this.$wechat.config(res.data);
-        }).catch(res => {
-            console.log(res);
-        })
-    },
-
     previewImage: function(e) {
         let that = this
         let current = this.image
@@ -285,6 +275,7 @@ export default {
       this.showPlugin('暂未开放，请稍后再来');
       return;
 
+      //跳转至鸡小德
       //window.location.href = `http://chick.vallnet.cn/?openid=${this.remote.userInfo.openid}&openkey=${this.remote.userInfo.openkey}`;
 
       let cname = this.cpItem.name
@@ -293,7 +284,6 @@ export default {
       let game = this.gameInfo.game_title
       let gameUrl = this.gameInfo.large_img_url
       const url = "/pages/test/test?cid=" + cid + "&addr=" + addr + "&game=" + game + "&gameUrl=" + gameUrl;
-      //wx.miniProgram.navigateTo({ url: url });
       this.$wechat.miniProgram.navigateTo({ url: url })
     },
 
@@ -307,20 +297,18 @@ export default {
         let uid = this.GLOBAL.openid
         let notifyurl = this.GLOBAL.apiUrl
         let order_sn = item.id + '-new-' + this.randomString(16)
-        let price = this.GLOBAL.gameGoldOrigin(item.props_price)
+        let price = this.GLOBAL.toGamegoldOrigin(item.props_price)
         var url = "/pages/order/order?cid=" + cid + "&uid=" + uid + "&sn=" + order_sn;
         url += "&price=" + price + '&notifyurl=' + encodeURI(notifyurl) + '&returl=' + encodeURI(window.location.href) ;
         console.log(url);
         this.$wechat.miniProgram.navigateTo({ url: url });
         */
-        let order_sn = item.id + '-new-' + this.randomString(16)
+        let order_sn = item.id + '-new-' + this.randomString(16);
         this.remote.fetching({
-          func:'OrderPay', 
-          control: 'order', 
-          cid: this.cpItem.cid, 
+          func:'order.OrderPay', 
+          cid: this.cpItem.cid,
           sn: order_sn,
-          price: this.GLOBAL.gameGoldOrigin(item.props_price),
-          account: this.GLOBAL.userBase.uid,
+          price: this.GLOBAL.toGamegoldOrigin(item.props_price),
         }).then(res => {
             if(res.code == 0) {
               this.showPlugin('道具已购买成功')
@@ -362,7 +350,7 @@ export default {
         this.cpInfo.proplist.forEach(element => {
             //从cp获取资源
             this.remote.get(encodeURI(encodeURI(this.cpItem.url + '/prop/' + element.id))).then(res => {
-                res.props_price = this.GLOBAL.formatGameGold(res.props_price);
+                res.props_price = this.GLOBAL.toGamegoldKg(res.props_price);
                 this.cpProps.push(res);
             });
         });
@@ -405,7 +393,6 @@ export default {
         this.userToken()
         this.getCommentList()
     }
-    this.getWxConfig()
   }
 };
 </script>

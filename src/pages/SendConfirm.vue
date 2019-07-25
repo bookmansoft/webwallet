@@ -161,7 +161,7 @@ export default {
   created() {
     this.sender = {
       amount : this.$route.params.amount,
-      actAmount: this.GLOBAL.gameGoldOrigin(this.$route.params.amount),
+      actAmount: this.GLOBAL.toGamegoldOrigin(this.$route.params.amount),
       fee: this.$route.params.fee,
       address: this.$route.params.address,
     };

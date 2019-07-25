@@ -17,7 +17,7 @@
                 <div class="flex-demo2">
                     <div>未提取<span class="drawGold">
                         <countup :end-val="gold" :duration="1" :start="doStart" :decimals=3></countup>
-                        <!--{{this.GLOBAL.formatGameGold(mine.vip_usable_count)}}-->
+                        <!--{{this.GLOBAL.toGamegoldKg(mine.vip_usable_count)}}-->
                         </span>千克
                     </div>
                     <div><p>满10千克可提到钱包</p></div>
@@ -60,7 +60,7 @@
               </flexbox-item>
               <flexbox-item :span="4">
                 <div class="flex-demo3">
-                    <span>{{GLOBAL.formatGameGold(item.draw_count)}}千克</span>
+                    <span>{{GLOBAL.toGamegoldKg(item.draw_count)}}千克</span>
                 </div>
               </flexbox-item>
             </flexbox>
@@ -116,7 +116,7 @@ export default {
     let current_time = parseInt(new Date().getTime() / 1000)
     this.GLOBAL.vipGetNotifyTime = current_time
     if(this.mine.vip_usable_count > 0) {
-      this.gold = this.GLOBAL.formatGameGold(this.mine.vip_usable_count);
+      this.gold = this.GLOBAL.toGamegoldKg(this.mine.vip_usable_count);
       this.doStart = true
       this.getDrawLog()
       this.doCircle()
@@ -170,7 +170,7 @@ export default {
                 if(that.checkRate(value)==false) {
                     that.showPluginAuto('输入无效数字')
                 } else {
-                    let draw_count = that.GLOBAL.gameGoldOrigin(value)
+                    let draw_count = that.GLOBAL.toGamegoldOrigin(value)
                     if(value < 10) {
                       that.showPluginAuto('提取数量不能少于10千克')
                     } else if(draw_count > that.mine.vip_usable_count) {
@@ -193,7 +193,7 @@ export default {
               this.percent = 0;
               this.doStart = false;
               this.mine.vip_usable_count = this.mine.vip_usable_count - draw_count;
-              this.gold = this.GLOBAL.formatGameGold(this.mine.vip_usable_count.vip_usable_count );
+              this.gold = this.GLOBAL.toGamegoldKg(this.mine.vip_usable_count.vip_usable_count );
               this.doStart = true;
               this.drawLog.unshift(res.data);
               this.showPluginAuto('提币成功');

@@ -14,7 +14,7 @@
                     </flexbox-item>
                     <flexbox-item :span="5">
                         <div class="flex-demo">
-                            <p><span>{{GLOBAL.formatGameGold(item.draw_count)}} 千克</span></p>
+                            <p><span>{{GLOBAL.toGamegoldKg(item.draw_count)}} 千克</span></p>
                             <p>&nbsp;</p>
                         </div>
                     </flexbox-item>
@@ -62,7 +62,7 @@ export default {
                 this.drawLog.forEach(element => {
                     this.drawCount += element.draw_count;
                 });
-                this.title = '累计提取' + this.drawLog.length + '次，共' + this.GLOBAL.formatGameGold(this.drawCount) + '千克';
+                this.title = '累计提取' + this.drawLog.length + '次，共' + this.GLOBAL.toGamegoldKg(this.drawCount) + '千克';
             }
         });  
     }

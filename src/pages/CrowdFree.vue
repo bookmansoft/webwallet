@@ -1,3 +1,4 @@
+<!-- 众筹自由市场页 -->
 <template>
   <div class="root" style="background-color:white;margin-top:0px">
     <div v-if="isLoadMore">
@@ -78,8 +79,7 @@ export default {
     },
     crowdFreeList() {
       this.remote.fetching({
-        func: "ListRecord",
-        control: "stock",
+        func: "stock.ListRecord",
       }).then(res => {
         this.isLoadMore = true;
         res.data.list.forEach(element => {

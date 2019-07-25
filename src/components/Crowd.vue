@@ -241,8 +241,7 @@ export default {
           this.isLoadMore = true;
         } else {
           this.remote.fetching({
-            func: "ListRecord", 
-            control: "stock",
+            func: "stock.ListRecord", 
             page: page,
           }).then(res => {
             if (res.code == 0) {

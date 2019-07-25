@@ -81,7 +81,7 @@ export default {
             func:'ContractCreate', 
             control: 'contract',
             ntype: 1,
-            num: this.GLOBAL.gameGoldOrigin(this.number),
+            num: this.GLOBAL.toGamegoldOrigin(this.number),
             btc: this.btc * 100000000,
             addr: this.address,
           }).then(res => {

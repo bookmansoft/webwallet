@@ -45,6 +45,8 @@ export default {
     onItemClick(index) {
       console.log(this.tabIndex)
     }
-  }
+  },
+  created() {
+  },
 }
 </script>

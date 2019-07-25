@@ -1,3 +1,4 @@
+<!-- 众筹自由市场订单页 --> 
 <template>
   <div class="root">
     <div style="background-color:#f3f3f3">
@@ -18,12 +19,8 @@
           </flexbox-item>
           <flexbox-item :span="9">
             <div style="display:block;margin-left:5px;line-height:30px">
-              <span
-                style="font-size:16px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-              >进击的兵长 百宝箱</span><br />
-              <span
-                style="font-size:16px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100);"
-              >  {{price}}千克</span>
+              <span style="font-size:16px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);">进击的兵长 百宝箱</span><br />
+              <span style="font-size:16px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100);"> {{price}}千克</span>
             </div>
           </flexbox-item>
         </flexbox>
@@ -229,16 +226,12 @@ export default {
       msg: "众筹",
       headerTitle: "众筹购买",
       tabIndex: 0,
-      quantity: 1,
-      showLoading: false,
-
-
       item: {},
       price: 10,
       buyNum: 1, //购买数量，预设为1
       realPay: 10, //支付总额
-
-      flagMore: false
+      showLoading: false,
+      flagMore: false,
     };
   },
   methods: {
@@ -247,7 +240,6 @@ export default {
       this.flagMore = true;
     },
     onPayYuan() {
-      console.log(317, this.payYuanValue);
       this.realPay = this.payYuanValue;
     },
     onBuyNumChange(value) {
@@ -260,43 +252,18 @@ export default {
     onBack() {
       this.$router.push({ name: "CrowdInfo", params: { item: this.item } });
     },
-    orderRePay() {
-      this.remote.fetching({
-        func: "CommonOrderRepay",
-        control: "order",
-        price: this.item.price * this.quantity,
-        productId: this.item.id,
-        attach: this.item.cid,
-        quantity: this.quantity,
-        productIntro: this.item.cname,
-      }).then(res => {
-        if ((res.code == 0)) {
-          setTimeout(() => {
-            this.showLoading = false;
-            this.$router.push({
-              name: "WeChatPay",
-              params: {
-                order: res.data.order,
-                tradeId: res.data.tradeId,
-                retPath: "/my/stock"
-              }
-            });
-          }, 1500);
+    crowdPay() {
+      this.$router.push({
+        name: "WeChatPay",
+        params: {
+          order: {
+            type: 'stock',
+            id: this.item.id,
+            num: this.buyNum,
+          },
+          retPath: "/my/stock",
         }
       });
-    },
-    crowdPay() {
-      this.showLoading = true;
-      let iNum=parseInt(Math.random()*2);//0-1的整数
-      switch (iNum) {
-        case 0:
-          this.$router.push({name:"BuySuccess"});
-          break;
-        case 1:
-          this.$router.push({name:"BuyFail"});
-          break;
-      }
-      // this.orderRePay();
     }
   },
 

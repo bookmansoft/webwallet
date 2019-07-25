@@ -6,7 +6,6 @@ import Crowd from '@/components/Crowd'
 import CrowdFree from '@/pages/CrowdFree'
 import CrowdInfo from '@/pages/CrowdInfo'
 import CrowdOrder from '@/pages/CrowdOrder'
-import CrowdPay from '@/pages/CrowdPay'
 import CrowdFreeInfo from '@/pages/CrowdFreeInfo'
 import CrowdMy from '@/pages/CrowdMy'
 import CrowdMyInfo from '@/pages/CrowdMyInfo'
@@ -29,7 +28,6 @@ import PropSaleInfo from '@/pages/PropSaleInfo'
 import PropReceive from '@/pages/PropReceive'
 import About from '@/pages/About'
 import Member from '@/pages/Member'
-import OrderPay from '@/pages/OrderPay'
 import WeChatPay from '@/pages/WeChatPay'
 import MemberDrawLog from '@/pages/MemberDrawLog'
 import Message from '@/pages/Message'
@@ -86,7 +84,6 @@ export default new Router({
     { path: '/crowd/info', name: 'CrowdInfo', component: CrowdInfo ,meta:{title:'众筹详情-百谷王游戏金链'}},
     { path: '/crowd/order', name: 'CrowdOrder', component: CrowdOrder ,meta:{title:'确认订单'}},
     { path: '/crowd/freeOrder', name: 'CrowdFreeOrder', component: CrowdFreeOrder ,meta:{title:'自由市场-确认订单'}},
-    { path: '/crowd/pay', name: 'CrowdPay', component: CrowdPay ,meta:{title:'众筹订单支付'}},
     { path: '/crowd/free/info', name: 'CrowdFreeInfo', component: CrowdFreeInfo ,meta:{title:'游戏元宝信息-百谷王游戏金链'}},
     { path: '/crowd/my/info', name: 'CrowdMyInfo', component: CrowdMyInfo ,meta:{title:'我的游戏元宝'}},
     { path: '/crowd/my/sale', name: 'CrowdMySale', component: CrowdMySale ,meta:{title:'挂单出售中'}},
@@ -129,7 +126,6 @@ export default new Router({
 
     { path: '/contract/info', name: 'ContractInfo', component: ContractInfo ,meta:{title:'交易对信息'}},
 
-    { path: '/order/pay', name: 'OrderPay', component: OrderPay ,meta:{title:'订单支付'}},
     { path: '/wechat/pay', name: 'WeChatPay', component: WeChatPay ,meta:{title:'微信支付'}},
 
     { path: '/lucky', name: 'LuckyWheel', component: LuckyWheel ,meta:{title:'幸运大转盘'}},

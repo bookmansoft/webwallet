@@ -158,37 +158,26 @@ export default {
     onBack() {
       this.$router.push("/wallet");
     },
-    getWxConfig() {
-      const url = location.href.split("#")[0];
-      this.remote.fetching({
-        func: "WechatConfig",
-        control: "wechat",
-        uri: url,
-      }).then(res => {
-        console.log('getWxConfig', res);
-        if(res.code == 0) {
-          this.$wechat.config(res.data);
-        }
-      }).catch(res => {
-        console.log('getWxConfig', res);
-      });
-    },
-    // 调用摄像头
+
+    /**
+     * 调用摄像头
+     */
     wxScanCode() {
       let that = this;
       that.$wechat.scanQRCode({
-        needResult: 1,
-        scanType: ["qrCode", "barCode"],
+        needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+        scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
         success: function(res) {
           console.log(res);
-          let resultStr = res.resultStr;
-          that.address = resultStr;
+          that.address = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
         },
         fail: function(res) {
-          that.GLOBAL.myAlert(that.$vux.alert, "地址扫描失败");
+          console.log(res);
+          that.GLOBAL.myAlert(that.$vux.alert, `地址扫描失败${JSON.stringify(res)}`);
         }
       });
     },
+
     sendGamegold() {
       if (this.checkSend() == false) {
         return;
@@ -220,7 +209,6 @@ export default {
     }
   },
   created() {
-    this.getWxConfig();
     this.mine = this.GLOBAL.userBase;
   }
 };
