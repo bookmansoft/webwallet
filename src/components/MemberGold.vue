@@ -3,74 +3,41 @@
     <div class="split"> </div>
     <div class="member_car">
       <div class="member_car_up">
-            <div class="flex-demo1">
-                <div>
-                  <div style="display:inline-block">我的会员等级：</div>
-                  <img :src="getVipImg(mine.vip_level)" class="imgDiv" />
-                </div>
-                <div><p>会员有效期至：{{this.GLOBAL.formatDateStr(new Date(mine.vip_end_time*1000), 'yyyy年MM月dd日')}}</p></div>
+        <div class="flex-demo1">
+            <div>
+              <div style="display:inline-block">我的会员等级</div>
+              <img :src="getVipImg(mine.vl)" class="imgDiv" />
             </div>
+            <div>
+              <p>会员有效期至：{{this.GLOBAL.formatDateStr(new Date(mine.vet*1000), 'yyyy年MM月dd日')}}</p>
+            </div>
+        </div>
       </div>
       <div class="member_car_down">
-            <flexbox>
-            <flexbox-item :span="7">
-                <div class="flex-demo2">
-                    <div>未提取<span class="drawGold">
-                        <countup :end-val="gold" :duration="1" :start="doStart" :decimals=3></countup>
-                        <!--{{this.GLOBAL.toGamegoldKg(mine.vip_usable_count)}}-->
-                        </span>千克
-                    </div>
-                    <div><p>满10千克可提到钱包</p></div>
-                </div>
-            </flexbox-item>
-            <flexbox-item :span="5"><div class="flex-demo22">
-              <!--
-              <img src="static/img/member/tiqu1.png" class="imgDiv2" @click="vipDrawConfirm" v-if="gold>=10" />
-              <img src="static/img/member/tiqu.png" class="imgDiv2" v-if="gold<10" />
-              -->
-                <div class="vux-circle-demo">
-                    <div style="width:60px;height:60px;">
-                      <x-circle
-                        :percent="percent"
-                        :stroke-width="5"
-                        stroke-color="#ff8312">
-                        <span style="color:red;" v-if="this.percent >= 100" @click="vipDrawConfirm">提取</span>
-                        <span style="color:#b3bfce;" v-else>提取</span>
-                      </x-circle>
-                    </div>
-                </div>
+        <flexbox>
+          <flexbox-item :span="7">
+              <div class="flex-demo2">
+                  <div>未提取: <span class="drawGold">{{this.GLOBAL.toGamegoldKg(mine.vcur)}}</span>千克</div>
+                  <div><p>满10千克可提到钱包</p></div>
               </div>
-            </flexbox-item>
-            </flexbox>
-      </div>
-    </div>
-
-    <div v-if="drawLog.length>0" >
-      <div class="split"> </div>
-      <div>
-          <p class="drawLog">
-            <span class="drawLogSpan">近期提币</span>
-          </p>
-          <div style="background-color:white; padding:10px;"> 
-            <flexbox v-for="(item, index) in drawLog" :key="index">
-              <flexbox-item :span="8">
-                  <div class="flex-demo3">
-                    <span>{{GLOBAL.formatDateStr(new Date(item.draw_at*1000), 'MM-dd HH:mm:ss')}}</span>
+          </flexbox-item>
+          <flexbox-item :span="5"><div class="flex-demo22">
+              <div class="vux-circle-demo">
+                  <div style="width:60px;height:60px;">
+                    <x-circle
+                      :percent="percent"
+                      :stroke-width="5"
+                      stroke-color="#ff8312">
+                      <span style="color:red;" v-if="this.percent >= 100" @click="vipDrawConfirm">提取</span>
+                      <span style="color:#b3bfce;" v-else>提取</span>
+                    </x-circle>
                   </div>
-              </flexbox-item>
-              <flexbox-item :span="4">
-                <div class="flex-demo3">
-                    <span>{{GLOBAL.toGamegoldKg(item.draw_count)}}千克</span>
-                </div>
-              </flexbox-item>
-            </flexbox>
-          </div>
-          <p class="drawLogMore">
-            <span @click="allDrawLog">查看更多>></span>
-          </p>
+              </div>
+            </div>
+          </flexbox-item>
+        </flexbox>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -79,58 +46,36 @@ import { Flexbox, FlexboxItem, Group, Countup, XCircle, TransferDomDirective as 
 
 export default {
   name: 'MemberGold',
+
   directives: {
     TransferDom
   },
+
   components: {
     Flexbox, FlexboxItem, Group, Countup, XCircle
   },
+
   props: [
     'mine'
   ],
+
   data () {
     return {
-      doStart: false,
       gold: 1000,
       percent: 0,
-      drawLog: [],
+      maxPercent: 0,
       timer: null,
       canDrawGold: 10,
-      maxPercent: 0,
-      timer2: null,
     }
   },
-  mounted() {
-    console.log('mounted')
-　　//clearInterval(this.timer)
-  },
 
-  beforeDestroy: function () {
-  　console.log('beforeDestroy')　
-    clearInterval(this.timer)
-    clearInterval(this.timer2)
-  },
-
-  created() {
-    console.log('created')
-    let current_time = parseInt(new Date().getTime() / 1000)
-    this.GLOBAL.vipGetNotifyTime = current_time
-    if(this.mine.vip_usable_count > 0) {
-      this.gold = this.GLOBAL.toGamegoldKg(this.mine.vip_usable_count);
-      this.doStart = true
-      this.getDrawLog()
-      this.doCircle()
-      //this.setTimer2()
-    }
-  },
-  
   methods: {
     doCircle() {
-      this.maxPercent = parseInt(this.gold / this.canDrawGold * 100)
+      this.maxPercent = (this.gold / this.canDrawGold * 100) | 0;
       let interval = 50
       if(this.maxPercent > 100) {
-        this.maxPercent = 100
-        interval = 10
+        this.maxPercent = 100;
+        interval = 10;
       }
       console.log('this.maxPercent', this.maxPercent)
       this.percent = 0
@@ -145,19 +90,8 @@ export default {
           }
 　　　　}, val);
 　　},
-    setTimer2: function () {
-      console.log('setTimer')
-　　　　this.timer2 = setInterval( () => {
-          this.gold += 0.0011
-          this.percent++
-　　　　}, 1000);
-　　},
     getVipImg(vip_level) {
       return 'static/img/member/vip_'+vip_level+'.png'
-    },
-
-    allDrawLog() {
-      this.$router.push({name: 'MemberDrawLog'})
     },
 
     vipDrawConfirm() {
@@ -173,7 +107,7 @@ export default {
                     let draw_count = that.GLOBAL.toGamegoldOrigin(value)
                     if(value < 10) {
                       that.showPluginAuto('提取数量不能少于10千克')
-                    } else if(draw_count > that.mine.vip_usable_count) {
+                    } else if(draw_count > that.mine.vcur) {
                       that.showPluginAuto('提取数量超出额度')
                     } else {
                       that.vipDraw(draw_count)
@@ -191,31 +125,18 @@ export default {
         }).then(res => {
             if(res.code == 0) {
               this.percent = 0;
-              this.doStart = false;
-              this.mine.vip_usable_count = this.mine.vip_usable_count - draw_count;
-              this.gold = this.GLOBAL.toGamegoldKg(this.mine.vip_usable_count.vip_usable_count );
-              this.doStart = true;
-              this.drawLog.unshift(res.data);
+              this.mine.vcur = this.mine.vcur - draw_count;
+              this.gold = this.GLOBAL.toGamegoldKg(this.mine.vcur);
               this.showPluginAuto('提币成功');
               this.doCircle();
             }
         });  
     },
 
-    getDrawLog() {
-        this.remote.fetching({
-          func:'VipDrawLog',
-          control: 'profile',
-          last: 1,
-        }).then(res => {
-            if(res.code == 0) {
-                this.drawLog = res.data;
-            }
-        });  
-    },
     checkRate(input) {
-    　　var re = /^[0-9]+.?[0-9]*$/; //判断字符串是否为数字 //判断正整数 /^[1-9]+[0-9]*]*$/ 
-        return re.test(input)
+        //判断字符串是否为数字 //判断正整数 /^[1-9]+[0-9]*]*$/ 
+    　　var re = /^[0-9]+.?[0-9]*$/;
+        return re.test(input);
     },
     showPlugin(msg) {
       this.$vux.alert.show({
@@ -230,7 +151,20 @@ export default {
         this.$vux.alert.hide()
       }, 3000)
     },
-  }
+  },
+
+  //#region 生命周期函数
+  beforeDestroy: function () {
+    clearInterval(this.timer)
+  },
+
+  created() {
+    if(this.mine.vcur > 0) {
+      this.gold = this.GLOBAL.toGamegoldKg(this.mine.vcur);
+      this.doCircle();
+    }
+  },
+  //#endregion
 }
 </script>
 <style lang="less" scoped>
@@ -287,9 +221,6 @@ export default {
 }
 .drawGold {
   color:black; font-size:17px; font-weight:620;
-}
-.drawLog {
-  text-align:center;width:100%; background-color: white;padding-top:5px; top:0px; position: relative;
 }
 .drawLogMore {
   text-align:center; background-color: white; padding:5px;

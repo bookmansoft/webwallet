@@ -17,30 +17,7 @@
         @on-pullup-loading="selPullUp"
       >
         <div>
-          <div style="margin-top:15px;">
-            <flexbox>
-              <flexbox-item :span="12">
-                <div class="flex-left">
-                  <img src="static/img/stock/hot_line.png" style="width:3px;height:13px">
-                  <span style="font-size:15px;">背包一览</span>
-                </div>
-              </flexbox-item>
-            </flexbox>
-          </div>
-
-          <div style="margin-top:-30px">
-            <div v-for="(item, index) in pocketItems" :key="index" class="crowdItem">
-              <div style="padding: 10px;" v-on:click="crowdDetail(item)">
-                <flexbox>
-                  <flexbox-item :span="12">
-                    <div class="flex-left" style="margin-top:6px;margin-bottom:8px">
-                      <span style="font-size:15px;">{{item.id}}/{{item.num}}</span>
-                    </div>
-                  </flexbox-item>
-                </flexbox>
-              </div>
-            </div>
-          </div>
+          <panel :header="Title" :list="pocketItems" :type="type" @on-click-item="itemDetail" @on-img-error="onImgError"></panel>        
         </div>
       </scroller>
     </div>
@@ -55,8 +32,10 @@
     <navs></navs>
   </div>
 </template>
+
 <script>
 import {
+  Panel,
   Scroller,
   XButton,
   Tab,
@@ -75,6 +54,7 @@ import NoData from "@/components/NoData.vue";
 export default {
   name: 'Pocket',
   components: {
+    Panel,
     Scroller,
     NoData,
     Navs,
@@ -89,6 +69,8 @@ export default {
   },
   data: function() {
     return {
+      type: '2',
+      Title: '背包一览',
       downobj: {
         content: "下拉刷新数据...",
         downContent: "下拉刷新数据...",
@@ -100,8 +82,8 @@ export default {
         clsPrefix: "xs-plugin-pulldown-"
       },
       upobj: {
-        content: "向上滑动获取更多数据...",
-        upContent: "向上滑动获取更多数据...",
+        content: "",
+        upContent: "",
         downContent: "释放获取数据",
         loadingContent: "加载中...",
         pullUpHeight: 50,
@@ -121,6 +103,9 @@ export default {
     };
   },
   methods: {
+    onImgError (item, $event) {
+      console.log(item, $event)
+    },
     selPullDown() {
       this.showNoData = false;
       
@@ -146,8 +131,7 @@ export default {
         }
       }, 1000);
     },
-    //跳转至众筹详情
-    crowdDetail(item) {
+    itemDetail(item) {
       this.$router.push({ name: "ItemInfo", params: { item: item } });
     },
     /**
@@ -198,14 +182,17 @@ export default {
             func: "item.list", 
             page: page,
           }).then(res => {
-            console.log(`${res.code}`);
             if (res.code == 0) {
               let qryPage = Math.min(res.data.page, res.data.total); //数据修复：查询页数不能大于总页数
               if(this.curPage < qryPage) {
                 this.curPage = qryPage;
 
                 res.data.list.forEach(item => {
-                  this.pocketItems.push(item);
+                  let tp = item.id.split('.')[0];
+                  this.pocketItems.push({
+                    title: `${this.GLOBAL.ResType[tp]}`,
+                    desc: `类型: ${tp[1]} / 当前数量: ${item.num}`,
+                  });
                 });
               } else {
                 //没有新的数据了，禁止继续下拉

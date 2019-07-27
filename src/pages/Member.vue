@@ -2,11 +2,11 @@
 <template>
   <div>
     <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
-    <memberJoin v-if="mine != null && mine.vip_level == 0" @click.native="orderRePay"></memberJoin>
-    <memberGold v-if="mine != null && mine.vip_level > 0" :mine="mine" ></memberGold>
+    <memberJoin v-if="mine != null && mine.vl == 0" @click.native="orderRePay"></memberJoin>
+    <memberGold v-if="mine != null && mine.vl > 0" :mine="mine" ></memberGold>
     
     <div><p class="memberMore">
-    <span>会员方案</span></p>
+      <span>会员方案</span></p>
     </div>
     <div class="memberMoreDiv">
         <flexbox>
@@ -21,7 +21,7 @@
     <div class="vipDesc">
       <divider>.</divider>
       <div class="vipDescDiv">
-        <swiper v-model="vipDescIndex" height="100px" :show-dots="false">
+        <swiper v-model="vipDescIndex" height="120px" :show-dots="false">
           <swiper-item v-for="(item, index) in vipDescItems" :key="index">
             <p v-for="(item1, index1) in item.memo" :key="index1">{{item1}}</p>
           </swiper-item>
@@ -43,40 +43,42 @@ import MemberJoin from '@/components/MemberJoin.vue'
 import MemberGold from '@/components/MemberGold.vue'
 import { XHeader, Flexbox, FlexboxItem, Group, Divider, XButton, Swiper, SwiperItem  } from 'vux'
 
-const getVipDescItems = () => [{
-  label: 'VIP1',
-  price: '600',
-  value: 1,
-  memo: [
-    'VIP 1会员特权：',
-    '首次开通会员立得价值188元游戏道具大礼包',
-    '会员有效期内每秒可产出0.1克游戏金',
-    '点亮VIP1会员专属勋章',
-    '后续会员服务升级，已开通用户将自动更新服务'
-  ]
-}, {
-  label: 'VIP2',
-  price: '6600',
-  value: 2,
-  memo: [
-    'VIP 2会员特权：',
-    '首次开通会员立得价值188元游戏道具大礼包',
-    '会员有效期内每秒可产出1.1克游戏金',
-    '点亮VIP2会员专属勋章',
-    '后续会员服务升级，已开通用户将自动更新服务'
-  ]
-},{
-  label: 'VIP3',
-  price: '16800',
-  value: 3,
-  memo: [
-    'VIP 3会员特权：',
-    '首次开通会员立得价值188元游戏道具大礼包',
-    '会员有效期内每秒可产出3.3克游戏金',
-    '点亮VIP3会员专属勋章',
-    '后续会员服务升级，已开通用户将自动更新服务'
-  ]
-}]
+const getVipDescItems = () => [
+  {
+    label: 'VIP1',
+    price: '600',
+    value: 1,
+    memo: [
+      'VIP 1会员特权：',
+      '首次开通会员立得价值188元游戏道具大礼包',
+      '会员有效期内每秒可产出0.1克游戏金',
+      '点亮VIP1会员专属勋章',
+      '后续会员服务升级，已开通用户将自动更新服务'
+    ]
+  }, {
+    label: 'VIP2',
+    price: '6600',
+    value: 2,
+    memo: [
+      'VIP 2会员特权：',
+      '首次开通会员立得价值188元游戏道具大礼包',
+      '会员有效期内每秒可产出1.1克游戏金',
+      '点亮VIP2会员专属勋章',
+      '后续会员服务升级，已开通用户将自动更新服务'
+    ]
+  },{
+    label: 'VIP3',
+    price: '16800',
+    value: 3,
+    memo: [
+      'VIP 3会员特权：',
+      '首次开通会员立得价值188元游戏道具大礼包',
+      '会员有效期内每秒可产出3.3克游戏金',
+      '点亮VIP3会员专属勋章',
+      '后续会员服务升级，已开通用户将自动更新服务'
+    ]
+  }
+];
 
 const vipBtns = () => [
   {
@@ -133,21 +135,21 @@ export default {
           }
       },
       getFee(select_vip, index) {
-        if(this.mine.vip_level == 0 || this.mine.is_expired == 1) {
+        if(this.mine.vl == 0 || this.mine.vs == 1) {
           return this.getBaseFee(select_vip)
 
-        } else if(this.mine.vip_level == select_vip) {
+        } else if(this.mine.vl == select_vip) {
           return this.getBaseFee(select_vip)
 
-        } else if(select_vip > this.mine.vip_level) {
+        } else if(select_vip > this.mine.vl) {
           let current_time = parseInt(new Date().getTime() / 1000);
-          let remainder_time = this.mine.vip_end_time - this.mine.vip_start_time
+          let remainder_time = this.mine.vet - this.mine.vst;
           console.log('remainder_time', remainder_time)
           let days = parseInt(remainder_time / (24 * 3600))
           console.log('days', days)
           let allFee = 0
-          let currentVipIndex = this.mine.vip_level - 1
-          let currentVipPrice = this.vipDescItems[currentVipIndex].price 
+          let currentVipIndex = this.mine.vl - 1;
+          let currentVipPrice = this.vipDescItems[currentVipIndex].price ;
           if(select_vip == 2) {
             allFee = 220 * days
           } else {
@@ -173,17 +175,16 @@ export default {
         });
 
         let select_vip = this.vipDescItems[index].value
-        if(this.mine.vip_level > 0 && this.mine.is_expired == 0) {
+        if(this.mine.vl > 0 && this.mine.vs == 0) {
           console.log('select_vip', select_vip)
-          console.log('mine.vip_level', this.mine.vip_level)
-          if(select_vip < this.mine.vip_level) {
+          if(select_vip < this.mine.vl) {
             this.btnTitle = '不可降级'
             this.btnEnable = false
-          } else if(select_vip > this.mine.vip_level) {
+          } else if(select_vip > this.mine.vl) {
             this.btnTitle = '升级VIP' + select_vip
             this.btnEnable = true
           } else {
-            this.btnTitle = 'VIP' + this.mine.vip_level + '续费'
+            this.btnTitle = 'VIP' + this.mine.vl + '续费'
             this.btnEnable = true
           }
 
@@ -195,15 +196,19 @@ export default {
 
       orderRePay() {
         let product = this.vipDescItems[this.vipDescIndex];
-        if(this.mine.vip_level > 0 && this.mine.is_expired == 0 && product.value < this.mine.vip_level) {
+        if(this.mine.vl > 0 && this.mine.vs == 0 && product.value < this.mine.vl) {
             this.showPluginAuto('不能降级，当前已经是'+ product.label)
             return;
         }
+
+        console.log('vip orderRePay', product);
 
         this.$router.push({name:'WeChatPay', params: {
           order: {
             type:'vip',
             id: product.value,
+            price: product.price,
+            desc: product.label,
             num: 1,
           },
           retPath: '/member',
@@ -224,6 +229,7 @@ export default {
         }, 2000)
       },
   },
+  //#region 生命周期函数
   created() {
     if(!this.GLOBAL.userBase.uid) {
       this.$router.push('/login');
@@ -232,13 +238,27 @@ export default {
   mounted() {
     this.mine = this.GLOBAL.userBase;
     let btnIndex = 0;
-    if(!this.mine.vip_level || this.mine.is_expired == 1) {
+    if(!this.mine.vl || this.mine.vs == 1) {
       btnIndex = 0;
     } else {
-      btnIndex = this.mine.vip_level - 1;
+      btnIndex = this.mine.vl - 1;
     }
+
     this.vipSelect(this.btnItems[btnIndex], btnIndex);
-  }
+    this.remote.watch(info => {
+        this.GLOBAL.userBase.vs = info.vs;
+        this.GLOBAL.userBase.vl = info.vl;
+        this.GLOBAL.userBase.vst = info.vst;
+        this.GLOBAL.userBase.vet = info.vet;
+        this.GLOBAL.userBase.vlg = info.vlg;
+        this.GLOBAL.userBase.vcur = info.vcur;
+    }, 911002);
+  },
+  beforeDestroy() {
+    //不再监听事件，也为了避免不当持有造成的内存泄漏
+    delete this.remote.notifyHandles[911002];
+  },
+  //#endregion
 }
 </script>
 <style lang="less" scoped>

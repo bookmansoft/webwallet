@@ -220,12 +220,12 @@ export default {
       this.$router.push({ name: "About" });
     },
     getNotify() {
-      if (!!this.userBase && this.userBase.vip_level > 0) {
-        this.items0[0].value = "产币加速中"; //'未提' + this.GLOBAL.toGamegoldKg(this.userBase.vip_usable_count) + '千克'
+      if (!!this.userBase && this.userBase.vl > 0) {
+        this.items0[0].value = "产币加速中";
         this.items0[0].img =
-          "static/img/member/Vip" + this.userBase.vip_level + ".png";
+          "static/img/member/Vip" + this.userBase.vl + ".png";
         let current_time = parseInt(new Date().getTime() / 1000);
-        if (this.GLOBAL.toGamegoldKg(this.userBase.vip_usable_count) >= 10) {
+        if (this.GLOBAL.toGamegoldKg(this.userBase.vcur) >= 10) {
           this.items0[0].showDot = true;
         } else {
           this.items0[0].showDot = false;

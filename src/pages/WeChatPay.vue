@@ -66,8 +66,30 @@ export default {
     wxPay() {
         let params = this.orderParams;
         this.showLoading = true;
-
         let self = this;
+
+        //test only
+        self.payTitle = '支付成功';
+        self.payIcon = 'success';
+        
+        self.remote.fetching({
+            func: 'order.OrderPayResult',
+            tradeId: params.tradeId,
+            status: 1,
+        }).then(res => {
+            if(res.code == 0) {
+                setTimeout(()=>{
+                    if(!!self.retPath) {
+                        self.$router.push(self.retPath);
+                    } else {
+                        self.$router.go(-1);
+                    }
+                }, 1000);
+            }
+        });
+        return;
+        //end
+
         if (typeof window.WeixinJSBridge === 'undefined') {
             if (document.addEventListener) {
                 document.addEventListener('WeixinJSBridgeReady', function () { self.onBridgeReady(params) }, false);
@@ -86,7 +108,7 @@ export default {
     onBridgeReady (params) {
         this.payResult = true;
 
-        let that = this;
+        let self = this;
         window.WeixinJSBridge.invoke(
             'getBrandWCPayRequest', {
                 'appId': params.appId,          //公众号id String(16) 商户注册具有支付权限的公众号成功后即可获得
@@ -101,27 +123,27 @@ export default {
                 // get_brand_wcpay_request:cancel	支付过程中用户取消
                 // get_brand_wcpay_request:fail	    支付失败
                 if(res.err_msg == "get_brand_wcpay_request:ok" ) {
-                    that.payTitle = '支付成功';
-                    that.payIcon = 'success';
+                    self.payTitle = '支付成功';
+                    self.payIcon = 'success';
                     
-                    that.remote.fetching({
+                    self.remote.fetching({
                         func: 'order.OrderPayResult',
                         tradeId: params.tradeId,
                         status: 1,
                     }).then(res => {
                         if(res.code == 0) {
                             setTimeout(()=>{
-                                if(!!that.retPath) {
-                                    that.$router.push(that.retPath);
+                                if(!!self.retPath) {
+                                    self.$router.push(self.retPath);
                                 } else {
-                                    that.$router.go(-1);
+                                    self.$router.go(-1);
                                 }
                             }, 1000);
                         }
                     });
                 } else {
-                    that.payTitle = '支付失败';
-                    that.payIcon = 'warn';
+                    self.payTitle = '支付失败';
+                    self.payIcon = 'warn';
                 }
             }
         )
@@ -129,6 +151,20 @@ export default {
   },
 
   //#region 生命周期函数
+  mounted() {
+    this.remote.watch(info => {
+        this.GLOBAL.userBase.vs = info.vs;
+        this.GLOBAL.userBase.vl = info.vl;
+        this.GLOBAL.userBase.vst = info.vst;
+        this.GLOBAL.userBase.vet = info.vet;
+        this.GLOBAL.userBase.vlg = info.vlg;
+        this.GLOBAL.userBase.vcur = info.vcur;
+    }, 911002);
+  },
+  beforeDestroy() {
+    //不再监听事件，也为了避免不当持有造成的内存泄漏
+    delete this.remote.notifyHandles[911002];
+  },
   created() {
     if(!this.GLOBAL.userBase.uid) {
       this.$router.push('/login');

@@ -31,7 +31,6 @@ import PropReceive from '@/pages/PropReceive'
 import About from '@/pages/About'
 import Member from '@/pages/Member'
 import WeChatPay from '@/pages/WeChatPay'
-import MemberDrawLog from '@/pages/MemberDrawLog'
 import Message from '@/pages/Message'
 import PropOrderPay from '@/pages/PropOrderPay'
 import RedPack from '@/pages/RedPack'
@@ -71,7 +70,6 @@ export default new Router({
     { path: '/home', name: 'Home', component: Home,meta:{title:'游戏金链'} },
     { path: '/about', name: 'About', component: About ,meta:{title:'关于我们'}},
     { path: '/member', name: 'Member', component: Member ,meta:{title:'成员'}},
-    { path: '/member/draw/log', name: 'MemberDrawLog', component: MemberDrawLog ,meta:{title:'成员画图日志'}},
     { path: '/mine', name: 'Mine', component: Mine ,meta:{title:'我的'}},
     { path: '/mywallet', name: 'MyWallet', component: MyWallet ,meta:{title:'我的钱包'}},
     { path: '/mygame', name: 'MyGame', component: MyGame ,meta:{title:'我的游戏'}},

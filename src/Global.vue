@@ -77,7 +77,10 @@ var games = []
 var cplist = []
 var crowdlist = []
 var pocketlist = [];
-var vipGetNotifyTime = 0
+
+var ResType = {
+  '99000': '众筹凭证',
+}
 
 function getRandColor () {
   var tem = Math.round(Math.random() * colorListLength)
@@ -161,6 +164,6 @@ export default
 {
   colorList, colorListLength, getRandColor, appConfig, ConfigMgr,
   toGamegoldKg, toGamegoldOrigin, gameGoldUnit, myAlert, formatDateStr, 
-  checkAddr, userBase, games, cplist, crowdlist, pocketlist, vipGetNotifyTime, remote
+  checkAddr, userBase, games, cplist, crowdlist, pocketlist, ResType, remote
 }
 </script>
