@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import Home from '@/pages/Home'
 import Market from '@/pages/Market'
 import Crowd from '@/components/Crowd'
+import Pocket from '@/components/Pocket'
+import ItemInfo from '@/pages/ItemInfo'
 import CrowdFree from '@/pages/CrowdFree'
 import CrowdInfo from '@/pages/CrowdInfo'
 import CrowdOrder from '@/pages/CrowdOrder'
@@ -78,6 +80,8 @@ export default new Router({
     { path: '/message', name: 'Message', component: Message ,meta:{title:'消息'}},
 
     { path: '/market', name: 'Market', component: Market,meta:{title:'Market'} },
+    { path: '/pocket', name: 'Pocket', component: Pocket,meta:{title:'背包'} },
+    { path: '/pocket/info', name: 'ItemInfo', component: ItemInfo ,meta:{title:'背包 - 道具详情'}},
 
     { path: '/crowd', name: 'Crowd', component: Crowd,meta:{title:'众筹-百谷王游戏金链'} },
     { path: '/crowdFree', name: 'CrowdFree', component: CrowdFree,meta:{title:'自由市场'} },
