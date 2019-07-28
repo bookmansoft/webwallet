@@ -49,22 +49,22 @@ const ConfigMgr = {
   files: {},
 };
 ConfigMgr.get = (file, callback) => {
-    if(!ConfigMgr.files[file]) {
-      remote.fetching({func:'config.get', file: file}).then(res => {
-          if(res.code == 0) {
-            //获得指定配置表，放入全局缓存
-            ConfigMgr.files['crowd'] = res.data;
-            callback(null, res.data);
-          } else {
-            callback(new Error(`error: ${res.code}`));
-          }
-      }).catch(e => {
-        callback(e);
-      })
-    } else {
-      callback(null, ConfigMgr.files[file]);
-    }
+  if(!ConfigMgr.files[file]) {
+    remote.fetching({func:'config.get', file: file}).then(res => {
+        if(res.code == 0) {
+          //获得指定配置表，放入全局缓存
+          ConfigMgr.files['crowd'] = res.data;
+          callback(null, res.data);
+        } else {
+          callback(new Error(`error: ${res.code}`));
+        }
+    }).catch(e => {
+      callback(e);
+    })
+  } else {
+    callback(null, ConfigMgr.files[file]);
   }
+}
 
 const colorListLength = 20;
 

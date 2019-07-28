@@ -73,6 +73,18 @@ export default {
         this.GLOBAL.userBase.nickname = this.remote.userInfo.name;
         //#endregion
 
+        //监测VIP等级变化 - 此段代码写在 GLOBAL 文件中无效，尚不明白其中原因
+        this.remote.watch(info => {
+          console.log('vip changed:', info.vl, info.vcur);
+          if(!!this.GLOBAL.userBase.uid) {
+            this.GLOBAL.userBase.vl = info.vl;
+            this.GLOBAL.userBase.vst = info.vst;
+            this.GLOBAL.userBase.vet = info.vet;
+            this.GLOBAL.userBase.vlg = info.vlg;
+            this.GLOBAL.userBase.vcur = info.vcur || 0;
+          }
+        }, 911002);
+
         //获取微信令牌
         let res = await this.remote.fetching({func: "wechat.WechatConfig", uri: this.GLOBAL.appConfig.siteUri});
         if (res.code == 0) {

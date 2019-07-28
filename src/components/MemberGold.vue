@@ -66,6 +66,7 @@ export default {
       gold: 0,            //当前可提取福利
       cfg: {},            //VIP等级配置条目
       timer: null,        //定时器句柄
+      timerBreak: false,  //控制定时器例程暂停执行
     }
   },
 
@@ -75,37 +76,39 @@ export default {
         return;
       }
 
-      this.gold = this.mine.vcur || 0;
-      this.refreshTime = this.mine.vlg;
+      this.percent = Math.min(100, (this.GLOBAL.toGamegoldKg(this.gold) / 10.0 * 100) | 0);
 
       if(!!this.timer) {
         clearInterval(this.timer);
       }
 
       this.timer = setInterval( () => {
-        let _now = Date.parse(new Date())/1000;
-        this.gold += (_now - this.refreshTime) * this.cfg[this.mine.vl].time_get_count;
-        this.refreshTime = _now;
-        this.percent = Math.min(100, (this.GLOBAL.toGamegoldKg(this.gold) / 10.0 * 100) | 0);
-        console.log(this.gold, this.GLOBAL.toGamegoldKg(this.gold), this.percent);
-        if(this.percent >= 100) {
-          clearInterval(this.timer);
+        if(!this.timerBreak) {
+          let _now = Date.parse(new Date())/1000;
+          this.gold += (_now - this.refreshTime) * this.cfg[this.mine.vl].time_get_count;
+          this.refreshTime = _now;
+          this.percent = Math.min(100, (this.GLOBAL.toGamegoldKg(this.gold) / 10.0 * 100) | 0);
+          console.log(this.gold, this.GLOBAL.toGamegoldKg(this.gold), this.percent);
         }
 　　　}, 5000);
+      console.log('set Interval', this.timer);
     },
     getVipImg(vip_level) {
       return 'static/img/member/vip_'+vip_level+'.png'
     },
 
     vipDrawConfirm() {
+        this.timerBreak = true;
+
         let self = this;
         this.$vux.confirm.show({
             title: '输入提取游戏金数量(千克)',
             content: '输入提取游戏金数量(千克)',
             showInput: true,
             onConfirm (value) {
+                this.timerBreak = false;
                 if(self.checkRate(value)==false) {
-                    self.showPluginAuto('输入无效数字')
+                    self.showPluginAuto('输入无效数字');
                 } else {
                     let draw_count = self.GLOBAL.toGamegoldOrigin(value);
                     if(value < 10) {
@@ -116,20 +119,28 @@ export default {
                       self.vipDraw(draw_count);
                     }
                 }
+            },
+            onCancel() {
+              this.timerBreak = false;
             }
         })
     },
 
     vipDraw(draw_count) {
+        this.timerBreak = true;
         this.remote.fetching({
           func:'VipDraw',
           control: 'profile',
           draw_count: draw_count,
         }).then(res => {
+            this.timerBreak = false;
             if(res.code == 0) {
+              this.gold -= draw_count;
               this.showPluginAuto('提币成功');
-              this.doCircle();
             }
+        }).catch(e=>{
+          this.timerBreak = false;
+          console.log(e);
         });  
     },
 
@@ -141,7 +152,7 @@ export default {
     showPlugin(msg) {
       this.$vux.alert.show({
         title: '提示',
-        content: msg
+        content: msg  
       })
     },
 
@@ -155,13 +166,24 @@ export default {
 
   //#region 生命周期函数
   beforeDestroy: function () {
+    console.log('clear Interval', this.timer);
     clearInterval(this.timer)
   },
 
   created() {
     this.mine.vcur = this.mine.vcur || 0;
-    this.GLOBAL.ConfigMgr.get('vip', (err, config)=>{ this.cfg = config; });
-    this.doCircle();
+
+    this.GLOBAL.ConfigMgr.get('vip', (err, config)=>{ 
+      this.cfg = config; 
+
+      this.gold = this.mine.vcur || 0;
+      let _now = Date.parse(new Date())/1000;
+      this.refreshTime = this.mine.vlg;
+      this.gold += (_now - this.refreshTime) * this.cfg[this.mine.vl].time_get_count;
+      this.refreshTime = _now;
+
+      this.doCircle();
+    });
   },
   //#endregion
 }

@@ -152,18 +152,9 @@ export default {
 
   //#region 生命周期函数
   mounted() {
-    //监测VIP等级变化
-    this.remote.watch(info => {
-        this.GLOBAL.userBase.vl = info.vl;
-        this.GLOBAL.userBase.vst = info.vst;
-        this.GLOBAL.userBase.vet = info.vet;
-        this.GLOBAL.userBase.vlg = info.vlg;
-        this.GLOBAL.userBase.vcur = info.vcur || 0;
-    }, 911002);
   },
   beforeDestroy() {
-    //不再监听事件，也为了避免不当持有造成的内存泄漏
-    delete this.remote.notifyHandles[911002];
+    //在此集中取消不再需要的监听事件，避免不当持有造成的内存泄漏
   },
   created() {
     if(!this.GLOBAL.userBase.uid) {

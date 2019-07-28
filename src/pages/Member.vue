@@ -153,15 +153,6 @@ export default {
     }
   },
   mounted() {
-    //监测VIP等级变化
-    this.remote.watch(info => {
-        this.GLOBAL.userBase.vl = info.vl;
-        this.GLOBAL.userBase.vst = info.vst;
-        this.GLOBAL.userBase.vet = info.vet;
-        this.GLOBAL.userBase.vlg = info.vlg;
-        this.GLOBAL.userBase.vcur = info.vcur || 0;
-    }, 911002);
-
     this.GLOBAL.ConfigMgr.get('vip', (err, config) => {
       if(!err) {
         //将对象转化为客户端要求的数组
@@ -186,8 +177,7 @@ export default {
     });
   },
   beforeDestroy() {
-    //不再监听事件，也为了避免不当持有造成的内存泄漏
-    delete this.remote.notifyHandles[911002];
+    //在此集中取消不再需要的监听事件，避免不当持有造成的内存泄漏
   },
   //#endregion
 }
