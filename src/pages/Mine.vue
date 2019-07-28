@@ -1,6 +1,6 @@
 <template>
   <div class="root" style="background-color:white;">
-    <div style="position:absolute;width:100%;margin-top:60px">
+    <div style="position:absolute;width:100%;margin-top:60px"  @click="member()">
       <div align="center">
         <!-- 相对于父容器定位 -->
         <div style="display:block;postion:relative">
@@ -210,6 +210,9 @@ export default {
     };
   },
   methods: {
+    member() {
+      this.$router.push({ name: "Member" });
+    },
     mywallet() {
       this.$router.push({ name: "MyWallet" });
     },
@@ -222,8 +225,7 @@ export default {
     getNotify() {
       if (!!this.userBase && this.userBase.vl > 0) {
         this.items0[0].value = "产币加速中";
-        this.items0[0].img =
-          "static/img/member/Vip" + this.userBase.vl + ".png";
+        this.items0[0].img = "static/img/member/Vip" + this.userBase.vl + ".png";
         let current_time = parseInt(new Date().getTime() / 1000);
         if (this.GLOBAL.toGamegoldKg(this.userBase.vcur) >= 10) {
           this.items0[0].showDot = true;

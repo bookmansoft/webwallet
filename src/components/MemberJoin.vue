@@ -9,9 +9,7 @@
     <div style="background-color: white; padding:15px;">
         <flexbox>
           <flexbox-item v-for="(item, index) in vipAuthoritysItems" :key="index">
-            <div class="box">
-            <img :src="item">
-            </div>
+            <div class="box"><img :src="item"></div>
           </flexbox-item>
         </flexbox>
     </div>

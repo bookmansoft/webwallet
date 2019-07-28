@@ -2,16 +2,14 @@
 <template>
   <div>
     <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
-    <memberJoin v-if="mine != null && mine.vl == 0" @click.native="orderRePay"></memberJoin>
-    <memberGold v-if="mine != null && mine.vl > 0" :mine="mine" ></memberGold>
+    <memberJoin v-if="!!mine && !mine.vl" @click.native="orderRePay"></memberJoin>
+    <memberGold v-if="!!mine && mine.vl > 0" :mine="mine" ></memberGold>
     
-    <div><p class="memberMore">
-      <span>会员方案</span></p>
-    </div>
+    <div><p class="memberMore"><span>会员方案</span></p></div>
     <div class="memberMoreDiv">
         <flexbox>
           <flexbox-item v-for="(item, index) in btnItems" :key="index">
-            <div class="box2" @click="vipSelect(item, index)">
+            <div class="box2" @click="vipSelect(item)">
               <img :src="item.status==0 ? item.src0 : item.src1">
             </div>
           </flexbox-item>
@@ -43,62 +41,6 @@ import MemberJoin from '@/components/MemberJoin.vue'
 import MemberGold from '@/components/MemberGold.vue'
 import { XHeader, Flexbox, FlexboxItem, Group, Divider, XButton, Swiper, SwiperItem  } from 'vux'
 
-const getVipDescItems = () => [
-  {
-    label: 'VIP1',
-    price: '600',
-    value: 1,
-    memo: [
-      'VIP 1会员特权：',
-      '首次开通会员立得价值188元游戏道具大礼包',
-      '会员有效期内每秒可产出0.1克游戏金',
-      '点亮VIP1会员专属勋章',
-      '后续会员服务升级，已开通用户将自动更新服务'
-    ]
-  }, {
-    label: 'VIP2',
-    price: '6600',
-    value: 2,
-    memo: [
-      'VIP 2会员特权：',
-      '首次开通会员立得价值188元游戏道具大礼包',
-      '会员有效期内每秒可产出1.1克游戏金',
-      '点亮VIP2会员专属勋章',
-      '后续会员服务升级，已开通用户将自动更新服务'
-    ]
-  },{
-    label: 'VIP3',
-    price: '16800',
-    value: 3,
-    memo: [
-      'VIP 3会员特权：',
-      '首次开通会员立得价值188元游戏道具大礼包',
-      '会员有效期内每秒可产出3.3克游戏金',
-      '点亮VIP3会员专属勋章',
-      '后续会员服务升级，已开通用户将自动更新服务'
-    ]
-  }
-];
-
-const vipBtns = () => [
-  {
-    index: 0,
-    src0: 'static/img/member/v1_no.png',
-    src1: 'static/img/member/v1_yes.png',
-    status: 1
-  },{
-    index: 1,
-    src0: 'static/img/member/v2_no.png',
-    src1: 'static/img/member/v2_yes.png',
-    status: 0
-  },{
-    index: 2,
-    src0: 'static/img/member/v3_no.png',
-    src1: 'static/img/member/v3_yes.png',
-    status: 0
-  }
-]
-
 export default {
   components: {
     MemberJoin, MemberGold,
@@ -107,15 +49,16 @@ export default {
   data () {
     return {
       headerTitle: '会员服务',
-      btnLabel: '6',
-      vipDescItems: getVipDescItems(),
-      btnItems: vipBtns(),
       vipDescIndex: 0,
-      btnTab: 0,
+      curPrice: 0,
+      product: null,
+      vipDescItems: [],
+      vipConfig: {},
+      btnItems: {},
       mine: null,
       btnTitle: '',
+      btnTitleFee: '',
       btnEnable: true,
-      btnTitleFee: ''
     }
   },
   methods: {
@@ -123,92 +66,61 @@ export default {
         this.$router.push('/mine')
       },
 
-      getBaseFee(vip_level) {
-          if(vip_level == 1) {
-            return '(￥6)'
-          } else if(vip_level == 2) {
-            return '(￥66)'
-          } else if(vip_level == 3) {
-            return '(￥168)'
-          } else {
-            return ''
-          }
-      },
-      getFee(select_vip, index) {
-        if(this.mine.vl == 0 || this.mine.vs == 1) {
-          return this.getBaseFee(select_vip)
-
-        } else if(this.mine.vl == select_vip) {
-          return this.getBaseFee(select_vip)
-
-        } else if(select_vip > this.mine.vl) {
-          let current_time = parseInt(new Date().getTime() / 1000);
-          let remainder_time = this.mine.vet - this.mine.vst;
-          console.log('remainder_time', remainder_time)
-          let days = parseInt(remainder_time / (24 * 3600))
-          console.log('days', days)
-          let allFee = 0
-          let currentVipIndex = this.mine.vl - 1;
-          let currentVipPrice = this.vipDescItems[currentVipIndex].price ;
-          if(select_vip == 2) {
-            allFee = 220 * days
-          } else {
-            allFee = 560 * days
-          }
-          allFee = allFee - currentVipPrice
-          this.vipDescItems[index].price = allFee
-          let k = allFee / 100
-          return '(￥' + parseFloat(k.toFixed(2)) + ')'
-        } else {
-          return ''
-        }
-      },
-
-      vipSelect(item, index) {
-        item.status = 1
-        this.vipDescIndex = index
-
+      vipSelect(item) {
+        this.vipDescIndex = parseInt(item.index) - 1;
         this.btnItems.forEach(element => {
-          if(element.index != index) {
-            element.status = 0
-          } 
+          if(element.index != item.index) {
+            element.status = 0;
+          } else {
+            element.status = 1;
+          }
         });
 
-        let select_vip = this.vipDescItems[index].value
-        if(this.mine.vl > 0 && this.mine.vs == 0) {
-          console.log('select_vip', select_vip)
+        this.product = this.vipConfig[this.vipDescIndex+1];
+        let select_vip = parseInt(this.product.value);
+        if(!!this.mine.vl) {
           if(select_vip < this.mine.vl) {
-            this.btnTitle = '不可降级'
-            this.btnEnable = false
+            this.btnTitle = '不可降级';
+            this.btnEnable = false;
           } else if(select_vip > this.mine.vl) {
-            this.btnTitle = '升级VIP' + select_vip
-            this.btnEnable = true
+            this.btnTitle = '升级VIP' + select_vip;
+            this.btnEnable = true;
           } else {
-            this.btnTitle = 'VIP' + this.mine.vl + '续费'
-            this.btnEnable = true
+            this.btnTitle = 'VIP' + this.mine.vl + '续费';
+            this.btnEnable = true;
           }
-
         } else {
-          this.btnTitle = '开通会员'
+          this.btnTitle = '开通会员';
         }
-        this.btnTitleFee = this.getFee(select_vip, index)
+
+        let current_time = Date.parse(new Date())/1000;
+        if(!this.mine.vl || current_time > this.mine.vet || this.mine.vl == select_vip) {
+          this.curPrice = parseFloat(this.vipConfig[select_vip].price/100).toFixed(2);
+        } else if(select_vip > this.mine.vl) {
+          let days = ((this.mine.vet - this.mine.vst) / (24 * 3600)) | 0;
+          this.curPrice = parseFloat((this.vipConfig[select_vip].price - this.vipConfig[this.mine.vl].price) * days / 30 / 100).toFixed(2);
+        } else {
+          this.curPrice = 0;
+        }
+        this.btnTitleFee = `(￥${this.curPrice})`;
       },
 
       orderRePay() {
-        let product = this.vipDescItems[this.vipDescIndex];
-        if(this.mine.vl > 0 && this.mine.vs == 0 && product.value < this.mine.vl) {
-            this.showPluginAuto('不能降级，当前已经是'+ product.label)
+        this.product = this.product || this.vipConfig[1];
+        let val = parseInt(this.product.value);
+        if(!!this.mine.vl && val < this.mine.vl) {
+            this.showPluginAuto('不能降级，当前已经是' + this.product.label);
             return;
         }
 
-        console.log('vip orderRePay', product);
+        console.log('vip orderRePay', this.product);
 
         this.$router.push({name:'WeChatPay', params: {
           order: {
             type:'vip',
-            id: product.value,
-            price: product.price,
-            desc: product.label,
+            id: val,
+            price: this.curPrice,
+            desc: this.product.label,
             num: 1,
           },
           retPath: '/member',
@@ -234,25 +146,44 @@ export default {
     if(!this.GLOBAL.userBase.uid) {
       this.$router.push('/login');
     }
+
+    this.mine = this.GLOBAL.userBase;
+    if(!this.mine.vl) {
+      this.mine.vl = 0;
+    }
   },
   mounted() {
-    this.mine = this.GLOBAL.userBase;
-    let btnIndex = 0;
-    if(!this.mine.vl || this.mine.vs == 1) {
-      btnIndex = 0;
-    } else {
-      btnIndex = this.mine.vl - 1;
-    }
-
-    this.vipSelect(this.btnItems[btnIndex], btnIndex);
+    //监测VIP等级变化
     this.remote.watch(info => {
-        this.GLOBAL.userBase.vs = info.vs;
         this.GLOBAL.userBase.vl = info.vl;
         this.GLOBAL.userBase.vst = info.vst;
         this.GLOBAL.userBase.vet = info.vet;
         this.GLOBAL.userBase.vlg = info.vlg;
-        this.GLOBAL.userBase.vcur = info.vcur;
+        this.GLOBAL.userBase.vcur = info.vcur || 0;
     }, 911002);
+
+    this.GLOBAL.ConfigMgr.get('vip', (err, config) => {
+      if(!err) {
+        //将对象转化为客户端要求的数组
+        this.vipDescItems = Object.keys(config).map(key => config[key]);
+        this.vipConfig = config;
+        this.btnItems = Object.keys(config).map(key => {
+          let item = {    
+              index: key,
+              src0: `static/img/member/v${key}_no.png`,
+              src1: `static/img/member/v${key}_yes.png`,
+              status: this.mine.vl == key ? 1 : 0,
+          };
+          return item;
+        });
+
+        if(!!this.mine.vl) {
+            this.vipSelect(this.btnItems[this.mine.vl-1]);
+        } else {
+            this.vipSelect(this.btnItems[0]);
+        }
+      }
+    });
   },
   beforeDestroy() {
     //不再监听事件，也为了避免不当持有造成的内存泄漏

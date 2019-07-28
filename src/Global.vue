@@ -88,6 +88,38 @@ function getRandColor () {
 }
 
 /**
+ * 复制一个对象
+ * @param obj
+ * @returns {*}
+ */
+function clone(obj) {
+    // Handle the 3 simple types, and null or undefined
+    if (null == obj || "object" != typeof obj) return obj;
+
+    if (obj instanceof Date) {// Handle Date
+        let copy = new Date();
+        copy.setTime(obj.getTime());
+        return copy;
+    }
+    else if (obj instanceof Array) {// Handle Array
+        let copy = [];
+        for (let i = 0, len = obj.length; i < len; ++i) {
+            copy[i] = clone(obj[i]);
+        }
+        return copy;
+    }
+    else if (obj instanceof Object) {// Handle Object
+        let copy = {};
+        for (let attr in obj) {
+            if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr]);
+        }
+        return copy;
+    }
+
+    throw new Error("Unable to copy obj! Its type isn't supported.");
+}
+
+/**
  * 尘转换为公斤
  */
 function toGamegoldKg(v) {
@@ -162,7 +194,7 @@ function checkAddr(value) {
 //输出全局数据仓库
 export default
 {
-  colorList, colorListLength, getRandColor, appConfig, ConfigMgr,
+  clone, colorList, colorListLength, getRandColor, appConfig, ConfigMgr,
   toGamegoldKg, toGamegoldOrigin, gameGoldUnit, myAlert, formatDateStr, 
   checkAddr, userBase, games, cplist, crowdlist, pocketlist, ResType, remote
 }

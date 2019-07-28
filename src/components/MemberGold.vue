@@ -17,7 +17,7 @@
         <flexbox>
           <flexbox-item :span="7">
               <div class="flex-demo2">
-                  <div>未提取: <span class="drawGold">{{this.GLOBAL.toGamegoldKg(mine.vcur)}}</span>千克</div>
+                  <div>未提取: <span class="drawGold">{{this.GLOBAL.toGamegoldKg(gold)}}</span>千克</div>
                   <div><p>满10千克可提到钱包</p></div>
               </div>
           </flexbox-item>
@@ -61,56 +61,59 @@ export default {
 
   data () {
     return {
-      gold: 1000,
-      percent: 0,
-      maxPercent: 0,
-      timer: null,
-      canDrawGold: 10,
+      percent: 0,         //达到100时可以提取福利
+      refreshTime: 0,     //计算福利增长的机师基准点
+      gold: 0,            //当前可提取福利
+      cfg: {},            //VIP等级配置条目
+      timer: null,        //定时器句柄
     }
   },
 
   methods: {
     doCircle() {
-      this.maxPercent = (this.gold / this.canDrawGold * 100) | 0;
-      let interval = 50
-      if(this.maxPercent > 100) {
-        this.maxPercent = 100;
-        interval = 10;
+      if(!this.mine.vl) {
+        return;
       }
-      console.log('this.maxPercent', this.maxPercent)
-      this.percent = 0
-      this.setTimer(interval)
+
+      this.gold = this.mine.vcur || 0;
+      this.refreshTime = this.mine.vlg;
+
+      if(!!this.timer) {
+        clearInterval(this.timer);
+      }
+
+      this.timer = setInterval( () => {
+        let _now = Date.parse(new Date())/1000;
+        this.gold += (_now - this.refreshTime) * this.cfg[this.mine.vl].time_get_count;
+        this.refreshTime = _now;
+        this.percent = Math.min(100, (this.GLOBAL.toGamegoldKg(this.gold) / 10.0 * 100) | 0);
+        console.log(this.gold, this.GLOBAL.toGamegoldKg(this.gold), this.percent);
+        if(this.percent >= 100) {
+          clearInterval(this.timer);
+        }
+　　　}, 5000);
     },
-    setTimer: function (val) {
-      console.log('setTimer')
-　　　　this.timer = setInterval( () => {
-          this.percent += 5
-          if(this.percent >= this.maxPercent) {
-            clearInterval(this.timer)
-          }
-　　　　}, val);
-　　},
     getVipImg(vip_level) {
       return 'static/img/member/vip_'+vip_level+'.png'
     },
 
     vipDrawConfirm() {
-        let that = this
+        let self = this;
         this.$vux.confirm.show({
             title: '输入提取游戏金数量(千克)',
             content: '输入提取游戏金数量(千克)',
             showInput: true,
             onConfirm (value) {
-                if(that.checkRate(value)==false) {
-                    that.showPluginAuto('输入无效数字')
+                if(self.checkRate(value)==false) {
+                    self.showPluginAuto('输入无效数字')
                 } else {
-                    let draw_count = that.GLOBAL.toGamegoldOrigin(value)
+                    let draw_count = self.GLOBAL.toGamegoldOrigin(value);
                     if(value < 10) {
-                      that.showPluginAuto('提取数量不能少于10千克')
-                    } else if(draw_count > that.mine.vcur) {
-                      that.showPluginAuto('提取数量超出额度')
+                      self.showPluginAuto('提取数量不能少于10千克')
+                    } else if(draw_count > self.gold) {
+                      self.showPluginAuto('提取数量超出额度')
                     } else {
-                      that.vipDraw(draw_count)
+                      self.vipDraw(draw_count);
                     }
                 }
             }
@@ -124,9 +127,6 @@ export default {
           draw_count: draw_count,
         }).then(res => {
             if(res.code == 0) {
-              this.percent = 0;
-              this.mine.vcur = this.mine.vcur - draw_count;
-              this.gold = this.GLOBAL.toGamegoldKg(this.mine.vcur);
               this.showPluginAuto('提币成功');
               this.doCircle();
             }
@@ -159,10 +159,9 @@ export default {
   },
 
   created() {
-    if(this.mine.vcur > 0) {
-      this.gold = this.GLOBAL.toGamegoldKg(this.mine.vcur);
-      this.doCircle();
-    }
+    this.mine.vcur = this.mine.vcur || 0;
+    this.GLOBAL.ConfigMgr.get('vip', (err, config)=>{ this.cfg = config; });
+    this.doCircle();
   },
   //#endregion
 }

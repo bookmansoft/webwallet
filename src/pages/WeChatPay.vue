@@ -152,13 +152,13 @@ export default {
 
   //#region 生命周期函数
   mounted() {
+    //监测VIP等级变化
     this.remote.watch(info => {
-        this.GLOBAL.userBase.vs = info.vs;
         this.GLOBAL.userBase.vl = info.vl;
         this.GLOBAL.userBase.vst = info.vst;
         this.GLOBAL.userBase.vet = info.vet;
         this.GLOBAL.userBase.vlg = info.vlg;
-        this.GLOBAL.userBase.vcur = info.vcur;
+        this.GLOBAL.userBase.vcur = info.vcur || 0;
     }, 911002);
   },
   beforeDestroy() {
