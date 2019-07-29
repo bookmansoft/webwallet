@@ -1,4 +1,4 @@
-<!-- 众筹首页 -->
+<!-- 我的凭证挂单 -->
 <template>
   <div class="root" style="background-color:white;margin-top:-8px">
     <div v-if="isLoadMore">
@@ -16,85 +16,32 @@
         :pullup-config="upobj"
         @on-pullup-loading="selPullUp"
       >
-        <div>
-          <div style="margin-top:15px;">
-            <flexbox>
-              <flexbox-item :span="12">
-                <div class="flex-left">
-                  <img src="static/img/stock/hot_line.png" style="width:3px;height:13px">
-                  <span style="font-size:15px;">热门众筹</span>
+        <div style="margin-top:10px">
+          <div v-for="(item, index) in localItems" :key="index" class="crowdItem">
+            <flexbox @click.native="showDetail(item, index)">
+              <flexbox-item :span="2.5" style="padding:0.3rem;">
+                <div class="flex-demo-left">
+                  <img :src="item.src" class="img-game-list2" />
+                </div></flexbox-item>
+              <flexbox-item>
+                <div style="padding-left:0px;">
+                  <p><span style="font-size:15px;">{{item.title}}</span></p>
+                  <p>
+                    <flexbox>
+                    <flexbox-item :span="8"><p><span style="color: #888; font-size:13px;">{{item.sales}}</span></p></flexbox-item>
+                    <flexbox-item :span="4"><p><span style="color: red; font-size:13px;">{{item.gold}}</span></p></flexbox-item>
+                    </flexbox>
+                  </p>
                 </div>
               </flexbox-item>
             </flexbox>
-          </div>
-
-          <div style="margin-top:-30px">
-            <div class="flex-left" style="position: relative;top:45px;left:-5px">
-              <img src="static/img/stock/ren_qi.png" style="width:100px;height:27px">
-            </div>
-            <div v-for="(item, index) in crowdItems" :key="index" class="crowdItem">
-              <div style="padding: 10px;" v-on:click="crowdDetail(item)">
-                <img :src="item.large_img_url" class="img-top">
-                <flexbox>
-                  <flexbox-item :span="12">
-                    <div class="flex-left" style="margin-top:6px;margin-bottom:8px">
-                      <span style="font-size:15px;">{{item.funding_text}}</span>
-                    </div>
-                  </flexbox-item>
-                </flexbox>
-
-                <flexbox>
-                  <flexbox-item :span="1">
-                    <div class="flex-left">
-                      <span style="font-size:15px;">
-                        <img src="static/img/stock/headimg.png" style="width:22px;height:22px">
-                      </span>
-                    </div>
-                  </flexbox-item>
-                  <flexbox-item :span="11">
-                    <div class="flex-left" style="margin-left:-8px;margin-top:-5px">
-                      <span style="font-size:15px;">{{item.provider}}</span>
-                    </div>
-                  </flexbox-item>
-                </flexbox>
-
-                <flexbox>
-                  <flexbox-item :span="12">
-                    <box gap="10px">
-                      <XXProgress :percent="item.percent2" :show-cancel="false"></XXProgress>
-                    </box>
-                  </flexbox-item>
-                </flexbox>
-
-                <flexbox style="height:40px;line-height:40px;">
-                  <flexbox-item :span="4">
-                    <div class="flex-left">
-                      <img src="static/img/stock/stock_jiner.png" style="width:15px;hegith:15px">
-                      <span style="color:coral; font-size:12px;">￥ {{item.stock_money}}</span>
-                    </div>
-                  </flexbox-item>
-                  <flexbox-item :span="4">
-                    <div class="flex-left">
-                      <img src="static/img/stock/stock_renshu.png" style="width:15px;hegith:15px">
-                      <span style="font-size:12px;">￥{{item.supply_people_num}}</span>
-                    </div>
-                  </flexbox-item>
-                  <flexbox-item :span="4">
-                    <div class="flex-left">
-                      <img src="static/img/stock/stock_shichang.png" style="width:15px;hegith:15px">
-                      <span style="font-size:12px;">￥ {{`${item.percent2}%`}}</span>
-                    </div>
-                  </flexbox-item>
-                </flexbox>
-              </div>
-            </div>
           </div>
         </div>
       </scroller>
     </div>
 
-    <div v-if="isLoadMore && crowdItems.length==0 && showNoData==true">
-      <no-data src="static/img/default/no-games.png"></no-data>
+    <div v-if="isLoadMore && localItems.length==0 && showNoData==true">
+      <no-data src="static/img/default/no-walletdetail.png"></no-data>
     </div>
     <div v-if="!isLoadMore">
       <load-more tip="正在加载" style="position: relative; top:250px;" :show-loading="!isLoadMore"></load-more>
@@ -165,7 +112,7 @@ export default {
       showNoData: false,
       isActive: false,
 
-      crowdItems: [],     //众筹项目列表
+      localItems: [],     //众筹项目列表
     };
   },
   methods: {
@@ -194,10 +141,9 @@ export default {
         }
       }, 1000);
     },
-    //跳转至众筹详情
-    crowdDetail(item) {
+    showDetail(item) {
       console.log('crowdDetail', item);
-      this.$router.push({ name: "CrowdInfo", params: { item: item } });
+      this.$router.push({ name: 'CrowdFreeInfo', params: { item: item }});
     },
     /**
      * 获取列表, page 请求的页码 flash 强制更新
@@ -206,18 +152,18 @@ export default {
       console.log(`query page: ${page}`);
 
       if(!!flash) {
-        this.GLOBAL.crowdlist = [];
-        this.crowdItems = [];
+        this.GLOBAL.bidlist = [];
+        this.localItems = [];
         this.curPage = 0;
       }
 
-      let curPage = (this.crowdItems.length/10)|0 + 1;
-      if(this.crowdItems.length%10==0) {
+      let curPage = (this.localItems.length/10)|0 + 1;
+      if(this.localItems.length%10==0) {
         curPage--;
       }
       if(curPage < page) {
-        let totalPage = (this.GLOBAL.crowdlist.length/10)|0 + 1;
-        if(this.GLOBAL.crowdlist.length%10==0) {
+        let totalPage = (this.GLOBAL.bidlist.length/10)|0 + 1;
+        if(this.GLOBAL.bidlist.length%10==0) {
           totalPage--;
         }
 
@@ -225,12 +171,12 @@ export default {
           this.curPage++;
 
           let idx = 0;
-          for(let element of this.GLOBAL.crowdlist) {
+          for(let element of this.GLOBAL.bidlist) {
             if(idx < (page-1)*10) continue;
             if(idx > page*10) break;
 
             let game = element.cpInfo.game;
-            this.crowdItems.push({
+            this.localItems.push({
               src: game.small_img_url,
               title: game.game_title,
               desc: game.provider
@@ -241,17 +187,21 @@ export default {
           this.isLoadMore = true;
         } else {
           this.remote.fetching({
-            func: "stockMgr.ListRecord", 
+            func: "stockMgr.MyStock", 
             page: page,
+            type: 1, //查询我的挂单
           }).then(res => {
+            // src: 'static/img/crowd/a.jpg',
+            // title: '进击的兵长 代练宝宝',
+            // sales: '15个挂单出售',
+            // gold: '11000.000',
             if (res.code == 0) {
               let qryPage = Math.min(res.data.page, res.data.total); //数据修复：查询页数不能大于总页数
               if(this.curPage < qryPage) {
                 this.curPage = qryPage;
 
                 res.data.list.forEach(cpItem => {
-                  cpItem.percent2 = ((parseInt(cpItem.funding_done_amount) * 100) / parseInt(cpItem.funding_target_amount))|0;
-                  this.crowdItems.push(cpItem);
+                  this.localItems.push(cpItem);
                 });
               } else {
                 //没有新的数据了，禁止继续下拉

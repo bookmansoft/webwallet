@@ -1,123 +1,42 @@
 <template>
   <div>
-      <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
+    <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
     <tab :line-width="3" custom-bar-width="60px" v-model="tabIndex">
       <tab-item v-for="(item, index) in tabItems" :key="index" @on-item-click="onItemClick">
         <span style="font-size:15px;font-weight:620;">{{item.label}}</span>
       </tab-item>
     </tab>
     <div v-if="tabIndex==0">
-      <div v-if="isLoadMore && crowdItems.length == 0">
-        <no-data src="static/img/default/no-walletdetail.png"></no-data>
-      </div>
-      <div v-if="isLoadMore" class="crowdItem">
-        <div v-for="(item, index) in crowdItems" :key="index" class="crowdItem">
-              <flexbox @click.native="crowdDetail(item, index)">
-                <flexbox-item :span="2.5" style="padding:0.3rem;">
-                  <div class="flex-demo-left">
-                    <img :src="item.src" class="img-game-list" />
-                  </div></flexbox-item>
-                <flexbox-item>
-                  <div style="padding-left:6px;">
-                    <p><span style="font-size:15px;">{{item.title}}</span></p>
-                    <p><span style="color: coral; font-size:14px;">持有 {{item.quantity}} 个</span></p>
-                  </div>
-                </flexbox-item>
-              </flexbox>
-        </div>
-      </div>
-
+      <!-- 标签1：我的凭证 -->
+      <MyStock></MyStock>
     </div>
-
     <div v-else>
-      <div v-if="isLoadMore && crowdFreeItems.length == 0">
-        <no-data src="static/img/default/no-walletdetail.png"></no-data>
-      </div>
-      <div v-if="isLoadMore">
-        <div v-for="(item, index) in crowdFreeItems" :key="index" class="crowdItem2">
-              <flexbox @click.native="crowFreeDetail(item, index)">
-                <flexbox-item :span="2.5" style="padding:0.3rem;">
-                  <div class="flex-demo-left">
-                    <img :src="item.src" class="img-game-list2" />
-                  </div></flexbox-item>
-                <flexbox-item>
-                  <div style="padding-left:0px;">
-                    <p><span style="font-size:15px;">{{item.title}}</span></p>
-                    <p>
-                      <flexbox>
-                      <flexbox-item :span="8"><p><span style="color: #888; font-size:13px;">{{item.sales}}</span></p></flexbox-item>
-                      <flexbox-item :span="4"><p><span style="color: red; font-size:13px;">{{item.gold}}</span></p></flexbox-item>
-                      </flexbox>
-                    </p>
-                  </div>
-                </flexbox-item>
-              </flexbox>
-        </div>
-      </div>
-    </div>
-    
-    <div v-if="!isLoadMore">
-        <load-more tip="正在加载" style="position: relative; top:200px;" :show-loading="!isLoadMore"></load-more>
+      <!-- 标签2：我的挂单 -->
+      <MyBid></MyBid>
     </div>
 
+    <!-- 导航 -->
     <navs></navs>
-
   </div>
 </template>
 <script>
-//import { XHeader, Group, Cell } from 'vux'
-import { XHeader, XButton, Tab, TabItem, Flexbox, FlexboxItem, LoadMore } from 'vux'
+import { XHeader, XButton, Tab, TabItem } from 'vux'
 import Navs from '@/components/Navs.vue'
 import NoData from '@/components/NoData.vue'
+import MyStock from '@/components/MyStock.vue'
+import MyBid from '@/components/MyBid.vue'
 
 const tabList = () => [
   {
     label:'当前持有'
-  },{
+  },
+  {
     label:'挂单出售中'
-}]
-
-const crowdList = () => [
-  {
-    src: 'static/img/crowd/item1.jpg',
-    title: 'Forza Horizon 3',
-    desc: '￥ 25元起售',
-    support: '60人支持',
-    remainder: '剩余13天'
-  },{
-    src: 'static/img/crowd/item2.jpg',
-    title: 'Forza Horizon 3',
-    desc: '￥ 47元起售',
-    support: '52人支持',
-    remainder: '剩余8天'
-  },{
-    src: 'static/img/crowd/item3.jpg',
-    title: 'Forza Horizon 3',
-    desc: '￥ 47元起售',
-    support: '139人支持',
-    remainder: '剩余5天'
-  }
-]
-
-const crowdFreeList = () => [
-  {
-    src: 'static/img/crowd/a.jpg',
-    title: '进击的兵长 代练宝宝',
-    sales: '15个挂单出售',
-    gold: '11000.000',
-    group: 'Vallnet Co., Ltd'
-  },{
-    src: 'static/img/crowd/item1.jpg',
-    title: 'Forza Horizon 代练宝宝 ',
-    sales: '20个挂单出售',
-    gold: '800.00',
-    group: 'Vallnet Co., Ltd'
-  }
-]
+}];
 
 export default {
   components: {
-    Navs, XHeader, Tab, XButton, TabItem, Flexbox, FlexboxItem, NoData, LoadMore
+    Navs, XHeader, Tab, XButton, TabItem, NoData, MyStock, MyBid,
   },
   data () {
     return {
@@ -125,9 +44,6 @@ export default {
       msg: '众筹',
       tabIndex: 0,
       tabItems: tabList(),
-      crowdItems: [], //crowdList(),
-      crowdFreeItems: [], //crowdFreeList(),
-      isLoadMore: false
     }
   },
   methods: {
@@ -137,21 +53,8 @@ export default {
         onItemClick(index) {
           console.log(this.tabIndex)
         },
-        crowdDetail(item, index) {
-          this.$router.push({ name: 'CrowdMyInfo', params: { item: item }})
-        },
-        crowFreeDetail(item, index) {
-          this.$router.push({ name: 'CrowdFreeInfo', params: { item: item }})
-        },
-        getUserStocks(){
-            this.remote.fetching({func:'UserStocks', control: 'stock'}).then(res => {
-                this.isLoadMore = true;
-                this.crowdItems = res.data;
-            });
-        },
   },
   created() {
-    this.getUserStocks()
   }
 }
 </script>

@@ -54,9 +54,6 @@ import SendFail from '@/pages/SendFail';
 import SendConfirm from '@/pages/SendConfirm';
 
 import TransList from '@/pages/TransList';
-import MyStock from '@/pages/MyStock';
-import MyStockSell from '@/pages/MyStockSell';
-import MyStockSellDetail from '@/pages/MyStockSellDetail';
 
 
 Vue.use(Router)
@@ -73,7 +70,6 @@ export default new Router({
     { path: '/mine', name: 'Mine', component: Mine ,meta:{title:'我的'}},
     { path: '/mywallet', name: 'MyWallet', component: MyWallet ,meta:{title:'我的钱包'}},
     { path: '/mygame', name: 'MyGame', component: MyGame ,meta:{title:'我的游戏'}},
-    { path: '/my/stock', name: 'CrowdMy', component: CrowdMy ,meta:{title:'CrowdMy'}},
 
     { path: '/message', name: 'Message', component: Message ,meta:{title:'消息'}},
 
@@ -82,26 +78,26 @@ export default new Router({
     { path: '/pocket/info', name: 'ItemInfo', component: ItemInfo ,meta:{title:'背包 - 道具详情'}},
 
     { path: '/crowd', name: 'Crowd', component: Crowd,meta:{title:'众筹-百谷王游戏金链'} },
-    { path: '/crowdFree', name: 'CrowdFree', component: CrowdFree,meta:{title:'自由市场'} },
     { path: '/crowd/info', name: 'CrowdInfo', component: CrowdInfo ,meta:{title:'众筹详情-百谷王游戏金链'}},
     { path: '/crowd/order', name: 'CrowdOrder', component: CrowdOrder ,meta:{title:'确认订单'}},
-    { path: '/crowd/freeOrder', name: 'CrowdFreeOrder', component: CrowdFreeOrder ,meta:{title:'自由市场-确认订单'}},
-    { path: '/crowd/free/info', name: 'CrowdFreeInfo', component: CrowdFreeInfo ,meta:{title:'游戏元宝信息-百谷王游戏金链'}},
-    { path: '/crowd/my/info', name: 'CrowdMyInfo', component: CrowdMyInfo ,meta:{title:'我的游戏元宝'}},
-    { path: '/crowd/my/sale', name: 'CrowdMySale', component: CrowdMySale ,meta:{title:'挂单出售中'}},
     { path: '/crowd/prePay', name: 'CrowdPrePay', component: CrowdPrePay ,meta:{title:'选择回报'}},
     { path: '/crowd/SendSuccess', name: 'SendSuccess', component: SendSuccess ,meta:{title:'发送成功'}},
     { path: '/crowd/SendFail', name: 'SendFail', component: SendFail ,meta:{title:' 发送失败'}},
     { path: '/crowd/SendConfirm', name: 'SendConfirm', component: SendConfirm ,meta:{title:'发送确认'}},
     { path: '/crowd/TransList', name: 'TransList', component: TransList ,meta:{title:'交易清单'}},
-    { path: '/crowd/MyStock', name: 'MyStock', component: MyStock ,meta:{title:'我的游戏元宝'}},
-    { path: '/crowd/MyStockSell', name: 'MyStockSell', component: MyStockSell ,meta:{title:'我的游戏元宝'}},
-    { path: '/crowd/MyStockSellDetail', name: 'MyStockSellDetail', component: MyStockSellDetail ,meta:{title:'我的游戏元宝详情'}},
     { path: '/crowd/BuySuccess', name: 'BuySuccess', component: BuySuccess ,meta:{title:'购买成功'}},
     { path: '/crowd/BuyFail', name: 'BuyFail', component: BuyFail ,meta:{title:' 购买失败'}},
     { path: '/crowd/PaySuccess', name: 'PaySuccess', component: PaySuccess ,meta:{title:'支付成功'}},
     { path: '/crowd/HouseAddress', name: 'HouseAddress', component: HouseAddress ,meta:{title:'收货地址'}},
     { path: '/crowd/HouseAddressAdd', name: 'HouseAddressAdd', component: HouseAddressAdd ,meta:{title:'添加收货地址'}},
+
+    { path: '/my/stock', name: 'CrowdMy', component: CrowdMy ,meta:{title:'CrowdMy'}},
+    { path: '/crowd/my/info', name: 'CrowdMyInfo', component: CrowdMyInfo ,meta:{title:'我的游戏元宝'}},
+    { path: '/crowd/my/sale', name: 'CrowdMySale', component: CrowdMySale ,meta:{title:'挂单出售中'}},
+
+    { path: '/crowd/freeOrder', name: 'CrowdFreeOrder', component: CrowdFreeOrder ,meta:{title:'自由市场-确认订单'}},
+    { path: '/crowd/free/info', name: 'CrowdFreeInfo', component: CrowdFreeInfo ,meta:{title:'游戏元宝信息-百谷王游戏金链'}},
+    { path: '/crowdFree', name: 'CrowdFree', component: CrowdFree,meta:{title:'自由市场'} },
 
     { path: '/wallet', name: 'Wallet', component: Wallet ,meta:{title:'钱包'}},
     { path: '/wallet/send', name: 'WalletSend', component: WalletSend ,meta:{title:'转账'}},

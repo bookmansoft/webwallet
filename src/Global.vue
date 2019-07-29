@@ -75,7 +75,9 @@ var userBase = {userAgent: 0, uid: 0, user_name: null, openid: null}
 
 var games = []
 var cplist = []
-var crowdlist = []
+var crowdlist = [];
+var stocklist = [];     //我的凭证
+var bidlist = [];       //我的挂单
 var pocketlist = [];
 
 var ResType = {
@@ -196,6 +198,6 @@ export default
 {
   clone, colorList, colorListLength, getRandColor, appConfig, ConfigMgr,
   toGamegoldKg, toGamegoldOrigin, gameGoldUnit, myAlert, formatDateStr, 
-  checkAddr, userBase, games, cplist, crowdlist, pocketlist, ResType, remote
+  checkAddr, userBase, games, cplist, crowdlist, stocklist, bidlist, pocketlist, ResType, remote
 }
 </script>

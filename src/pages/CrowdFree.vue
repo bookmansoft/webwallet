@@ -79,10 +79,17 @@ export default {
     },
     crowdFreeList() {
       this.remote.fetching({
-        func: "stock.ListRecord",
+        func: "stockMgr.bidList",
       }).then(res => {
         this.isLoadMore = true;
         res.data.list.forEach(element => {
+            // cid: item.cid,
+            // addr: item.addr,
+            // sum: item.sum,
+            // price: item.price,
+            // sell_price: item.stock.price,
+            // sell_sum: item.stock.sum,
+            // period: item.stock.period,
             this.crowdFreeItems.push(element);
         });
       });

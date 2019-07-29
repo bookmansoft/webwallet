@@ -10,7 +10,7 @@
             <flexbox-item>
                 <div style="padding-left:6px;">
                 <p><span style="font-size:15px;">{{crowdItem.title}}</span></p>
-                <p><span style="color: coral; font-size:14px;">持有 {{crowdItem.quantity}} 个</span>
+                <p><span style="color: coral; font-size:14px;">持有 {{crowdItem.sum}} 个</span>
                     <x-button mini :gradients="['#FF5E3A', '#FF9500']" style="margin-left:50px;" @click.native="sale()">挂单出售</x-button>
                 </p>
                 </div>
@@ -74,7 +74,7 @@ export default {
     return {
       headerTitle: '我的代练宝宝',
       msg: '众筹',
-      crowdItem: null, //crowdList(),
+      crowdItem: null,
       tabItems: tabList(),
       userStockLogs: [],
       tabIndex: 0
@@ -82,29 +82,21 @@ export default {
   },
   methods: {
         onBack() {
-            this.$router.push('/my/stock')
+          this.$router.push('/my/stock')
         },
         onItemClick() {
-
         },
         sale() {
           this.$router.push({ name: 'CrowdMySale', params: { item: this.crowdItem }})
         },
-        getUserStockLogs(){
-            this.remote.fetching({ 
-              func:'UserStockLogs', 
-              control: 'stock', 
-              cid: this.crowdItem.cid,
-            }).then(res => {
-                if(res.code == 0) {
-                    this.userStockLogs = res.data;
-                }
-            });
-        },
   },
   created() {
-    this.crowdItem = this.$route.params.item
-    this.getUserStockLogs()
+    this.crowdItem = this.$route.params.item;
+    this.remote.fetching({func: 'stock.UserStockLogs', cid: this.crowdItem.cid}).then(res => {
+      if(res.code == 0) {
+          this.userStockLogs = res.data;
+      }
+    });
   }
 }
 </script>

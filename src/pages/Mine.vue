@@ -217,7 +217,7 @@ export default {
       this.$router.push({ name: "MyWallet" });
     },
     mystock() {
-      this.$router.push({ name: "MyStock" });
+      this.$router.push({ name: "CrowdMy" });
     },
     about() {
       this.$router.push({ name: "About" });

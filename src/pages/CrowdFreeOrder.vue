@@ -3,13 +3,10 @@
   <div class="root">
     <div style="background-color:#f3f3f3">
       <flexbox>
-        <flexbox-item :span="12">
-          <div style="height:6px;"></div>
-        </flexbox-item>
+        <flexbox-item :span="12"><div style="height:6px;"></div></flexbox-item>
       </flexbox>
     </div>
     <div style="background-color:white">
-      <!-- 回报档 -->
       <div>
         <flexbox class="cell">
           <flexbox-item :span="3">
@@ -19,20 +16,18 @@
           </flexbox-item>
           <flexbox-item :span="9">
             <div style="display:block;margin-left:5px;line-height:30px">
-              <span style="font-size:16px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);">进击的兵长 百宝箱</span><br />
-              <span style="font-size:16px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100);"> {{price}}千克</span>
+              <span style="font-size:16px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);">{{item.desc}}</span><br />
+              <span style="font-size:16px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100);">{{item.sell_price}}千克</span>
             </div>
           </flexbox-item>
         </flexbox>
       </div>
-      <!-- 购买数量及打赏金额 -->
+      <!-- 购买数量 -->
       <div>
         <flexbox class="cell">
           <flexbox-item :span="3">
             <div style="display:block;text-align:left">
-              <span
-                style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-              >购买数量：</span>
+              <span style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);">购买数量：</span>
             </div>
           </flexbox-item>
           <flexbox-item :span="4"></flexbox-item>
@@ -43,9 +38,7 @@
           </flexbox-item>
           <flexbox-item :span="1">
             <div style="display:block;text-align:center">
-              <span
-                style="font-size:14px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-              >&nbsp;{{buyNum}}&nbsp;</span>
+              <span style="font-size:14px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);">&nbsp;{{buyNum}}&nbsp;</span>
             </div>
           </flexbox-item>
           <flexbox-item :span="1">
@@ -63,47 +56,35 @@
         </flexbox-item>
       </flexbox>
 
-      <!-- 支付方式：微信支付 -->
+      <!-- 支付方式 -->
       <flexbox class="cell">
         <flexbox-item :span="4">
           <div style="display:block;text-align:left;">
             <img src="static/img/stock/orderfree/buy.png" style="width:22px;height:19px">
-            <span
-              style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);vertical-align:top;"
-            >游戏金支付</span>
+            <span style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);vertical-align:top;">游戏金支付</span>
           </div>
         </flexbox-item>
         <flexbox-item :span="3"></flexbox-item>
         <flexbox-item :span="3">
-          <div style="display:block;text-align:right">
-            <img src="static/img/stock/order/wechat_ok.png" style="width:14px;height:14px">
-          </div>
+          <div style="display:block;text-align:right"><img src="static/img/stock/order/wechat_ok.png" style="width:14px;height:14px"></div>
         </flexbox-item>
         <flexbox-item :span="2"></flexbox-item>
       </flexbox>
 
       <flexbox>
-        <flexbox-item :span="12">
-          <div style="height:2px;background-color:#f3f3f3"></div>
-        </flexbox-item>
+        <flexbox-item :span="12"><div style="height:2px;background-color:#f3f3f3"></div></flexbox-item>
       </flexbox>
 
       <!-- 关键信息：支付总额 -->
       <flexbox class="cell">
         <flexbox-item :span="3">
           <div style="display:block;text-align:left">
-            <span
-              style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-            >商品总金额：</span>
+            <span style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);">商品总金额：</span>
           </div>
         </flexbox-item>
         <flexbox-item :span="4"></flexbox-item>
         <flexbox-item :span="3">
-          <div style="display:block;text-align:right">
-            <span
-              style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-            >{{realPay}}千克</span>
-          </div>
+          <div style="display:block;text-align:right"><span style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);">{{realPay}}千克</span></div>
         </flexbox-item>
         <flexbox-item :span="2"></flexbox-item>
       </flexbox>
@@ -119,45 +100,35 @@
       <flexbox>
         <flexbox-item :span="12">
           <div style="margin-left:25px;height:40px;">
-            <span
-              style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(50,58,69);"
-            >免责协议：</span>
+            <span style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(50,58,69);">免责协议：</span>
           </div>
         </flexbox-item>
       </flexbox>
       <flexbox>
         <flexbox-item :span="12">
           <div style="margin-left:25px;">
-            <span
-              style="font-size:14px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(50,58,69);"
-            >1、点击“确认支付”，即表明您已阅并同意《支持者协议》、《法律声明及隐私权政策-项目众筹》，并自愿承担众筹风险。</span>
+            <span style="font-size:14px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(50,58,69);">1、点击“确认支付”，即表明您已阅并同意《支持者协议》、《法律声明及隐私权政策-项目众筹》，并自愿承担众筹风险。</span>
           </div>
         </flexbox-item>
       </flexbox>
       <flexbox style="margin-top:45px" v-if="flagMore==false">
         <flexbox-item :span="12">
           <div style="height:40px;text-align:center;" @click="viewMore">
-            <span
-              style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(72,93,172);"
-            >查看更多▼</span>
+            <span style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(72,93,172);">查看更多▼</span>
           </div>
         </flexbox-item>
       </flexbox>
       <flexbox style="margin-top:14px;" v-if="flagMore==true">
         <flexbox-item :span="12">
           <div style="display:block;margin-left:21px">
-            <span
-              style="font-size:14px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(50,58,69);"
-            >2、众筹商户与本平台均不承诺任何形式的收益。</span>
+            <span style="font-size:14px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(50,58,69);">2、众筹商户与本平台均不承诺任何形式的收益。</span>
           </div>
         </flexbox-item>
       </flexbox>
       <flexbox style="margin-top:14px;" v-if="flagMore==true">
         <flexbox-item :span="12">
           <div style="display:block;margin-left:21px">
-            <span
-              style="font-size:14px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(50,58,69);"
-            >3、请不要听信他人的建议。</span>
+            <span style="font-size:14px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(50,58,69);">3、请不要听信他人的建议。</span>
           </div>
           <div style="height:40px;"></div>
         </flexbox-item>
@@ -167,9 +138,7 @@
     <div>
       <flexbox style="margin:0px;padding:0px;border-style:outset none outset none;border-width:1px;">
         <flexbox-item :span="7">
-          <div  style="width:100%;height:100%;align:center;text-align:center">
-          <label style="font-weight:bold;font-size:16px;color:rgb(255,113,101);" >{{realPay}}千克</label>
-          </div>
+          <div  style="width:100%;height:100%;align:center;text-align:center"><label style="font-weight:bold;font-size:16px;color:rgb(255,113,101);" >{{realPay}}千克</label></div>
         </flexbox-item>
         <flexbox-item :span="5">
           <x-button
@@ -184,7 +153,6 @@
   </div>
 </template>
 <script>
-//import { XHeader, Group, Cell } from 'vux'
 import {
   XButton,
   XHeader,
@@ -223,11 +191,9 @@ export default {
   },
   data() {
     return {
-      msg: "众筹",
-      headerTitle: "众筹购买",
+      headerTitle: "凭证购买",
       tabIndex: 0,
       item: {},
-      price: 10,
       buyNum: 1, //购买数量，预设为1
       realPay: 10, //支付总额
       showLoading: false,
@@ -239,31 +205,39 @@ export default {
       console.log("进入viewMore方法");
       this.flagMore = true;
     },
-    onPayYuan() {
-      this.realPay = this.payYuanValue;
-    },
     onBuyNumChange(value) {
       this.buyNum = this.buyNum + value;
       if (this.buyNum < 1) {
         this.buyNum = 1;
       }
-      this.realPay = this.buyNum * this.price; //price是单价;
+      this.buyNum = Math.min(this.item.sell_sum, this.buyNum);
+      this.realPay = this.buyNum * this.item.sell_price;
     },
     onBack() {
       this.$router.push({ name: "CrowdInfo", params: { item: this.item } });
     },
     crowdPay() {
-      this.$router.push({
-        name: "WeChatPay",
-        params: {
-          order: {
-            type: 'stock',
-            id: this.item.id,
+      this.remote.fetching({
+          func:'stockMgr.auctionStock',
+          params: {
+            addr: this.item.addr,
+            cid: this.item.cid,
+            price: this.item.sell_price,
             num: this.buyNum,
-          },
-          retPath: "/my/stock",
-        }
-      });
+          }
+      }).then(res => {
+          if(res.code == 0) {
+          } else {
+
+          }
+      }).catch(e => {
+        console.log(e);
+      });  
+
+      setTimeout(() => {
+          this.showLoading = false
+          this.$router.push({ name: "CrowdFreeInfo", params: { item: this.item } });
+      }, 2000);
     }
   },
 

@@ -43,19 +43,13 @@
     <flexbox style="margin-top:14px">
       <flexbox-item :span="5">
         <div style="display:block;margin-left:21px">
-          <span style="color:red; font-size:18px;">{{parseInt(item.sell_stock_amount/100)/1000}}千克</span>
+          <span style="color:red; font-size:18px;">{{parseInt(item.sell_price/100)/1000}}千克</span>
         </div>
       </flexbox-item>
       <flexbox-item>
         <div>
-          <span
-            v-if="item.sell_stock_amount>=item.base_amount"
-            style="color: red; font-size:13px;"
-          >↑ {{parseInt(item.sell_stock_amount-item.base_amount/100)/1000}} (+ {{parseInt(item.sell_stock_amount*100/item.base_amount-100)}}%)</span>
-          <span
-            v-if="item.sell_stock_amount<item.base_amount"
-            style="color: blue; font-size:13px;"
-          >↓ {{parseInt(item.base_amount-item.sell_stock_amount/100)/1000}}(- {{parseInt(100-item.sell_stock_amount*100/item.base_amount)}}%)</span>
+          <span v-if="item.sell_price>=item.price" style="color: red; font-size:13px;">↑ {{parseInt(item.sell_price-item.price)/100/1000}} (+ {{parseInt(item.sell_price/item.price-100)}}%)</span>
+          <span v-if="item.sell_price<item.price" style="color: blue; font-size:13px;">↓ {{parseInt(item.price-item.sell_price/100)/1000}}(- {{parseInt(100-item.sell_price/item.price)}}%)</span>
         </div>
       </flexbox-item>
     </flexbox>
@@ -312,9 +306,8 @@ export default {
     },
     stockBulletin(cid) {
       this.remote.fetching({
-        func: "ListRecord",
-        control: "stockbulletin",
-        cid: cid
+        func: "stockbulletin.ListRecord",
+        cid: cid,
       }).then(res => {
         this.stock_bulletin = res.data.list[0];
       });

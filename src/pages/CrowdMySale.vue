@@ -1,3 +1,4 @@
+<!-- 出售凭证 -->
 <template>
   <div>
     <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
@@ -9,8 +10,8 @@
                 </div></flexbox-item>
             <flexbox-item>
                 <div style="padding-left:6px;">
-                <p><span style="font-size:15px;">{{crowdItem.title}}</span></p>
-                <p><span style="color: coral; font-size:14px;">持有 {{crowdItem.quantity}} 个</span>
+                <p><span style="font-size:15px;">{{crowdItem.cid}}</span></p>
+                <p><span style="color: coral; font-size:14px;">持有 {{crowdItem.sum}} 个</span>
                 </p>
                 </div>
             </flexbox-item>
@@ -48,7 +49,7 @@ export default {
     return {
       headerTitle: '我的代练宝宝',
       msg: '众筹',
-      crowdItem: null, //crowdList(),
+      crowdItem: null,
       tabItems: tabList(),
       tabIndex: 0,
       quantity: '',
@@ -81,7 +82,7 @@ export default {
                 this.showPlugin("请输入有效数量")
                 return
             }
-            if(this.quantity > this.crowdItem.quantity) {
+            if(this.quantity > this.crowdItem.sum) {
                 this.showPlugin("出售数量超出")
                 return
             }
@@ -90,11 +91,13 @@ export default {
                 return
             }
             this.remote.fetching({
-                func:'StockSale',
-                control: 'stock',
-                cid: this.crowdItem.cid,
-                price: this.price,
-                quantity: this.quantity,
+                func:'stockMgr.bidStock',
+                params: {
+                  addr: this.crowdItem.addr,
+                  cid: this.crowdItem.cid,
+                  price: this.price,
+                  num: this.quantity,
+                }
             }).then(res => {
                 if(res.code == 0) {
                     setTimeout(() => {
