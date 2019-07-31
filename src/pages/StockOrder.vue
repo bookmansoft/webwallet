@@ -42,7 +42,7 @@
             </div>
           </flexbox-item>
           <flexbox-item :span="1">
-            <div style="display:block;text-align:left" @click="onBuyNumChange(1)">
+            <div style="display:block;text-align:left" @click="onBuyNumChange(100)">
               <img src="static/img/stock/order/plus.png" style="width:14px;height:14px">
             </div>
           </flexbox-item>
@@ -194,8 +194,8 @@ export default {
       headerTitle: "凭证购买",
       tabIndex: 0,
       item: {},
-      buyNum: 1, //购买数量，预设为1
-      realPay: 10, //支付总额
+      buyNum: 100,  //购买数量
+      realPay: 0,   //支付总额
       showLoading: false,
       flagMore: false,
     };
@@ -207,8 +207,8 @@ export default {
     },
     onBuyNumChange(value) {
       this.buyNum = this.buyNum + value;
-      if (this.buyNum < 1) {
-        this.buyNum = 1;
+      if (this.buyNum < 100) {
+        this.buyNum = 100;
       }
       this.buyNum = Math.min(this.item.sell_sum, this.buyNum);
       this.realPay = this.buyNum * this.item.sell_price;
@@ -236,7 +236,7 @@ export default {
 
       setTimeout(() => {
           this.showLoading = false
-          this.$router.push({ name: "CrowdFreeInfo", params: { item: this.item } });
+          this.$router.push({ name: "StockInfo", params: { item: this.item } });
       }, 2000);
     }
   },
@@ -244,9 +244,10 @@ export default {
   created() {
     this.item = this.$route.params.item;
     if (!!!this.item) {
-      this.$router.push({ name: "Crowd" });
+      this.$router.push({ name: "Crowds" });
     }
     console.log("该元素 item", this.item);
+    this.realPay = this.buyNum * this.item.sell_price;
   }
 };
 </script>

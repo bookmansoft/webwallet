@@ -73,11 +73,13 @@ export default {
   },
   methods: {
     onBack() {
-      this.$router.push({ name: "Crowd" });
+      this.$router.push({ name: "Crowds" });
     },
     itemUse() {
+      console.log("item.useItem", this.item);
       this.remote.fetching({
         func: "item.useItem", 
+        type: this.item.type,
         id: this.item.id,
         num: this.item.num,
       }).then(res => {
@@ -93,10 +95,6 @@ export default {
     if(!this.item) {
       this.$router.push("/mine")
     }
-
-    let tp = item.id.split('.')[0];
-    item.title = this.GLOBAL.ResType[tp];
-    item.desc = `类型: ${tp[1]} / 当前数量: ${item.num}`;
 
     console.log('ItemInfo', this.item);
   }

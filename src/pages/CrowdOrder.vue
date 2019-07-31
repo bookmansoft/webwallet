@@ -230,10 +230,11 @@ export default {
   //#region 生命周期函数
   created() {
     if (!this.$route.params.item) {
-      this.$router.push({ name: "Crowd" });
+      this.$router.push({ name: "Crowds" });
     }
 
     this.item = this.$route.params.item;
+    console.log('CrowdOrder', this.item);
     this.GLOBAL.ConfigMgr.get('crowd', (err, config) =>{
       if(!err) {
         this.crowdConfig = config;

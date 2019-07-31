@@ -2,18 +2,18 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/pages/Home'
 import Market from '@/pages/Market'
-import Crowd from '@/components/Crowd'
+import Crowds from '@/pages/Crowds'
 import Pocket from '@/components/Pocket'
 import ItemInfo from '@/pages/ItemInfo'
-import CrowdFree from '@/pages/CrowdFree'
+import Stocks from '@/pages/Stocks'
 import CrowdInfo from '@/pages/CrowdInfo'
 import CrowdOrder from '@/pages/CrowdOrder'
-import CrowdFreeInfo from '@/pages/CrowdFreeInfo'
+import StockInfo from '@/pages/StockInfo'
 import CrowdMy from '@/pages/CrowdMy'
 import CrowdMyInfo from '@/pages/CrowdMyInfo'
 import CrowdMySale from '@/pages/CrowdMySale'
 import CrowdPrePay from '@/pages/CrowdPrePay'
-import CrowdFreeOrder from '@/pages/CrowdFreeOrder'
+import StockOrder from '@/pages/StockOrder'
 import Mine from '@/pages/Mine'
 import MyWallet from '@/pages/MyWallet'
 import Wallet from '@/pages/Wallet'
@@ -77,7 +77,7 @@ export default new Router({
     { path: '/pocket', name: 'Pocket', component: Pocket,meta:{title:'背包'} },
     { path: '/pocket/info', name: 'ItemInfo', component: ItemInfo ,meta:{title:'背包 - 道具详情'}},
 
-    { path: '/crowd', name: 'Crowd', component: Crowd,meta:{title:'众筹-百谷王游戏金链'} },
+    { path: '/crowds', name: 'Crowds', component: Crowds,meta:{title:'众筹-百谷王游戏金链'} },
     { path: '/crowd/info', name: 'CrowdInfo', component: CrowdInfo ,meta:{title:'众筹详情-百谷王游戏金链'}},
     { path: '/crowd/order', name: 'CrowdOrder', component: CrowdOrder ,meta:{title:'确认订单'}},
     { path: '/crowd/prePay', name: 'CrowdPrePay', component: CrowdPrePay ,meta:{title:'选择回报'}},
@@ -95,9 +95,9 @@ export default new Router({
     { path: '/crowd/my/info', name: 'CrowdMyInfo', component: CrowdMyInfo ,meta:{title:'我的游戏元宝'}},
     { path: '/crowd/my/sale', name: 'CrowdMySale', component: CrowdMySale ,meta:{title:'挂单出售中'}},
 
-    { path: '/crowd/freeOrder', name: 'CrowdFreeOrder', component: CrowdFreeOrder ,meta:{title:'自由市场-确认订单'}},
-    { path: '/crowd/free/info', name: 'CrowdFreeInfo', component: CrowdFreeInfo ,meta:{title:'游戏元宝信息-百谷王游戏金链'}},
-    { path: '/crowdFree', name: 'CrowdFree', component: CrowdFree,meta:{title:'自由市场'} },
+    { path: '/stocks/order', name: 'StockOrder', component: StockOrder ,meta:{title:'自由市场-确认订单'}},
+    { path: '/stocks/info', name: 'StockInfo', component: StockInfo ,meta:{title:'游戏元宝信息-百谷王游戏金链'}},
+    { path: '/stocks', name: 'Stocks', component: Stocks, meta:{title:'自由市场'} },
 
     { path: '/wallet', name: 'Wallet', component: Wallet ,meta:{title:'钱包'}},
     { path: '/wallet/send', name: 'WalletSend', component: WalletSend ,meta:{title:'转账'}},

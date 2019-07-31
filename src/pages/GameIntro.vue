@@ -160,7 +160,7 @@ export default {
         if(!this.GLOBAL.openid) {
             return;
         }
-        this.remote.fetching({func:'UserToken', control: 'cp', cid: this.cpItem.cid}).then(res => {
+        this.remote.fetching({func:'cp.UserToken', cid: this.cpItem.cid}).then(res => {
           if(res.code == 0) {
             this.cpAddr = res.data;
           }

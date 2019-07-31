@@ -1,4 +1,4 @@
-<!-- 我的凭证挂单 -->
+<!-- 众筹首页 -->
 <template>
   <div class="root" style="background-color:white;margin-top:-8px">
     <div v-if="isLoadMore">
@@ -16,23 +16,35 @@
         :pullup-config="upobj"
         @on-pullup-loading="selPullUp"
       >
-        <div style="margin-top:10px">
-          <div v-for="(item, index) in localItems" :key="index" class="crowdItem">
-            <flexbox @click.native="showDetail(item, index)">
-              <flexbox-item :span="2.5" style="padding:0.3rem;">
-                <div class="flex-demo-left">
-                  <img :src="item.src" class="img-game-list2" />
-                </div></flexbox-item>
-              <flexbox-item>
-                <div style="padding-left:0px;">
-                  <p><span style="font-size:15px;">{{item.title}}</span></p>
-                  <p>
-                    <flexbox>
-                    <flexbox-item :span="8"><p><span style="color: #888; font-size:13px;">{{item.sales}}</span></p></flexbox-item>
-                    <flexbox-item :span="4"><p><span style="color: red; font-size:13px;">{{item.gold}}</span></p></flexbox-item>
-                    </flexbox>
-                  </p>
-                </div>
+        <div>
+          <div v-for="(item, index) in pocketItems" :key="index">
+            <div style="display:block;margin-top:8px;margin-bottom:8px">
+              <flexbox @click.native="itemDetail(item, index)">
+                <flexbox-item :span="2">
+                  <div class="flex-demo-left"><img :src="item.icon_url" style="width: 45px;height: 45px;margin-left:17px;border-radius: 10%;"></div>
+                </flexbox-item>
+                <flexbox-item :span="6" style="padding-left:5px">
+                  <div style="margin-top:0px;">
+                    <span style="color: #919191; font-size:12px;">{{item.cp_text}}</span>
+                  </div>
+                  <div style="margin-top:6px;">
+                    <span style="font-size:15px;">{{item.sell_sum}}份在售</span>
+                  </div>
+                </flexbox-item>
+                <flexbox-item :span="4">
+                  <div style="margin-left:10px">
+                    <div style="height:24px;margin-top:10px;margin-bottom:-10px;">
+                      <span style="color: #919191; font-size:12px;line-height:18px;">单价/份(千克)</span>
+                    </div>
+                    <div style="margin-left:5px;display:block;margin-top:6px;border-radius: 5px;text-align:center;line-height:26px;width:60px;height:26px;background-color:#ff7164;font-size:13px;color:white">{{item.sell_price}}</div>
+                    <div style="display:block;height:12px"></div>
+                  </div>
+                </flexbox-item>
+              </flexbox>
+            </div>
+            <flexbox>
+              <flexbox-item :span="12">
+                <div style="height:3px;background-color:#f3f3f3"></div>
               </flexbox-item>
             </flexbox>
           </div>
@@ -40,8 +52,8 @@
       </scroller>
     </div>
 
-    <div v-if="isLoadMore && localItems.length==0 && showNoData==true">
-      <no-data src="static/img/default/no-walletdetail.png"></no-data>
+    <div v-if="isLoadMore && pocketItems.length==0 && showNoData==true">
+      <no-data src="static/img/default/no-games.png"></no-data>
     </div>
     <div v-if="!isLoadMore">
       <load-more tip="正在加载" style="position: relative; top:250px;" :show-loading="!isLoadMore"></load-more>
@@ -50,8 +62,10 @@
     <navs></navs>
   </div>
 </template>
+
 <script>
 import {
+  Panel,
   Scroller,
   XButton,
   Tab,
@@ -68,8 +82,9 @@ import { setTimeout } from "timers";
 import NoData from "@/components/NoData.vue";
 
 export default {
-  name: 'Crowd',
+  name: 'Pocket',
   components: {
+    Panel,
     Scroller,
     NoData,
     Navs,
@@ -84,6 +99,8 @@ export default {
   },
   data: function() {
     return {
+      type: '2',
+      Title: '背包一览',
       downobj: {
         content: "下拉刷新数据...",
         downContent: "下拉刷新数据...",
@@ -95,8 +112,8 @@ export default {
         clsPrefix: "xs-plugin-pulldown-"
       },
       upobj: {
-        content: "向上滑动获取更多数据...",
-        upContent: "向上滑动获取更多数据...",
+        content: "",
+        upContent: "",
         downContent: "释放获取数据",
         loadingContent: "加载中...",
         pullUpHeight: 50,
@@ -112,15 +129,18 @@ export default {
       showNoData: false,
       isActive: false,
 
-      localItems: [],     //众筹项目列表
+      pocketItems: [],
     };
   },
   methods: {
+    onImgError (item, $event) {
+      console.log(item, $event)
+    },
     selPullDown() {
       this.showNoData = false;
       
       //用户选择下拉刷新，清除本地数据，重新拉取
-      this.getcrowdlist(1, true);
+      this.getPocketList(1, true);
       setTimeout(() => {
         this.showNoData = true;
         if(this.isActive) {
@@ -133,7 +153,7 @@ export default {
       this.showNoData = false;
 
       //用户选择上滑获取新数据，更新当前页码
-      this.getcrowdlist(this.curPage+1);
+      this.getPocketList(this.curPage+1);
       setTimeout(() => {
         this.showNoData = true;
         if(this.isActive) {
@@ -141,42 +161,43 @@ export default {
         }
       }, 1000);
     },
-    showDetail(item) {
-      console.log('StockInfo', item);
-      this.$router.push({ name: 'StockInfo', params: { item: item }});
+    itemDetail(item) {
+      this.$router.push({ name: "StockInfo", params: { item: item } });
     },
     /**
      * 获取列表, page 请求的页码 flash 强制更新
      */
-    getcrowdlist(page, flash) {
-      console.log(`query page: ${page}`);
+    getPocketList(page, flash) {
+      console.log(`query pocket: ${page}`);
 
       if(!!flash) {
-        this.GLOBAL.bidlist = [];
-        this.localItems = [];
+        this.GLOBAL.pocketlist = [];
+        this.pocketItems = [];
         this.curPage = 0;
       }
 
-      let curPage = (this.localItems.length/10)|0 + 1;
-      if(this.localItems.length%10==0) {
+      let curPage = (this.pocketItems.length/10)|0 + 1;
+      if(this.pocketItems.length%10==0) {
         curPage--;
       }
       if(curPage < page) {
-        let totalPage = (this.GLOBAL.bidlist.length/10)|0 + 1;
-        if(this.GLOBAL.bidlist.length%10==0) {
+        let totalPage = (this.GLOBAL.pocketlist.length/10)|0 + 1;
+        if(this.GLOBAL.pocketlist.length%10==0) {
           totalPage--;
         }
 
+        console.log(`totalPage: ${totalPage}`);
+        console.log(`page: ${page}`);
         if(totalPage > page) {
           this.curPage++;
 
           let idx = 0;
-          for(let element of this.GLOBAL.bidlist) {
+          for(let element of this.GLOBAL.pocketlist) {
             if(idx < (page-1)*10) continue;
             if(idx > page*10) break;
 
             let game = element.cpInfo.game;
-            this.localItems.push({
+            this.pocketItems.push({
               src: game.small_img_url,
               title: game.game_title,
               desc: game.provider
@@ -186,23 +207,21 @@ export default {
           }
           this.isLoadMore = true;
         } else {
+          console.log(`item.list`);
           this.remote.fetching({
-            func: "stockMgr.MyStock", 
+            func: "stockMgr.BidList",
             page: page,
-            type: 1, //查询我的挂单
           }).then(res => {
-            // src: 'static/img/crowd/a.jpg',
-            // title: '进击的兵长 代练宝宝',
-            // sales: '15个挂单出售',
-            // gold: '11000.000',
             if (res.code == 0) {
               let qryPage = Math.min(res.data.page, res.data.total); //数据修复：查询页数不能大于总页数
               if(this.curPage < qryPage) {
                 this.curPage = qryPage;
-
-                res.data.list.forEach(cpItem => {
-                  this.localItems.push(cpItem);
+                res.data.list.forEach(item => {
+                  //cid, addr, sum, price, sell_price, sell_sum, period, icon_url, cp_text
+                  this.pocketItems.push(item);
                 });
+
+                console.log('stockMgr.BidList', this.pocketItems);
               } else {
                 //没有新的数据了，禁止继续下拉
                 this.scrollerStatus.pullupStatus = 'disabled';
@@ -225,7 +244,7 @@ export default {
     this.isActive = false;
   },
   created() {
-    this.getcrowdlist(1);
+    this.getPocketList(1, true);
   },
 };
 </script>

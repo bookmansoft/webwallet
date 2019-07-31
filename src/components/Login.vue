@@ -92,7 +92,7 @@ export default {
         } else {
           throw new Error(`WechatConfig Error: ${res.code}`);
         }
-
+        
         console.log('after login', this.GLOBAL.userBase);
         this.gotoHome();
       } else {

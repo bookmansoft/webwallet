@@ -37,17 +37,17 @@
             <flexbox @click.native="gotoCpInfo(item, index)">
               <flexbox-item :span="4" style="padding:0.3rem;">
                 <div class="flex-demo-left">
-                  <img :src="item.src" class="img-game-list">
+                  <img :src="item.small_img_url" class="img-game-list">
                 </div>
               </flexbox-item>
               <flexbox-item>
                 <div style="padding-left:6px;">
                   <p>
-                    <span style="font-size:15px;">{{item.title}}</span>
+                    <span style="font-size:15px;">{{item.game_title}}</span>
                   </p>
                   <br>
                   <p>
-                    <span style="color: #888; font-size:14px;">{{item.desc}}</span>
+                    <span style="color: #888; font-size:14px;">{{item.game_desc}}</span>
                   </p>
                 </div>
               </flexbox-item>
@@ -127,9 +127,6 @@ export default {
         src: "static/img/game/game-3.jpg",
         gameProvider: "原石互娱"
       },
-      cpFilter: [
-        "xxxxxxxx-game-gold-boss-xxxxxxxxxxxx",
-      ]
     };
   },
   mounted() {
@@ -193,20 +190,14 @@ export default {
             if(idx < (page-1)*10) continue;
             if(idx > page*10) break;
 
-            let game = element.cpInfo.game;
-            this.gameList.push({
-              src: game.small_img_url,
-              title: game.game_title,
-              desc: game.provider
-            });
+            this.gameList.push(element);
 
             idx++;
           }
           this.isLoadMore = true;
         } else {
           this.remote.fetching({
-            func: "List", 
-            control: "cp",
+            func: "cp.List", 
             page: page,
           }).then(res => {
             if (res.code == 0) {
@@ -215,23 +206,8 @@ export default {
                 this.curPage = qryPage;
 
                 res.data.list.forEach(cpItem => {
-                  if (this.cpFilter.indexOf(cpItem.cid) == -1) {
-                    //从cp获取资源
-                    this.remote.get(encodeURI(`${cpItem.url}/${cpItem.name}`)).then(res => {
-                        if (!!res.game) {
-                          let game = res.game;
-                          this.GLOBAL.cplist.push({
-                            cpItem: cpItem,
-                            cpInfo: res,
-                          });
-                          this.gameList.push({
-                            src: game.small_img_url,
-                            title: game.game_title,
-                            desc: game.provider
-                          });
-                        }
-                    });
-                  }
+                  this.GLOBAL.cplist.push(cpItem);
+                  this.gameList.push(cpItem);
                 });
               } else {
                 //没有新的数据了，禁止继续下拉
@@ -247,12 +223,9 @@ export default {
       }
     },
     gotoCpInfo(item, index) {
-      console.log("goto cp info", index);
-      let cpInfo = this.GLOBAL.cplist[index].cpInfo;
-      let cpItem = this.GLOBAL.cplist[index].cpItem;
       this.$router.push({
         name: "GameInfo",
-        params: { cpInfo: cpInfo, cpItem: cpItem }
+        params: { cpInfo: item },
       });
     },
   },

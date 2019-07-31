@@ -1,4 +1,22 @@
-<!-- 众筹首页 -->
+<!-- 众筹首页 
+数据接口
+1. stockMgr.getCrowdList: 
+[
+  {
+    large_img_url，     //游戏大图
+    funding_text,       //众筹描述
+    provider,           //游戏开发商
+    percent2,           //完成进度(Calc)
+    price,              //众筹单价
+    supply_people_num,  //众筹人数
+    cp_name,            //游戏名称
+    small_img_url,      //游戏小图
+    icon_url,           //游戏图标
+    pic_urls,           //游戏截屏图数组
+    cp_desc,            //游戏描述
+  },
+]
+-->
 <template>
   <div class="root" style="background-color:white;margin-top:-8px">
     <div v-if="isLoadMore">
@@ -70,19 +88,19 @@
                   <flexbox-item :span="4">
                     <div class="flex-left">
                       <img src="static/img/stock/stock_jiner.png" style="width:15px;hegith:15px">
-                      <span style="color:coral; font-size:12px;">￥ {{item.stock_money}}</span>
+                      <span style="color:coral; font-size:12px;">{{item.price}}千克</span>
                     </div>
                   </flexbox-item>
                   <flexbox-item :span="4">
                     <div class="flex-left">
                       <img src="static/img/stock/stock_renshu.png" style="width:15px;hegith:15px">
-                      <span style="font-size:12px;">￥{{item.supply_people_num}}</span>
+                      <span style="font-size:12px;">{{item.supply_people_num}}</span>
                     </div>
                   </flexbox-item>
                   <flexbox-item :span="4">
                     <div class="flex-left">
                       <img src="static/img/stock/stock_shichang.png" style="width:15px;hegith:15px">
-                      <span style="font-size:12px;">￥ {{`${item.percent2}%`}}</span>
+                      <span style="font-size:12px;">{{`${item.percent2}%`}}</span>
                     </div>
                   </flexbox-item>
                 </flexbox>
@@ -229,29 +247,26 @@ export default {
             if(idx < (page-1)*10) continue;
             if(idx > page*10) break;
 
-            let game = element.cpInfo.game;
-            this.crowdItems.push({
-              src: game.small_img_url,
-              title: game.game_title,
-              desc: game.provider
-            });
+            this.crowdItems.push(element);
 
             idx++;
           }
           this.isLoadMore = true;
         } else {
           this.remote.fetching({
-            func: "stockMgr.ListRecord", 
+            func: "stockMgr.getCrowdList", 
             page: page,
           }).then(res => {
             if (res.code == 0) {
+              console.log('getCrowdList', res.data);
               let qryPage = Math.min(res.data.page, res.data.total); //数据修复：查询页数不能大于总页数
               if(this.curPage < qryPage) {
                 this.curPage = qryPage;
 
                 res.data.list.forEach(cpItem => {
-                  cpItem.percent2 = ((parseInt(cpItem.funding_done_amount) * 100) / parseInt(cpItem.funding_target_amount))|0;
+                  cpItem.percent2 = ((cpItem.sum -cpItem.sum_left) * 100 / cpItem.sum) | 0;
                   this.crowdItems.push(cpItem);
+                  this.GLOBAL.crowdlist.push(cpItem);
                 });
               } else {
                 //没有新的数据了，禁止继续下拉

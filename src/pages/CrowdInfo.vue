@@ -31,7 +31,7 @@
           <flexbox-item :span="12">
             <box gap="20px">
               <div style="margin-top:-10px">
-                <XXProgress :percent="percent2" :show-cancel="false"></XXProgress>
+                <XXProgress :percent="item.percent2" :show-cancel="false"></XXProgress>
               </div>
             </box>
           </flexbox-item>
@@ -40,12 +40,12 @@
         <flexbox>
           <flexbox-item :span="4">
             <div class="flex-left" style="margin-top:-10px">
-              <span style="color:coral; font-size:12px;">￥ {{item.stock_money}}</span>
+              <span style="color:coral; font-size:12px;">{{item.price*(item.sum-item.sum_left)}}千克</span>
             </div>
           </flexbox-item>
           <flexbox-item :span="4">
             <div class="flex-center" style="margin-top:-10px">
-              <span style="font-size:12px;">￥{{item.supply_people_num}}</span>
+              <span style="font-size:12px;">{{item.sum*item.price/100000}}千克</span>
             </div>
           </flexbox-item>
           <flexbox-item :span="4">
@@ -58,9 +58,7 @@
         <flexbox>
           <flexbox-item :span="4">
             <div class="flex-left" style="margin-top:-6px">
-              <span
-                style="color:#999999; font-size:12px;"
-              >已筹{{parseInt(item.funding_done_amount*100/item.funding_target_amount) + '%'}}</span>
+              <span style="color:#999999; font-size:12px;">已筹 {{item.percent2}} %</span>
             </div>
           </flexbox-item>
           <flexbox-item :span="4">
@@ -127,7 +125,7 @@
                 <span>&nbsp;</span>
               </flexbox-item>
               <flexbox-item :span="4">
-                <span style="font-size:14px;font-family:'黑体','Heiti SC','Droidsansfallback';margin-left:-10px;">{{item.cp_text}}</span>
+                <span style="font-size:14px;font-family:'黑体','Heiti SC','Droidsansfallback';margin-left:-10px;">{{item.cp_name}}</span>
               </flexbox-item>
               <flexbox-item :span="4">
                 <span style="font-size:14px;font-family:'黑体','Heiti SC','Droidsansfallback';margin-left:-10px;">{{item.provider}}</span>
@@ -211,7 +209,7 @@ export default {
       msg: "众筹",
       headerTitle: "众筹详情",
       item: null,
-      percent2: 50,
+      funding_residue_day: 0, //剩余天数
       swiperOption: {
         notNextTick: true,
         //循环
@@ -256,7 +254,7 @@ export default {
   },
   methods: {
     onBack() {
-      this.$router.push({ name: "Crowd" });
+      this.$router.push({ name: "Crowds" });
     },
     crowdDetail(item, index) {},
     crowdPrePay() {
@@ -274,10 +272,7 @@ export default {
 
     console.log('crowdInfo', this.item);
     this.pic_urls=JSON.parse(this.item.pic_urls);
-    this.percent2 = parseInt(
-      (this.item.funding_done_amount * 100) / this.item.funding_target_amount
-    );
-  }
+  },
 };
 </script>
 

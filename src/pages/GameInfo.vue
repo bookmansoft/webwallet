@@ -3,15 +3,15 @@
     <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> 
     <div id="gameName">
         <div id="topImg">
-            <img :src="gameInfo.large_img_url">
+            <img :src="cpInfo.game_resource_uri">
         </div>
         <div id="centImg" class="backcolor-white" style="height:130px;">
             <div>
-                <img :src="gameInfo.icon_url">
+                <img :src="cpInfo.game_ico_uri">
             </div>
             <ul class="center-ul" style="position:relative; top:-75px;">
-                <li>{{gameInfo.game_title}}</li>
-                <li class="color-999-provider">发行商：{{gameInfo.provider}}</li>
+                <li>{{cpInfo.game_title}}</li>
+                <li class="color-999-provider">发行商：{{cpInfo.developer}}</li>
                 <li>
                 <span class="color-999">射击</span>
                   <!--
@@ -50,17 +50,17 @@
         <div id="introduce">
             <div class="backcolor-white padding-rem">
                 <p>简介</p>
-                <p style="color: #888; font-size:14px;">{{gameInfo.desc}}</p>
+                <p style="color: #888; font-size:14px;">{{cpInfo.game_desc}}</p>
             </div>
             <div class="backcolor-white padding-rem">
                 <p>游戏信息</p>
-                <p><span>版本</span><span>v{{gameInfo.version}}</span></p>
-                <p><span>开发者</span><span>{{gameInfo.provider}}</span></p>
+                <p><span>版本</span><span>v{{cpInfo.game_version}}</span></p>
+                <p><span>开发者</span><span>{{cpInfo.developer}}</span></p>
             </div>
             <div class="backcolor-white padding-rem">
                 <p>最近更新</p>
-                <p><span>更新时间</span><span>{{gameInfo.publishTime}}</span></p>
-                <p style="color: #888; font-size:14px;">{{gameInfo.update_content}}</p>
+                <p><span>更新时间</span><span>{{cpInfo.update_time}}</span></p>
+                <p style="color: #888; font-size:14px;">{{cpInfo.update_desc}}</p>
             </div>
             <!--
             <div style="padding:15px;">
@@ -70,7 +70,7 @@
         </div>
         <div id="gameNameImg" class="backcolor-white">
             <div>
-                <img v-for="(item, index) in gameInfo.pic_urls" :key="index" :src="item" alt="">
+                <img v-for="(item, index) in cpInfo.game_screenshots" :key="index" :src="item" alt="">
             </div>
         </div>
 
@@ -147,8 +147,6 @@ export default {
         hasComments: false,
         commentsList: [],
         cpInfo: [],
-        gameInfo: {},
-        cpItem: {},
         msgInput: "",
         times: "",
         cpAddr: '',
@@ -221,7 +219,7 @@ export default {
         control: 'comments', 
         openid: this.GLOBAL.openid, 
         uid: this.GLOBAL.uid,
-        cid: this.cpItem.cid,
+        cid: this.cpInfo.cpid,
         reply_id: 0,
         nick: this.GLOBAL.userBase.nickname,
         avatar_url: this.GLOBAL.userBase.avatar_uri,
@@ -278,12 +276,7 @@ export default {
       //跳转至鸡小德
       //window.location.href = `http://chick.vallnet.cn/?openid=${this.remote.userInfo.openid}&openkey=${this.remote.userInfo.openkey}`;
 
-      let cname = this.cpItem.name
-      let cid = this.cpItem.cid
-      let addr = this.cpAddr
-      let game = this.gameInfo.game_title
-      let gameUrl = this.gameInfo.large_img_url
-      const url = "/pages/test/test?cid=" + cid + "&addr=" + addr + "&game=" + game + "&gameUrl=" + gameUrl;
+      const url = `/pages/test/test?cid=${this.cpInfo.cpid}&addr=${this.cpAddr}&game=${this.cpInfo.game_title}&gameUrl=${this.cpInfo.game_resource_uri}`;
       this.$wechat.miniProgram.navigateTo({ url: url })
     },
 
@@ -293,7 +286,7 @@ export default {
         }
 
         /*
-        let cid = this.cpItem.cid
+        let cid = this.cpInfo.cpid
         let uid = this.GLOBAL.openid
         let notifyurl = this.GLOBAL.apiUrl
         let order_sn = item.id + '-new-' + this.randomString(16)
@@ -306,7 +299,7 @@ export default {
         let order_sn = item.id + '-new-' + this.randomString(16);
         this.remote.fetching({
           func:'order.OrderPay', 
-          cid: this.cpItem.cid,
+          cid: this.cpInfo.cpid,
           sn: order_sn,
           price: this.GLOBAL.toGamegoldOrigin(item.props_price),
         }).then(res => {
@@ -328,7 +321,7 @@ export default {
     
     //获取评论列表列表
     getCommentList() {
-      let cid = this.cpItem.cid;
+      let cid = this.cpInfo.cpid;
       this.remote.fetching({func:'GameCommentList', control: 'comments', cid: cid,}).then(res => {
           if(res.code == 0) {
             res.data.forEach(element => {
@@ -346,21 +339,22 @@ export default {
     },
 
     getCpProps() {
-        this.cpProps.splice(0, this.cpProps.length)
-        this.cpInfo.proplist.forEach(element => {
-            //从cp获取资源
-            this.remote.get(encodeURI(encodeURI(this.cpItem.url + '/prop/' + element.id))).then(res => {
-                res.props_price = this.GLOBAL.toGamegoldKg(res.props_price);
-                this.cpProps.push(res);
-            });
-        });
+      //todo: 展示CP的可售道具列表      
+      // this.cpProps.splice(0, this.cpProps.length);
+      // this.cpInfo.proplist.forEach(element => {
+      //     //从cp获取资源
+      //     this.remote.get(encodeURI(encodeURI(this.cpInfo.cpurl + '/prop/' + element.id))).then(res => {
+      //         res.props_price = this.GLOBAL.toGamegoldKg(res.props_price);
+      //         this.cpProps.push(res);
+      //     });
+      // });
     },
 
     userToken() {
         if(this.GLOBAL.uid == 0) {
             return;
         }
-        this.remote.fetching({func:'UserToken', control: 'cp', cid: this.cpItem.cid}).then(res => {
+        this.remote.fetching({func:'cp.UserToken', cid: this.cpInfo.cpid}).then(res => {
           if(res.code == 0) {
             this.cpAddr = res.data;
           }
@@ -382,16 +376,15 @@ export default {
   },
 
   created() {
-    if(!!!this.$route.params.cpInfo || !!!this.$route.params.cpItem) {
-        this.$router.push('/Home')
+    if(!!!this.$route.params.cpInfo) {
+        this.$router.push('/Home');
     } else {
-        this.cpInfo = this.$route.params.cpInfo
-        this.cpItem = this.$route.params.cpItem
-        this.gameInfo = this.cpInfo.game
-        this.gameInfo.publishTime = this.getTime(this.gameInfo.publish_time)
-        this.getCpProps()
-        this.userToken()
-        this.getCommentList()
+        this.cpInfo = this.$route.params.cpInfo;
+        this.cpInfo.update_time = this.getTime(this.cpInfo.update_time);
+        this.cpInfo.game_screenshots = this.cpInfo.game_screenshots.split(',');
+        this.getCpProps();
+        this.userToken();
+        this.getCommentList();
     }
   }
 };

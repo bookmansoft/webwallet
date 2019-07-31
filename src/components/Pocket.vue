@@ -132,6 +132,7 @@ export default {
       }, 1000);
     },
     itemDetail(item) {
+      console.log('goto ItemInfo', item);
       this.$router.push({ name: "ItemInfo", params: { item: item } });
     },
     /**
@@ -188,10 +189,13 @@ export default {
                 this.curPage = qryPage;
 
                 res.data.list.forEach(item => {
-                  let tp = item.id.split('.')[0];
+                  let tps = item.id.split('.');
                   this.pocketItems.push({
-                    title: `${this.GLOBAL.ResType[tp]}`,
-                    desc: `类型: ${tp[1]} / 当前数量: ${item.num}`,
+                    type: tps[0],
+                    id: tps[1],
+                    num: item.num,
+                    title: `${this.GLOBAL.ResType[tps[0]]}`,
+                    desc: `类型: ${item.id} / 当前数量: ${item.num}`,
                   });
                 });
               } else {
