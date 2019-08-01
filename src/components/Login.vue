@@ -73,6 +73,12 @@ export default {
         this.GLOBAL.userBase.nickname = this.remote.userInfo.name;
         //#endregion
 
+        this.GLOBAL.ConfigMgr.get('base', (err, config)=>{ 
+          if(!err) {
+            this.GLOBAL.base = config;
+          }
+        });
+
         //监测VIP等级变化 - 此段代码写在 GLOBAL 文件中无效，尚不明白其中原因
         this.remote.watch(info => {
           console.log('vip changed:', info.vl, info.vcur);

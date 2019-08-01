@@ -1,3 +1,39 @@
+<!-- 众筹详情页 
+数据接口
+1. item: 
+{
+  icon_url,           //游戏图标
+  small_img_url,      //游戏小图
+  large_img_url，     //游戏大图
+  pic_urls,           //游戏截屏图数组
+  funding_text,       //众筹描述
+  provider,           //游戏开发商
+  percent2,           //完成进度(Calc)
+  price,              //众筹单价，单位 千克
+  supply_people_num,  //众筹人数
+  cp_name,            //游戏名称
+  cp_desc,            //游戏描述
+  funding_residue_day,//活动剩余天数
+}
+
+跳转链接
+1. 微信支付 
+    {
+      name: "WeChatPay",
+      params: {
+        order: {
+          type: 'crowd',          //商品分类
+          id: this.item.payType,  //众筹项目编号，索引到配置表'crowd'中的项目，类似商品编号
+          cid: this.item.cid,     //CP编码
+          num: this.quantity,     //众筹加成数量
+          price: this.realPay,    //实际价格，单位元
+          desc: this.crowdConfig[this.item.payType].desc,
+        },
+        retPath: "/crowd/my"
+      }
+    }
+2. 返回: Crowds
+-->
 <template>
   <div class="root">
     <div style="background-color:#f3f3f3">
@@ -190,7 +226,7 @@ export default {
       showLoading: false,
       flagMore: false,
       item: {},     //CP对象
-      crowdConfig: {0:{price:0}},
+      crowdConfig: {},
       payType: 0,   //支付类型
       quantity: 1,  //购买数量，预设为1
       realPay: 1,   //支付总额
@@ -205,7 +241,7 @@ export default {
       if (this.quantity < 1) {
         this.quantity = 1;
       }
-      this.realPay = this.quantity * this.crowdConfig[this.item.payType].price;
+      this.calc();
     },
     onBack() {
       this.$router.push({ name: "CrowdInfo", params: { item: this.item } });
@@ -222,25 +258,33 @@ export default {
             price: this.realPay,
             desc: this.crowdConfig[this.item.payType].desc,
           },
-          retPath: "/my/stock"
+          retPath: "/crowd/my"
         }
       });
-    }
+    },
+    calc() {
+      if(this.crowdConfig[this.item.payType].stock > 0) {
+        this.realPay = parseFloat(
+          this.item.price / this.GLOBAL.base.kg         //atom化为KG
+          * this.crowdConfig[this.item.payType].stock   //选项包含的凭证数量
+          * this.quantity                               //选项数量
+          * this.GLOBAL.base.kgprice                    //KG单价
+        ).toFixed(2);
+      } else {
+        this.realPay = this.quantity;
+      }
+    },
   },
   //#region 生命周期函数
   created() {
     if (!this.$route.params.item) {
       this.$router.push({ name: "Crowds" });
+    } else {
+      this.item = this.$route.params.item;
+      this.crowdConfig = this.GLOBAL.crowdConfig;
+      console.log('CrowdOrder', this.item);
+      this.calc();
     }
-
-    this.item = this.$route.params.item;
-    console.log('CrowdOrder', this.item);
-    this.GLOBAL.ConfigMgr.get('crowd', (err, config) =>{
-      if(!err) {
-        this.crowdConfig = config;
-        this.realPay = this.quantity * this.crowdConfig[this.item.payType].price;
-      }
-    });
   }
   //#endregion
 };

@@ -1,3 +1,29 @@
+<!-- 我持有的指定凭证的详情
+数据接口
+1. stock.UserStockLogs -> userStockLogs
+[
+  {
+    "height",      //交易高度
+    "txid",        //交易哈希
+    "type",        //交易类型 GLOBAL.RecordType
+        {
+          1: '发行凭证', sum 发行数量 addr 凭证发行者(交易发起者) to 没有意义   price 发行价格
+          2: '购买凭证', sum 买入数量 addr 凭证买入者(交易发起者) to 凭证拥有者 price 无意义
+          3: '转让凭证', sum 转让数量 addr 凭证拥有者(交易发起者) to 凭证接收者 price 无意义
+          4: '凭证分成', sum 没有意义 addr 分成受益者(分成诉求方) to 没有意义   price 分成数量
+          5: '媒体分成', sum 没有意义 addr 分成受益者(分成诉求方) to 没有意义   price 分成数量
+          6: '拍卖凭证', sum 拍卖数量 addr 凭证拍卖者(交易发起者) to 无意义     price 拍卖价格
+          7: '竞买凭证', sum 买入数量 addr 凭证买入者(交易发起者) to 凭证拥有者 price 买入价格
+        }
+    "cid",         //CP编号
+    "sum",         //交易数量
+    "addr,         //交易相关地址
+    "to",          //目标地址
+    "price",       //交易价格
+    "sn",          //交易流水号
+  }
+]
+-->
 <template>
   <div>
     <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
@@ -9,9 +35,11 @@
                 </div></flexbox-item>
             <flexbox-item>
                 <div style="padding-left:6px;">
-                <p><span style="font-size:15px;">{{crowdItem.title}}</span></p>
-                <p><span style="color: coral; font-size:14px;">持有 {{crowdItem.sum}} 个</span>
-                    <x-button mini :gradients="['#FF5E3A', '#FF9500']" style="margin-left:50px;" @click.native="sale()">挂单出售</x-button>
+                <p>
+                  <div style="font-size:15px;">{{crowdItem.title}}</div>
+                  <div style="color: coral; font-size:14px;">持有 {{crowdItem.sum}} 个</div>
+                  <span style="color: coral; font-size:14px;">成本 {{parseFloat(crowdItem.price / GLOBAL.base.kg).toFixed(3)}} 千克</span>
+                  <x-button mini :gradients="['#FF5E3A', '#FF9500']" style="margin-left:50px;" @click.native="sale()">挂单出售</x-button>
                 </p>
                 </div>
             </flexbox-item>
@@ -28,27 +56,22 @@
     <div v-if="tabIndex==0">
         <div style="padding:10px;">
             <flexbox>
-                <flexbox-item :span="6" class="flex-center">
-                    <p>昨日收益</p>
-                    <p>+0千克</p>
-                </flexbox-item>
                 <flexbox-item class="flex-center">
                     <p>累计收益</p>
-                    <p>+0千克</p>
+                    <p>+{{bonus}}千克</p>
                 </flexbox-item>
             </flexbox>
         </div>
     </div>
     <div v-else>
-        <!--
-        <no-data src="static/img/default/no-walletdetail.png" style="margin-top:0px;"></no-data>
-        -->
         <group>
-          <cell :title="item.status==1 ? '买入': '卖出'" link="" 
-            :inline-desc="GLOBAL.formatDateStr(new Date(item.pay_at*1000), 'yyyy-MM-dd HH:mm:ss')"
-            :value="(item.status==1 ? '+': '-') + item.quantity"
-            v-for="(item, index) in userStockLogs" :key="index" is-link>
-          </cell>
+          <cell 
+            v-for="(item, index) in userStockLogs" :key="index" is-link
+            :title="item.type==3 ? '转出': '买入'" 
+            link="" 
+            :inline-desc="item.time"
+            :value="(item.type==3 ? '-': '+') + item.sum"
+          ></cell>
         </group>
     </div>
   </div>
@@ -75,6 +98,7 @@ export default {
       headerTitle: '我的代练宝宝',
       msg: '众筹',
       crowdItem: null,
+      bonus: 0,
       tabItems: tabList(),
       userStockLogs: [],
       tabIndex: 0
@@ -82,19 +106,33 @@ export default {
   },
   methods: {
         onBack() {
-          this.$router.push('/my/stock')
+          this.$router.push('/crowd/my')
         },
         onItemClick() {
         },
         sale() {
-          this.$router.push({ name: 'CrowdMySale', params: { item: this.crowdItem }})
+          this.$router.push({ name: 'MyStockSale', params: { item: this.crowdItem }})
         },
   },
   created() {
     this.crowdItem = this.$route.params.item;
-    this.remote.fetching({func: 'stock.UserStockLogs', cid: this.crowdItem.cid}).then(res => {
+    console.log('MyStockInfo', this.crowdItem);
+    this.remote.fetching({func: 'stockMgr.UserStockLogs', cid: this.crowdItem.cid, addr: this.crowdItem.addr}).then(res => {
+      console.log('stockMgr.UserStockLogs', res);
+
+      this.userStockLogs = [];
       if(res.code == 0) {
-          this.userStockLogs = res.data;
+        let bo = 0;
+        for(let item of res.data.list) {
+          if(item.type == 4) {
+            bo += item.price;
+          } else if(item.type == 2 || item.type == 3 || item.type == 7) {
+            item.time = this.GLOBAL.formatDateStr(new Date(Date.parse(new Date()) - (res.data.height - item.height)*600*1000), 'yyyy-MM-dd HH:mm:ss');
+            this.userStockLogs.push(item);
+          }
+        }
+        this.bonus = parseFloat(bo/this.GLOBAL.base.kg).toFixed(3);
+        console.log(this.bonus, this.userStockLogs);
       }
     });
   }

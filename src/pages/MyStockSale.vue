@@ -10,9 +10,11 @@
                 </div></flexbox-item>
             <flexbox-item>
                 <div style="padding-left:6px;">
-                <p><span style="font-size:15px;">{{crowdItem.cid}}</span></p>
-                <p><span style="color: coral; font-size:14px;">持有 {{crowdItem.sum}} 个</span>
-                </p>
+                  <p>
+                    <span style="font-size:15px;">{{crowdItem.title}}</span>
+                    <div style="color: coral; font-size:14px;">持有 {{crowdItem.sum}} 个</div>
+                    <div style="color: coral; font-size:14px;">成本 {{parseFloat(crowdItem.price / GLOBAL.base.kg).toFixed(3)}} 千克</div>
+                  </p>
                 </div>
             </flexbox-item>
         </flexbox>
@@ -21,7 +23,7 @@
       <x-input title="出售数量" name="quantity" placeholder="请输入" v-model="quantity"></x-input>
     </group>
     <group >
-      <x-input title="出售价格" name="price" placeholder="请输入" v-model="price"></x-input>
+      <x-input title="出售价格" name="price" placeholder="请输入(单位 千克)" v-model="price"></x-input>
     </group>
     <div style="padding:15px;">
       <x-button @click.native="btnSale()" type="primary" v-bind:show-loading="showLoading"> 出售</x-button>
@@ -29,29 +31,19 @@
   </div>
 </template>
 <script>
-//import { XHeader, Group, Cell } from 'vux'
-import { XHeader, XButton, Tab, TabItem, XInput, Flexbox, Group, FlexboxItem, LoadMore } from 'vux'
+import { XHeader, XButton, Tab, TabItem, XInput, Flexbox, Group, FlexboxItem, LoadMore, } from 'vux'
 import Navs from '@/components/Navs.vue'
 import NoData from '@/components/NoData.vue'
 
-const tabList = () => [
-  {
-    label:'收益情况'
-  },{
-    label:'交易记录'
-}]
-
 export default {
   components: {
-    Navs, XHeader, Tab, XButton, XInput, TabItem, Flexbox, FlexboxItem, NoData, Group, LoadMore
+    Navs, XHeader, Tab, XButton, XInput, TabItem, Flexbox, FlexboxItem, NoData, Group, LoadMore,
   },
   data () {
     return {
       headerTitle: '我的代练宝宝',
       msg: '众筹',
       crowdItem: null,
-      tabItems: tabList(),
-      tabIndex: 0,
       quantity: '',
       price: '',
       showLoading: false
@@ -59,7 +51,7 @@ export default {
   },
   methods: {
         onBack() {
-            this.$router.push({ name: 'CrowdMyInfo', params: { item: this.crowdItem }})
+            this.$router.push({ name: 'MyStockInfo', params: { item: this.crowdItem }})
         },
         showPlugin(msg) {
         this.$vux.alert.show({
@@ -95,14 +87,14 @@ export default {
                 params: {
                   addr: this.crowdItem.addr,
                   cid: this.crowdItem.cid,
-                  price: this.price,
+                  price: this.price*this.GLOBAL.base.kg,
                   num: this.quantity,
                 }
             }).then(res => {
                 if(res.code == 0) {
                     setTimeout(() => {
                         this.showLoading = false
-                        this.$router.push({ name: 'CrowdMy'})
+                        this.$router.push({ name: 'StocksMine'})
                     }, 2000);
                     
                 }

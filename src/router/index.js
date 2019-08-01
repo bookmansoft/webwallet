@@ -9,9 +9,9 @@ import Stocks from '@/pages/Stocks'
 import CrowdInfo from '@/pages/CrowdInfo'
 import CrowdOrder from '@/pages/CrowdOrder'
 import StockInfo from '@/pages/StockInfo'
-import CrowdMy from '@/pages/CrowdMy'
-import CrowdMyInfo from '@/pages/CrowdMyInfo'
-import CrowdMySale from '@/pages/CrowdMySale'
+import StocksMine from '@/pages/StocksMine'
+import MyStockInfo from '@/pages/MyStockInfo'
+import MyStockSale from '@/pages/MyStockSale'
 import CrowdPrePay from '@/pages/CrowdPrePay'
 import StockOrder from '@/pages/StockOrder'
 import Mine from '@/pages/Mine'
@@ -74,10 +74,14 @@ export default new Router({
     { path: '/message', name: 'Message', component: Message ,meta:{title:'消息'}},
 
     { path: '/market', name: 'Market', component: Market,meta:{title:'Market'} },
+
     { path: '/pocket', name: 'Pocket', component: Pocket,meta:{title:'背包'} },
     { path: '/pocket/info', name: 'ItemInfo', component: ItemInfo ,meta:{title:'背包 - 道具详情'}},
 
     { path: '/crowds', name: 'Crowds', component: Crowds,meta:{title:'众筹-百谷王游戏金链'} },
+    { path: '/crowd/my', name: 'StocksMine', component: StocksMine ,meta:{title:'StocksMine'}},
+    { path: '/crowd/my/info', name: 'MyStockInfo', component: MyStockInfo ,meta:{title:'我的游戏元宝'}},
+    { path: '/crowd/my/sale', name: 'MyStockSale', component: MyStockSale ,meta:{title:'挂单出售中'}},
     { path: '/crowd/info', name: 'CrowdInfo', component: CrowdInfo ,meta:{title:'众筹详情-百谷王游戏金链'}},
     { path: '/crowd/order', name: 'CrowdOrder', component: CrowdOrder ,meta:{title:'确认订单'}},
     { path: '/crowd/prePay', name: 'CrowdPrePay', component: CrowdPrePay ,meta:{title:'选择回报'}},
@@ -91,19 +95,16 @@ export default new Router({
     { path: '/crowd/HouseAddress', name: 'HouseAddress', component: HouseAddress ,meta:{title:'收货地址'}},
     { path: '/crowd/HouseAddressAdd', name: 'HouseAddressAdd', component: HouseAddressAdd ,meta:{title:'添加收货地址'}},
 
-    { path: '/my/stock', name: 'CrowdMy', component: CrowdMy ,meta:{title:'CrowdMy'}},
-    { path: '/crowd/my/info', name: 'CrowdMyInfo', component: CrowdMyInfo ,meta:{title:'我的游戏元宝'}},
-    { path: '/crowd/my/sale', name: 'CrowdMySale', component: CrowdMySale ,meta:{title:'挂单出售中'}},
-
+    { path: '/stocks', name: 'Stocks', component: Stocks, meta:{title:'自由市场'} },
     { path: '/stocks/order', name: 'StockOrder', component: StockOrder ,meta:{title:'自由市场-确认订单'}},
     { path: '/stocks/info', name: 'StockInfo', component: StockInfo ,meta:{title:'游戏元宝信息-百谷王游戏金链'}},
-    { path: '/stocks', name: 'Stocks', component: Stocks, meta:{title:'自由市场'} },
 
     { path: '/wallet', name: 'Wallet', component: Wallet ,meta:{title:'钱包'}},
     { path: '/wallet/send', name: 'WalletSend', component: WalletSend ,meta:{title:'转账'}},
     { path: '/wallet/receive', name: 'WalletReceive', component: WalletReceive ,meta:{title:'接受转账'}},
     { path: '/wallet/trans', name: 'WalletTrans', component: WalletTrans ,meta:{title:'交易对'}},
     { path: '/wallet/detail', name: 'WalletDetail', component: WalletDetail ,meta:{title:'交易流水'}},
+
     { path: '/redpack', name: 'RedPack', component: RedPack ,meta:{title:'红包'}},
     { path: '/redpack/act', name: 'RedPackAct', component: RedPackAct ,meta:{title:'红包Act'}},
 

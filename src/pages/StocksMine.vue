@@ -1,57 +1,30 @@
 <template>
   <div>
     <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
-    <tab :line-width="3" custom-bar-width="60px" v-model="tabIndex">
-      <tab-item v-for="(item, index) in tabItems" :key="index" @on-item-click="onItemClick">
-        <span style="font-size:15px;font-weight:620;">{{item.label}}</span>
-      </tab-item>
-    </tab>
-    <div v-if="tabIndex==0">
-      <!-- 标签1：我的凭证 -->
-      <MyStock></MyStock>
-    </div>
-    <div v-else>
-      <!-- 标签2：我的挂单 -->
-      <MyBid></MyBid>
-    </div>
-
+    <MyStock :showType="1"></MyStock>
     <!-- 导航 -->
     <navs></navs>
   </div>
 </template>
 <script>
-import { XHeader, XButton, Tab, TabItem } from 'vux'
+import { XHeader, XButton } from 'vux'
 import Navs from '@/components/Navs.vue'
 import NoData from '@/components/NoData.vue'
 import MyStock from '@/components/MyStock.vue'
-import MyBid from '@/components/MyBid.vue'
-
-const tabList = () => [
-  {
-    label:'当前持有'
-  },
-  {
-    label:'挂单出售中'
-}];
 
 export default {
   components: {
-    Navs, XHeader, Tab, XButton, TabItem, NoData, MyStock, MyBid,
+    Navs, XHeader, XButton, NoData, MyStock,
   },
   data () {
     return {
       headerTitle: '我的代练宝宝',
       msg: '众筹',
-      tabIndex: 0,
-      tabItems: tabList(),
     }
   },
   methods: {
         onBack() {
             this.$router.push('/mine')
-        },
-        onItemClick(index) {
-          console.log(this.tabIndex)
         },
   },
   created() {

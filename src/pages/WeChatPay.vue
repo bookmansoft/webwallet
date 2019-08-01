@@ -158,16 +158,15 @@ export default {
   },
   created() {
     if(!this.GLOBAL.userBase.uid) {
-      this.$router.push('/login');
+        this.$router.push('/login');
+    } else if(!this.$route.params.order) {
+        this.$router.push('/mine')
+    } else {
+        this.order = this.$route.params.order;
+        console.log('wechatpay', this.order);
+        this.retPath = this.$route.params.retPath;
+        this.prepay();
     }
-
-    if(!this.$route.params.order) {
-      this.$router.push('/mine')
-    }
-
-    this.order = this.$route.params.order;
-    this.retPath = this.$route.params.retPath;
-    this.prepay();
   }
   //#endregion
 }

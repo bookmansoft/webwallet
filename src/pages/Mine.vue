@@ -172,7 +172,7 @@ const getItems1 = () => [
     is_link: true,
     img: "static/img/mine/stock.png",
     badge: 0,
-    link: { path: "/my/stock" },
+    link: { path: "/crowd/my" },
     value: "",
     showDot: false
   }
@@ -217,7 +217,7 @@ export default {
       this.$router.push({ name: "MyWallet" });
     },
     mystock() {
-      this.$router.push({ name: "CrowdMy" });
+      this.$router.push({ name: "StocksMine" });
     },
     about() {
       this.$router.push({ name: "About" });

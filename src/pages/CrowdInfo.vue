@@ -1,6 +1,27 @@
-<!-- 众筹详情页 -->
+<!-- 众筹详情页 
+数据接口
+1. item: 
+{
+  icon_url,           //游戏图标
+  small_img_url,      //游戏小图
+  large_img_url，     //游戏大图
+  pic_urls,           //游戏截屏图数组
+  funding_text,       //众筹描述
+  provider,           //游戏开发商
+  percent2,           //完成进度(Calc)
+  price,              //众筹单价
+  supply_people_num,  //众筹人数
+  cp_name,            //游戏名称
+  cp_desc,            //游戏描述
+  funding_residue_day,//活动剩余天数
+}
+
+跳转链接
+1. 支付选项页面 { name: "CrowdPrePay", params: { item: this.item } }
+2. 返回: Crowds
+-->
 <template>
-  <div style="margin-top:-0px" class="root">
+  <div v-if="!!item" style="margin-top:-0px" class="root">
     <div>
       <div class="crowd-car">
         <img :src="item.large_img_url" class="img-top">
@@ -40,12 +61,12 @@
         <flexbox>
           <flexbox-item :span="4">
             <div class="flex-left" style="margin-top:-10px">
-              <span style="color:coral; font-size:12px;">{{item.price*(item.sum-item.sum_left)}}千克</span>
+              <span style="color:coral; font-size:12px;">{{item.price/baseConfig.kg*(item.sum-item.sum_left)}}千克</span>
             </div>
           </flexbox-item>
           <flexbox-item :span="4">
             <div class="flex-center" style="margin-top:-10px">
-              <span style="font-size:12px;">{{item.sum*item.price/100000}}千克</span>
+              <span style="font-size:12px;">{{item.price/baseConfig.kg*item.sum}}千克</span>
             </div>
           </flexbox-item>
           <flexbox-item :span="4">
@@ -152,13 +173,13 @@
         <swiper :options="swiperOption" ref="mySwiper">
           <!-- slides -->
           <swiper-slide>
-            <img :src="pic_urls[0]" style="width:100%;">
+            <img :src="item.pic_urls[0]" style="width:100%;">
           </swiper-slide>
           <swiper-slide>
-            <img :src="pic_urls[1]" style="width:100%;">
+            <img :src="item.pic_urls[1]" style="width:100%;">
           </swiper-slide>
           <swiper-slide>
-            <img :src="pic_urls[2]" style="width:100%;">
+            <img :src="item.pic_urls[2]" style="width:100%;">
           </swiper-slide>
         </swiper>
       </div>
@@ -206,10 +227,9 @@ export default {
   },
   data() {
     return {
-      msg: "众筹",
       headerTitle: "众筹详情",
       item: null,
-      funding_residue_day: 0, //剩余天数
+      baseConfig: {},
       swiperOption: {
         notNextTick: true,
         //循环
@@ -248,8 +268,6 @@ export default {
           clickable: true
         }
       }
-
-      // swiperSlides: [1, 2, 3, 4]
     };
   },
   methods: {
@@ -266,12 +284,12 @@ export default {
   },
   created() {
     this.item = this.$route.params.item;
+    this.baseConfig = this.GLOBAL.base;
     if(!this.item) {
-      this.$router.push("/mine")
+      this.$router.push("/crowds")
+    } else {
+      console.log('crowdInfo', this.item);
     }
-
-    console.log('crowdInfo', this.item);
-    this.pic_urls=JSON.parse(this.item.pic_urls);
   },
 };
 </script>

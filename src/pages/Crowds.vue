@@ -1,21 +1,24 @@
 <!-- 众筹首页 
-数据接口
+数据接口：
 1. stockMgr.getCrowdList: 
 [
   {
+    icon_url,           //游戏图标
+    small_img_url,      //游戏小图
     large_img_url，     //游戏大图
+    pic_urls,           //游戏截屏图数组
     funding_text,       //众筹描述
     provider,           //游戏开发商
     percent2,           //完成进度(Calc)
     price,              //众筹单价
     supply_people_num,  //众筹人数
     cp_name,            //游戏名称
-    small_img_url,      //游戏小图
-    icon_url,           //游戏图标
-    pic_urls,           //游戏截屏图数组
     cp_desc,            //游戏描述
   },
 ]
+
+跳转链接：
+1. 众筹详情页面 { name: "CrowdInfo", params: { item: item } }
 -->
 <template>
   <div class="root" style="background-color:white;margin-top:-8px">
@@ -265,6 +268,7 @@ export default {
 
                 res.data.list.forEach(cpItem => {
                   cpItem.percent2 = ((cpItem.sum -cpItem.sum_left) * 100 / cpItem.sum) | 0;
+                  cpItem.pic_urls = JSON.parse(cpItem.pic_urls);
                   this.crowdItems.push(cpItem);
                   this.GLOBAL.crowdlist.push(cpItem);
                 });

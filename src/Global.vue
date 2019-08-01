@@ -53,7 +53,7 @@ ConfigMgr.get = (file, callback) => {
     remote.fetching({func:'config.get', file: file}).then(res => {
         if(res.code == 0) {
           //获得指定配置表，放入全局缓存
-          ConfigMgr.files['crowd'] = res.data;
+          ConfigMgr.files[file] = res.data;
           callback(null, res.data);
         } else {
           callback(new Error(`error: ${res.code}`));
@@ -77,11 +77,27 @@ var games = []
 var cplist = []
 var crowdlist = [];
 var stocklist = [];     //我的凭证
-var bidlist = [];       //我的挂单
 var pocketlist = [];
+//支付相关配置
+var base = {
+  "ton": 100000000,
+  "kg": 100000,
+  "price": 0.015,
+};
+var crowdConfig = null;
 
 var ResType = {
   '99000': '众筹凭证',
+}
+
+var RecordType = {
+    1: '发行凭证',           
+    2: '购买凭证',
+    3: '转让凭证',
+    4: '凭证分成',
+    5: '媒体分成',
+    6: '拍卖凭证',
+    7: '竞买凭证',
 }
 
 function getRandColor () {
@@ -198,6 +214,6 @@ export default
 {
   clone, colorList, colorListLength, getRandColor, appConfig, ConfigMgr,
   toGamegoldKg, toGamegoldOrigin, gameGoldUnit, myAlert, formatDateStr, 
-  checkAddr, userBase, games, cplist, crowdlist, stocklist, bidlist, pocketlist, ResType, remote
+  checkAddr, userBase, games, cplist, crowdlist, stocklist, pocketlist, ResType, remote, base, crowdConfig, RecordType,
 }
 </script>

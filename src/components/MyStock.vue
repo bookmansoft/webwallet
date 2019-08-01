@@ -1,4 +1,17 @@
-<!-- 我的凭证 -->
+<!-- 我的凭证 
+数据接口
+1. stockMgr.MyStock -> localItems
+[
+  {
+    src,          //图片
+    cid,          //CP编号
+    addr,         //凭证存储地址
+    sum,          //凭证存储总量
+    price,        //凭证持有成本，单位 尘
+    cp_desc,      //游戏描述
+  },
+]
+-->
 <template>
   <div class="root" style="background-color:white;margin-top:-8px">
     <div v-if="isLoadMore">
@@ -18,18 +31,25 @@
       >
         <div style="margin-top:10px">
           <div v-for="(item, index) in localItems" :key="index" class="crowdItem">
-            <flexbox @click.native="showDetail(item, index)">
-              <flexbox-item :span="2.5" style="padding:0.3rem;">
-                <div class="flex-demo-left">
-                  <img :src="item.src" class="img-game-list" />
-                </div></flexbox-item>
-              <flexbox-item>
-                <div style="padding-left:6px;">
-                  <p><span style="font-size:15px;">{{item.cid}}</span></p>
-                  <p><span style="color: coral; font-size:14px;">持有 {{item.sum}} 个</span></p>
-                </div>
-              </flexbox-item>
-            </flexbox>
+            <group>
+                <flexbox class="crowdItem"  @click.native="showDetail(item, index)">
+                    <flexbox-item :span="2.5" style="padding:0.3rem;">
+                        <div class="flex-demo-left">
+                          <img :src="item.src" class="img-game-list" />
+                        </div>
+                    </flexbox-item>
+                    <flexbox-item>
+                        <div style="padding-left:6px;">
+                          <p><span style="font-size:15px;">{{item.title}}</span></p>
+                          <p><span style="color: coral; font-size:14px;">持有 {{item.sum}} 个, 平均成本 {{parseFloat(item.price/GLOBAL.base.kg).toFixed(3)}} 千克</span></p>
+                        </div>
+                        <div style="padding-left:6px;" v-if="item.sell_sum>0">
+                          <p><span style="color: #888; font-size:13px;">挂单量 {{item.sell_sum}} 挂单价 {{parseFloat(item.sell_price/GLOBAL.base.kg).toFixed(3)}} 千克</span></p>
+                          <p><span style="color: #888; font-size:13px;">截止时间 {{item.validtime}}</span></p>
+                        </div>
+                    </flexbox-item>
+                </flexbox>
+            </group>
           </div>
         </div>
       </scroller>
@@ -51,6 +71,7 @@ import {
   Flexbox,
   FlexboxItem,
   LoadMore,
+  Group,
 } from "vux";
 import { setTimeout } from "timers";
 import NoData from "@/components/NoData.vue";
@@ -64,7 +85,11 @@ export default {
     Flexbox,
     FlexboxItem,
     LoadMore,
+    Group,
   },
+  props: [
+    'showType',
+  ],
   data: function() {
     return {
       downobj: {
@@ -128,7 +153,7 @@ export default {
      */
     showDetail(item) {
       console.log('showDetail', item);
-      this.$router.push({ name: 'CrowdMyInfo', params: { item: item }});
+      this.$router.push({ name: 'MyStockInfo', params: { item: item }});
     },
     /**
      * 获取列表, page 请求的页码 flash 强制更新
@@ -158,12 +183,7 @@ export default {
             if(idx < (page-1)*10) continue;
             if(idx > page*10) break;
 
-            this.localItems.push({
-              src: element.src,
-              cid: element.cid,
-              addr: element.addr,
-              sum: element.sum,
-            });
+            this.localItems.push(element);
 
             idx++;
           }
@@ -172,21 +192,22 @@ export default {
           this.remote.fetching({
             func: "stockMgr.MyStock", 
             page: page,
-            type: 0, //查询我的凭证列表
           }).then(res => {
             if (res.code == 0) {
               let qryPage = Math.min(res.data.page, res.data.total); //数据修复：查询页数不能大于总页数
               if(this.curPage < qryPage) {
                 //设置当前页码为查询到的页码数
                 this.curPage = qryPage;
+                
                 res.data.list.forEach(item => {
-                  item.src = 'static/img/crowd/item2.jpg';
+                  item.validtime = this.GLOBAL.formatDateStr(new Date(Date.parse(new Date()) - (res.data.height - item.period)*600*1000), 'yyyy-MM-dd HH:mm:ss');
 
                   //将查询到的条目放入当前缓存
                   this.localItems.push(item);
                   //将查询到的条目放入全局缓存，这样下次进入该页面时就不用网络请求了
                   this.GLOBAL.stocklist.push(item);
                 });
+                console.log('MyStock', this.localItems);
               } else {
                 //没有新的数据了，禁止继续下拉
                 this.scrollerStatus.pullupStatus = 'disabled';
@@ -212,6 +233,7 @@ export default {
     this.isActive = false;
   },
   created() {
+    console.log('showType', this.showType);
     this.queryList(1);
   },
 };
@@ -226,9 +248,53 @@ export default {
   margin-top: 0.4rem;
   padding: 0.2rem;
 }
+
+.crowdItem p {
+  height: 45px;
+  line-height: 45px;
+}
+
+.crowdItem2 {
+  background-color: white;
+  margin-top: 0.4rem;
+  padding: 0.2rem;
+}
+
+.crowdItem2 p {
+  height: 40px;
+  line-height: 40px;
+}
+
+.crowd-car {
+  padding: 10px; 
+  /*background-color: white; */ 
+  /*border-radius: 4%;*/
+}
+
+.img-game-list {
+    width: 75px;
+    height: 75px;
+    border-radius: 12%;
+    margin-left: 3px;
+}
+
+.img-game-list2 {
+    width: 65px;
+    height: 65px;
+    border-radius: 10%;
+    margin-left: 4px;
+}
+
 .img-top {
+  width:100%;
+  height:180px;
+  /*border-radius: 4%;*/
+  border-top-left-radius:1.5em; 
+  border-top-right-radius:1.5em; 
+}
+.imgDemo {
   width: 100%;
-  height: 180px;
+  height: auto;
 }
 .flex-left {
   text-align: left;
@@ -238,4 +304,14 @@ export default {
   text-align: right;
   padding-right: 15px;
 }
+.flex-center {
+  font-size: 15px;
+  text-align: center;
+  padding: 5px;
+}
+.flex-center p {
+  height: 30px;
+  line-height: 30px;
+}
 </style>
+
