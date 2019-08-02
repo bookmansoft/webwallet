@@ -63,7 +63,7 @@ export default {
         },
 
         getCpById(marketProp) {
-            this.remote.fetching({func:'ById', control: 'cp', cid: marketProp.cid}).then(res => {
+            this.remote.fetching({func:'cp.ById', cid: marketProp.cid}).then(res => {
                 if(res.code == 0) {
                     this.getPropFromCp(marketProp, res.data.url);
                 }

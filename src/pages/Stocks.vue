@@ -1,4 +1,18 @@
-<!-- 众筹首页 -->
+<!-- 众筹首页
+数据接口
+1. stockMgr.BidList -> pocketItems
+[
+  {
+      cid           CP编码
+      addr          持有地址
+      sum           持有总量
+      price         持有成本，单位尘
+      sell_price    拍卖价格，单位尘
+      sell_sum      拍卖数量
+      period        截至日期，单位块高度
+  }
+]
+-->
 <template>
   <div class="root" style="background-color:white;margin-top:-8px">
     <div v-if="isLoadMore">

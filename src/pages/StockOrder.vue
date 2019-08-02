@@ -17,7 +17,7 @@
           <flexbox-item :span="9">
             <div style="display:block;margin-left:5px;line-height:30px">
               <span style="font-size:16px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);">{{item.desc}}</span><br />
-              <span style="font-size:16px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100);">{{item.sell_price}}千克</span>
+              <span style="font-size:16px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100);">{{parseFloat(item.sell_price/100000).toFixed(3)}}千克</span>
             </div>
           </flexbox-item>
         </flexbox>
@@ -195,7 +195,7 @@ export default {
       tabIndex: 0,
       item: {},
       buyNum: 100,  //购买数量
-      realPay: 0,   //支付总额
+      realPay: 0,   //支付总额 - 千克
       showLoading: false,
       flagMore: false,
     };
@@ -206,12 +206,13 @@ export default {
       this.flagMore = true;
     },
     onBuyNumChange(value) {
+      //todo 这里暴露一个问题：余额不足100将无法卖出
       this.buyNum = this.buyNum + value;
       if (this.buyNum < 100) {
         this.buyNum = 100;
       }
       this.buyNum = Math.min(this.item.sell_sum, this.buyNum);
-      this.realPay = this.buyNum * this.item.sell_price;
+      this.realPay = this.buyNum * parseFloat(this.item.sell_price/100000).toFixed(3);
     },
     onBack() {
       this.$router.push({ name: "CrowdInfo", params: { item: this.item } });
@@ -247,7 +248,7 @@ export default {
       this.$router.push({ name: "Crowds" });
     }
     console.log("该元素 item", this.item);
-    this.realPay = this.buyNum * this.item.sell_price;
+    this.realPay = this.buyNum * parseFloat(this.item.sell_price/100000).toFixed(3);
   }
 };
 </script>

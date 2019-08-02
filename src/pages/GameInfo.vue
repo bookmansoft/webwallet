@@ -43,7 +43,6 @@
                 <p id="inGameNameImg">游戏截图</p>
             </div>
             <div @click="gameProps">
-                <!--<p id="inGameProps">游戏道具</p>-->
                 <p id="inGameProps">游戏道具</p>
             </div>
         </div>      
@@ -84,7 +83,7 @@
                     <p>&nbsp;<p>
                     <p>{{item.props_desc}}</p>
                     <a class="gp-btn" @click="buyProp(item)">购买</a>
-                    <p class="color-red">{{item.props_price}}千克</p>
+                    <p class="color-red">{{GLOBAL.toGamegoldKg(item.props_price)}}千克</p>
                 </div>
             </div>
         </div>
@@ -103,9 +102,8 @@
                     <p>&nbsp;<p>
                     <p><span style="color:#888;">{{item.content}}</span></p>
                     <p>&nbsp;</p>
-
                     <a class="gp-btn" @click="buyProp(item)">体验</a>
-                    <p class="color-red">{{item.props_price}}千克</p>
+                    <p class="color-red">{{GLOBAL.toGamegoldKg(item.props_price)}}千克</p>
                     <p style="text-align:right; width:100%;"><span style="color:#888;">{{item.timestamp}}</span></p>
                 </div>
             </div>
@@ -123,12 +121,9 @@
                 </div>
               </flexbox-item>
             </flexbox>
-            
           </tabbar>
-          
         </div>
         -->
-
     </div>
   </div>
 </template> 
@@ -290,23 +285,21 @@ export default {
         let uid = this.GLOBAL.openid
         let notifyurl = this.GLOBAL.apiUrl
         let order_sn = item.id + '-new-' + this.randomString(16)
-        let price = this.GLOBAL.toGamegoldOrigin(item.props_price)
+        let price = item.props_price
         var url = "/pages/order/order?cid=" + cid + "&uid=" + uid + "&sn=" + order_sn;
         url += "&price=" + price + '&notifyurl=' + encodeURI(notifyurl) + '&returl=' + encodeURI(window.location.href) ;
-        console.log(url);
         this.$wechat.miniProgram.navigateTo({ url: url });
         */
-        let order_sn = item.id + '-new-' + this.randomString(16);
         this.remote.fetching({
           func:'order.OrderPay', 
           cid: this.cpInfo.cpid,
-          sn: order_sn,
-          price: this.GLOBAL.toGamegoldOrigin(item.props_price),
+          sn: `${item.id}-new-${this.randomString(16)}`,
+          price: item.props_price,
         }).then(res => {
             if(res.code == 0) {
               this.showPlugin('道具已购买成功')
             } else {
-              this.showPlugin('你的游戏金余额不足')
+              this.showPlugin(`购买失败${res.code}`);
             }
         })
     },
@@ -319,7 +312,7 @@ export default {
       }
     },
     
-    //获取评论列表列表
+    //获取评论列表
     getCommentList() {
       let cid = this.cpInfo.cpid;
       this.remote.fetching({func:'GameCommentList', control: 'comments', cid: cid,}).then(res => {
@@ -339,15 +332,12 @@ export default {
     },
 
     getCpProps() {
-      //todo: 展示CP的可售道具列表      
-      // this.cpProps.splice(0, this.cpProps.length);
-      // this.cpInfo.proplist.forEach(element => {
-      //     //从cp获取资源
-      //     this.remote.get(encodeURI(encodeURI(this.cpInfo.cpurl + '/prop/' + element.id))).then(res => {
-      //         res.props_price = this.GLOBAL.toGamegoldKg(res.props_price);
-      //         this.cpProps.push(res);
-      //     });
-      // });
+      this.remote.fetching({func:'cp.getProps', cid: this.cpInfo.cpid}).then(res => {
+        console.log('getProps', res);
+        if(res.code == 0) {
+          this.cpProps = res.data;
+        }
+      })
     },
 
     userToken() {
@@ -377,14 +367,16 @@ export default {
 
   created() {
     if(!!!this.$route.params.cpInfo) {
-        this.$router.push('/Home');
+      this.$router.push('/Home');
     } else {
-        this.cpInfo = this.$route.params.cpInfo;
-        this.cpInfo.update_time = this.getTime(this.cpInfo.update_time);
+      this.cpInfo = this.$route.params.cpInfo;
+      this.cpInfo.update_time = this.getTime(this.cpInfo.update_time);
+      if(typeof this.cpInfo.game_screenshots == 'string') {
         this.cpInfo.game_screenshots = this.cpInfo.game_screenshots.split(',');
-        this.getCpProps();
-        this.userToken();
-        this.getCommentList();
+      }
+      this.getCpProps();
+      this.userToken();
+      this.getCommentList();
     }
   }
 };
