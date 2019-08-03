@@ -1,241 +1,302 @@
-<template>
-  <div>
-    <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
-      <!--
-      <panel header="道具列表" :list="propList" type="5" @on-img-error="onImgError"></panel>
-      -->
-      <!--
-      <scroller v-show="isShow" v-model="scrollerStatus" height="-46" lock-x scrollbar-y ref="scroller" :bounce="isbounce"
-              :use-pullup="showUp" :pullup-config="upobj" @on-pullup-loading="selPullUp">
-      <div>
+<!-- 我的道具列表
+数据接口：
+1. prop.PropList: 
+[
+  {
+    "pid",
+    "cid",
+    "oid",
+    "gold",
+    "current": {
+      "hash",
+      "index",
+      "address"
+    },
+    "height",
+    "pst",
+        propStatus {
+            Sale: 2,        //拍卖中    - 发起了拍卖交易，等待竞价结束
+            Borrow: 3,      //已借出    - 道具已经借出
+            Delete: 4,      //已删除    - 道具已经彻底失效、不可恢复
+            Ready: 9,       //已确认    - 道具处于确认状态
+        }
+    "wid",
+    "account",
+    "bid": {
+      "raw",
+      "fixed",
+      "period",
+      "hash",
+      "value",
+      "address"
+    }
+  }
+]
 
-        <group :title="groupTitle">
-          <div v-for="(item, index) in propList" :key="index" class="propItem">
-            <flexbox @click.native="gotoPropDetail(item, index)">
-              <flexbox-item :span="2.5" style="padding:0.3rem;">
-                <div class="flex-demo-left">
-                  <img :src="item.result.icon" class="img-prop-list" />
-                </div></flexbox-item>
-              <flexbox-item>
-                <div style="padding-left:15px;">
-                  <p><span style="font-size:16px;">{{item.result.props_name}}</span></p>
-                  <br />
-                  <p><span style="color: #888; font-size:14px;">{{item.desc}}</span></p>
+跳转链接：
+1. 众筹详情页面 { name: "CrowdInfo", params: { item: item } }
+-->
+<template>
+  <div class="root" style="background-color:white;margin-top:-8px">
+    <div v-if="isLoadMore">
+      <scroller
+        v-model="scrollerStatus"
+        height="-100"
+        lock-x
+        scrollbar-y
+        ref="scroller"
+        :bounce="true"
+        :use-pulldown="true"
+        :pulldown-config="downobj"
+        @on-pulldown-loading="selPullDown"
+        :use-pullup="true"
+        :pullup-config="upobj"
+        @on-pullup-loading="selPullUp"
+      >
+        <div>
+          <div style="margin-top:15px;">
+            <flexbox>
+              <flexbox-item :span="12">
+                <div class="flex-left">
+                  <img src="static/img/stock/hot_line.png" style="width:3px;height:13px">
+                  <span style="font-size:15px;">热门游戏</span>
                 </div>
               </flexbox-item>
             </flexbox>
           </div>
-        </group>
-        
-        <div style="padding: 10px 80px 20px 80px "><divider v-if="isBottom">到底了</divider></div>
 
-      </div>
+          <group :title="groupTitle">
+            <div v-for="(item, index) in propList" :key="index" class="propItem">
+              <flexbox @click.native="gotoPropDetail(item, index)">
+                <flexbox-item :span="2.5" style="padding:0.3rem;">
+                  <div class="flex-demo-left">
+                    <img :src="item.icon" class="img-prop-list" />
+                  </div></flexbox-item>
+                <flexbox-item>
+                  <div style="padding-left:15px;">
+                    <p><span style="font-size:16px;">{{item.props_name}}</span></p>
+                    <br />
+                    <p><span style="color: #888; font-size:14px;">{{item.desc}}</span></p>
+                  </div>
+                </flexbox-item>
+              </flexbox>
+            </div>
+          </group>
+          <div style="padding: 10px 80px 20px 80px "><divider v-if="isBottom">到底了</divider></div>
+        </div>
       </scroller>
-      <loading v-model="showLoading" :text="textLoading"></loading>
-      -->
-      <group :title="groupTitle">
-        <grid :cols="4" :show-lr-borders="false" :show-vertical-dividers="false">
-            <grid-item v-for="(item, index) in propList" :key="index">
-              <div class="grid-center" @click="gotoPropDetail(item, index)">
-                <img :src="item.result.icon" class="img-prop-list" />
-                <p class="grid-prop-title"><span>{{item.result.props_name}}</span></p>
-              </div>
-            </grid-item>
-        </grid>
-      </group>
+    </div>
+
+    <div v-if="isLoadMore && propItems.length==0 && showNoData==true">
+      <no-data src="static/img/default/no-games.png"></no-data>
+    </div>
+    <div v-if="!isLoadMore">
+      <load-more tip="正在加载" style="position: relative; top:250px;" :show-loading="!isLoadMore"></load-more>
+    </div>
+
+    <navs></navs>
   </div>
 </template>
-
 <script>
-
-import {Scroller, Group, XHeader, Panel, Flexbox, FlexboxItem, Loading, Divider, Grid, GridItem} from 'vux'
-import { setTimeout } from 'timers';
+import {
+  Scroller,
+  XButton,
+  Tab,
+  TabItem,
+  Flexbox,
+  FlexboxItem,
+  LoadMore,
+  XProgress,
+  Box
+} from "vux";
+import Navs from "@/components/Navs.vue";
+import XXProgress from "@/components/XXProgress.vue";
+import { setTimeout } from "timers";
+import NoData from "@/components/NoData.vue";
 
 export default {
-  name: 'Props',
-  directives: {
-    
-  },
+  name: 'Crowd',
   components: {
-    Scroller, Group, XHeader, Panel, Flexbox, FlexboxItem, Loading, Divider, Grid, GridItem
+    Scroller,
+    NoData,
+    Navs,
+    Tab,
+    XButton,
+    TabItem,
+    Flexbox,
+    FlexboxItem,
+    LoadMore,
+    XXProgress,
+    Box
   },
-  activated () {
-      this.$refs.scroller.reset()
-  },
-  data () {
+  data: function() {
     return {
-        headerTitle: '我的道具',
-        propList: [],
-        groupTitle: '道具数量：0',
-        type: '1',
-        isBottom: false,
-        PageIndex: 1,//页码从第一页开始
-        PageSize: 5,//煤业显示的条数
-        isShow: false,//是否显示scroller,第一次请求数据过程中隐藏插件，不隐藏的时候会显示“请上拉刷新数据”的字样，不好看
-        showLoading: false,
-        showUp: true,
-        isbounce: false,
-        lists: [],
-        upobj: {
-          content: '请上拉刷新数据',
-          pullUpHeight: 20,
-          height: 60,
-          autoRefresh: false,
-          upContent: '请上拉刷新数据',
-          loadingContent: '加载中...',
-          clsPrefix: 'xs-plugin-pullup-'
-        },
-        isShowLoading: false,
-        textLoading: '加载中',
-        scrollerStatus: {
-          pullupStatus: 'default'
-        }
-    }
+      headerTitle: '我的道具',
+      propList: [],
+      groupTitle: '道具数量：0',
+      type: '1',
+      isBottom: false,
+      PageIndex: 1,//页码从第一页开始
+      PageSize: 5,//煤业显示的条数
+      isShow: false,//是否显示scroller,第一次请求数据过程中隐藏插件，不隐藏的时候会显示“请上拉刷新数据”的字样，不好看
+      showLoading: false,
+      showUp: true,
+      isbounce: false,
+      lists: [],
+      downobj: {
+        content: "下拉刷新数据...",
+        downContent: "下拉刷新数据...",
+        upContent: "释放刷新数据",
+        loadingContent: "加载中...",
+        pullUpHeight: 50,
+        height: 40,
+        autoRefresh: false,
+        clsPrefix: "xs-plugin-pulldown-"
+      },
+      upobj: {
+        content: "向上滑动获取更多数据...",
+        upContent: "向上滑动获取更多数据...",
+        downContent: "释放获取数据",
+        loadingContent: "加载中...",
+        pullUpHeight: 50,
+        height: 40,
+        autoRefresh: false,
+        clsPrefix: "xs-plugin-pullup-"
+      },
+      scrollerStatus: {
+        pullupStatus: "default"
+      },
+      curPage: 0,
+      isLoadMore: false,
+      showNoData: false,
+      isActive: false,
+      textLoading: '加载中',
+      propItems: [],
+    };
   },
   methods: {
-      onBack() {
-        this.$router.push('/mine')
-      },
+    selPullDown() {
+      this.showNoData = false;
+      
+      //用户选择下拉刷新，清除本地数据，重新拉取
+      this.getcrowdlist(1, true);
+      setTimeout(() => {
+        this.showNoData = true;
+        if(this.isActive) {
+          this.$refs.scroller.donePulldown();
+          this.$refs.scroller.reset({ top: 0 });
+        }
+      }, 1000);
+    },
+    selPullUp() {
+      this.showNoData = false;
 
-      selPullUp() {
-        console.log('selPullUp')  
-        this.showLoading = true
-        setTimeout(()=>{
-          this.getProps(this.PageIndex)
-        }, 1000)
-      },
+      //用户选择上滑获取新数据，更新当前页码
+      this.getcrowdlist(this.curPage+1);
+      setTimeout(() => {
+        this.showNoData = true;
+        if(this.isActive) {
+        this.$refs.scroller.donePullup();
+        }
+      }, 1000);
+    },
+    //跳转至众筹详情
+    crowdDetail(item) {
+      this.$router.push({ name: 'PropDetail', params: { item: item }})
+    },
+    /**
+     * 获取列表, page 请求的页码 flash 强制更新
+     */
+    getcrowdlist(page, flash) {
+      console.log(`query page: ${page}`);
 
-      scrollerReset() {
-        this.$refs.scroller.donePullup()
-        //this.$refs.scroller.reset({top: 500})
-        
-        this.$nextTick(() => {
-              this.$refs.scroller.reset()
-        })
-        
-      },
+      if(!!flash) {
+        this.GLOBAL.propList = [];
+        this.propList = [];
+        this.curPage = 0;
+      }
 
-      // 道具数量
-      getPropCount() {
-        let that = this;
-        this.remote.fetching({func: 'PropCount', control: 'prop',}).then(res => {
-            if(res.code == 0) {
-               if(res.data.count > 0) {
-                 that.getProps(that.PageIndex);
-               }
-               that.groupTitle = '道具数量：' + res.data.count;
-            }
-        })
-      },
+      let curPage = (this.propList.length/10)|0 + 1;
+      if(this.propItems.length%10==0) {
+        curPage--;
+      }
+      if(curPage < page) {
+        let totalPage = (this.GLOBAL.propList.length/10)|0 + 1;
+        if(this.GLOBAL.propList.length%10==0) {
+          totalPage--;
+        }
 
-      // 发送请求 获取道具
-      getProps(page) {
-        let that = this;
-        this.remote.fetching({ func: 'PropList', control: 'prop', 
-            page: page, 
-        }).then(res => {
-            if(res.code == 0) {
-              that.groupTitle = '道具数量：'+ res.data.count
-              that.PageIndex++
-              if(res.data.props.length >0 ) {
-                  res.data.props.sort(function(a, b){
-                      return  b.time - a.time;
+        if(totalPage > page) {
+          this.curPage++;
+
+          let idx = 0;
+          for(let element of this.GLOBAL.propList) {
+            if(idx < (page-1)*10) continue;
+            if(idx > page*10) break;
+
+            this.propList.push(element);
+
+            idx++;
+          }
+          this.isLoadMore = true;
+        } else {
+          this.remote.fetching({func: 'prop.PropList', page: page}).then(res => {
+              if(res.code == 0) {
+                this.groupTitle = '道具数量：'+ res.data.count;
+                let qryPage = Math.min(res.data.cur, res.data.page); //数据修复：查询页数不能大于总页数
+                if(this.curPage < qryPage) {
+                  this.curPage = qryPage;
+
+                  res.data.list.forEach(cpItem => {
+                    this.GLOBAL.cplist.push(cpItem);
+                    this.gameList.push(cpItem);
                   });
+                } else {
+                  //没有新的数据了，禁止继续下拉
+                  this.scrollerStatus.pullupStatus = 'disabled';
+                  that.isBottom = true;
+                }
               }
-
-              for (var i = 0; i < res.data.props.length; i++) {
-                  let prop = res.data.props[i]
-                  that.getPropFromCp(prop)
-              }
-
-              if(res.data.props.length < 10) {
-                //console.log('pullupStatus.disabled')
-                that.scrollerStatus.pullupStatus = 'disabled' // 禁用下拉
-                that.showUp = false
-                that.isBottom = true
-              } else {
-                that.scrollerStatus.pullupStatus = 'default' 
-                this.getProps(that.PageIndex)
-              }
-
-            }
-            //that.scrollerReset()
-            that.showLoading = false
-        });
-      },
-
-      getPropFromCp(prop) {
-          this.remote.get(encodeURI(prop.cp.url + '/prop/' + prop.oid)).then(res => {
-            prop.result = res;
-            prop.desc = `价格：${this.GLOBAL.toGamegoldKg(prop.result.props_price)} 千克`;
-            this.propList.push(prop);
-          }) 
-      },
-
-      onImgError (item, $event) {
-        console.log(item, $event)
-      },
-
-      gotoPropDetail(item, index) {
-        console.log('gotoPropDetail', index)
-        console.log('prop', item)
-        this.$router.push({ name: 'PropDetail', params: { prop: item }})
-      },
+          });
+          setTimeout(() => {
+            this.isLoadMore = true;
+          }, 500);
+        }
+      }      
+    }
   },
 
-  created() {
-      if(this.GLOBAL.uid==0 || this.GLOBAL.openid=='') {
-          this.$router.push('/mine')
-      } 
-  },
   mounted() {
-    this.isShow = true
-    /*
-    this.$nextTick(() => {
-        this.$refs.scroller.reset()
-    })
-    */
-    this.getProps()
-  }
-}
+    this.isActive = true;
+  },
+  beforeDestroy() {
+    this.isActive = false;
+  },
+  created() {
+    this.getcrowdlist(1);
+  },
+};
 </script>
 
-<style lang="less" scoped>
-
-.grid-center {
-  display: block;
-  text-align: center;
-  /*color: #666;*/
-  background-color:#FAFAFA;
+<style scoped>
+.root {
+  overflow-x: hidden;
 }
-
-.grid-prop-title {
-  color: #999;
-  overflow: hidden;
-  text-overflow:ellipsis;
-  white-space: nowrap;
-  width: 85px;
+.crowdItem {
+  background-color: white;
+  margin-top: 0.4rem;
+  padding: 0.2rem;
 }
-
-.propItem {
-  background-color: #FAFAFA;
-  margin-top: 0.6rem;
-  padding: 0.5rem;
+.img-top {
+  width: 100%;
+  height: 180px;
 }
-.img-prop-list {
-  width: 4.2rem;
-  height: 4.2rem;
-  border-radius: 12%;
+.flex-left {
+  text-align: left;
+  padding-left: 15px;
 }
-
-.xs-plugin-pulldown-container {
- line-height: 40px;
- font-size: 18px;
- color: red;
+.flex-right {
+  text-align: right;
+  padding-right: 15px;
 }
-.xs-plugin-pullup-container {
- line-height: 40px;
- font-size: 100px;
- color: red;
- }
 </style>

@@ -167,8 +167,6 @@ export default {
 
     propSale(amount) {
       let prop = this.prop;
-        console.log(prop);
-        console.log(prop.current.hash);
         this.remote.fetching({
           func: 'PropSale', control: 'prop',
           pid: prop.pid,
@@ -248,10 +246,10 @@ export default {
   },
 
   created() {
-    if(!!!this.$route.params.prop) {
+    if(!!!this.$route.params.item) {
         this.$router.push('/props')
     } else {
-        this.prop = this.$route.params.prop;
+        this.prop = this.$route.params.item;
         this.propShareIcon = this.prop.result.large_icon;
         this.prop.result.more_icon.forEach( item => {
              this.propIcons.push(item);

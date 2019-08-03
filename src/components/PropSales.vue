@@ -1,3 +1,6 @@
+<!-- 道具交易市场
+数据接口
+-->
 <template>
   <div>
     <div v-if="isLoadMore && propList.length > 0">
@@ -12,7 +15,7 @@
                 <p><span style="color: #888; font-size:15px;">出售价：{{GLOBAL.toGamegoldKg(item.bid.fixed)}}千克</span></p>
                 <br/>
                 <p><span style="color: red; font-size:14px;">含金量：{{GLOBAL.toGamegoldKg(item.bid.value)}}千克</span></p>
-                <!--<p><span style="color: #888; font-size:10px;">{{item.addr}}</span></p>-->
+                <p><span style="color: #888; font-size:10px;">{{item.addr}}</span></p>
             </div>
             </flexbox-item>
         </flexbox>
@@ -43,42 +46,25 @@ export default {
         }
     },
     methods: {
-        // 获取发布数据
-        PropListMarket() {
-            this.remote.fetching({func:'PropListMarket', control: 'prop'}).then(res => {
-                if(res.code == 0) {
-                    res.data.forEach(element => {
-                        this.getCpById(element)
-                    });
-                }
-                this.isLoadMore = true
-            }).catch(e => {
-                console.log(e);
-                this.isLoadMore = true
-            })
-        },
-        
         propSaleInfo(item, index) {
             this.$router.push({ name: 'PropSaleInfo', params: { propSale: item }})
         },
-
-        getCpById(marketProp) {
-            this.remote.fetching({func:'cp.ById', cid: marketProp.cid}).then(res => {
-                if(res.code == 0) {
-                    this.getPropFromCp(marketProp, res.data.url);
-                }
-            })
-        },
-
-        getPropFromCp(marketProp, cpurl) {
-          this.remote.get(encodeURI(cpurl + '/prop/' + marketProp.oid)).then(res => {
-            marketProp.result = res;
-            this.propList.push(marketProp);
-          });
-        },
     },
     created() {
-        this.PropListMarket();
+        this.remote.fetching({func:'prop.PropListMarket'}).then(res => {
+            if(res.code == 0) {
+                res.data.forEach(element => {
+                    this.remote.get(encodeURI(element.cpurl + '/prop/' + element.oid)).then(res => {
+                        element.result = res;
+                        this.propList.push(element);
+                    });
+                });
+            }
+            this.isLoadMore = true
+        }).catch(e => {
+            console.log(e);
+            this.isLoadMore = true
+        })
     }
 }
 </script>

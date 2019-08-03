@@ -1,6 +1,9 @@
+<!-- 集市
+PropSales   道具交易市场
+Contract    游戏金交易市场
+-->
 <template>
   <div>
-    <!--
     <tab :line-width="3" custom-bar-width="60px" v-model="tabIndex">
       <tab-item v-for="(item, index) in tabItems" :key="index" @on-item-click="onItemClick">
         <span style="font-size:15px;font-weight:620;">{{item.label}}</span>
@@ -12,8 +15,6 @@
     <div v-else>
       <Contract></Contract>
     </div>
-    -->
-    <PropSales></PropSales>
     <navs></navs>
   </div>
 </template>
