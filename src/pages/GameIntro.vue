@@ -1,7 +1,7 @@
 <template>
   <div>
     <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> 
-    <div>
+    <div v-if="!!gameInfo">
         <x-img :src="gameInfo.large_img_url" />
         <flexbox>
             <flexbox-item :span="2">

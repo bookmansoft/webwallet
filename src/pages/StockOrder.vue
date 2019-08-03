@@ -6,7 +6,7 @@
         <flexbox-item :span="12"><div style="height:6px;"></div></flexbox-item>
       </flexbox>
     </div>
-    <div style="background-color:white">
+    <div v-if="!!item" style="background-color:white">
       <div>
         <flexbox class="cell">
           <flexbox-item :span="3">
@@ -228,8 +228,15 @@ export default {
           }
       }).then(res => {
           if(res.code == 0) {
+            this.$vux.alert.show({
+              title: '购买成功',
+              content: '购买成功',
+            })
           } else {
-
+            this.$vux.alert.show({
+              title: '购买失败',
+              content: res.msg,
+            })
           }
       }).catch(e => {
         console.log(e);
@@ -244,11 +251,12 @@ export default {
 
   created() {
     this.item = this.$route.params.item;
-    if (!!!this.item) {
+    if (!this.item) {
       this.$router.push({ name: "Crowds" });
+    } else {
+      console.log("StockOrder item", this.item);
+      this.realPay = this.buyNum * parseFloat(this.item.sell_price/100000).toFixed(3);
     }
-    console.log("该元素 item", this.item);
-    this.realPay = this.buyNum * parseFloat(this.item.sell_price/100000).toFixed(3);
   }
 };
 </script>
