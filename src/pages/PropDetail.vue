@@ -26,15 +26,9 @@
             </ul>
         </div>      
         <div id="botImage" class="backcolor-white">
-            <div @click="introduce">
-                <p id="inIntroduce" class="bottom-orange">道具详情</p>
-            </div>
-            <div @click="gameNameImg">
-                <p id="inGameNameImg">道具截图</p>
-            </div>
-            <div @click="gameProps">
-                <p id="inGameProps">技能说明</p>
-            </div>
+            <div @click="introduce"><p id="inIntroduce" class="bottom-orange">道具详情</p></div>
+            <div @click="gameNameImg"><p id="inGameNameImg">道具截图</p></div>
+            <div @click="gameProps"><p id="inGameProps">技能说明</p></div>
         </div>      
         <div id="introduce">
             <div class="backcolor-white padding-rem">
@@ -50,20 +44,10 @@
 
         </div>
     </div>
-        <!-- 三个按钮 -->
     <footer>
-        <div class="smelt" @click="propFoundConfirm">
-            <i>熔</i>
-            <p>熔炼</p>
-        </div>
-        <div class="sell" @click="propSaleInput">
-            <i>卖</i>
-            <p>出售</p>
-        </div>
-        <div class="present" @click="propShare">
-            <i>赠</i>
-            <p>赠送</p>
-        </div>
+        <div class="smelt" @click="propFoundConfirm"><i>熔</i><p>熔炼</p></div>
+        <div class="sell" @click="propSaleInput"><i>卖</i><p>出售</p></div>
+        <div class="present" @click="propShare"><i>赠</i><p>赠送</p></div>
     </footer>
   </div>
 </template> 
@@ -87,6 +71,60 @@ export default {
     };
   },
   methods: {
+    /**
+     * 出售道具
+     * @params {Number-KG} amount
+     */
+    propSale(amount) {
+        this.remote.fetching({
+          func: 'prop.PropSale',
+          pid: this.prop.pid,
+          fixedPrice: amount,
+        }).then(res => {
+          if(res.code == 0) {
+              this.showPluginAuto('道具已发布到交易市场!')
+          } else {
+              this.showPluginAuto('道具出售失败!')
+          }
+        });
+    },
+
+    /**
+     * 熔铸道具
+     */
+    propFound() {
+        this.remote.fetching({func: 'prop.PropFound', pid: this.prop.pid}).then(res => {
+          if(res.code == 0) {
+              this.showPluginAuto('道具已被成功熔铸!')
+              this.$router.go(-1)
+          } else {
+              this.showPluginAuto('道具熔铸操作失败!')
+          }
+        });
+    },
+
+    /**
+     * 捐赠道具
+     */
+    propShare() {
+      if(this.propShareIcon == '') {
+        return;
+      }
+      
+      this.remote.fetching({
+        func: 'prop.PropDonate',
+        pid: this.prop.pid,
+        txid: this.prop.current.hash,
+        index: this.prop.current.index,
+      }).then(res => {
+          if(res.code == 0) { 
+            this.wxshare(res);
+          } else {
+            this.showPlugin('道具捐赠失败！')
+          }
+      });
+    },
+
     onBack() {
         this.$router.push('/props')
     },
@@ -94,24 +132,20 @@ export default {
     introduce() { 
         introduce()
     },
-
     //游戏截图
     gameNameImg() { 
         gameNameImg() 
     },
-
     //获取道具
     gameProps() { 
         gameProps() 
     },
-
     showPlugin(msg) {
       this.$vux.alert.show({
         title: '提示',
         content: msg
       })
     },
-
     showPluginAuto(msg) {
       this.showPlugin(msg)
       setTimeout(() => {
@@ -119,7 +153,6 @@ export default {
       }, 2000)
     },
 
-    // 熔铸
     propFoundConfirm() {
         let that = this
         this.$vux.confirm.show({
@@ -129,20 +162,6 @@ export default {
                 that.propFound()
             }
         })
-    },
-
-    propFound() {
-        let prop = this.prop;
-        console.log('propFound', prop);
-				console.log(prop.current.hash);
-        this.remote.fetching({func: 'PropFound', control: 'prop', pid: prop.pid}).then(res => {
-          if(res.code == 0) {
-              this.showPluginAuto('道具已被成功熔铸!')
-              this.$router.go(-1)
-          } else {
-              this.showPluginAuto('道具熔铸操作失败!')
-          }
-        });
     },
 
     // 出售
@@ -168,84 +187,53 @@ export default {
         return re.test(input)
     },
 
-    propSale(amount) {
-      let prop = this.prop;
-        this.remote.fetching({
-          func: 'PropSale', control: 'prop',
-          pid: prop.pid,
-          fixedPrice: amount,
-        }).then(res => {
-          if(res.code == 0) {
-              this.showPluginAuto('道具已发布到交易市场!')
-          } else {
-              this.showPluginAuto('道具出售失败!')
-          }
-        });
-    },
-
     // 分享好友
-    propShare() {
-      if(this.propShareIcon == '') {
-        return;
-      }
-      
-      let prop = this.prop;
-      this.remote.fetching({
-        func: 'PropDonate', control: 'prop',
-        pid: prop.pid,
-        txid: prop.current.hash,
-        index: prop.current.index,
-      }).then(res => {
-          if(res.code == 0) { 
-            /*
-              var url = "/pages/prop/index?openid=" + data.openid + "&pid=" + prop.pid + "&prop_name=" + prop.props_name;
-              url += "&txid=" + prop.current.rev + "&prop_icon=" + prop.large_icon + "&act=send&raw=" + rep.ret.raw;
-              console.log("url " + url);
-              this.$wechat.miniProgram.navigateTo({ url: url });
-            */
-            this.showPlugin('点击右上角分享');
-            let that = this;
-            this.$wechat.ready(function () {   //需在用户可能点击分享按钮前就先调用
-                //分享给朋友
-                let title = '游戏金道具分享'
-                let desc = prop.props_name //'T10自行反坦克车'
-                let link = that.GLOBAL.appConfig.siteUri + '/?path=/prop/receive'
-                let imgUrl = prop.large_icon // 'http://114.116.148.48:9701/image/3/prop_large_icon.jpg' //prop.large_icon
-                let params = JSON.stringify({
-                  title: title,
-                  desc: desc,
-                  imgUrl: imgUrl,
-                  raw: res.data.raw,
-                })
-                link = link + '&prop=' + params;
-                that.$wechat.onMenuShareAppMessage({ 
-                    title: title, // 分享标题
-                    desc: desc, // 分享描述
-                    link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                    imgUrl: imgUrl, // 分享图标
-                    success: function () {
-                      // 设置成功
-                      //alert('设置成功')
-                    },
-                    fail: function() {
-                      //alert('设置失败')
-                    }
-                })
-                //分享到朋友圈
-                that.$wechat.onMenuShareTimeline({
-                    title: title, // 分享标题
-                    link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                    imgUrl: imgUrl, // 分享图标
-                    success: function () {
-                    // 用户点击了分享后执行的回调函数
-                    }
-                })
-            });
-          } else {
-            this.showPlugin('道具捐赠失败！')
-          }
-      });
-    },
+    wxshare(res) {
+      /*
+        var url = "/pages/prop/index?openid=" + data.openid + "&pid=" + prop.pid + "&prop_name=" + prop.props_name;
+        url += "&txid=" + prop.current.rev + "&prop_icon=" + prop.large_icon + "&act=send&raw=" + rep.ret.raw;
+        console.log("url " + url);
+        this.$wechat.miniProgram.navigateTo({ url: url });
+      */
+      this.showPlugin('点击右上角分享');
+      let that = this;
+      this.$wechat.ready(function () {   //需在用户可能点击分享按钮前就先调用
+          //分享给朋友
+          let title = '游戏金道具分享'
+          let desc = prop.props_name //'T10自行反坦克车'
+          let link = that.GLOBAL.appConfig.siteUri + '/?path=/prop/receive'
+          let imgUrl = prop.large_icon // 'http://114.116.148.48:9701/image/3/prop_large_icon.jpg' //prop.large_icon
+          let params = JSON.stringify({
+            title: title,
+            desc: desc,
+            imgUrl: imgUrl,
+            raw: res.data.raw,
+          })
+          link = link + '&prop=' + params;
+          that.$wechat.onMenuShareAppMessage({ 
+              title: title, // 分享标题
+              desc: desc, // 分享描述
+              link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+              imgUrl: imgUrl, // 分享图标
+              success: function () {
+                // 设置成功
+                //alert('设置成功')
+              },
+              fail: function() {
+                //alert('设置失败')
+              }
+          })
+          //分享到朋友圈
+          that.$wechat.onMenuShareTimeline({
+              title: title, // 分享标题
+              link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+              imgUrl: imgUrl, // 分享图标
+              success: function () {
+              // 用户点击了分享后执行的回调函数
+              }
+          })
+      });      
+    }
   },
 
   created() {

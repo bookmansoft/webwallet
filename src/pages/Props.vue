@@ -8,6 +8,13 @@
     "cpurl",
     "cp_name",
     "oid",
+    "pst":
+        // propStatus {
+        //     Sale: 2,        //拍卖中    - 发起了拍卖交易，等待竞价结束
+        //     Borrow: 3,      //已借出    - 道具已经借出
+        //     Delete: 4,      //已删除    - 道具已经彻底失效、不可恢复
+        //     Ready: 9,       //已确认    - 道具处于确认状态
+        // }
     "gold",
     "height",
     "large_icon",
@@ -233,7 +240,7 @@ export default {
           });
           setTimeout(() => {
             this.isLoadMore = true;
-            this.panelTitle = `道具背包(${this.propList.length}})`;
+            this.panelTitle = `道具背包(${this.propList.length})`;
           }, 500);
         }
       }      

@@ -188,7 +188,7 @@ export default {
       this.$router.push({ name: "TransList" });
     },
     redpack() {
-      this.$router.push({ name: "TransList" });
+      this.$router.push('/redPack');
     },
     propList() {
       this.$router.push({ name: "Props" });
