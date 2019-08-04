@@ -1,3 +1,5 @@
+<!-- 多人红包接收页面
+-->
 <template>
   <div>
     <div class="topDiv">

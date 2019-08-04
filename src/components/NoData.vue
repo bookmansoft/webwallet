@@ -1,3 +1,6 @@
+<!-- 空数据集展示组件
+
+-->
 <template>
   <div class="no-data-box">
     <img :src="src" />

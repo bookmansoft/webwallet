@@ -1,3 +1,6 @@
+<!-- 游戏分类页面
+1. 数据接口 gameCategory: 获取服务端类别配置表
+-->
 <template>
   <div>
     <grid :show-lr-borders="false" :show-vertical-dividers="true" :cols="3" style="top:5px;">

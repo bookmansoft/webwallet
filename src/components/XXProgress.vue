@@ -1,3 +1,5 @@
+<!-- 进度显示组件
+-->
 <template>
   <div class="weui-progress">
     <div class="weui-progress__bar">

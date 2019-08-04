@@ -1,4 +1,4 @@
-<!-- 我的凭证 
+<!-- 我的凭证
 数据接口
 1. stockMgr.MyStock -> localItems
 [

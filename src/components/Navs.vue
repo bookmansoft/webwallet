@@ -1,3 +1,6 @@
+<!-- 导航条
+
+-->
 <template>
   <div>
     <tabbar v-model="tabIndex" style="background-color: #FAFAFA;">

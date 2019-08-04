@@ -1,3 +1,6 @@
+<!-- 会员特权展示组件
+
+-->
 <template>
   <div>
     <div style="padding:15px 15px 0px 15px;">

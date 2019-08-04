@@ -1,3 +1,5 @@
+<!-- 游戏金发送界面
+-->
 <template>
   <div class="root">
     <div style="background-color:#f3f3f3">

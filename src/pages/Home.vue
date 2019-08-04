@@ -1,3 +1,5 @@
+<!-- 钱包首页
+-->
 <template>
   <div>
     <tab :line-width="3" custom-bar-width="60px" v-model="tabIndex">

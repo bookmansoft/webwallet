@@ -1,3 +1,5 @@
+<!-- 微信支付页面
+-->
 <template>
   <div>
       <div v-if="orderPre==true">

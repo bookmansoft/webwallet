@@ -1,3 +1,5 @@
+<!-- 游戏介绍页面，疑并未启用
+-->
 <template>
   <div>
     <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> 

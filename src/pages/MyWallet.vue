@@ -1,3 +1,5 @@
+<!-- 我的钱包
+-->
 <template>
   <div class="root" style="background-color:white;">
     <div style="position:absolute;width:100%;margin-top:30px">
@@ -185,7 +187,7 @@ export default {
       this.$router.push('/wallet/receive');
     },
     transList() {
-      this.$router.push({ name: "TransList" });
+      this.$router.push({ name: "WalletDetail" });
     },
     redpack() {
       this.$router.push('/redPack');

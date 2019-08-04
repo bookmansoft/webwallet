@@ -1,3 +1,5 @@
+<!-- 购买成功展示页面，疑并未启用
+-->
 <template>
   <div class="root">
     <div style="background-color:#f3f3f3">

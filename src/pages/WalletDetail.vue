@@ -1,3 +1,22 @@
+<!-- 交易流水
+数据接口
+1. wallet.TxLogs -> items
+[
+  {
+    amount,
+    is_link: false,
+    link: {path:'/wallet'},
+    badge,
+    time,
+    title: 'MM-dd HH:mm:ss',
+    category,
+    img,
+    desc,
+  }
+]
+
+目前上述接口使用的 tx.list 不能满足流水查询的要求，需要改到TXO查询上
+-->
 <template>
   <div>
     <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
@@ -39,9 +58,6 @@ export default {
   data () {
     return {
       headerTitle: '交易流水',
-      gameGold: '游戏金',
-      address: '',
-      number: 0.0,
       isLoadMore: false,
       items: []
     }
@@ -52,13 +68,15 @@ export default {
       },
       //获取交易记录
       getTxLogs() {
-          this.remote.fetching({func:'TxLogs', control: 'wallet',}).then(res => {
+          this.remote.fetching({func:'wallet.TxLogs',}).then(res => {
+            if(res.code == 0) {
+              console.log('TxLogs', res.data);
               for(var i=0; i<res.data.list.length; i++) {
                   var item = res.data.list[i];
                   if(item.amount != 0) {
-                      item.is_link = false
-                      item.link = {path:'/wallet'}
-                      item.badge = 0
+                      item.is_link = false;
+                      item.link = {path:'/wallet'};
+                      item.badge = 0;
                       item.title = this.GLOBAL.formatDateStr(new Date(item.time*1000), 'MM-dd HH:mm:ss');
                       if(item.category=='receive') {
                         item.img = 'static/img/wallet/rec.png'
@@ -70,12 +88,8 @@ export default {
                       this.items.push(item);
                   }
               }
-              if(this.items.length >0 ) {
-                  this.items.sort(function(a, b){
-                      return  b.time - a.time;
-                  });
-              }
-              this.isLoadMore = true
+            }
+            this.isLoadMore = true
           }).catch(e => {
               console.log(e);
               this.isLoadMore = true
@@ -83,9 +97,7 @@ export default {
       }
   },
   created() {
-    setTimeout(()=>{
-      this.getTxLogs()
-    }, 800) 
+    this.getTxLogs();
   }
 }
 </script>

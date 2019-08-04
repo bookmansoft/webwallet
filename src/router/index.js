@@ -121,7 +121,7 @@ export default new Router({
     { path: '/prop/sale/info', name: 'PropSaleInfo', component: PropSaleInfo ,meta:{title:'道具销售'}},
 
     { path: '/game/info', name: 'GameInfo', component: GameInfo ,meta:{title:'游戏信息'}},
-    { path: '/game/intro', name: 'GameIntro', component: GameIntro ,meta:{title:'游戏Intro'}},
+    { path: '/game/intro', name: 'GameIntro', component: GameIntro ,meta:{title:'游戏介绍'}},
 
     { path: '/contract/info', name: 'ContractInfo', component: ContractInfo ,meta:{title:'交易对信息'}},
 

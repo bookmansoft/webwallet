@@ -1,5 +1,6 @@
 <!-- 道具交易市场
-数据接口
+数据接口 
+1. prop.PropListMarket
 -->
 <template>
   <div>

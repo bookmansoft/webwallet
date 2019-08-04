@@ -1,3 +1,6 @@
+<!-- 交易对界面
+
+-->
 <template>
   <div>
     <div v-if="isLoadMore && contractList.length > 0">

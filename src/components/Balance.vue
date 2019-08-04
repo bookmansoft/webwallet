@@ -1,3 +1,6 @@
+<!-- 余额查询页面
+
+-->
 <template>
   <div>
     <card :header="{title: gameGold}">

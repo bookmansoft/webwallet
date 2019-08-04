@@ -1,3 +1,6 @@
+<!-- 会员提取福利组件
+
+-->
 <template>
   <div>
     <div class="split"> </div>

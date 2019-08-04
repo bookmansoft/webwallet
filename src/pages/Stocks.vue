@@ -1,4 +1,4 @@
-<!-- 众筹首页
+<!-- 二级市场首页
 数据接口
 1. stockMgr.BidList -> pocketItems
 [

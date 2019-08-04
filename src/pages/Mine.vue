@@ -1,3 +1,5 @@
+<!-- 个人中心页面
+-->
 <template>
   <div class="root" style="background-color:white;">
     <div style="position:absolute;width:100%;margin-top:60px"  @click="member()">

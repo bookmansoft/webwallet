@@ -1,4 +1,5 @@
-<!-- 众筹自由市场订单页 --> 
+<!-- 二级市场凭证购买页 
+--> 
 <template>
   <div class="root">
     <div style="background-color:#f3f3f3">

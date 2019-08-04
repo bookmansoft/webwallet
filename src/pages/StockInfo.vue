@@ -1,4 +1,5 @@
-<!-- 众筹自由市场详情页 -->
+<!-- 二级市场凭证详情页 
+-->
 <template>
   <div class="root">
     <div v-if="!!item">

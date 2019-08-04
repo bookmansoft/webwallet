@@ -1,3 +1,5 @@
+<!-- 道具购买订单页面
+-->
 <template>
   <div>
     <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> 

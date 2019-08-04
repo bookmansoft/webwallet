@@ -1,3 +1,5 @@
+<!-- 我的凭证页面
+-->
 <template>
   <div>
     <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>

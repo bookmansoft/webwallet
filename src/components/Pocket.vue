@@ -1,4 +1,5 @@
-<!-- 众筹首页 -->
+<!-- 背包页面
+-->
 <template>
   <div class="root" style="background-color:white;margin-top:-8px">
     <div v-if="isLoadMore">

@@ -1,3 +1,5 @@
+<!-- 我的钱包页面，疑为旧版界面
+-->
 <template>
   <div>
     <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>

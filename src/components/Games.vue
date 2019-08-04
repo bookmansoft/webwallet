@@ -1,3 +1,7 @@
+<!-- 游戏列表
+数据接口
+1. cp.List
+-->
 <template>
   <div>
     <div v-if="isLoadMore">

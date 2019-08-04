@@ -1,4 +1,5 @@
-<!-- VIP会员页面 --> 
+<!-- VIP会员页面 
+--> 
 <template>
   <div>
     <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>

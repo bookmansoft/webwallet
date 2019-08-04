@@ -1,4 +1,7 @@
-<!-- 众筹详情页 -->
+<!-- 背包物品页面
+数据接口
+1. item.useItem
+-->
 <template>
   <div style="margin-top:-0px" class="root">
     <div>

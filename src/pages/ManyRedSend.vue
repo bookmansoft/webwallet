@@ -1,3 +1,5 @@
+<!-- 多人红包预发送页面
+-->
 <template>
   <div>
     <box gap="10px 10px">
