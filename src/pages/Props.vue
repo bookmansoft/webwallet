@@ -1,40 +1,36 @@
 <!-- 我的道具列表
 数据接口：
-1. prop.PropList: 
+1. prop.PropList -> propList 
 [
   {
     "pid",
     "cid",
+    "cpurl",
+    "cp_name",
     "oid",
     "gold",
-    "current": {
-      "hash",
-      "index",
-      "address"
-    },
     "height",
-    "pst",
-        propStatus {
-            Sale: 2,        //拍卖中    - 发起了拍卖交易，等待竞价结束
-            Borrow: 3,      //已借出    - 道具已经借出
-            Delete: 4,      //已删除    - 道具已经彻底失效、不可恢复
-            Ready: 9,       //已确认    - 道具处于确认状态
-        }
-    "wid",
-    "account",
-    "bid": {
-      "raw",
-      "fixed",
-      "period",
-      "hash",
-      "value",
-      "address"
-    }
+    "large_icon",
+    "more_icon": [],
+    "props_type",
+    "props_price",
+    "props_createtime",
+    "props_rank",
+    "props_status",
+    "state":,
+    "props_extra": {
+            "attr1": "属性1",
+            "attr2": "属性2",
+    },
+    "icon",
+    "props_name",
+    "props_desc",
   }
 ]
 
 跳转链接：
-1. 众筹详情页面 { name: "CrowdInfo", params: { item: item } }
+1. 道具详情页面 { name: 'PropDetail', params: { item: item }}
+
 -->
 <template>
   <div class="root" style="background-color:white;margin-top:-8px">
@@ -54,40 +50,15 @@
         @on-pullup-loading="selPullUp"
       >
         <div>
-          <div style="margin-top:15px;">
-            <flexbox>
-              <flexbox-item :span="12">
-                <div class="flex-left">
-                  <img src="static/img/stock/hot_line.png" style="width:3px;height:13px">
-                  <span style="font-size:15px;">热门游戏</span>
-                </div>
-              </flexbox-item>
-            </flexbox>
-          </div>
-
-          <group :title="groupTitle">
-            <div v-for="(item, index) in propList" :key="index" class="propItem">
-              <flexbox @click.native="gotoPropDetail(item, index)">
-                <flexbox-item :span="2.5" style="padding:0.3rem;">
-                  <div class="flex-demo-left">
-                    <img :src="item.icon" class="img-prop-list" />
-                  </div></flexbox-item>
-                <flexbox-item>
-                  <div style="padding-left:15px;">
-                    <p><span style="font-size:16px;">{{item.props_name}}</span></p>
-                    <br />
-                    <p><span style="color: #888; font-size:14px;">{{item.desc}}</span></p>
-                  </div>
-                </flexbox-item>
-              </flexbox>
-            </div>
+          <group>
+            <panel :header="panelTitle" :list="propList" :type="panelType" @on-click-item="showPropDetail"></panel>        
           </group>
-          <div style="padding: 10px 80px 20px 80px "><divider v-if="isBottom">到底了</divider></div>
+          <div style="padding: 10px 80px 20px 80px "><divider v-if="isBottom && propList.length > 0 && showNoData==true">到底了</divider></div>
         </div>
       </scroller>
     </div>
 
-    <div v-if="isLoadMore && propItems.length==0 && showNoData==true">
+    <div v-if="isLoadMore && propList.length==0 && showNoData==true">
       <no-data src="static/img/default/no-games.png"></no-data>
     </div>
     <div v-if="!isLoadMore">
@@ -105,9 +76,11 @@ import {
   TabItem,
   Flexbox,
   FlexboxItem,
-  LoadMore,
+  LoadMore, Divider,
   XProgress,
-  Box
+  Panel,
+  Box,
+  Group,
 } from "vux";
 import Navs from "@/components/Navs.vue";
 import XXProgress from "@/components/XXProgress.vue";
@@ -125,24 +98,16 @@ export default {
     TabItem,
     Flexbox,
     FlexboxItem,
-    LoadMore,
+    LoadMore, Divider, Panel,
     XXProgress,
-    Box
+    Box,
+    Group,
   },
   data: function() {
     return {
       headerTitle: '我的道具',
-      propList: [],
-      groupTitle: '道具数量：0',
-      type: '1',
-      isBottom: false,
-      PageIndex: 1,//页码从第一页开始
-      PageSize: 5,//煤业显示的条数
-      isShow: false,//是否显示scroller,第一次请求数据过程中隐藏插件，不隐藏的时候会显示“请上拉刷新数据”的字样，不好看
-      showLoading: false,
-      showUp: true,
-      isbounce: false,
-      lists: [],
+      panelTitle: '',
+      panelType: "1",
       downobj: {
         content: "下拉刷新数据...",
         downContent: "下拉刷新数据...",
@@ -154,8 +119,8 @@ export default {
         clsPrefix: "xs-plugin-pulldown-"
       },
       upobj: {
-        content: "向上滑动获取更多数据...",
-        upContent: "向上滑动获取更多数据...",
+        content: "",
+        upContent: "",
         downContent: "释放获取数据",
         loadingContent: "加载中...",
         pullUpHeight: 50,
@@ -170,8 +135,8 @@ export default {
       isLoadMore: false,
       showNoData: false,
       isActive: false,
-      textLoading: '加载中',
-      propItems: [],
+      propList: [],
+      isBottom: false,
     };
   },
   methods: {
@@ -179,7 +144,7 @@ export default {
       this.showNoData = false;
       
       //用户选择下拉刷新，清除本地数据，重新拉取
-      this.getcrowdlist(1, true);
+      this.getPropList(1, true);
       setTimeout(() => {
         this.showNoData = true;
         if(this.isActive) {
@@ -192,7 +157,7 @@ export default {
       this.showNoData = false;
 
       //用户选择上滑获取新数据，更新当前页码
-      this.getcrowdlist(this.curPage+1);
+      this.getPropList(this.curPage+1);
       setTimeout(() => {
         this.showNoData = true;
         if(this.isActive) {
@@ -201,13 +166,14 @@ export default {
       }, 1000);
     },
     //跳转至众筹详情
-    crowdDetail(item) {
+    showPropDetail(item) {
+      console.log(item);
       this.$router.push({ name: 'PropDetail', params: { item: item }})
     },
     /**
      * 获取列表, page 请求的页码 flash 强制更新
      */
-    getcrowdlist(page, flash) {
+    getPropList(page, flash) {
       console.log(`query page: ${page}`);
 
       if(!!flash) {
@@ -217,7 +183,7 @@ export default {
       }
 
       let curPage = (this.propList.length/10)|0 + 1;
-      if(this.propItems.length%10==0) {
+      if(this.propList.length%10==0) {
         curPage--;
       }
       if(curPage < page) {
@@ -242,24 +208,32 @@ export default {
         } else {
           this.remote.fetching({func: 'prop.PropList', page: page}).then(res => {
               if(res.code == 0) {
-                this.groupTitle = '道具数量：'+ res.data.count;
+                console.log('prop list', res.data);
                 let qryPage = Math.min(res.data.cur, res.data.page); //数据修复：查询页数不能大于总页数
                 if(this.curPage < qryPage) {
                   this.curPage = qryPage;
 
                   res.data.list.forEach(cpItem => {
-                    this.GLOBAL.cplist.push(cpItem);
-                    this.gameList.push(cpItem);
+                    this.remote.get(encodeURI(cpItem.cpurl + '/prop/' + cpItem.oid)).then(res => {
+                      Object.assign(cpItem, res);
+                      cpItem.src = cpItem.icon;
+                      cpItem.title = cpItem.props_name;
+                      cpItem.desc = cpItem.props_desc;
+
+                      this.GLOBAL.cplist.push(cpItem);
+                      this.propList.push(cpItem);
+                    });
                   });
                 } else {
                   //没有新的数据了，禁止继续下拉
                   this.scrollerStatus.pullupStatus = 'disabled';
-                  that.isBottom = true;
+                  this.isBottom = true;
                 }
               }
           });
           setTimeout(() => {
             this.isLoadMore = true;
+            this.panelTitle = `道具背包(${this.propList.length}})`;
           }, 500);
         }
       }      
@@ -273,7 +247,7 @@ export default {
     this.isActive = false;
   },
   created() {
-    this.getcrowdlist(1);
+    this.getPropList(1);
   },
 };
 </script>

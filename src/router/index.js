@@ -63,8 +63,8 @@ export default new Router({
   // base: __dirname,
   routes: [
     { path:'/', redirect:'Login' },
-    { path: '/login', name: 'Login', component: Login ,meta:{title:'登录'}},
-    { path: '/home', name: 'Home', component: Home,meta:{title:'游戏金链'} },
+    { path: '/login', name: 'Login', component: Login ,meta:{title:'Vallnet'}},
+    { path: '/home', name: 'Home', component: Home,meta:{title:'Vallnet'} },
     { path: '/about', name: 'About', component: About ,meta:{title:'关于我们'}},
     { path: '/member', name: 'Member', component: Member ,meta:{title:'成员'}},
     { path: '/mine', name: 'Mine', component: Mine ,meta:{title:'我的'}},
@@ -80,7 +80,7 @@ export default new Router({
 
     { path: '/crowds', name: 'Crowds', component: Crowds,meta:{title:'众筹-百谷王游戏金链'} },
     { path: '/crowd/my', name: 'StocksMine', component: StocksMine ,meta:{title:'StocksMine'}},
-    { path: '/crowd/my/info', name: 'MyStockInfo', component: MyStockInfo ,meta:{title:'我的游戏元宝'}},
+    { path: '/crowd/my/info', name: 'MyStockInfo', component: MyStockInfo ,meta:{title:'代练宝宝'}},
     { path: '/crowd/my/sale', name: 'MyStockSale', component: MyStockSale ,meta:{title:'挂单出售中'}},
     { path: '/crowd/info', name: 'CrowdInfo', component: CrowdInfo ,meta:{title:'众筹详情-百谷王游戏金链'}},
     { path: '/crowd/order', name: 'CrowdOrder', component: CrowdOrder ,meta:{title:'确认订单'}},
@@ -114,7 +114,7 @@ export default new Router({
     { path: '/manyRed/receive/:send_id',name:'ManyRedReceive',component:ManyRedReceive,meta:{title:'多人红包接收'}},
     { path: '/manyRed/unpack/:send_id',name:'ManyRedUnpack',component:ManyRedUnpack,meta:{title:'打开多人红包'}},
 
-    { path: '/props', name: 'Props', component: Props ,meta:{title:'道具'}},
+    { path: '/props', name: 'Props', component: Props ,meta:{title:'道具背包'}},
     { path: '/prop/detail', name: 'PropDetail', component: PropDetail ,meta:{title:'道具详情'}},
     { path: '/prop/receive', name: 'PropReceive', component: PropReceive ,meta:{title:'道具接收'}},
     { path: '/prop/order/pay', name: 'PropOrderPay', component: PropOrderPay ,meta:{title:'道具订单支付'}},

@@ -74,18 +74,11 @@
           <div @click="transList">
             <flexbox class="content underline">
               <flexbox-item :span="1">
-                <img
-                  src="static/img/stock/mywallet/list1.png"
-                  style="width:20px;height:25px;"
-                  @click="transList"
-                >
+                <img src="static/img/stock/mywallet/list1.png" style="width:20px;height:25px;">
               </flexbox-item>
               <flexbox-item :span="3">
                 <div style="display:block;margin-top:-8px">
-                  <span
-                    style="font-size:16px;line-height:25px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-                    @click="transList"
-                  >收支明细</span>
+                  <span style="font-size:16px;line-height:25px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);">收支明细</span>
                 </div>
               </flexbox-item>
               <flexbox-item :span="7">
@@ -98,26 +91,46 @@
               </flexbox-item>
             </flexbox>
           </div>
-          <flexbox class="content underline">
-            <flexbox-item :span="1">
-              <img src="static/img/stock/mywallet/list2.png" style="width:21px;height:22px;">
-            </flexbox-item>
-            <flexbox-item :span="3">
-              <div style="display:block;margin-top:-8px">
-                <span
-                  style="font-size:16px;line-height:25px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);"
-                >红包管理</span>
-              </div>
-            </flexbox-item>
-            <flexbox-item :span="7">
-              <div style="display:block;"></div>
-            </flexbox-item>
-            <flexbox-item :span="1">
-              <div style="display:block;">
-                <img src="static/img/stock/mywallet/arrow.png" style="width:7px;height:13px;">
-              </div>
-            </flexbox-item>
-          </flexbox>
+          <div @click="redpack">
+            <flexbox class="content underline">
+              <flexbox-item :span="1">
+                <img src="static/img/stock/mywallet/list2.png" style="width:21px;height:22px;">
+              </flexbox-item>
+              <flexbox-item :span="3">
+                <div style="display:block;margin-top:-8px">
+                  <span style="font-size:16px;line-height:25px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);">红包管理</span>
+                </div>
+              </flexbox-item>
+              <flexbox-item :span="7">
+                <div style="display:block;"></div>
+              </flexbox-item>
+              <flexbox-item :span="1">
+                <div style="display:block;">
+                  <img src="static/img/stock/mywallet/arrow.png" style="width:7px;height:13px;">
+                </div>
+              </flexbox-item>
+            </flexbox>
+          </div>
+          <div @click="propList">
+            <flexbox class="content underline">
+              <flexbox-item :span="1">
+                <img src="static/img/stock/mywallet/list2.png" style="width:21px;height:22px;">
+              </flexbox-item>
+              <flexbox-item :span="3">
+                <div style="display:block;margin-top:-8px">
+                  <span style="font-size:16px;line-height:25px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);">道具背包</span>
+                </div>
+              </flexbox-item>
+              <flexbox-item :span="7">
+                <div style="display:block;"></div>
+              </flexbox-item>
+              <flexbox-item :span="1">
+                <div style="display:block;">
+                  <img src="static/img/stock/mywallet/arrow.png" style="width:7px;height:13px;">
+                </div>
+              </flexbox-item>
+            </flexbox>
+          </div>
         </flexbox-item>
         <flexbox-item :span="1"></flexbox-item>
       </flexbox>
@@ -172,8 +185,13 @@ export default {
       this.$router.push('/wallet/receive');
     },
     transList() {
-      console.log("transList");
       this.$router.push({ name: "TransList" });
+    },
+    redpack() {
+      this.$router.push({ name: "TransList" });
+    },
+    propList() {
+      this.$router.push({ name: "Props" });
     },
     balanceChanged(info) {
       console.log('balance changed', info);

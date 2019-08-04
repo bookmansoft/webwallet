@@ -76,6 +76,7 @@ var userBase = {userAgent: 0, uid: 0, user_name: null, openid: null}
 var games = []
 var cplist = []
 var crowdlist = [];
+var propList = [];
 var stocklist = [];     //我的凭证
 var pocketlist = [];
 //支付相关配置
@@ -214,6 +215,6 @@ export default
 {
   clone, colorList, colorListLength, getRandColor, appConfig, ConfigMgr,
   toGamegoldKg, toGamegoldOrigin, gameGoldUnit, myAlert, formatDateStr, 
-  checkAddr, userBase, games, cplist, crowdlist, stocklist, pocketlist, ResType, remote, base, crowdConfig, RecordType,
+  checkAddr, userBase, games, cplist, crowdlist, stocklist, pocketlist, ResType, remote, base, crowdConfig, RecordType, propList
 }
 </script>

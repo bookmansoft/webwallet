@@ -1,17 +1,20 @@
+<!-- 道具详情页面
+
+-->
 <template>
   <div>
     <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> 
     <div id="gameName">
         <div id="topImg">
-            <img :src="prop.result.large_icon">
+            <img :src="prop.large_icon">
         </div>
         <div id="centImg" class="backcolor-white" style="height:90px;">
             <div>
-                <img :src="prop.result.icon">
+                <img :src="prop.icon">
             </div>
             <ul class="center-ul" style="position:relative; top:-80px;">
-                <li><span class="prop-name">{{prop.result.props_name}}</span></li>
-                <li class="color-999-provider">道具名称：{{prop.result.props_name}}</li>
+                <li><span class="prop-name">{{prop.props_name}}</span></li>
+                <li class="color-999-provider">道具名称：{{prop.props_name}}</li>
                 <li>
                 <span class="color-999">装备</span>
                 <!--
@@ -35,7 +38,7 @@
         </div>      
         <div id="introduce">
             <div class="backcolor-white padding-rem">
-                <p style="color: #888; font-size:14px;">{{prop.result.props_desc}}</p>
+                <p style="color: #888; font-size:14px;">{{prop.props_desc}}</p>
             </div>
         </div>
         <div id="gameNameImg" class="backcolor-white">
@@ -195,8 +198,8 @@ export default {
       }).then(res => {
           if(res.code == 0) { 
             /*
-              var url = "/pages/prop/index?openid=" + data.openid + "&pid=" + prop.pid + "&prop_name=" + prop.result.props_name;
-              url += "&txid=" + prop.current.rev + "&prop_icon=" + prop.result.large_icon + "&act=send&raw=" + rep.ret.raw;
+              var url = "/pages/prop/index?openid=" + data.openid + "&pid=" + prop.pid + "&prop_name=" + prop.props_name;
+              url += "&txid=" + prop.current.rev + "&prop_icon=" + prop.large_icon + "&act=send&raw=" + rep.ret.raw;
               console.log("url " + url);
               this.$wechat.miniProgram.navigateTo({ url: url });
             */
@@ -205,9 +208,9 @@ export default {
             this.$wechat.ready(function () {   //需在用户可能点击分享按钮前就先调用
                 //分享给朋友
                 let title = '游戏金道具分享'
-                let desc = prop.result.props_name //'T10自行反坦克车'
+                let desc = prop.props_name //'T10自行反坦克车'
                 let link = that.GLOBAL.appConfig.siteUri + '/?path=/prop/receive'
-                let imgUrl = prop.result.large_icon // 'http://114.116.148.48:9701/image/3/prop_large_icon.jpg' //prop.result.large_icon
+                let imgUrl = prop.large_icon // 'http://114.116.148.48:9701/image/3/prop_large_icon.jpg' //prop.large_icon
                 let params = JSON.stringify({
                   title: title,
                   desc: desc,
@@ -250,8 +253,8 @@ export default {
         this.$router.push('/props')
     } else {
         this.prop = this.$route.params.item;
-        this.propShareIcon = this.prop.result.large_icon;
-        this.prop.result.more_icon.forEach( item => {
+        this.propShareIcon = this.prop.large_icon;
+        this.prop.more_icon.forEach( item => {
              this.propIcons.push(item);
         });
     }
