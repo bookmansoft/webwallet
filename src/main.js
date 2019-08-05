@@ -36,39 +36,34 @@ const remote = new toolkit.gameconn({
   },
 });
 remote.setmode(remote.CommMode.ws);
+remote.appConfig = cfg;
 
 Vue.prototype.remote = remote;
 //#endregion
-
-//APP设置
-Vue.prototype.appConfig = {
-  appid: cfg.AppId,      //此项配置必须和服务端保持一致
-  siteUri: `${cfg.UrlHead}://${cfg.Host}`,
-};
 
 /**
  * 配置信息管理
  */
 const ConfigMgr = {
   files: {},
-};
-ConfigMgr.get = (file, callback) => {
-  if(!ConfigMgr.files[file]) {
-    remote.fetching({func:'config.get', file: file}).then(res => {
-        if(res.code == 0) {
-          //获得指定配置表，放入全局缓存
-          ConfigMgr.files[file] = res.data;
-          callback(null, res.data);
-        } else {
-          callback(new Error(`error: ${res.code}`));
-        }
-    }).catch(e => {
-      callback(e);
-    })
-  } else {
-    callback(null, ConfigMgr.files[file]);
+  get: (file, callback) => {
+    if(!ConfigMgr.files[file]) {
+      remote.fetching({func:'config.get', file: file}).then(res => {
+          if(res.code == 0) {
+            //获得指定配置表，放入全局缓存
+            ConfigMgr.files[file] = res.data;
+            callback(null, res.data);
+          } else {
+            callback(new Error(`error: ${res.code}`));
+          }
+      }).catch(e => {
+        callback(e);
+      })
+    } else {
+      callback(null, ConfigMgr.files[file]);
+    }
   }
-}
+};
 Vue.prototype.ConfigMgr = ConfigMgr;
 
 /* eslint-disable no-new */

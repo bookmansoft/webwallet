@@ -79,10 +79,10 @@ export default {
                       item.badge = 0;
                       item.title = this.utils.formatDateStr(new Date(item.time*1000), 'MM-dd HH:mm:ss');
                       if(item.category=='receive') {
-                        item.img = 'static/img/wallet/rec.png'
+                        item.img = '/static/img/wallet/rec.png'
                         item.desc = '接收 ' + this.gamegold.toKg(item.amount * 10000 * 10000) + '千克'
                       } else {
-                        item.img = 'static/img/wallet/send.png'
+                        item.img = '/static/img/wallet/send.png'
                         item.desc = '发送 ' + this.gamegold.toKg(item.amount * 10000 * 10000) + '千克'
                       }
                       this.items.push(item);

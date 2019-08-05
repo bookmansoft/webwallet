@@ -110,7 +110,7 @@ export default {
         }, 911002);
 
         //获取微信令牌
-        let res = await this.remote.fetching({func: "wechat.WechatConfig", uri: this.appConfig.siteUri});
+        let res = await this.remote.fetching({func: "wechat.WechatConfig", uri: this.remote.appConfig.siteUri});
         if (res.code == 0) {
           this.$wechat.config(res.data);
         } else {
@@ -138,6 +138,12 @@ export default {
 
     //#region Modified by liub 2019.06.13
     try {
+      let appConfig = await this.remote.getRequest({file: 'app'}, 'config');
+      if(appConfig.code == 0) {
+        this.remote.appConfig = Object.assign(this.remote.appConfig, appConfig.data);
+      }
+      console.log('appConfig', this.remote.appConfig);
+
       let code = this.utils.getUrlKey('code');
       if(!!code) {
         //以下流程采用 code 登录模式进行登录(OAUTH2.0)，登录细节(验证码转换、负载均衡、发送登录请求并处理应答)封装于 remote 组件中
@@ -156,11 +162,11 @@ export default {
           await this.remote.setUserInfo({openkey: openkey, token: token}).getToken();
         } else {
           setTimeout(()=>{ 
-            let redirect_uri = this.global.appConfig.siteUri;
+            let redirect_uri = this.remote.appConfig.siteUri;
             if (location.search.indexOf("?") == 0 && location.search.indexOf("=") > 1) {
               redirect_uri = redirect_uri + location.search;
             }
-            let url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${this.appConfig.appid}&redirect_uri=${encodeURIComponent(redirect_uri)}&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect`;
+            let url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${this.remote.appConfig.wx_appid}&redirect_uri=${encodeURIComponent(redirect_uri)}&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect`;
             window.location.href = url;
           }, 2000); //发生错误时，两秒后跳回微信授权页面，重新拉取授权码
           return;

@@ -59,8 +59,8 @@ import TransList from '@/pages/TransList';
 Vue.use(Router)
 
 export default new Router({
-  // mode: 'history',
-  // base: __dirname,
+  mode: 'history',
+  //base: __dirname,
   routes: [
     { path:'/', redirect:'Login' },
     { path: '/login', name: 'Login', component: Login ,meta:{title:'Vallnet'}},

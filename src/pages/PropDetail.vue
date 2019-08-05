@@ -204,7 +204,7 @@ export default {
           //分享给朋友
           let title = '游戏金道具分享'
           let desc = prop.props_name //'T10自行反坦克车'
-          let link = that.appConfig.siteUri + '/?path=/prop/receive'
+          let link = that.remote.appConfig.siteUri + '/?path=/prop/receive'
           let imgUrl = prop.large_icon // 'http://114.116.148.48:9701/image/3/prop_large_icon.jpg' //prop.large_icon
           let params = JSON.stringify({
             title: title,

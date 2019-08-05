@@ -95,8 +95,8 @@ export default {
         that.$wechat.onMenuShareAppMessage({
           title: "[游戏金红包]" + sendDataWishing + "！", // 分享标题
           desc: "来自" + sendDataSendNickName + "的游戏金红包", // 分享描述
-          link: `${this.appConfig.siteUri}?path=/manyRed/unpack/${that.send_id}`, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-          imgUrl: `${this.appConfig.siteUri}static/img/manyRed/redpacketsmall.jpg`, // 分享图标
+          link: `${that.remote.appConfig.siteUri}?path=/manyRed/unpack/${that.send_id}`, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+          imgUrl: `${that.remote.appConfig.siteUri}static/img/manyRed/redpacketsmall.jpg`, // 分享图标
           success: function() {
             console.log("微信分享设置成功");
             // 设置成功
