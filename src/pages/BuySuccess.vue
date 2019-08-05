@@ -16,7 +16,7 @@
         <flexbox-item :span="1">
           <div style="display:block;padding:2px">
             <img
-              src="static/img/stock/pay/buysuccess.png"
+              src="/static/img/stock/pay/buysuccess.png"
               style="width:auto;height:auto;max-width:100%;max-height:100%"
             >
           </div>

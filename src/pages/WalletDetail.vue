@@ -36,7 +36,7 @@
     </div>
 
     <div v-if="isLoadMore && items.length == 0">
-        <no-data src="static/img/default/no-walletdetail.png"></no-data>
+        <no-data src="/static/img/default/no-walletdetail.png"></no-data>
     </div>
 
     <div v-if="!isLoadMore">

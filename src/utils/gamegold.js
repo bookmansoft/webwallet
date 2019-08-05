@@ -11,7 +11,8 @@ class gamegoldAssistant
     }
 
     constructor(type) {
-        this.gameGoldUnit = '千克'
+        this.gameGoldAccount = '游戏金账户';
+        this.gameGoldUnit = '千克';
         this.$unit = {
             "ton": 100000000,
             "kg": 100000,

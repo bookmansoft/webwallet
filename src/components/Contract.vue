@@ -8,7 +8,7 @@
         <flexbox @click.native="contracInfo(item, index)">
             <flexbox-item :span="3" style="padding:0.3rem;">
             <div class="flex-demo-left" style="text-align:center;">
-                <img src="static/img/gamegold/logo.png" class="img-game-list" />
+                <img src="/static/img/gamegold/logo.png" class="img-game-list" />
             </div></flexbox-item>
             <flexbox-item>
             <div style="padding-left:0px;">
@@ -22,7 +22,7 @@
     </div>
 
     <div v-if="isLoadMore && contractList.length == 0">
-        <no-data src="static/img/default/no-product.png"></no-data>
+        <no-data src="/static/img/default/no-product.png"></no-data>
     </div>
     <div v-if="!isLoadMore">
         <load-more tip="正在加载" style="position: relative; top:200px;" :show-loading="!isLoadMore"></load-more>

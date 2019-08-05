@@ -12,7 +12,7 @@
         <flexbox class="cell">
           <flexbox-item :span="3">
             <div style="display:block;padding:8px">
-              <img src="static/img/stock/orderfree/head.png" style="width:auto;height:auto;max-width:100%;max-height:100%">
+              <img src="/static/img/stock/orderfree/head.png" style="width:auto;height:auto;max-width:100%;max-height:100%">
             </div>
           </flexbox-item>
           <flexbox-item :span="9">
@@ -34,7 +34,7 @@
           <flexbox-item :span="4"></flexbox-item>
           <flexbox-item :span="1">
             <div style="display:block;text-align:right" @click="onBuyNumChange(-1)">
-              <img src="static/img/stock/order/minus.png" style="width:14px;height:14px">
+              <img src="/static/img/stock/order/minus.png" style="width:14px;height:14px">
             </div>
           </flexbox-item>
           <flexbox-item :span="1">
@@ -44,7 +44,7 @@
           </flexbox-item>
           <flexbox-item :span="1">
             <div style="display:block;text-align:left" @click="onBuyNumChange(100)">
-              <img src="static/img/stock/order/plus.png" style="width:14px;height:14px">
+              <img src="/static/img/stock/order/plus.png" style="width:14px;height:14px">
             </div>
           </flexbox-item>
           <flexbox-item :span="2"></flexbox-item>
@@ -61,13 +61,13 @@
       <flexbox class="cell">
         <flexbox-item :span="4">
           <div style="display:block;text-align:left;">
-            <img src="static/img/stock/orderfree/buy.png" style="width:22px;height:19px">
+            <img src="/static/img/stock/orderfree/buy.png" style="width:22px;height:19px">
             <span style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);vertical-align:top;">游戏金支付</span>
           </div>
         </flexbox-item>
         <flexbox-item :span="3"></flexbox-item>
         <flexbox-item :span="3">
-          <div style="display:block;text-align:right"><img src="static/img/stock/order/wechat_ok.png" style="width:14px;height:14px"></div>
+          <div style="display:block;text-align:right"><img src="/static/img/stock/order/wechat_ok.png" style="width:14px;height:14px"></div>
         </flexbox-item>
         <flexbox-item :span="2"></flexbox-item>
       </flexbox>

@@ -7,7 +7,7 @@
             <flexbox>
                 <flexbox-item :span="3" style="padding:0.3rem;">
                 <div class="flex-demo-left" style="text-align:center;">
-                    <img src="static/img/gamegold/logo.png" class="img-game-list" />
+                    <img src="/static/img/gamegold/logo.png" class="img-game-list" />
                 </div></flexbox-item>
                 <flexbox-item>
                 <div style="padding-left:0px;">

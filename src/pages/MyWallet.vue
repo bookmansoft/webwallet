@@ -19,19 +19,19 @@
     <!-- 正常代码区域 -->
     <div style="display:block" class="nospace">
       <img
-        src="static/img/stock/mywallet/top.png"
+        src="/static/img/stock/mywallet/top.png"
         style="width:auto;height:auto;max-width:100%;max-height:100%"
       >
     </div>
     <flexbox :gutter="0" class="nospace" style="margin-top:-3px;margin-bottom:-3px">
       <flexbox-item :span="2">
         <div style="display:block">
-          <img src="static/img/stock/mywallet/left.png" style="width:100%;height:100px;">
+          <img src="/static/img/stock/mywallet/left.png" style="width:100%;height:100px;">
         </div>
       </flexbox-item>
       <flexbox-item :span="2">
         <div style="display:block" align="center" @click="send">
-          <img src="static/img/stock/mywallet/send.png" style="width:32px;height:32px;">
+          <img src="/static/img/stock/mywallet/send.png" style="width:32px;height:32px;">
         </div>
         <div style="display:block" align="center" @click="send">
           <span style="font-size:12px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(51,51,51);">发送</span>
@@ -40,7 +40,7 @@
       <flexbox-item :span="1"></flexbox-item>
       <flexbox-item :span="2">
         <div style="display:block" align="center" @click="receive">
-          <img src="static/img/stock/mywallet/receive.png" style="width:32px;height:32px;">
+          <img src="/static/img/stock/mywallet/receive.png" style="width:32px;height:32px;">
         </div>
         <div style="display:block" align="center" @click="receive">
           <span style="font-size:12px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(51,51,51);">接收</span>
@@ -49,7 +49,7 @@
       <flexbox-item :span="1"></flexbox-item>
       <flexbox-item :span="2">
         <div style="display:block" align="center" @click='sendPack'>
-          <img src="static/img/stock/mywallet/red.png" style="width:30px;height:32px;">
+          <img src="/static/img/stock/mywallet/red.png" style="width:30px;height:32px;">
         </div>
         <div style="display:block" align="center" @click='sendPack'>
           <span style="font-size:12px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(51,51,51);">发红包</span>
@@ -57,13 +57,13 @@
       </flexbox-item>
       <flexbox-item :span="2">
         <div style="display:block">
-          <img src="static/img/stock/mywallet/right.png" style="width:100%;height:100px;">
+          <img src="/static/img/stock/mywallet/right.png" style="width:100%;height:100px;">
         </div>
       </flexbox-item>
     </flexbox>
 
     <div style="display:block" class="nospace">
-      <img src="static/img/stock/mywallet/bottom.png" style="width:auto;height:auto;max-width:100%;max-height:100%">
+      <img src="/static/img/stock/mywallet/bottom.png" style="width:auto;height:auto;max-width:100%;max-height:100%">
     </div>
 
     <div style="background-color:white;">
@@ -76,7 +76,7 @@
           <div @click="transList">
             <flexbox class="content underline">
               <flexbox-item :span="1">
-                <img src="static/img/stock/mywallet/list1.png" style="width:20px;height:25px;">
+                <img src="/static/img/stock/mywallet/list1.png" style="width:20px;height:25px;">
               </flexbox-item>
               <flexbox-item :span="3">
                 <div style="display:block;margin-top:-8px">
@@ -88,7 +88,7 @@
               </flexbox-item>
               <flexbox-item :span="1">
                 <div style="display:block;">
-                  <img src="static/img/stock/mywallet/arrow.png" style="width:7px;height:13px;">
+                  <img src="/static/img/stock/mywallet/arrow.png" style="width:7px;height:13px;">
                 </div>
               </flexbox-item>
             </flexbox>
@@ -96,7 +96,7 @@
           <div @click="redpack">
             <flexbox class="content underline">
               <flexbox-item :span="1">
-                <img src="static/img/stock/mywallet/list2.png" style="width:21px;height:22px;">
+                <img src="/static/img/stock/mywallet/list2.png" style="width:21px;height:22px;">
               </flexbox-item>
               <flexbox-item :span="3">
                 <div style="display:block;margin-top:-8px">
@@ -108,7 +108,7 @@
               </flexbox-item>
               <flexbox-item :span="1">
                 <div style="display:block;">
-                  <img src="static/img/stock/mywallet/arrow.png" style="width:7px;height:13px;">
+                  <img src="/static/img/stock/mywallet/arrow.png" style="width:7px;height:13px;">
                 </div>
               </flexbox-item>
             </flexbox>
@@ -116,7 +116,7 @@
           <div @click="propList">
             <flexbox class="content underline">
               <flexbox-item :span="1">
-                <img src="static/img/stock/mywallet/list2.png" style="width:21px;height:22px;">
+                <img src="/static/img/stock/mywallet/list2.png" style="width:21px;height:22px;">
               </flexbox-item>
               <flexbox-item :span="3">
                 <div style="display:block;margin-top:-8px">
@@ -128,7 +128,7 @@
               </flexbox-item>
               <flexbox-item :span="1">
                 <div style="display:block;">
-                  <img src="static/img/stock/mywallet/arrow.png" style="width:7px;height:13px;">
+                  <img src="/static/img/stock/mywallet/arrow.png" style="width:7px;height:13px;">
                 </div>
               </flexbox-item>
             </flexbox>

@@ -75,10 +75,11 @@ export default {
         this.global.userBase.user_name = this.remote.userInfo.name;
         this.global.userBase.nickname = this.remote.userInfo.name;
 
-        this.$store.commit('balanceChanged', {
+        this.$store.dispatch('changeBalance', {
           confirmed: this.gamegold.toKg(this.global.userBase.confirmed), 
           unconfirmed: this.gamegold.toKg(this.global.userBase.unconfirmed - this.global.userBase.confirmed),
-        });
+        })
+        //@note 也可以这样写: this.$store.commit('balanceChanged', {})
         //#endregion
 
         this.ConfigMgr.get('base', (err, config)=>{ 
@@ -91,7 +92,7 @@ export default {
         this.remote.watch((info) => {
           this.global.userBase.confirmed = info.confirmed;
           this.global.userBase.unconfirmed = info.unconfirmed;
-          this.$store.commit('balanceChanged', {
+          this.$store.dispatch('changeBalance', {
             confirmed: this.gamegold.toKg(info.confirmed), 
             unconfirmed: this.gamegold.toKg(info.unconfirmed - info.confirmed),
           });

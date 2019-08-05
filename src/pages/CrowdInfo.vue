@@ -37,7 +37,7 @@
           <flexbox-item :span="1">
             <div class="flex-left">
               <span style="font-size:15px;">
-                <img src="static/img/stock/headimg.png" style="width:22px;height:22px">
+                <img src="/static/img/stock/headimg.png" style="width:22px;height:22px">
               </span>
             </div>
           </flexbox-item>

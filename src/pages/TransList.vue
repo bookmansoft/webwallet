@@ -34,7 +34,7 @@
         <flexbox-item :span="1">
           <div style="display:block;padding-right:10px">
             <img
-              src="static/img/stock/translist/wait.png"
+              src="/static/img/stock/translist/wait.png"
               style="width:auto;height:auto;max-width:100%;max-height:100%"
             >
           </div>
@@ -75,7 +75,7 @@
         <flexbox-item :span="1">
           <div style="display:block;padding-right:10px">
             <img
-              src="static/img/stock/translist/send.png"
+              src="/static/img/stock/translist/send.png"
               style="width:auto;height:auto;max-width:100%;max-height:100%"
             >
           </div>
@@ -116,7 +116,7 @@
         <flexbox-item :span="1">
           <div style="display:block;padding-right:10px">
             <img
-              src="static/img/stock/translist/receive.png"
+              src="/static/img/stock/translist/receive.png"
               style="width:auto;height:auto;max-width:100%;max-height:100%"
             >
           </div>

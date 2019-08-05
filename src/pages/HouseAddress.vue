@@ -16,7 +16,7 @@
         <flexbox-item :span="1">
           <div style="display:block;padding-bottom:20px;padding-right:10px;">
             <img
-              src="static/img/stock/address/check.png"
+              src="/static/img/stock/address/check.png"
               style="width:auto;height:auto;max-width:100%;max-height:100%; "
             >
           </div>
@@ -38,7 +38,7 @@
               <flexbox-item :span="3">
                 <div
                   style="border-style:solid;border-color:rgb(180,180,180);border-width:1px;width:55px;text-align:center"
-                ><img src="static/img/stock/address/edit.png" style="vertical-align:middle;width:12px;height:12px"><span
+                ><img src="/static/img/stock/address/edit.png" style="vertical-align:middle;width:12px;height:12px"><span
                     style="margin-left:5px;font-size:12px;font-family:'黑体','Heiti SC','Droidsansfallback';line-height:23px;color:rgb(148,148,148)"
                   >编辑</span>
                 </div>
@@ -46,7 +46,7 @@
               <flexbox-item :span="3">
                 <div
                   style="border-style:solid;border-color:rgb(180,180,180);border-width:1px;width:55px;text-align:center"
-                ><img src="static/img/stock/address/delete.png" style="vertical-align:middle;width:12px;height:12px"><span
+                ><img src="/static/img/stock/address/delete.png" style="vertical-align:middle;width:12px;height:12px"><span
                     style="margin-left:5px;font-size:12px;font-family:'黑体','Heiti SC','Droidsansfallback';line-height:23px;color:rgb(148,148,148)"
                   >删除</span>
                 </div>
@@ -72,7 +72,7 @@
         <flexbox-item :span="1">
           <div style="display:block;padding-bottom:20px;padding-right:10px;">
             <img
-              src="static/img/stock/address/uncheck.png"
+              src="/static/img/stock/address/uncheck.png"
               style="width:auto;height:auto;max-width:100%;max-height:100%; "
             >
           </div>
@@ -94,7 +94,7 @@
               <flexbox-item :span="3">
                 <div
                   style="border-style:solid;border-color:rgb(180,180,180);border-width:1px;width:55px;text-align:center"
-                ><img src="static/img/stock/address/edit.png" style="vertical-align:middle;width:12px;height:12px"><span
+                ><img src="/static/img/stock/address/edit.png" style="vertical-align:middle;width:12px;height:12px"><span
                     style="margin-left:5px;font-size:12px;font-family:'黑体','Heiti SC','Droidsansfallback';line-height:23px;color:rgb(148,148,148)"
                   >编辑</span>
                 </div>
@@ -102,7 +102,7 @@
               <flexbox-item :span="3">
                 <div
                   style="border-style:solid;border-color:rgb(180,180,180);border-width:1px;width:55px;text-align:center"
-                ><img src="static/img/stock/address/delete.png" style="vertical-align:middle;width:12px;height:12px"><span
+                ><img src="/static/img/stock/address/delete.png" style="vertical-align:middle;width:12px;height:12px"><span
                     style="margin-left:5px;font-size:12px;font-family:'黑体','Heiti SC','Droidsansfallback';line-height:23px;color:rgb(148,148,148)"
                   >删除</span>
                 </div>

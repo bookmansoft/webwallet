@@ -18,7 +18,7 @@
         <flexbox-item :span="1">
           <div style="display:block;padding-left:10px;" @click="wxScanCode">
             <img
-              src="static/img/stock/send/scan.png"
+              src="/static/img/stock/send/scan.png"
               style="width:auto;height:auto;max-width:100%;max-height:100%; "
             >
           </div>

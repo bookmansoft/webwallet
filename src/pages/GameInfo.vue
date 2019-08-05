@@ -30,7 +30,7 @@
         <group title="长按二维码进入游戏">
         <div style="text-align:center; padding:15px;">
             <qrcode :value="gameWexQrcode" type="img" @touchstart.native="previewImage"></qrcode>
-            <img src="static/img/grcode.png" @click="previewImage" style="width:200px; height:200px;" />
+            <img src="/static/img/grcode.png" @click="previewImage" style="width:200px; height:200px;" />
           <img :src="image" :data-src="image" @click="previewImage" style="width:200px; height:200px;" />
         </div>   
         </group>

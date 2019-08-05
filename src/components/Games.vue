@@ -63,7 +63,7 @@
       <br>
     </div>
     <div v-if="isLoadMore && gameList.length==0 && showNoData==true">
-      <no-data src="static/img/default/no-games.png"></no-data>
+      <no-data src="/static/img/default/no-games.png"></no-data>
     </div>
     <div v-if="!isLoadMore">
       <load-more tip="正在加载" style="position: relative; top:200px;" :show-loading="!isLoadMore"></load-more>
@@ -128,7 +128,7 @@ export default {
       isActive: false,
       recommendGame: {
         gameTitle: "奔跑的悟空",
-        src: "static/img/game/game-3.jpg",
+        src: "/static/img/game/game-3.jpg",
         gameProvider: "原石互娱"
       },
     };

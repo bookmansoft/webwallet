@@ -54,7 +54,7 @@
           <flexbox-item :span="4"></flexbox-item>
           <flexbox-item :span="1">
             <div style="display:block;text-align:right" @click="onBuyNumChange(-1)">
-              <img src="static/img/stock/order/minus.png" style="width:14px;height:14px">
+              <img src="/static/img/stock/order/minus.png" style="width:14px;height:14px">
             </div>
           </flexbox-item>
           <flexbox-item :span="1">
@@ -66,7 +66,7 @@
           </flexbox-item>
           <flexbox-item :span="1">
             <div style="display:block;text-align:left" @click="onBuyNumChange(1)">
-              <img src="static/img/stock/order/plus.png" style="width:14px;height:14px">
+              <img src="/static/img/stock/order/plus.png" style="width:14px;height:14px">
             </div>
           </flexbox-item>
           <flexbox-item :span="2"></flexbox-item>
@@ -98,14 +98,14 @@
       <flexbox class="cell">
         <flexbox-item :span="3">
           <div style="display:block;text-align:left;">
-            <img src="static/img/stock/order/wechat_logo.png" style="width:22px;height:19px">
+            <img src="/static/img/stock/order/wechat_logo.png" style="width:22px;height:19px">
             <span style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(50,58,69);vertical-align:top;">微信支付</span>
           </div>
         </flexbox-item>
         <flexbox-item :span="4"></flexbox-item>
         <flexbox-item :span="3">
           <div style="display:block;text-align:right">
-            <img src="static/img/stock/order/wechat_ok.png" style="width:14px;height:14px">
+            <img src="/static/img/stock/order/wechat_ok.png" style="width:14px;height:14px">
           </div>
         </flexbox-item>
         <flexbox-item :span="2"></flexbox-item>

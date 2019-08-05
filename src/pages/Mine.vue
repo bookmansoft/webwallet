@@ -9,7 +9,7 @@
           <img :src="userBase.avatar_uri" style="width:61px;height:61px;">
         </div>
         <div style="display:block;postion:relative;margin-top:-61px">
-          <img src="static/img/stock/mine/star.png" style="width:61px;height:61px;">
+          <img src="/static/img/stock/mine/star.png" style="width:61px;height:61px;">
         </div>
         <div style="display:block">
           <span style="font-size:18px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(255,255,255);">{{this.userBase.name}}</span>
@@ -18,41 +18,41 @@
     </div>
     <!-- 正常代码区域 -->
     <div style="display:block" class="nospace">
-      <img src="static/img/stock/mine/top.png" style="width:auto;height:auto;max-width:100%;max-height:100%">
+      <img src="/static/img/stock/mine/top.png" style="width:auto;height:auto;max-width:100%;max-height:100%">
     </div>
     <flexbox :gutter="0" class="nospace" style="margin-top:-3px;margin-bottom:-3px">
       <flexbox-item :span="2">
         <div style="display:block">
-          <img src="static/img/stock/mine/left.png" style="width:100%;height:100px;">
+          <img src="/static/img/stock/mine/left.png" style="width:100%;height:100px;">
         </div>
       </flexbox-item>
       <flexbox-item :span="2">
         <div style="display:block" align="center" @click="mywallet()">
-          <img src="static/img/stock/mine/mywallet.png" style="width:51px;height:56px;">
+          <img src="/static/img/stock/mine/mywallet.png" style="width:51px;height:56px;">
         </div>
       </flexbox-item>
       <flexbox-item :span="1"></flexbox-item>
       <flexbox-item :span="2">
         <div style="display:block" align="center" @click="mystock()">
-          <img src="static/img/stock/mine/dingding.png" style="width:51px;height:56px;">
+          <img src="/static/img/stock/mine/dingding.png" style="width:51px;height:56px;">
         </div>
       </flexbox-item>
       <flexbox-item :span="1"></flexbox-item>
       <flexbox-item :span="2">
         <div style="display:block" align="center" @click="about()">
-          <img src="static/img/stock/mine/about.png" style="width:51px;height:56px;">
+          <img src="/static/img/stock/mine/about.png" style="width:51px;height:56px;">
         </div>
       </flexbox-item>
       <flexbox-item :span="2">
         <div style="display:block">
-          <img src="static/img/stock/mine/right.png" style="width:100%;height:100px;">
+          <img src="/static/img/stock/mine/right.png" style="width:100%;height:100px;">
         </div>
       </flexbox-item>
     </flexbox>
 
     <div style="display:block" class="nospace">
       <img
-        src="static/img/stock/mine/bottom.png"
+        src="/static/img/stock/mine/bottom.png"
         style="width:auto;height:auto;max-width:100%;max-height:100%"
       >
     </div>
@@ -74,7 +74,7 @@
         <span slot="title">
           <span style="vertical-align:middle;">{{item.title}}</span>
           <badge :text="item.badge" v-if="item.badge > 0"></badge>
-          <img src="static/img/member/shot.png" style="width: 8px; height:8px; position: relative; left:-2px; top:0px;" v-if="item.showDot==true" />
+          <img src="/static/img/member/shot.png" style="width: 8px; height:8px; position: relative; left:-2px; top:0px;" v-if="item.showDot==true" />
         </span>
         <img slot="icon" width="20" style="display:block;margin-right:5px;" :src="item.img">
       </cell>
@@ -84,7 +84,7 @@
         <span slot="title">
           <span style="vertical-align:middle;">{{item.title}}</span>
           <badge :text="item.badge" v-if="item.badge > 0"></badge>
-          <img src="static/img/member/shot.png" style="width: 8px; height:8px; position: relative; left:-2px; top:0px;" v-if="item.showDot==true" />
+          <img src="/static/img/member/shot.png" style="width: 8px; height:8px; position: relative; left:-2px; top:0px;" v-if="item.showDot==true" />
         </span>
         <img slot="icon" width="20" style="display:block;margin-right:5px;" :src="item.img">
       </cell>
@@ -115,7 +115,7 @@ const getItems0 = () => [
   {
     title: "会员",
     is_link: true,
-    img: "static/img/icon1/4.png",
+    img: "/static/img/icon1/4.png",
     badge: 0,
     link: "/member",
     value: "",
@@ -124,7 +124,7 @@ const getItems0 = () => [
   {
     title: "红包活动",
     is_link: true,
-    img: "static/img/icon3/market3.png",
+    img: "/static/img/icon3/market3.png",
     badge: 0,
     link: "/redpack/act",
     value: "限时抽红包",
@@ -135,7 +135,7 @@ const getItems1 = () => [
   {
     title: "我的钱包",
     is_link: true,
-    img: "static/img/mine/wallet.png",
+    img: "/static/img/mine/wallet.png",
     badge: 0,
     link: { path: "/wallet" },
     value: "",
@@ -144,7 +144,7 @@ const getItems1 = () => [
   {
     title: "我的道具",
     is_link: true,
-    img: "static/img/mine/prop.png",
+    img: "/static/img/mine/prop.png",
     badge: 0,
     link: { path: "/props" },
     value: "",
@@ -153,7 +153,7 @@ const getItems1 = () => [
   {
     title: "我的消息",
     is_link: true,
-    img: "static/img/mine/msg.png",
+    img: "/static/img/mine/msg.png",
     badge: 0,
     link: { path: "/message" },
     value: "",
@@ -163,7 +163,7 @@ const getItems1 = () => [
   {
     title: "我的游戏",
     is_link: true,
-    img: "static/img/mine/game.png",
+    img: "/static/img/mine/game.png",
     badge: 0,
     link: { path: "/mygame" },
     value: "",
@@ -172,7 +172,7 @@ const getItems1 = () => [
   {
     title: "我的代练宝宝",
     is_link: true,
-    img: "static/img/mine/stock.png",
+    img: "/static/img/mine/stock.png",
     badge: 0,
     link: { path: "/crowd/my" },
     value: "",
@@ -185,7 +185,7 @@ const getItems2 = () => [
   {
     title: "关于我们",
     is_link: true,
-    img: "static/img/mine/about.png",
+    img: "/static/img/mine/about.png",
     badge: 0,
     link: { path: "/about" },
     value: ""
@@ -227,7 +227,7 @@ export default {
     getNotify() {
       if (!!this.userBase && this.userBase.vl > 0) {
         this.items0[0].value = "产币加速中";
-        this.items0[0].img = "static/img/member/Vip" + this.userBase.vl + ".png";
+        this.items0[0].img = "/static/img/member/Vip" + this.userBase.vl + ".png";
         let current_time = parseInt(new Date().getTime() / 1000);
         if (this.gamegold.toKg(this.userBase.vcur) >= 10) {
           this.items0[0].showDot = true;

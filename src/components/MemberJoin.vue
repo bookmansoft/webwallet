@@ -4,7 +4,7 @@
 <template>
   <div>
     <div style="padding:15px 15px 0px 15px;">
-        <img src="static/img/member/vip_6yuan.png" style="width:100%;height:auto;" />
+        <img src="/static/img/member/vip_6yuan.png" style="width:100%;height:auto;" />
     </div>
     <div><p style="text-align:center;width:100%;background-color: white;padding-top:5px;">
         <span style="color:#CC9900; font-size:16px;font-weight:620;">会员特权</span></p>

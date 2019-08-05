@@ -5,7 +5,7 @@
 -->
 <template>
   <div>
-    <card :header="{title: gameGold}">
+    <card :header="{title: gamegold.gameGoldAccount}">
       <div slot="content" class="card-demo-flex card-demo-content01">
         <div class="vux-1px-r confirm">
           已确认:{{balance.confirmed}}{{this.gamegold.gameGoldUnit}}
@@ -27,7 +27,6 @@ export default {
   },
   data () {
     return {
-      gameGold: '游戏金',
     }
   },
   computed:{

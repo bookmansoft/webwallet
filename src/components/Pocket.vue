@@ -24,7 +24,7 @@
     </div>
 
     <div v-if="isLoadMore && pocketItems.length==0 && showNoData==true">
-      <no-data src="static/img/default/no-games.png"></no-data>
+      <no-data src="/static/img/default/no-games.png"></no-data>
     </div>
     <div v-if="!isLoadMore">
       <load-more tip="正在加载" style="position: relative; top:250px;" :show-loading="!isLoadMore"></load-more>

@@ -42,7 +42,7 @@
             <flexbox>
               <flexbox-item :span="12">
                 <div class="flex-left">
-                  <img src="static/img/stock/hot_line.png" style="width:3px;height:13px">
+                  <img src="/static/img/stock/hot_line.png" style="width:3px;height:13px">
                   <span style="font-size:15px;">热门众筹</span>
                 </div>
               </flexbox-item>
@@ -51,7 +51,7 @@
 
           <div style="margin-top:-30px">
             <div class="flex-left" style="position: relative;top:45px;left:-5px">
-              <img src="static/img/stock/ren_qi.png" style="width:100px;height:27px">
+              <img src="/static/img/stock/ren_qi.png" style="width:100px;height:27px">
             </div>
             <div v-for="(item, index) in crowdItems" :key="index" class="crowdItem">
               <div style="padding: 10px;" v-on:click="crowdDetail(item)">
@@ -68,7 +68,7 @@
                   <flexbox-item :span="1">
                     <div class="flex-left">
                       <span style="font-size:15px;">
-                        <img src="static/img/stock/headimg.png" style="width:22px;height:22px">
+                        <img src="/static/img/stock/headimg.png" style="width:22px;height:22px">
                       </span>
                     </div>
                   </flexbox-item>
@@ -90,19 +90,19 @@
                 <flexbox style="height:40px;line-height:40px;">
                   <flexbox-item :span="4">
                     <div class="flex-left">
-                      <img src="static/img/stock/stock_jiner.png" style="width:15px;hegith:15px">
+                      <img src="/static/img/stock/stock_jiner.png" style="width:15px;hegith:15px">
                       <span style="color:coral; font-size:12px;">{{item.price}}千克</span>
                     </div>
                   </flexbox-item>
                   <flexbox-item :span="4">
                     <div class="flex-left">
-                      <img src="static/img/stock/stock_renshu.png" style="width:15px;hegith:15px">
+                      <img src="/static/img/stock/stock_renshu.png" style="width:15px;hegith:15px">
                       <span style="font-size:12px;">{{item.supply_people_num}}</span>
                     </div>
                   </flexbox-item>
                   <flexbox-item :span="4">
                     <div class="flex-left">
-                      <img src="static/img/stock/stock_shichang.png" style="width:15px;hegith:15px">
+                      <img src="/static/img/stock/stock_shichang.png" style="width:15px;hegith:15px">
                       <span style="font-size:12px;">{{`${item.percent2}%`}}</span>
                     </div>
                   </flexbox-item>
@@ -115,7 +115,7 @@
     </div>
 
     <div v-if="isLoadMore && crowdItems.length==0 && showNoData==true">
-      <no-data src="static/img/default/no-games.png"></no-data>
+      <no-data src="/static/img/default/no-games.png"></no-data>
     </div>
     <div v-if="!isLoadMore">
       <load-more tip="正在加载" style="position: relative; top:250px;" :show-loading="!isLoadMore"></load-more>
