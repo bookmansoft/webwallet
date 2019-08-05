@@ -168,7 +168,7 @@ export default {
         this.remote.fetching({
           func: "ListRecord",
           control: "manyreceive",
-          receive_uid: this.GLOBAL.userBase.uid,
+          receive_uid: this.global.userBase.uid,
         }).then(res => {
           this.receiveData = res.data.list;
         });
@@ -176,7 +176,7 @@ export default {
         this.remote.fetching({
           func: "ListRecord",
           control: "manysend",
-          send_uid: this.GLOBAL.userBase.uid,
+          send_uid: this.global.userBase.uid,
         }).then(res => {
           this.sendData = res.data.list;
         });

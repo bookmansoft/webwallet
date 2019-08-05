@@ -229,7 +229,7 @@ export default {
         this.items0[0].value = "产币加速中";
         this.items0[0].img = "static/img/member/Vip" + this.userBase.vl + ".png";
         let current_time = parseInt(new Date().getTime() / 1000);
-        if (this.GLOBAL.toGamegoldKg(this.userBase.vcur) >= 10) {
+        if (this.gamegold.toKg(this.userBase.vcur) >= 10) {
           this.items0[0].showDot = true;
         } else {
           this.items0[0].showDot = false;
@@ -266,10 +266,10 @@ export default {
     }
   },
   created() {
-    if(!this.GLOBAL.userBase.uid) {
+    if(!this.global.userBase.uid) {
       this.$router.push('/login');
     } else {
-      this.userBase = this.GLOBAL.userBase;
+      this.userBase = this.global.userBase;
       console.log(this.userBase.avatar_uri);
       this.getNotify();
     }

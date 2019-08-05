@@ -41,10 +41,10 @@
                     <flexbox-item>
                         <div style="padding-left:6px;">
                           <p><span style="font-size:15px;">{{item.title}}</span></p>
-                          <p><span style="color: coral; font-size:14px;">持有 {{item.sum}} 个, 平均成本 {{parseFloat(item.price/GLOBAL.base.kg).toFixed(3)}} 千克</span></p>
+                          <p><span style="color: coral; font-size:14px;">持有 {{item.sum}} 个, 平均成本 {{parseFloat(item.price/gamegold.unit.kg).toFixed(3)}} 千克</span></p>
                         </div>
                         <div style="padding-left:6px;" v-if="item.sell_sum>0">
-                          <p><span style="color: #888; font-size:13px;">挂单量 {{item.sell_sum}} 挂单价 {{parseFloat(item.sell_price/GLOBAL.base.kg).toFixed(3)}} 千克</span></p>
+                          <p><span style="color: #888; font-size:13px;">挂单量 {{item.sell_sum}} 挂单价 {{parseFloat(item.sell_price/gamegold.unit.kg).toFixed(3)}} 千克</span></p>
                           <p><span style="color: #888; font-size:13px;">截止时间 {{item.validtime}}</span></p>
                         </div>
                     </flexbox-item>
@@ -160,7 +160,7 @@ export default {
      */
     queryList(page, flash) {
       if(!!flash) {
-        this.GLOBAL.stocklist = [];
+        this.global.stocklist = [];
         this.localItems = [];
         this.curPage = 0;
       }
@@ -172,14 +172,14 @@ export default {
 
       console.log(`localPages:${localPages}, page:${page}`);
       if(localPages < page) {
-        let cachePages = (this.GLOBAL.stocklist.length/10)|0 + 1;
-        if(this.GLOBAL.stocklist.length%10==0) {
+        let cachePages = (this.global.stocklist.length/10)|0 + 1;
+        if(this.global.stocklist.length%10==0) {
           cachePages--;
         }
 
         if(cachePages > page) {
           let idx = 0;
-          for(let element of this.GLOBAL.stocklist) {
+          for(let element of this.global.stocklist) {
             if(idx < (page-1)*10) continue;
             if(idx > page*10) break;
 
@@ -200,12 +200,12 @@ export default {
                 this.curPage = qryPage;
                 
                 res.data.list.forEach(item => {
-                  item.validtime = this.GLOBAL.formatDateStr(new Date(Date.parse(new Date()) - (res.data.height - item.period)*600*1000), 'yyyy-MM-dd HH:mm:ss');
+                  item.validtime = this.utils.formatDateStr(new Date(Date.parse(new Date()) - (res.data.height - item.period)*600*1000), 'yyyy-MM-dd HH:mm:ss');
 
                   //将查询到的条目放入当前缓存
                   this.localItems.push(item);
                   //将查询到的条目放入全局缓存，这样下次进入该页面时就不用网络请求了
-                  this.GLOBAL.stocklist.push(item);
+                  this.global.stocklist.push(item);
                 });
                 console.log('MyStock', this.localItems);
               } else {

@@ -31,7 +31,7 @@ export default {
       }
   },
   created() {
-    this.GLOBAL.ConfigMgr.get('gameCategory', (err, config)=>{
+    this.ConfigMgr.get('gameCategory', (err, config)=>{
       if(!err) {
         this.gameCategory = config;
       }

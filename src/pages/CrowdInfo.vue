@@ -284,7 +284,7 @@ export default {
   },
   created() {
     this.item = this.$route.params.item;
-    this.baseConfig = this.GLOBAL.base;
+    this.baseConfig = this.gamegold.unit;
     if(!this.item) {
       this.$router.push("/crowds")
     } else {

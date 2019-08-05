@@ -18,7 +18,6 @@
 </template> 
 <script>
 import {XHeader, XButton, Group, Cell, Flexbox, FlexboxItem, TransferDomDirective as TransferDom } from 'vux'
-import { introduce , gameNameImg , gameProps} from "../assets/js/gameName.js"
 import { setTimeout } from 'timers';
 
 export default {
@@ -40,17 +39,17 @@ export default {
     },
     //游戏详情
     introduce() { 
-        introduce()
+        this.utils.introduce();
     },
 
     //游戏截图
     gameNameImg() { 
-        gameNameImg() 
+        this.utils.gameNameImg();
     },
 
     //获取道具
     gameProps() { 
-        gameProps() 
+        this.utils.gameProps();
     },
 
     showPlugin(msg) {

@@ -159,7 +159,7 @@ export default {
     //在此集中取消不再需要的监听事件，避免不当持有造成的内存泄漏
   },
   created() {
-    if(!this.GLOBAL.userBase.uid) {
+    if(!this.global.userBase.uid) {
         this.$router.push('/login');
     } else if(!this.$route.params.order) {
         this.$router.push('/mine')

@@ -48,7 +48,7 @@ export default {
 
                         element.src = element.icon;
                         element.title = element.props_name;
-                        element.desc = `出售价 ${this.GLOBAL.toGamegoldKg(element.bid.fixed)}千克, 含金量 ${this.GLOBAL.toGamegoldKg(element.bid.value)}千克`;
+                        element.desc = `出售价 ${this.gamegold.toKg(element.bid.fixed)}千克, 含金量 ${this.gamegold.toKg(element.bid.value)}千克`;
 
                         this.propList.push(element);
                     });

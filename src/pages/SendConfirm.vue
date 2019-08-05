@@ -147,12 +147,12 @@ export default {
       }).then(res => {
         let that = this;
         if (res.code != 0) {
-          this.GLOBAL.myAlert(
+          this.utils.myAlert(
             this.$vux.alert,
             "发送失败，请确认接收地址是否正确"
           );
         } else {
-          this.GLOBAL.myAlert(this.$vux.alert, "发送成功", null, function() {
+          this.utils.myAlert(this.$vux.alert, "发送成功", null, function() {
             that.$router.push("/wallet/detail");
           });
         }
@@ -163,7 +163,7 @@ export default {
   created() {
     this.sender = {
       amount : this.$route.params.amount,
-      actAmount: this.GLOBAL.toGamegoldOrigin(this.$route.params.amount),
+      actAmount: this.gamegold.toAtom(this.$route.params.amount),
       fee: this.$route.params.fee,
       address: this.$route.params.address,
     };

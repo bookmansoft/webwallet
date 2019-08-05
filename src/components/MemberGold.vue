@@ -12,7 +12,7 @@
               <img :src="getVipImg(mine.vl)" class="imgDiv" />
             </div>
             <div>
-              <p>会员有效期至：{{this.GLOBAL.formatDateStr(new Date(mine.vet*1000), 'yyyy年MM月dd日')}}</p>
+              <p>会员有效期至：{{this.utils.formatDateStr(new Date(mine.vet*1000), 'yyyy年MM月dd日')}}</p>
             </div>
         </div>
       </div>
@@ -20,7 +20,7 @@
         <flexbox>
           <flexbox-item :span="7">
               <div class="flex-demo2">
-                  <div>未提取: <span class="drawGold">{{this.GLOBAL.toGamegoldKg(gold)}}</span>千克</div>
+                  <div>未提取: <span class="drawGold">{{this.gamegold.toKg(gold)}}</span>千克</div>
                   <div><p>满10千克可提到钱包</p></div>
               </div>
           </flexbox-item>
@@ -79,7 +79,7 @@ export default {
         return;
       }
 
-      this.percent = Math.min(100, (this.GLOBAL.toGamegoldKg(this.gold) / 10.0 * 100) | 0);
+      this.percent = Math.min(100, (this.gamegold.toKg(this.gold) / 10.0 * 100) | 0);
 
       if(!!this.timer) {
         clearInterval(this.timer);
@@ -90,8 +90,8 @@ export default {
           let _now = Date.parse(new Date())/1000;
           this.gold += (_now - this.refreshTime) * this.cfg[this.mine.vl].time_get_count;
           this.refreshTime = _now;
-          this.percent = Math.min(100, (this.GLOBAL.toGamegoldKg(this.gold) / 10.0 * 100) | 0);
-          console.log(this.gold, this.GLOBAL.toGamegoldKg(this.gold), this.percent);
+          this.percent = Math.min(100, (this.gamegold.toKg(this.gold) / 10.0 * 100) | 0);
+          console.log(this.gold, this.gamegold.toKg(this.gold), this.percent);
         }
 　　　}, 5000);
       console.log('set Interval', this.timer);
@@ -113,7 +113,7 @@ export default {
                 if(self.checkRate(value)==false) {
                     self.showPluginAuto('输入无效数字');
                 } else {
-                    let draw_count = self.GLOBAL.toGamegoldOrigin(value);
+                    let draw_count = self.gamegold.toAtom(value);
                     if(value < 10) {
                       self.showPluginAuto('提取数量不能少于10千克')
                     } else if(draw_count > self.gold) {
@@ -176,7 +176,7 @@ export default {
   created() {
     this.mine.vcur = this.mine.vcur || 0;
 
-    this.GLOBAL.ConfigMgr.get('vip', (err, config)=>{ 
+    this.ConfigMgr.get('vip', (err, config)=>{ 
       this.cfg = config; 
 
       this.gold = this.mine.vcur || 0;

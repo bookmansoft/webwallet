@@ -53,7 +53,6 @@
 </template> 
 <script>
 import {XHeader, Flexbox, FlexboxItem, TransferDomDirective as TransferDom } from 'vux'
-import { introduce , gameNameImg , gameProps} from "../assets/js/gameName.js"
 
 export default {
   directives: {
@@ -128,18 +127,22 @@ export default {
     onBack() {
         this.$router.push('/props')
     },
+
     //游戏详情
     introduce() { 
-        introduce()
+        this.utils.introduce();
     },
+
     //游戏截图
     gameNameImg() { 
-        gameNameImg() 
+        this.utils.gameNameImg();
     },
+
     //获取道具
     gameProps() { 
-        gameProps() 
+        this.utils.gameProps();
     },
+
     showPlugin(msg) {
       this.$vux.alert.show({
         title: '提示',
@@ -175,7 +178,7 @@ export default {
                 if(that.checkRate(value)==false) {
                     that.showPluginAuto('请输入一个有效的出售价格')
                 } else {
-                    let amount = that.GLOBAL.toGamegoldOrigin(value)
+                    let amount = that.gamegold.toAtom(value)
                     that.propSale(amount)
                 }
             }
@@ -201,7 +204,7 @@ export default {
           //分享给朋友
           let title = '游戏金道具分享'
           let desc = prop.props_name //'T10自行反坦克车'
-          let link = that.GLOBAL.appConfig.siteUri + '/?path=/prop/receive'
+          let link = that.appConfig.siteUri + '/?path=/prop/receive'
           let imgUrl = prop.large_icon // 'http://114.116.148.48:9701/image/3/prop_large_icon.jpg' //prop.large_icon
           let params = JSON.stringify({
             title: title,

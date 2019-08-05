@@ -265,10 +265,10 @@ export default {
     calc() {
       if(this.crowdConfig[this.item.payType].stock > 0) {
         this.realPay = parseFloat(
-          this.item.price / this.GLOBAL.base.kg         //atom化为KG
+          this.item.price / this.gamegold.unit.kg         //atom化为KG
           * this.crowdConfig[this.item.payType].stock   //选项包含的凭证数量
           * this.quantity                               //选项数量
-          * this.GLOBAL.base.kgprice                    //KG单价
+          * this.gamegold.unit.kgprice                    //KG单价
         ).toFixed(2);
       } else {
         this.realPay = this.quantity;
@@ -281,7 +281,7 @@ export default {
       this.$router.push({ name: "Crowds" });
     } else {
       this.item = this.$route.params.item;
-      this.crowdConfig = this.GLOBAL.crowdConfig;
+      this.crowdConfig = this.global.crowdConfig;
       console.log('CrowdOrder', this.item);
       this.calc();
     }

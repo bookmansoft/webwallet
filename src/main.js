@@ -4,15 +4,16 @@ import Vue from 'vue'
 import FastClick from 'fastclick'
 import router from './router/index'
 import App from './App'
-import Vuex from 'vuex'
 import { WechatPlugin, AjaxPlugin, AlertPlugin, ToastPlugin, ConfirmPlugin  } from 'vux'
-import global_ from './Global'
-import utils from './assets/scripts/utils'
+import $global from './utils/global'
+import utils from './utils/func'
+import cfg from './config'
+import gamegold from './utils/gamegold'
 import VueWechatTitle from 'vue-wechat-title'
+import store from './store/index'
 
 FastClick.attach(document.body)
 Vue.config.productionTip = false
-Vue.use(Vuex)
 Vue.use(WechatPlugin)
 Vue.use(AjaxPlugin)
 Vue.use(AlertPlugin)
@@ -20,13 +21,59 @@ Vue.use(ToastPlugin)
 Vue.use(ConfirmPlugin)
 Vue.use(VueWechatTitle)
 
-Vue.prototype.GLOBAL = global_
-Vue.prototype.utils = utils
+Vue.prototype.global = $global;
+Vue.prototype.utils = utils;
+Vue.prototype.gamegold = gamegold;
 
-Vue.prototype.remote = global_.remote;
+//#region 通讯设置
+
+const remote = new toolkit.gameconn({
+  "UrlHead": cfg.UrlHead,
+  "webserver": { 
+      "host": cfg.Host,
+      "authPort": 9601,           //签证主机端口
+      "port": 9901
+  },
+});
+remote.setmode(remote.CommMode.ws);
+
+Vue.prototype.remote = remote;
+//#endregion
+
+//APP设置
+Vue.prototype.appConfig = {
+  appid: cfg.AppId,      //此项配置必须和服务端保持一致
+  siteUri: `${cfg.UrlHead}://${cfg.Host}`,
+};
+
+/**
+ * 配置信息管理
+ */
+const ConfigMgr = {
+  files: {},
+};
+ConfigMgr.get = (file, callback) => {
+  if(!ConfigMgr.files[file]) {
+    remote.fetching({func:'config.get', file: file}).then(res => {
+        if(res.code == 0) {
+          //获得指定配置表，放入全局缓存
+          ConfigMgr.files[file] = res.data;
+          callback(null, res.data);
+        } else {
+          callback(new Error(`error: ${res.code}`));
+        }
+    }).catch(e => {
+      callback(e);
+    })
+  } else {
+    callback(null, ConfigMgr.files[file]);
+  }
+}
+Vue.prototype.ConfigMgr = ConfigMgr;
 
 /* eslint-disable no-new */
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app-box')

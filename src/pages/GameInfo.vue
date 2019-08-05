@@ -83,7 +83,7 @@
                     <p>&nbsp;<p>
                     <p>{{item.props_desc}}</p>
                     <a class="gp-btn" @click="buyProp(item)">购买</a>
-                    <p class="color-red">{{GLOBAL.toGamegoldKg(item.props_price)}}千克</p>
+                    <p class="color-red">{{gamegold.toKg(item.props_price)}}千克</p>
                 </div>
             </div>
         </div>
@@ -103,7 +103,7 @@
                     <p><span style="color:#888;">{{item.content}}</span></p>
                     <p>&nbsp;</p>
                     <a class="gp-btn" @click="buyProp(item)">体验</a>
-                    <p class="color-red">{{GLOBAL.toGamegoldKg(item.props_price)}}千克</p>
+                    <p class="color-red">{{gamegold.toKg(item.props_price)}}千克</p>
                     <p style="text-align:right; width:100%;"><span style="color:#888;">{{item.timestamp}}</span></p>
                 </div>
             </div>
@@ -129,7 +129,6 @@
 </template> 
 <script>
 import {XHeader, Flexbox, FlexboxItem, Qrcode, Group, XInput, Tabbar, XButton } from 'vux'
-import { introduce , gameNameImg , gameProps} from "../assets/js/gameName.js"
 
 export default {
   components: {
@@ -176,17 +175,17 @@ export default {
 
     //游戏详情
     introduce() { 
-        introduce()
+        this.utils.introduce();
     },
 
     //游戏截图
     gameNameImg() { 
-        gameNameImg() 
+        this.utils.gameNameImg();
     },
 
     //获取道具
     gameProps() { 
-        gameProps() 
+        this.utils.gameProps();
     },
 
     // 时间转换
@@ -212,12 +211,12 @@ export default {
       this.remote.fetching({
         func:'GameCommentAdd', 
         control: 'comments', 
-        openid: this.GLOBAL.openid, 
-        uid: this.GLOBAL.uid,
+        openid: this.global.openid, 
+        uid: this.global.uid,
         cid: this.cpInfo.cpid,
         reply_id: 0,
-        nick: this.GLOBAL.userBase.nickname,
-        avatar_url: this.GLOBAL.userBase.avatar_uri,
+        nick: this.global.userBase.nickname,
+        avatar_url: this.global.userBase.avatar_uri,
         title: '',
         content: this.msgInput
       }).then(res => {
@@ -228,7 +227,7 @@ export default {
                 avatar: data.avatar_url,
                 nick: data.nick,
                 content: data.content,
-                timestamp: this.GLOBAL.formatDateStr(new Date(current_time*1000), 'yyyy-MM-dd HH:mm'),
+                timestamp: this.utils.formatDateStr(new Date(current_time*1000), 'yyyy-MM-dd HH:mm'),
                 create_at: current_time,
              })
              this.sortCommentList()
@@ -276,14 +275,14 @@ export default {
     },
 
     buyProp(item) {
-        if(this.cpAddr == '' || !this.GLOBAL.userBase.uid) {
+        if(this.cpAddr == '' || !this.global.userBase.uid) {
             return;
         }
 
         /*
         let cid = this.cpInfo.cpid
-        let uid = this.GLOBAL.openid
-        let notifyurl = this.GLOBAL.apiUrl
+        let uid = this.global.openid
+        let notifyurl = this.global.apiUrl
         let order_sn = item.id + '-new-' + this.randomString(16)
         let price = item.props_price
         var url = "/pages/order/order?cid=" + cid + "&uid=" + uid + "&sn=" + order_sn;
@@ -322,7 +321,7 @@ export default {
                 avatar: element.avatar_url,
                 nick: element.nick,
                 content: element.content,
-                timestamp: this.GLOBAL.formatDateStr(new Date(element.create_at*1000), 'yyyy-MM-dd HH:mm'),
+                timestamp: this.utils.formatDateStr(new Date(element.create_at*1000), 'yyyy-MM-dd HH:mm'),
                 create_at: element.create_at,
               })
             });
@@ -341,7 +340,7 @@ export default {
     },
 
     userToken() {
-        if(this.GLOBAL.uid == 0) {
+        if(this.global.uid == 0) {
             return;
         }
         this.remote.fetching({func:'cp.UserToken', cid: this.cpInfo.cpid}).then(res => {

@@ -185,7 +185,7 @@ export default {
       console.log(`query pocket: ${page}`);
 
       if(!!flash) {
-        this.GLOBAL.pocketlist = [];
+        this.global.pocketlist = [];
         this.pocketItems = [];
         this.curPage = 0;
       }
@@ -195,8 +195,8 @@ export default {
         curPage--;
       }
       if(curPage < page) {
-        let totalPage = (this.GLOBAL.pocketlist.length/10)|0 + 1;
-        if(this.GLOBAL.pocketlist.length%10==0) {
+        let totalPage = (this.global.pocketlist.length/10)|0 + 1;
+        if(this.global.pocketlist.length%10==0) {
           totalPage--;
         }
 
@@ -206,7 +206,7 @@ export default {
           this.curPage++;
 
           let idx = 0;
-          for(let element of this.GLOBAL.pocketlist) {
+          for(let element of this.global.pocketlist) {
             if(idx < (page-1)*10) continue;
             if(idx > page*10) break;
 

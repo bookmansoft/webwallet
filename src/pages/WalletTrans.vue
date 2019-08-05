@@ -43,6 +43,9 @@ export default {
       btc: ''
     }
   },
+  computed:{
+    balance() {return this.$store.state.gamegold.balance},
+  },
   methods: {
       onBack() {
         this.$router.push('/wallet')
@@ -54,25 +57,24 @@ export default {
         this.contractCreate()
       },
       checkSend() {
-        const confirmed = this.$refs.balance.getConfirmed()
         let sendGold = !!this.number ? this.number : 0
         let btcGold = !!this.btc ? this.btc : 0
         if(sendGold == 0) {
-          this.GLOBAL.myAlert(this.$vux.alert, '输入出售数量')
+          this.utils.myAlert(this.$vux.alert, '输入出售数量')
           return false
-        } else if(sendGold > confirmed) {
-          this.GLOBAL.myAlert(this.$vux.alert, '出售游戏金大于你当前可用总数')
+        } else if(sendGold > this.balance.confirmed) {
+          this.utils.myAlert(this.$vux.alert, '出售游戏金大于你当前可用总数')
           return false
         }
         if(this.address == '') {
-          this.GLOBAL.myAlert(this.$vux.alert, '请输入BTC地址')
+          this.utils.myAlert(this.$vux.alert, '请输入BTC地址')
           return false
-        } else if(this.GLOBAL.checkAddr(this.address)==false) {
-          this.GLOBAL.myAlert(this.$vux.alert, '无效接收地址')
+        } else if(this.global.checkAddr(this.address)==false) {
+          this.utils.myAlert(this.$vux.alert, '无效接收地址')
           return false
         }
         if(btcGold == 0) {
-          this.GLOBAL.myAlert(this.$vux.alert, '输入BTC数量')
+          this.utils.myAlert(this.$vux.alert, '输入BTC数量')
           return false
         } 
         return true
@@ -83,14 +85,14 @@ export default {
             func:'ContractCreate', 
             control: 'contract',
             ntype: 1,
-            num: this.GLOBAL.toGamegoldOrigin(this.number),
+            num: this.gamegold.toAtom(this.number),
             btc: this.btc * 100000000,
             addr: this.address,
           }).then(res => {
             if (res.code != 0) {
-                this.GLOBAL.myAlert(this.$vux.alert, "发布失败，请确认BTC接收地址是否正确");
+                this.utils.myAlert(this.$vux.alert, "发布失败，请确认BTC接收地址是否正确");
             } else {
-                this.GLOBAL.myAlert(this.$vux.alert, '发布成功', null, function() {
+                this.utils.myAlert(this.$vux.alert, '发布成功', null, function() {
                 that.$router.push('/wallet/detail')
               })
             }

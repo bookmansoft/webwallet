@@ -227,7 +227,7 @@ export default {
       console.log(`query page: ${page}`);
 
       if(!!flash) {
-        this.GLOBAL.crowdlist = [];
+        this.global.crowdlist = [];
         this.crowdItems = [];
         this.curPage = 0;
       }
@@ -237,8 +237,8 @@ export default {
         curPage--;
       }
       if(curPage < page) {
-        let totalPage = (this.GLOBAL.crowdlist.length/10)|0 + 1;
-        if(this.GLOBAL.crowdlist.length%10==0) {
+        let totalPage = (this.global.crowdlist.length/10)|0 + 1;
+        if(this.global.crowdlist.length%10==0) {
           totalPage--;
         }
 
@@ -246,7 +246,7 @@ export default {
           this.curPage++;
 
           let idx = 0;
-          for(let element of this.GLOBAL.crowdlist) {
+          for(let element of this.global.crowdlist) {
             if(idx < (page-1)*10) continue;
             if(idx > page*10) break;
 
@@ -270,7 +270,7 @@ export default {
                   cpItem.percent2 = ((cpItem.sum -cpItem.sum_left) * 100 / cpItem.sum) | 0;
                   cpItem.pic_urls = JSON.parse(cpItem.pic_urls);
                   this.crowdItems.push(cpItem);
-                  this.GLOBAL.crowdlist.push(cpItem);
+                  this.global.crowdlist.push(cpItem);
                 });
               } else {
                 //没有新的数据了，禁止继续下拉

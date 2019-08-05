@@ -70,39 +70,54 @@ export default {
     async afterLogin() {
       if(this.remote.status.check(this.remote.CommStatus.logined)) {
         //#region 登录成功后，客户端缓存的、供客户端显性调用的认证信息对象
-        this.GLOBAL.userBase = this.remote.userInfo;
-        this.GLOBAL.userBase.uid = this.remote.userInfo.id;
-        this.GLOBAL.userBase.user_name = this.remote.userInfo.name;
-        this.GLOBAL.userBase.nickname = this.remote.userInfo.name;
+        this.global.userBase = this.remote.userInfo;
+        this.global.userBase.uid = this.remote.userInfo.id;
+        this.global.userBase.user_name = this.remote.userInfo.name;
+        this.global.userBase.nickname = this.remote.userInfo.name;
+
+        this.$store.commit('balanceChanged', {
+          confirmed: this.gamegold.toKg(this.global.userBase.confirmed), 
+          unconfirmed: this.gamegold.toKg(this.global.userBase.unconfirmed - this.global.userBase.confirmed),
+        });
         //#endregion
 
-        this.GLOBAL.ConfigMgr.get('base', (err, config)=>{ 
+        this.ConfigMgr.get('base', (err, config)=>{ 
           if(!err) {
-            this.GLOBAL.base = config;
+            this.gamegold.unit = config;
           }
         });
 
-        //监测VIP等级变化 - 此段代码写在 GLOBAL 文件中无效，尚不明白其中原因
+        //监测账户余额变化
+        this.remote.watch((info) => {
+          this.global.userBase.confirmed = info.confirmed;
+          this.global.userBase.unconfirmed = info.unconfirmed;
+          this.$store.commit('balanceChanged', {
+            confirmed: this.gamegold.toKg(info.confirmed), 
+            unconfirmed: this.gamegold.toKg(info.unconfirmed - info.confirmed),
+          });
+        }, 911001);
+        
+        //监测VIP等级变化
         this.remote.watch(info => {
           console.log('vip changed:', info.vl, info.vcur);
-          if(!!this.GLOBAL.userBase.uid) {
-            this.GLOBAL.userBase.vl = info.vl;
-            this.GLOBAL.userBase.vst = info.vst;
-            this.GLOBAL.userBase.vet = info.vet;
-            this.GLOBAL.userBase.vlg = info.vlg;
-            this.GLOBAL.userBase.vcur = info.vcur || 0;
+          if(!!this.global.userBase.uid) {
+            this.global.userBase.vl = info.vl;
+            this.global.userBase.vst = info.vst;
+            this.global.userBase.vet = info.vet;
+            this.global.userBase.vlg = info.vlg;
+            this.global.userBase.vcur = info.vcur || 0;
           }
         }, 911002);
 
         //获取微信令牌
-        let res = await this.remote.fetching({func: "wechat.WechatConfig", uri: this.GLOBAL.appConfig.siteUri});
+        let res = await this.remote.fetching({func: "wechat.WechatConfig", uri: this.appConfig.siteUri});
         if (res.code == 0) {
           this.$wechat.config(res.data);
         } else {
           throw new Error(`WechatConfig Error: ${res.code}`);
         }
         
-        console.log('after login', this.GLOBAL.userBase);
+        console.log('after login', this.global.userBase);
         this.gotoHome();
       } else {
         throw(new Error('登录失败'));
@@ -119,7 +134,7 @@ export default {
   async created() {
     this.urlParamPath = this.utils.getUrlKey('path');
     let userAgent = this.checkUserAgent();
-    this.GLOBAL.userBase.userAgent = userAgent;
+    this.global.userBase.userAgent = userAgent;
 
     //#region Modified by liub 2019.06.13
     try {
@@ -141,11 +156,11 @@ export default {
           await this.remote.setUserInfo({openkey: openkey, token: token}).getToken();
         } else {
           setTimeout(()=>{ 
-            let redirect_uri = this.GLOBAL.appConfig.siteUri;
+            let redirect_uri = this.global.appConfig.siteUri;
             if (location.search.indexOf("?") == 0 && location.search.indexOf("=") > 1) {
               redirect_uri = redirect_uri + location.search;
             }
-            let url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${this.GLOBAL.appConfig.appid}&redirect_uri=${encodeURIComponent(redirect_uri)}&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect`;
+            let url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${this.appConfig.appid}&redirect_uri=${encodeURIComponent(redirect_uri)}&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect`;
             window.location.href = url;
           }, 2000); //发生错误时，两秒后跳回微信授权页面，重新拉取授权码
           return;

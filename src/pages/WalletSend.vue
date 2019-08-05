@@ -175,7 +175,7 @@ export default {
         },
         fail: function(res) {
           console.log(res);
-          that.GLOBAL.myAlert(that.$vux.alert, `地址扫描失败${JSON.stringify(res)}`);
+          that.utils.myAlert(that.$vux.alert, `地址扫描失败${JSON.stringify(res)}`);
         }
       });
     },
@@ -194,24 +194,24 @@ export default {
       const confirmed = this.mine.confirmed;
       let sendGold = !!this.number ? this.number : 0;
       if (this.address == "") {
-        this.GLOBAL.myAlert(this.$vux.alert, "请输入地址");
+        this.utils.myAlert(this.$vux.alert, "请输入地址");
         return false;
-      } else if (this.GLOBAL.checkAddr(this.address) == false) {
-        this.GLOBAL.myAlert(this.$vux.alert, "无效接收地址");
+      } else if (this.global.checkAddr(this.address) == false) {
+        this.utils.myAlert(this.$vux.alert, "无效接收地址");
         return false;
       }
       if (sendGold == 0) {
-        this.GLOBAL.myAlert(this.$vux.alert, "请输入发送游戏金数量");
+        this.utils.myAlert(this.$vux.alert, "请输入发送游戏金数量");
         return false;
       } else if (sendGold > confirmed) {
-        this.GLOBAL.myAlert(this.$vux.alert, "发送游戏金大于你当前可用总数");
+        this.utils.myAlert(this.$vux.alert, "发送游戏金大于你当前可用总数");
         return false;
       }
       return true;
     }
   },
   created() {
-    this.mine = this.GLOBAL.userBase;
+    this.mine = this.global.userBase;
   }
 };
 </script>

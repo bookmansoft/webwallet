@@ -171,7 +171,7 @@ export default {
     getCpList(page, flash) {
       console.log(`query page: ${page}`);
       if(!!flash) {
-        this.GLOBAL.cplist = [];
+        this.global.cplist = [];
         this.gameList = [];
         this.curPage = 0;
       }
@@ -181,8 +181,8 @@ export default {
         curPage--;
       }
       if(curPage < page) {
-        let totalPage = (this.GLOBAL.cplist.length/10)|0 + 1;
-        if(this.GLOBAL.cplist.length%10==0) {
+        let totalPage = (this.global.cplist.length/10)|0 + 1;
+        if(this.global.cplist.length%10==0) {
           totalPage--;
         }
 
@@ -190,7 +190,7 @@ export default {
           this.curPage++;
 
           let idx = 0;
-          for(let element of this.GLOBAL.cplist) {
+          for(let element of this.global.cplist) {
             if(idx < (page-1)*10) continue;
             if(idx > page*10) break;
 
@@ -210,7 +210,7 @@ export default {
                 this.curPage = qryPage;
 
                 res.data.list.forEach(cpItem => {
-                  this.GLOBAL.cplist.push(cpItem);
+                  this.global.cplist.push(cpItem);
                   this.gameList.push(cpItem);
                 });
               } else {

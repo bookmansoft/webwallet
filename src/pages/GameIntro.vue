@@ -133,14 +133,14 @@ export default {
     },
 
     buyProp(item) {
-        if(this.cpAddr == '' || this.GLOBAL.openid == '') {
+        if(this.cpAddr == '' || this.global.openid == '') {
             return;
         }
         let cid = this.cpItem.cid
-        let uid = this.GLOBAL.openid
-        let notifyurl = this.GLOBAL.apiUrl
+        let uid = this.global.openid
+        let notifyurl = this.global.apiUrl
         let order_sn = item.id + '-new-' + this.randomString(16)
-        let price = this.GLOBAL.toGamegoldOrigin(item.props_price)
+        let price = this.gamegold.toAtom(item.props_price)
         var url = "/pages/order/order?cid=" + cid + "&uid=" + uid + "&sn=" + order_sn;
         url += "&price=" + price + '&notifyurl=' + encodeURI(notifyurl) + '&returl=' + encodeURI(window.location.href) ;
         console.log(url);
@@ -152,14 +152,14 @@ export default {
         this.cpInfo.proplist.forEach(element => {
             //从cp获取资源
             this.remote.get(encodeURI(this.cpItem.url + '/prop/' + element.id)).then(res => {
-                res.props_price = this.GLOBAL.toGamegoldKg(res.props_price);
+                res.props_price = this.gamegold.toKg(res.props_price);
                 this.cpProps.push(res);
             })        
         });
     },
 
     userToken() {
-        if(!this.GLOBAL.openid) {
+        if(!this.global.openid) {
             return;
         }
         this.remote.fetching({func:'cp.UserToken', cid: this.cpItem.cid}).then(res => {

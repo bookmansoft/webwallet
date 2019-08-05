@@ -184,7 +184,7 @@ export default {
       console.log(`query page: ${page}`);
 
       if(!!flash) {
-        this.GLOBAL.propList = [];
+        this.global.propList = [];
         this.propList = [];
         this.curPage = 0;
       }
@@ -194,8 +194,8 @@ export default {
         curPage--;
       }
       if(curPage < page) {
-        let totalPage = (this.GLOBAL.propList.length/10)|0 + 1;
-        if(this.GLOBAL.propList.length%10==0) {
+        let totalPage = (this.global.propList.length/10)|0 + 1;
+        if(this.global.propList.length%10==0) {
           totalPage--;
         }
 
@@ -203,7 +203,7 @@ export default {
           this.curPage++;
 
           let idx = 0;
-          for(let element of this.GLOBAL.propList) {
+          for(let element of this.global.propList) {
             if(idx < (page-1)*10) continue;
             if(idx > page*10) break;
 
@@ -227,7 +227,7 @@ export default {
                       cpItem.title = cpItem.props_name;
                       cpItem.desc = cpItem.props_desc;
 
-                      this.GLOBAL.cplist.push(cpItem);
+                      this.global.cplist.push(cpItem);
                       this.propList.push(cpItem);
                     });
                   });

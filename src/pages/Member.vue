@@ -144,17 +144,17 @@ export default {
   },
   //#region 生命周期函数
   created() {
-    if(!this.GLOBAL.userBase.uid) {
+    if(!this.global.userBase.uid) {
       this.$router.push('/login');
     }
 
-    this.mine = this.GLOBAL.userBase;
+    this.mine = this.global.userBase;
     if(!this.mine.vl) {
       this.mine.vl = 0;
     }
   },
   mounted() {
-    this.GLOBAL.ConfigMgr.get('vip', (err, config) => {
+    this.ConfigMgr.get('vip', (err, config) => {
       if(!err) {
         //将对象转化为客户端要求的数组
         this.vipDescItems = Object.keys(config).map(key => config[key]);

@@ -68,10 +68,10 @@ export default {
       },
   },
   created() {
-    if(!this.GLOBAL.userBase.uid) {
+    if(!this.global.userBase.uid) {
       this.$router.push('/login');
     } else {
-      this.address = this.GLOBAL.userBase.block_addr;
+      this.address = this.global.userBase.block_addr;
     }
   }
 }

@@ -47,7 +47,7 @@ export default {
       },
   },
   created() {
-    if(!this.GLOBAL.userBase.uid) {
+    if(!this.global.userBase.uid) {
       this.$router.push('/login');
     }
   }

@@ -61,7 +61,7 @@ export default {
     },
 
     payNow() {
-      if(this.data == null || this.GLOBAL.openid == '') {
+      if(this.data == null || this.global.openid == '') {
         return
       }
       let order = this.data.order
@@ -70,7 +70,7 @@ export default {
       }
 
       this.remote.fetching({func:'NotifyOrderPay', control: 'wallet',
-        openid: this.GLOBAL.openid,
+        openid: this.global.openid,
         sn: this.data.sn,
       }).then(res => {
           if(res.code == 0) {
@@ -102,7 +102,7 @@ export default {
         })
         this.data.list.push({
           label: '价格',
-          value: this.GLOBAL.toGamegoldKg(obj.price) + '千克'
+          value: this.gamegold.toKg(obj.price) + '千克'
         })
       } else {
         this.$router.push('/Message')

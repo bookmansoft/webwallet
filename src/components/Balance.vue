@@ -1,23 +1,17 @@
-<!-- 余额查询页面
+<!-- 余额查询组件，被多个页面直接引用
 
+2. 事件订阅
+911001
 -->
 <template>
   <div>
     <card :header="{title: gameGold}">
       <div slot="content" class="card-demo-flex card-demo-content01">
-        <div class="vux-1px-r">
-          <span>
-            <!-- <countup :end-val="balance.confirmed" :duration="1" :start="doStart" :decimals=3></countup> -->
-            {{balance.confirmed}}{{this.GLOBAL.gameGoldUnit}}
-          </span>
-          <br/>已确认
+        <div class="vux-1px-r confirm">
+          已确认:{{balance.confirmed}}{{this.gamegold.gameGoldUnit}}
         </div>
-        <div class="vux-1px-r">
-          <span>
-             <!-- <countup :end-val="balance.unconfirmed" :duration="1" :start="doStart" :decimals=3></countup> -->
-            {{balance.unconfirmed}}{{this.GLOBAL.gameGoldUnit}}
-          </span>
-          <br/>未确认
+        <div class="vux-1px-r unconfirm">
+          待确认:{{balance.unconfirmed}}</countup>{{this.gamegold.gameGoldUnit}}
         </div>
       </div>
     </card>
@@ -34,46 +28,31 @@ export default {
   data () {
     return {
       gameGold: '游戏金',
-      balance: {
-        confirmed: 0,
-        unconfirmed: 0
-      },
-      doStart: false
     }
+  },
+  computed:{
+    balance() {return this.$store.state.gamegold.balance},
   },
   methods: {
-    getConfirmed() {
-      return this.balance.confirmed
-    },
-    getUnConfirmed() {
-      return this.balance.unconfirmed
-    },
-    balanceChanged(info) {
-      console.log('balance changed', info);
-      this.GLOBAL.userBase.confirmed = info.confirmed;
-      this.GLOBAL.userBase.unconfirmed = info.unconfirmed;
-
-      this.balance = {
-        confirmed: this.GLOBAL.toGamegoldKg(this.GLOBAL.userBase.confirmed),
-        unconfirmed: this.GLOBAL.toGamegoldKg(this.GLOBAL.userBase.unconfirmed - this.GLOBAL.userBase.confirmed),
-      }
-    }
   },
   mounted() {
-    //#region 根据全局数据仓库更新state，再通过消息订阅感知后续变化
-    this.balanceChanged({confirmed: this.GLOBAL.userBase.confirmed, unconfirmed: this.GLOBAL.userBase.unconfirmed});
-    this.remote.watch(this.balanceChanged, 911001);
-    //#endregion
   },
   beforeDestroy() {
-    //不再监听事件，也为了避免不当持有造成的内存泄漏
-    delete this.remote.notifyHandles[911001];
   },
 }
 </script>
 
 <style scoped lang="less">
-
+.confirm {
+  font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+  font-size: 1.1em;
+  color: #04BE02;
+}
+.unconfirm {
+  font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+  font-size: 1.1em;
+  color: #f74c31;
+}
 .card-demo-flex {
   display: flex;
 }
@@ -87,8 +66,5 @@ export default {
   flex: 1;
   text-align: center;
   font-size: 12px;
-}
-.card-demo-flex span {
-  color: #f74c31;
 }
 </style>

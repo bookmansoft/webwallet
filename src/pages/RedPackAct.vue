@@ -9,9 +9,9 @@
         </group>
         <group title="活动时间">
             <div style="padding:15px;"><p>
-            {{GLOBAL.formatDateStr(new Date(redPackAct.act_start_at*1000), 'yyyy年MM月dd日')}} 
+            {{utils.formatDateStr(new Date(redPackAct.act_start_at*1000), 'yyyy年MM月dd日')}} 
               至  
-            {{GLOBAL.formatDateStr(new Date(redPackAct.act_end_at*1000), 'yyyy年MM月dd日')}}
+            {{utils.formatDateStr(new Date(redPackAct.act_end_at*1000), 'yyyy年MM月dd日')}}
             {{retMsg}}</p></div>
         </group>
 
@@ -28,7 +28,7 @@
                     <flexbox >
                     <flexbox-item :span="5">
                         <div class="flex-demo">
-                            <p><span style="font-size:13px;">{{GLOBAL.formatDateStr(new Date(item.act_at*1000), 'MM-dd HH:mm')}}</span></p>
+                            <p><span style="font-size:13px;">{{utils.formatDateStr(new Date(item.act_at*1000), 'MM-dd HH:mm')}}</span></p>
                         </div>
                     </flexbox-item>
                     <flexbox-item :span="2">
@@ -136,7 +136,7 @@ export default {
 
       userRedPackSend(item) {
           this.remote.fetching({func:'UserRedPackSend', control: 'redact', 
-            openid: this.GLOBAL.userBase.openid, 
+            openid: this.global.userBase.openid, 
             id: item.id,
             act_id: item.act_id,
           }).then(res => {
@@ -162,7 +162,7 @@ export default {
       
   },
   created() {
-    if(!this.GLOBAL.userBase.uid) {
+    if(!this.global.userBase.uid) {
         this.$router.push('/login');
     } else {
         this.getRedPackAct();

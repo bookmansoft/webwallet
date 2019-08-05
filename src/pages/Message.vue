@@ -10,7 +10,7 @@
               <div v-for="(item, index) in notifys" :key="index"> 
                   <div style="height:8px; width:100%; background-color:#FAFAFA"></div>
                   <div style="padding:5px 0px 20px 15px">
-                      <p><span>时间：{{GLOBAL.formatDateStr(new Date(item.create_time*1000), 'yyyy-MM-dd HH:mm:ss')}}</span></p>
+                      <p><span>时间：{{utils.formatDateStr(new Date(item.create_time*1000), 'yyyy-MM-dd HH:mm:ss')}}</span></p>
                       <p><span>内容：{{item.contentType}}</span></p>
                       <p><span>状态：{{item.statusLabel}}</span></p>
                       <p v-if="item.status !=3" style="top:8px; position: relative;"><x-button mini style="width:70px;" @click.native="notifyPay(item)">处理</x-button></p>
@@ -64,8 +64,8 @@ export default {
         this.remote.fetching({
           func:'NotifyList',
           control: 'wallet',
-          uid: this.GLOBAL.uid,
-          openid: this.GLOBAL.openid,
+          uid: this.global.uid,
+          openid: this.global.openid,
           last: 0,
         }).then(res => {
             if(res.code == 0) {
@@ -92,7 +92,7 @@ export default {
     }
   },
   created() {
-    if(!this.GLOBAL.userBase.uid) {
+    if(!this.global.userBase.uid) {
       this.$router.push('/login');
     }
     this.getNotify();

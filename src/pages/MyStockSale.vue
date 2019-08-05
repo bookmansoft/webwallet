@@ -14,7 +14,7 @@
                   <p>
                     <span style="font-size:15px;">{{crowdItem.title}}</span>
                     <div style="color: coral; font-size:14px;">持有 {{crowdItem.sum}} 个</div>
-                    <div style="color: coral; font-size:14px;">成本 {{parseFloat(crowdItem.price / GLOBAL.base.kg).toFixed(3)}} 千克</div>
+                    <div style="color: coral; font-size:14px;">成本 {{parseFloat(crowdItem.price / gamegold.unit.kg).toFixed(3)}} 千克</div>
                   </p>
                 </div>
             </flexbox-item>
@@ -88,7 +88,7 @@ export default {
                 params: {
                   addr: this.crowdItem.addr,
                   cid: this.crowdItem.cid,
-                  price: this.price*this.GLOBAL.base.kg,
+                  price: this.price*this.gamegold.unit.kg,
                   num: this.quantity,
                 }
             }).then(res => {

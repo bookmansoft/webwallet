@@ -144,20 +144,20 @@ export default {
     if(!this.item) {
       this.$router.push("/crowds");
     } else {
-      this.factor = this.item.price / this.GLOBAL.base.kg * this.GLOBAL.base.kgprice;
-      if(!this.GLOBAL.crowdConfig) {
-        this.GLOBAL.ConfigMgr.get('crowd', (err, config) => {
+      this.factor = this.item.price / this.gamegold.unit.kg * this.gamegold.unit.kgprice;
+      if(!this.global.crowdConfig) {
+        this.ConfigMgr.get('crowd', (err, config) => {
           if(!err) {
-            this.GLOBAL.crowdConfig = config.reduce((sofar,cur)=>{
+            this.global.crowdConfig = config.reduce((sofar,cur)=>{
               sofar[cur.payType] = cur;
               return sofar;
             },{});
-            console.log('crowdConfig', this.GLOBAL.crowdConfig);
+            console.log('crowdConfig', this.global.crowdConfig);
             this.crowdConfigList = config;
           }
         });
       } else {
-        this.crowdConfigList = Object.keys(this.GLOBAL.crowdConfig).map(key=>this.GLOBAL.crowdConfig[key]);
+        this.crowdConfigList = Object.keys(this.global.crowdConfig).map(key=>this.global.crowdConfig[key]);
       }
     }
   }
