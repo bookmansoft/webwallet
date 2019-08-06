@@ -126,16 +126,13 @@ export default {
     amountFomat: function(el) {
       return parseInt(el / 100) / 1000;
     },
-
   },
   created: function() {
     this.remote.fetching({
-      func: "Receive",
-      control: "manyreceive",
+      func: "sharedredpack_receive.Receive",
       id: this.$route.params.send_id
     }).then(res => {
       this.sendData = res.data;
-      console.log("ManyRedReceive.vue 144:",this.sendData);
     });
   }
 };

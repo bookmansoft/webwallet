@@ -19,7 +19,7 @@ const mod = {
      * @description 更改状态的唯一方法是提交 mutation: this.$store.commit
      */
     mutations: {
-        setpage(state, page) {
+        setPage(state, page) {
             state.pageMax = page;
         },
         clear(state) {

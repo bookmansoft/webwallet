@@ -15,6 +15,80 @@ const mod = {
          */
         auth: {userAgent: 0, uid: 0, user_name: null, openid: null, vl: 0},
         balance: {confirmed: 0, unconfirmed: 0},
+        menu: [
+            {
+                title: "会员",
+                is_link: true,
+                img: "/static/img/icon1/4.png",
+                badge: 0,
+                link: "/member",
+                value: "",
+                showDot: false
+            },
+            {
+                title: "红包活动",
+                is_link: true,
+                img: "/static/img/icon3/market3.png",
+                badge: 0,
+                link: "/redpack/act",
+                value: "限时抽红包",
+                showDot: false
+            },
+                {
+                title: "我的钱包",
+                is_link: true,
+                img: "/static/img/mine/wallet.png",
+                badge: 0,
+                link: { path: "/wallet" },
+                value: "",
+                showDot: false
+            },
+            {
+                title: "我的道具",
+                is_link: true,
+                img: "/static/img/mine/prop.png",
+                badge: 0,
+                link: { path: "/props" },
+                value: "",
+                showDot: false
+            },
+            {
+                title: "我的背包",
+                is_link: true,
+                img: "/static/img/mine/prop.png",
+                badge: 0,
+                link: { path: "/pocket" },
+                value: "",
+                showDot: false
+            },
+            {
+                title: "我的消息",
+                is_link: true,
+                img: "/static/img/mine/msg.png",
+                badge: 0,
+                link: { path: "/message" },
+                value: "",
+                showDot: false
+            },
+            {
+                title: "我的游戏",
+                is_link: true,
+                img: "/static/img/mine/game.png",
+                badge: 0,
+                link: { path: "/mygame" },
+                value: "",
+                showDot: false
+            },
+            {
+                title: "我的代练宝宝",
+                is_link: true,
+                img: "/static/img/mine/stock.png",
+                badge: 0,
+                link: { path: "/crowd/my" },
+                value: "",
+                showDot: false
+            },
+        ],
     },
     /**
      * 状态修改函数，必须是同步函数

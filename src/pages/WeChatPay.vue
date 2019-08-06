@@ -1,4 +1,16 @@
 <!-- 微信支付页面
+数据接口
+1. order.prepay 提交订单号、价格、用户编号等要素，调用微信统一下单接口，预生成订单并返回 tradeId prepay_id 等信息
+    {
+        appId,
+        timeStamp,
+        nonceStr,
+        package: `prepay_id=${data.prepay_id}`,
+        signType: 'MD5',
+        tradeId,
+    }
+2. WeixinJSBridge/getBrandWCPayRequest 发起微信支付
+3. order.OrderPayResult 微信支付成功后调用，向服务端发送支付成功通知 - 注意: 服务端将其视为一种状态改变，支付依据则以服务端收到的微信回调为准
 -->
 <template>
   <div>
@@ -27,7 +39,6 @@
 
 <script>
 import { InlineLoading, Cell, Group, XButton, Msg  } from 'vux'
-import { setTimeout } from 'timers';
 
 export default {
   components: {

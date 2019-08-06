@@ -1,4 +1,4 @@
-<!-- 游戏金出售界面
+<!-- 交易对发布界面
 -->
 <template>
   <div>
@@ -60,39 +60,40 @@ export default {
         let sendGold = !!this.number ? this.number : 0
         let btcGold = !!this.btc ? this.btc : 0
         if(sendGold == 0) {
-          this.utils.myAlert(this.$vux.alert, '输入出售数量')
+          this.utils.myAlert(this.$vux.alert, '输入参与交换的游戏金数量(单位千克)')
           return false
         } else if(sendGold > this.balance.confirmed) {
-          this.utils.myAlert(this.$vux.alert, '出售游戏金大于你当前可用总数')
+          this.utils.myAlert(this.$vux.alert, '出售数量大于你当前拥有量')
           return false
         }
         if(this.address == '') {
-          this.utils.myAlert(this.$vux.alert, '请输入BTC地址')
+          this.utils.myAlert(this.$vux.alert, '请输入比特币收款地址')
           return false
         } else if(this.utils.checkAddr(this.address)==false) {
-          this.utils.myAlert(this.$vux.alert, '无效接收地址')
+          this.utils.myAlert(this.$vux.alert, '无效的收款地址')
           return false
         }
         if(btcGold == 0) {
-          this.utils.myAlert(this.$vux.alert, '输入BTC数量')
+          this.utils.myAlert(this.$vux.alert, '输入希望交换的比特币数量(单位BTC)')
           return false
         } 
         return true
       },
-      // 发送请求 获取数据
+      /**
+       * 提交交易请求
+       */
       contractCreate() {
           this.remote.fetching({
-            func:'ContractCreate', 
-            control: 'contract',
+            func:'contract.ContractCreate', 
             ntype: 1,
-            num: this.assistant.toAtom(this.number),
-            btc: this.btc * 100000000,
+            num: this.assistant.toAtom(this.number), //转化为尘
+            btc: this.btc * 100000000, //转化为聪
             addr: this.address,
           }).then(res => {
             if (res.code != 0) {
-                this.utils.myAlert(this.$vux.alert, "发布失败，请确认BTC接收地址是否正确");
+                this.utils.myAlert(this.$vux.alert, "交易发布失败");
             } else {
-                this.utils.myAlert(this.$vux.alert, '发布成功', null, function() {
+                this.utils.myAlert(this.$vux.alert, '交易发布成功', null, function() {
                 that.$router.push('/wallet/detail')
               })
             }
@@ -104,7 +105,6 @@ export default {
   created() {
 
   }
-
 }
 </script>
 

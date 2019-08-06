@@ -38,7 +38,7 @@ const mod = {
                 state.commit('add', item);
             }
         },
-        setpage(state, page) {
+        setPage(state, page) {
             state.pageMax = page;
         },
         clear(state) {

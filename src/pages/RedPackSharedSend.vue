@@ -37,7 +37,7 @@
         <flexbox-item :span="3"></flexbox-item>
         <flexbox-item :span="6">
           <div align="center" style="margin-top:35px;">
-            <x-button type="warn" @click.native="justSend">塞进红包</x-button>
+            <x-button type="warn" @click.native="justSend">生成红包</x-button>
           </div>
         </flexbox-item>
       </flexbox>
@@ -79,29 +79,19 @@ export default {
     };
   },
   methods: {
-    onItemClick(index) {
-    },
-
     justSend() {
       this.remote.fetching({
-        func: "Send",
-        control: "manysend",
+        func: "sharedredpack.Send",
         total_amount: parseInt(this.total_amount) * 100000,
         total_num: parseInt(this.total_num),
         wishing: this.wishing
       }).then(res => {
         this.send_id = res.data;
-        this.$router.push("/manyRed/justSend/" + this.send_id);
+        this.$router.push("/redpackshared/justSend/" + this.send_id);
       });
     }
   },
   filters: {
-    dateFormat: function(el) {
-      return moment(el * 1000).format("MM-DD HH:mm");
-    },
-    amountFomat: function(el) {
-      return parseInt(el / 100) / 1000;
-    }
   }
 };
 </script>

@@ -1,8 +1,9 @@
-import ConfigMgr from '../utils/ConfigMgr'
+import moment from "moment";
+import assistant from "../utils/assistant"
 import remote from '../utils/remote'
 
 /**
- * 众筹数据集合
+ * 背包数据集合
  */
 const mod = {
     namespaced: true, //独立命名空间
@@ -11,23 +12,14 @@ const mod = {
      * 状态集
      */
     state: {
-        list: [],           //众筹条目缓存列表
-        pageMax: 1,         //网络获取的最大页数
-        configList: [],     //配置信息列表形式
-        configDict: {},     //配置信息属性对象形式
+        list: [],           //发送记录缓存列表
+        pageMax: 1,            //网络获取的最大页数
     },
     /**
      * 状态修改函数，必须是同步函数
      * @description 更改状态的唯一方法是提交 mutation: this.$store.commit
      */
     mutations: {
-        configChanged(state, msg) {
-            state.configList = msg;
-            state.configDict = msg.reduce((sofar,cur)=>{
-                sofar[cur.payType] = cur;
-                return sofar;
-              }, {});
-        }, 
         setPage(state, page) {
             state.pageMax = page;
         },
@@ -44,26 +36,15 @@ const mod = {
      * @description actions 类似于mutations, 不过Action 提交的是 mutation，而不是直接变更状态,而且可以包含任意异步操作: this.$store.dispatch
      */
     actions: {
-        async getConfig (context) {
-            return new Promise((resolve, reject) =>{
-                ConfigMgr.get('crowd', (err, config) => {
-                    if(!err) {
-                        context.commit('configChanged', config);
-                        resolve(config);
-                    } else {
-                        reject(err);
-                    }
-                });
-            });
-        },
         clear(context) {
             context.commit('clear');
         },
+        add(context, item) {
+            context.commit('add', item);
+        },
         merge(context, list) {
-            for(let crowdItem of list) {
-                crowdItem.percent2 = ((crowdItem.sum - crowdItem.sum_left) * 100 / crowdItem.sum) | 0;
-                crowdItem.pic_urls = JSON.parse(crowdItem.pic_urls);
-                context.commit('add', crowdItem);
+            for(let item of list) {
+                context.commit('add', item);
             }
         },
         /**
@@ -78,7 +59,7 @@ const mod = {
 
             if(curPage < context.state.pageMax) {
                 let res = await remote.fetching({
-                    func: "stockMgr.getCrowdList", 
+                    func: "sharedredpack_receive.ListRecord",
                     page: curPage+1,
                 });
                 if (res.code == 0) {
@@ -89,9 +70,13 @@ const mod = {
 
                     let qryPage = Math.min(res.data.total, res.data.page); //数据修复：查询页数不能大于总页数
                     if(curPage < qryPage) { //说明获得了新的内容
-                        console.log('crowd.pull', res.data.list);
-                        res.data.list.forEach(item => {
-                            context.commit('add', item);
+                        console.log('rpsSend.pull', res.data.list);
+                        res.data.list.forEach(it => {
+                            it.src = `/static/img/manyRed/redpacketsmall.jpg`;
+                            it.title = `来自${it.send_nickname}的红包${moment(it.modify_date * 1000).format("MM-DD HH:mm")}`;
+                            it.desc = `+${assistant.toKg(it.receive_amount)}千克`;
+
+                            context.dispatch('add', it);
                         });
                     }
                 }

@@ -21,7 +21,7 @@
     </box>
 
     <div v-transfer-dom>
-      <alert v-model="show" :title="好的">点击页面右上角-发送给好友，即可将该红包分享到微信好友/群。</alert>
+      <alert v-model="show" :title="Title">点击页面右上角-发送给好友，即可将该红包分享到微信好友/群。</alert>
     </div>
   </div>
 </template>
@@ -63,6 +63,7 @@ export default {
   data() {
     return {
       show: false,
+      Title: '好的',
       sendData: {},
       send_id: -1,
       that: {}
@@ -81,8 +82,7 @@ export default {
     let that = this;
     //第一步先获取参数带来的发送包信息
     this.remote.fetching({
-      func: "Retrieve",
-      control: "manysend",
+      func: "sharedredpack.Retrieve",
       id: this.send_id
     }).then(res => {
       this.sendData = res.data;
@@ -95,7 +95,7 @@ export default {
         that.$wechat.onMenuShareAppMessage({
           title: "[游戏金红包]" + sendDataWishing + "！", // 分享标题
           desc: "来自" + sendDataSendNickName + "的游戏金红包", // 分享描述
-          link: `${that.remote.appConfig.siteUri}?path=/manyRed/unpack/${that.send_id}`, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+          link: `${that.remote.appConfig.siteUri}?path=/redpackshared/unpack/${that.send_id}`, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
           imgUrl: `${that.remote.appConfig.siteUri}static/img/manyRed/redpacketsmall.jpg`, // 分享图标
           success: function() {
             console.log("微信分享设置成功");

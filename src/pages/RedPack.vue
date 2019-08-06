@@ -1,9 +1,9 @@
-<!-- 红包管理页面
+<!-- 红包首页，包含了抽红包和发红包的业务连接
 -->
 <template>
   <div>
     <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
-    <group title="红包管理">
+    <group title="红包活动">
         <div style="padding:15px;">
           <x-button type="primary" @click.native="wheel">抽红包</x-button>
         </div>
@@ -39,14 +39,10 @@ export default {
         this.$router.go(-1);
       },
       wheel(){
-        this.$router.push('/redPack/act');
+        this.$router.push('/redpack/act');
       },
       sendRedPack() {
-          this.remote.fetching({func:'SendRecPack', control: 'wechat',}).then(res => {
-              if(res.code == 0) {
-                  this.retMsg = res.data;
-              }
-          });
+        this.$router.push('/redpackshared');
       },
   },
   created() {

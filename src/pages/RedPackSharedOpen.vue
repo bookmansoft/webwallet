@@ -55,7 +55,7 @@ export default {
     //点击图标打开红包
     openPack() {
       //alert(this.send_id);
-      this.$router.push("/manyRed/receive/" + this.send_id);
+      this.$router.push("/redpackshared/receive/" + this.send_id);
     }
   },
 

@@ -15,7 +15,6 @@ import MyStockSale from '@/pages/MyStockSale'
 import CrowdPrePay from '@/pages/CrowdPrePay'
 import StockOrder from '@/pages/StockOrder'
 import Mine from '@/pages/Mine'
-import MyWallet from '@/pages/MyWallet'
 import Wallet from '@/pages/Wallet'
 import WalletSend from '@/pages/WalletSend'
 import WalletReceive from '@/pages/WalletReceive'
@@ -37,11 +36,11 @@ import RedPackAct from '@/pages/RedPackAct'
 import MyGame from '@/pages/MyGame'
 import Login from '@/components/Login'
 import LuckyWheel from '@/components/luckywheel'
-import ManyRedManage from '@/pages/ManyRedManage';
-import ManyRedSend from '@/pages/ManyRedSend';
-import ManyRedJustSend from '@/pages/ManyRedJustSend';
-import ManyRedReceive from '@/pages/ManyRedReceive';
-import ManyRedUnpack from '@/pages/ManyRedUnpack';
+import RedPackShared from '@/pages/RedPackShared';
+import RedPackSharedSend from '@/pages/RedPackSharedSend';
+import RedPackSharedCommit from '@/pages/RedPackSharedCommit';
+import RedPackSharedReceive from '@/pages/RedPackSharedReceive';
+import RedPackSharedOpen from '@/pages/RedPackSharedOpen';
 
 import BuySuccess from '@/pages/BuySuccess';
 import BuyFail from '@/pages/BuyFail';
@@ -59,7 +58,7 @@ Vue.use(Router)
 
 export default new Router({
   mode: 'history',
-  //base: __dirname,
+  base: __dirname,
   routes: [
     { path:'/', redirect:'Login' },
     { path: '/login', name: 'Login', component: Login ,meta:{title:'Vallnet'}},
@@ -67,7 +66,6 @@ export default new Router({
     { path: '/about', name: 'About', component: About ,meta:{title:'关于我们'}},
     { path: '/member', name: 'Member', component: Member ,meta:{title:'成员'}},
     { path: '/mine', name: 'Mine', component: Mine ,meta:{title:'我的'}},
-    { path: '/mywallet', name: 'MyWallet', component: MyWallet ,meta:{title:'我的钱包'}},
     { path: '/mygame', name: 'MyGame', component: MyGame ,meta:{title:'我的游戏'}},
 
     { path: '/message', name: 'Message', component: Message ,meta:{title:'消息'}},
@@ -98,7 +96,7 @@ export default new Router({
     { path: '/stocks/order', name: 'StockOrder', component: StockOrder ,meta:{title:'自由市场-确认订单'}},
     { path: '/stocks/info', name: 'StockInfo', component: StockInfo ,meta:{title:'游戏元宝信息-百谷王游戏金链'}},
 
-    { path: '/wallet', name: 'Wallet', component: Wallet ,meta:{title:'钱包'}},
+    { path: '/wallet', name: 'Wallet', component: Wallet ,meta:{title:'我的钱包'}},
     { path: '/wallet/send', name: 'WalletSend', component: WalletSend ,meta:{title:'转账'}},
     { path: '/wallet/receive', name: 'WalletReceive', component: WalletReceive ,meta:{title:'接受转账'}},
     { path: '/wallet/trans', name: 'WalletTrans', component: WalletTrans ,meta:{title:'交易对'}},
@@ -106,12 +104,11 @@ export default new Router({
 
     { path: '/redpack', name: 'RedPack', component: RedPack ,meta:{title:'红包'}},
     { path: '/redpack/act', name: 'RedPackAct', component: RedPackAct ,meta:{title:'红包Act'}},
-
-    { path: '/manyRed/manage',name:'ManyRedManage',component:ManyRedManage,meta:{title:'多人红包管理'}},
-    { path: '/manyRed/send',name:'ManyRedSend',component:ManyRedSend,meta:{title:'多人红包发送'}},
-    { path: '/manyRed/justSend/:send_id',name:'ManyRedJustSend',component:ManyRedJustSend,meta:{title:'多人红包-即将发送'}},
-    { path: '/manyRed/receive/:send_id',name:'ManyRedReceive',component:ManyRedReceive,meta:{title:'多人红包接收'}},
-    { path: '/manyRed/unpack/:send_id',name:'ManyRedUnpack',component:ManyRedUnpack,meta:{title:'打开多人红包'}},
+    { path: '/redpackshared',name:'RedPackShared', component: RedPackShared, meta:{title:'多人红包管理'}},
+    { path: '/redpackshared/send',name:'RedPackSharedSend', component:RedPackSharedSend, meta:{title:'多人红包发送'}},
+    { path: '/redpackshared/justSend/:send_id',name:'RedPackSharedCommit', component:RedPackSharedCommit, meta:{title:'多人红包-即将发送'}},
+    { path: '/redpackshared/unpack/:send_id',name:'RedPackSharedOpen',component:RedPackSharedOpen, meta:{title:'打开多人红包'}},
+    { path: '/redpackshared/receive/:send_id',name:'RedPackSharedReceive', component:RedPackSharedReceive, meta:{title:'多人红包接收'}},
 
     { path: '/props', name: 'Props', component: Props ,meta:{title:'道具背包'}},
     { path: '/prop/detail', name: 'PropDetail', component: PropDetail ,meta:{title:'道具详情'}},

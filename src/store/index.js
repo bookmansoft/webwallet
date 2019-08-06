@@ -21,6 +21,12 @@ store.registerModule('pocket', pocket);
 import prop from './prop'
 store.registerModule('prop', prop);
 
+import rpsReceive from './rpsReceive'
+store.registerModule('rpsReceive', rpsReceive);
+
+import rpsSend from './rpsSend'
+store.registerModule('rpsSend', rpsSend);
+
 import stock from './stock'
 store.registerModule('stock', stock);
 
@@ -29,5 +35,8 @@ store.registerModule('stockMine', stockMine);
 
 import user from './user'
 store.registerModule('user', user);
+
+import wallet from './wallet'
+store.registerModule('wallet', wallet);
 
 export default store
