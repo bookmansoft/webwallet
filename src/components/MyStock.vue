@@ -41,10 +41,10 @@
                     <flexbox-item>
                         <div style="padding-left:6px;">
                           <p><span style="font-size:15px;">{{item.title}}</span></p>
-                          <p><span style="color: coral; font-size:14px;">持有 {{item.sum}} 个, 平均成本 {{parseFloat(item.price/gamegold.unit.kg).toFixed(3)}} 千克</span></p>
+                          <p><span style="color: coral; font-size:14px;">持有 {{item.sum}} 个, 平均成本 {{parseFloat(item.price/assistant.unit.kg).toFixed(3)}} 千克</span></p>
                         </div>
                         <div style="padding-left:6px;" v-if="item.sell_sum>0">
-                          <p><span style="color: #888; font-size:13px;">挂单量 {{item.sell_sum}} 挂单价 {{parseFloat(item.sell_price/gamegold.unit.kg).toFixed(3)}} 千克</span></p>
+                          <p><span style="color: #888; font-size:13px;">挂单量 {{item.sell_sum}} 挂单价 {{parseFloat(item.sell_price/assistant.unit.kg).toFixed(3)}} 千克</span></p>
                           <p><span style="color: #888; font-size:13px;">截止时间 {{item.validtime}}</span></p>
                         </div>
                     </flexbox-item>
@@ -118,16 +118,19 @@ export default {
       isLoadMore: false,
       showNoData: false,
       isActive: false,
-      curPage: 0,       //当前页码
-      localItems: [],   //凭证列表
     };
+  },
+  computed: {
+    localItems() {
+      return this.$store.state.stockMine.list;
+    }
   },
   methods: {
     selPullDown() {
       this.showNoData = false;
       
       //用户选择下拉刷新，清除本地数据，重新拉取
-      this.queryList(1, true);
+      this.getContent(true);
       setTimeout(() => {
         this.showNoData = true;
         if(this.isActive) {
@@ -140,7 +143,7 @@ export default {
       this.showNoData = false;
 
       //用户选择上滑获取新数据，更新当前页码
-      this.queryList(this.curPage+1);
+      this.getContent();
       setTimeout(() => {
         this.showNoData = true;
         if(this.isActive) {
@@ -156,76 +159,24 @@ export default {
       this.$router.push({ name: 'MyStockInfo', params: { item: item }});
     },
     /**
-     * 获取列表, page 请求的页码 flash 强制更新
+     * 获取列表, flash 强制更新
      */
-    queryList(page, flash) {
+    getContent(flash) {
+      this.isLoadMore = false;
       if(!!flash) {
-        this.global.stocklist = [];
-        this.localItems = [];
-        this.curPage = 0;
+        this.$store.dispatch('crowd/clear');
       }
 
-      let localPages = (this.localItems.length/10)|0 + 1;
-      if(this.localItems.length%10==0) {
-        localPages--;
-      }
+      return this.$store.dispatch('crowd/pull').then(ret => {
+        this.isLoadMore = true;
 
-      console.log(`localPages:${localPages}, page:${page}`);
-      if(localPages < page) {
-        let cachePages = (this.global.stocklist.length/10)|0 + 1;
-        if(this.global.stocklist.length%10==0) {
-          cachePages--;
+        if(!ret) {
+          //没有新的数据了，禁止继续下拉
+          this.scrollerStatus.pullupStatus = 'disabled';
         }
-
-        if(cachePages > page) {
-          let idx = 0;
-          for(let element of this.global.stocklist) {
-            if(idx < (page-1)*10) continue;
-            if(idx > page*10) break;
-
-            this.localItems.push(element);
-
-            idx++;
-          }
-          this.isLoadMore = true;
-        } else {
-          this.remote.fetching({
-            func: "stockMgr.MyStock", 
-            page: page,
-          }).then(res => {
-            if (res.code == 0) {
-              let qryPage = Math.min(res.data.page, res.data.total); //数据修复：查询页数不能大于总页数
-              if(this.curPage < qryPage) {
-                //设置当前页码为查询到的页码数
-                this.curPage = qryPage;
-                
-                res.data.list.forEach(item => {
-                  item.validtime = this.utils.formatDateStr(new Date(Date.parse(new Date()) - (res.data.height - item.period)*600*1000), 'yyyy-MM-dd HH:mm:ss');
-
-                  //将查询到的条目放入当前缓存
-                  this.localItems.push(item);
-                  //将查询到的条目放入全局缓存，这样下次进入该页面时就不用网络请求了
-                  this.global.stocklist.push(item);
-                });
-                console.log('MyStock', this.localItems);
-              } else {
-                //没有新的数据了，禁止继续下拉
-                this.scrollerStatus.pullupStatus = 'disabled';
-              }
-
-              setTimeout(() => {
-                this.isLoadMore = true;
-              }, 500);
-            }
-          }).catch(e=>{
-            console.log(e);
-            this.isLoadMore = true;
-          });
-        }
-      }      
-    }
+      });
+    },
   },
-
   mounted() {
     this.isActive = true;
   },
@@ -234,7 +185,7 @@ export default {
   },
   created() {
     console.log('showType', this.showType);
-    this.queryList(1);
+    this.getContent();
   },
 };
 </script>

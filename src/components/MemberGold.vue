@@ -20,7 +20,7 @@
         <flexbox>
           <flexbox-item :span="7">
               <div class="flex-demo2">
-                  <div>未提取: <span class="drawGold">{{this.gamegold.toKg(gold)}}</span>千克</div>
+                  <div>未提取: <span class="drawGold">{{this.assistant.toKg(gold)}}</span>千克</div>
                   <div><p>满10千克可提到钱包</p></div>
               </div>
           </flexbox-item>
@@ -79,7 +79,7 @@ export default {
         return;
       }
 
-      this.percent = Math.min(100, (this.gamegold.toKg(this.gold) / 10.0 * 100) | 0);
+      this.percent = Math.min(100, (this.assistant.toKg(this.gold) / 10.0 * 100) | 0);
 
       if(!!this.timer) {
         clearInterval(this.timer);
@@ -90,8 +90,8 @@ export default {
           let _now = Date.parse(new Date())/1000;
           this.gold += (_now - this.refreshTime) * this.cfg[this.mine.vl].time_get_count;
           this.refreshTime = _now;
-          this.percent = Math.min(100, (this.gamegold.toKg(this.gold) / 10.0 * 100) | 0);
-          console.log(this.gold, this.gamegold.toKg(this.gold), this.percent);
+          this.percent = Math.min(100, (this.assistant.toKg(this.gold) / 10.0 * 100) | 0);
+          console.log(this.gold, this.assistant.toKg(this.gold), this.percent);
         }
 　　　}, 5000);
       console.log('set Interval', this.timer);
@@ -113,7 +113,7 @@ export default {
                 if(self.checkRate(value)==false) {
                     self.showPluginAuto('输入无效数字');
                 } else {
-                    let draw_count = self.gamegold.toAtom(value);
+                    let draw_count = self.assistant.toAtom(value);
                     if(value < 10) {
                       self.showPluginAuto('提取数量不能少于10千克')
                     } else if(draw_count > self.gold) {

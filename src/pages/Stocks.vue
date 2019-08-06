@@ -1,6 +1,6 @@
 <!-- 二级市场首页
 数据接口
-1. stockMgr.BidList -> pocketItems
+1. stockMgr.BidList -> stockItems
 [
   {
       cid           CP编码
@@ -31,7 +31,7 @@
         @on-pullup-loading="selPullUp"
       >
         <div>
-          <div v-for="(item, index) in pocketItems" :key="index">
+          <div v-for="(item, index) in stockItems" :key="index">
             <div style="display:block;margin-top:8px;margin-bottom:8px">
               <flexbox @click.native="itemDetail(item, index)">
                 <flexbox-item :span="2">
@@ -66,7 +66,7 @@
       </scroller>
     </div>
 
-    <div v-if="isLoadMore && pocketItems.length==0 && showNoData==true">
+    <div v-if="isLoadMore && stockItems.length==0 && showNoData==true">
       <no-data src="/static/img/default/no-games.png"></no-data>
     </div>
     <div v-if="!isLoadMore">
@@ -138,13 +138,15 @@ export default {
       scrollerStatus: {
         pullupStatus: "default"
       },
-      curPage: 0,
       isLoadMore: false,
       showNoData: false,
       isActive: false,
-
-      pocketItems: [],
     };
+  },
+  computed: {
+    stockItems () {
+      return this.$store.state.stock.list;
+    },
   },
   methods: {
     onImgError (item, $event) {
@@ -154,7 +156,7 @@ export default {
       this.showNoData = false;
       
       //用户选择下拉刷新，清除本地数据，重新拉取
-      this.getPocketList(1, true);
+      this.getContent(true);
       setTimeout(() => {
         this.showNoData = true;
         if(this.isActive) {
@@ -167,7 +169,7 @@ export default {
       this.showNoData = false;
 
       //用户选择上滑获取新数据，更新当前页码
-      this.getPocketList(this.curPage+1);
+      this.getContent();
       setTimeout(() => {
         this.showNoData = true;
         if(this.isActive) {
@@ -179,78 +181,24 @@ export default {
       this.$router.push({ name: "StockInfo", params: { item: item } });
     },
     /**
-     * 获取列表, page 请求的页码 flash 强制更新
+     * 获取列表, flash 强制更新
      */
-    getPocketList(page, flash) {
-      console.log(`query pocket: ${page}`);
-
+    getContent(flash) {
+      this.isLoadMore = false;
       if(!!flash) {
-        this.global.pocketlist = [];
-        this.pocketItems = [];
-        this.curPage = 0;
+        this.$store.dispatch('stock/clear');
       }
 
-      let curPage = (this.pocketItems.length/10)|0 + 1;
-      if(this.pocketItems.length%10==0) {
-        curPage--;
-      }
-      if(curPage < page) {
-        let totalPage = (this.global.pocketlist.length/10)|0 + 1;
-        if(this.global.pocketlist.length%10==0) {
-          totalPage--;
+      return this.$store.dispatch('stock/pull').then(ret => {
+        this.isLoadMore = true;
+
+        if(!ret) {
+          //没有新的数据了，禁止继续下拉
+          this.scrollerStatus.pullupStatus = 'disabled';
         }
-
-        console.log(`totalPage: ${totalPage}`);
-        console.log(`page: ${page}`);
-        if(totalPage > page) {
-          this.curPage++;
-
-          let idx = 0;
-          for(let element of this.global.pocketlist) {
-            if(idx < (page-1)*10) continue;
-            if(idx > page*10) break;
-
-            let game = element.cpInfo.game;
-            this.pocketItems.push({
-              src: game.small_img_url,
-              title: game.game_title,
-              desc: game.provider
-            });
-
-            idx++;
-          }
-          this.isLoadMore = true;
-        } else {
-          console.log(`item.list`);
-          this.remote.fetching({
-            func: "stockMgr.BidList",
-            page: page,
-          }).then(res => {
-            if (res.code == 0) {
-              let qryPage = Math.min(res.data.page, res.data.total); //数据修复：查询页数不能大于总页数
-              if(this.curPage < qryPage) {
-                this.curPage = qryPage;
-                res.data.list.forEach(item => {
-                  //cid, addr, sum, price, sell_price, sell_sum, period, icon_url, cp_text
-                  this.pocketItems.push(item);
-                });
-
-                console.log('stockMgr.BidList', this.pocketItems);
-              } else {
-                //没有新的数据了，禁止继续下拉
-                this.scrollerStatus.pullupStatus = 'disabled';
-              }
-
-              setTimeout(() => {
-                this.isLoadMore = true;
-              }, 500);
-            }
-          });
-        }
-      }      
-    }
+      });
+    },
   },
-
   mounted() {
     this.isActive = true;
   },
@@ -258,7 +206,7 @@ export default {
     this.isActive = false;
   },
   created() {
-    this.getPocketList(1, true);
+    this.getContent();
   },
 };
 </script>

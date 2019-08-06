@@ -138,20 +138,21 @@ export default {
       scrollerStatus: {
         pullupStatus: "default"
       },
-      curPage: 0,
       isLoadMore: false,
       showNoData: false,
       isActive: false,
-      propList: [],
       isBottom: false,
     };
+  },
+  computed: {
+    propList () { return this.$store.state.prop.list; },
   },
   methods: {
     selPullDown() {
       this.showNoData = false;
       
       //用户选择下拉刷新，清除本地数据，重新拉取
-      this.getPropList(1, true);
+      this.getContent(true);
       setTimeout(() => {
         this.showNoData = true;
         if(this.isActive) {
@@ -164,7 +165,7 @@ export default {
       this.showNoData = false;
 
       //用户选择上滑获取新数据，更新当前页码
-      this.getPropList(this.curPage+1);
+      this.getContent();
       setTimeout(() => {
         this.showNoData = true;
         if(this.isActive) {
@@ -174,77 +175,28 @@ export default {
     },
     //跳转至众筹详情
     showPropDetail(item) {
-      console.log(item);
+      console.log('PropDetail', item);
       this.$router.push({ name: 'PropDetail', params: { item: item }})
     },
     /**
-     * 获取列表, page 请求的页码 flash 强制更新
+     * 获取列表, flash 强制更新
      */
-    getPropList(page, flash) {
-      console.log(`query page: ${page}`);
-
+    getContent(flash) {
+      this.isLoadMore = false;
       if(!!flash) {
-        this.global.propList = [];
-        this.propList = [];
-        this.curPage = 0;
+        this.$store.dispatch('prop/clear');
       }
 
-      let curPage = (this.propList.length/10)|0 + 1;
-      if(this.propList.length%10==0) {
-        curPage--;
-      }
-      if(curPage < page) {
-        let totalPage = (this.global.propList.length/10)|0 + 1;
-        if(this.global.propList.length%10==0) {
-          totalPage--;
+      return this.$store.dispatch('prop/pull').then(ret => {
+        this.isLoadMore = true;
+        this.panelTitle = `道具背包(${this.propList.length})`;
+
+        if(!ret) {
+          //没有新的数据了，禁止继续下拉
+          this.scrollerStatus.pullupStatus = 'disabled';
         }
-
-        if(totalPage > page) {
-          this.curPage++;
-
-          let idx = 0;
-          for(let element of this.global.propList) {
-            if(idx < (page-1)*10) continue;
-            if(idx > page*10) break;
-
-            this.propList.push(element);
-
-            idx++;
-          }
-          this.isLoadMore = true;
-        } else {
-          this.remote.fetching({func: 'prop.PropList', page: page}).then(res => {
-              if(res.code == 0) {
-                console.log('prop list', res.data);
-                let qryPage = Math.min(res.data.cur, res.data.page); //数据修复：查询页数不能大于总页数
-                if(this.curPage < qryPage) {
-                  this.curPage = qryPage;
-
-                  res.data.list.forEach(cpItem => {
-                    this.remote.get(encodeURI(cpItem.cpurl + '/prop/' + cpItem.oid)).then(res => {
-                      Object.assign(cpItem, res);
-                      cpItem.src = cpItem.icon;
-                      cpItem.title = cpItem.props_name;
-                      cpItem.desc = cpItem.props_desc;
-
-                      this.global.cplist.push(cpItem);
-                      this.propList.push(cpItem);
-                    });
-                  });
-                } else {
-                  //没有新的数据了，禁止继续下拉
-                  this.scrollerStatus.pullupStatus = 'disabled';
-                  this.isBottom = true;
-                }
-              }
-          });
-          setTimeout(() => {
-            this.isLoadMore = true;
-            this.panelTitle = `道具背包(${this.propList.length})`;
-          }, 500);
-        }
-      }      
-    }
+      });
+    },
   },
 
   mounted() {
@@ -254,7 +206,7 @@ export default {
     this.isActive = false;
   },
   created() {
-    this.getPropList(1);
+    this.getContent();
   },
 };
 </script>

@@ -15,7 +15,7 @@
   cp_desc,            //游戏描述
   funding_residue_day,//活动剩余天数
 }
-2. ConfigMgr['crowd'] -> crowdConfig
+2. this.$store.state.crowd.configList -> crowdConfigList,
 
 跳转链接
 1. 支付页面 { name: "CrowdOrder", params: { item: this.item } }
@@ -121,9 +121,11 @@ export default {
     return {
       item: {},
       factor: 0,
-      crowdConfigList: [],
       flagMore: false
     };
+  },
+  computed: {
+    crowdConfigList() {return this.$store.state.crowd.configList},
   },
   methods: {
     viewMore() {
@@ -144,21 +146,8 @@ export default {
     if(!this.item) {
       this.$router.push("/crowds");
     } else {
-      this.factor = this.item.price / this.gamegold.unit.kg * this.gamegold.unit.kgprice;
-      if(!this.global.crowdConfig) {
-        this.ConfigMgr.get('crowd', (err, config) => {
-          if(!err) {
-            this.global.crowdConfig = config.reduce((sofar,cur)=>{
-              sofar[cur.payType] = cur;
-              return sofar;
-            },{});
-            console.log('crowdConfig', this.global.crowdConfig);
-            this.crowdConfigList = config;
-          }
-        });
-      } else {
-        this.crowdConfigList = Object.keys(this.global.crowdConfig).map(key=>this.global.crowdConfig[key]);
-      }
+      this.factor = this.item.price / this.assistant.unit.kg * this.assistant.unit.kgprice;
+      this.$store.dispatch('crowd/getConfig');
     }
   }
   //#endregion

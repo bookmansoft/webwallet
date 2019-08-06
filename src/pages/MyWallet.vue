@@ -169,11 +169,11 @@ export default {
   },
   data() {
     return {
-      mine: {},
     };
   },
   computed:{
-    balance() {return this.$store.state.gamegold.balance},
+    balance() {return this.$store.state.user.balance},
+    userBase() {return this.$store.state.user.auth},
   },
   methods: {
     send() {
@@ -196,12 +196,11 @@ export default {
     },
   },
   created() {
-    if(!this.global.userBase.uid) {
+    if(!this.userBase.uid) {
       this.$router.push('/login');
     }
   },
   mounted() {
-    this.mine = this.global.userBase;
   },
   beforeDestroy() {
   },

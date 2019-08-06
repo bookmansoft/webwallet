@@ -163,7 +163,7 @@ export default {
   created() {
     this.sender = {
       amount : this.$route.params.amount,
-      actAmount: this.gamegold.toAtom(this.$route.params.amount),
+      actAmount: this.assistant.toAtom(this.$route.params.amount),
       fee: this.$route.params.fee,
       address: this.$route.params.address,
     };

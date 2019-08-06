@@ -44,7 +44,7 @@ export default {
     }
   },
   computed:{
-    balance() {return this.$store.state.gamegold.balance},
+    balance() {return this.$store.state.user.balance},
   },
   methods: {
       onBack() {
@@ -69,7 +69,7 @@ export default {
         if(this.address == '') {
           this.utils.myAlert(this.$vux.alert, '请输入BTC地址')
           return false
-        } else if(this.global.checkAddr(this.address)==false) {
+        } else if(this.utils.checkAddr(this.address)==false) {
           this.utils.myAlert(this.$vux.alert, '无效接收地址')
           return false
         }
@@ -85,7 +85,7 @@ export default {
             func:'ContractCreate', 
             control: 'contract',
             ntype: 1,
-            num: this.gamegold.toAtom(this.number),
+            num: this.assistant.toAtom(this.number),
             btc: this.btc * 100000000,
             addr: this.address,
           }).then(res => {

@@ -45,6 +45,9 @@ export default {
       payTitle: '支付中',
     }
   },
+  computed:{
+    userBase() {return this.$store.state.user.auth},
+  },
   methods: {
     /**
      * 预生成订单 - 通过这一步提交订单号、价格、用户编号等要素
@@ -159,7 +162,7 @@ export default {
     //在此集中取消不再需要的监听事件，避免不当持有造成的内存泄漏
   },
   created() {
-    if(!this.global.userBase.uid) {
+    if(!this.userBase.uid) {
         this.$router.push('/login');
     } else if(!this.$route.params.order) {
         this.$router.push('/mine')

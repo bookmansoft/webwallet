@@ -23,7 +23,6 @@ import WalletTrans from '@/pages/WalletTrans'
 import WalletDetail from '@/pages/WalletDetail'
 import Props from '@/pages/Props'
 import GameInfo from '@/pages/GameInfo'
-import GameIntro from '@/pages/GameIntro'
 import PropDetail from '@/pages/PropDetail'
 import ContractInfo from '@/pages/ContractInfo'
 import PropSaleInfo from '@/pages/PropSaleInfo'
@@ -121,7 +120,6 @@ export default new Router({
     { path: '/prop/sale/info', name: 'PropSaleInfo', component: PropSaleInfo ,meta:{title:'道具销售'}},
 
     { path: '/game/info', name: 'GameInfo', component: GameInfo ,meta:{title:'游戏信息'}},
-    { path: '/game/intro', name: 'GameIntro', component: GameIntro ,meta:{title:'游戏介绍'}},
 
     { path: '/contract/info', name: 'ContractInfo', component: ContractInfo ,meta:{title:'交易对信息'}},
 

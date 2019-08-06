@@ -1,6 +1,43 @@
 <!-- 游戏列表
 数据接口
-1. cp.List
+1. state.cp.list
+[
+  {
+    `category_id`  '游戏类别',
+    `category_title`  '类别名',
+    `provider_id`  '供应商ID',
+    `provider_name`  '供应商名',
+    `ad_title`  '推广标题',
+    `ranking`  '排名',
+    `star_level`  '星级',
+    `player_count`  '玩家人数',
+    `down_count`  '下载次数',
+    `comment_count`  '评论数',
+    `game_version`  '版本号',
+    `developer`  '开发者',
+    `create_time`  '创建时间',
+    `update_time`  '更新时间',
+    `store_status`  '状态',
+    `cpid`  'cpid',
+    `cpurl`  'cpurl',
+    `cp_addr`  'cp地址',
+    `cp_name`  'cp_name',
+    `game_title`  '标题',
+    `game_link_url`  '游戏链接'
+    `game_ico_uri`  '图标URI',
+    `update_desc`  '更新描述',
+    `game_resource_uri`  '资源URI, 展示大图',
+    `game_screenshots`  '游戏截图',
+    `game_desc`  '描述',
+    `small_img_url`  '展示小图',
+    `stock_price`  '当前资产价格',
+    `stock_sum`  '当前资产数量',
+    `grate`  '媒体分成',
+    `hHeight`  '初次高度',
+    `hBonus`  '历史分红',
+    `hAds`  '历史分成',
+  }
+]
 -->
 <template>
   <div>
@@ -37,7 +74,7 @@
               >{{recommendGame.gameProvider}}</p>
             </div>
           </div>
-          <div v-for="(item, index) in gameList" :key="index" class="gameItem">
+          <div v-for="(item, index) in cpList" :key="index" class="gameItem">
             <flexbox @click.native="gotoCpInfo(item, index)">
               <flexbox-item :span="4" style="padding:0.3rem;">
                 <div class="flex-demo-left">
@@ -62,7 +99,7 @@
       </scroller>
       <br>
     </div>
-    <div v-if="isLoadMore && gameList.length==0 && showNoData==true">
+    <div v-if="isLoadMore && cpList.length==0 && showNoData==true">
       <no-data src="/static/img/default/no-games.png"></no-data>
     </div>
     <div v-if="!isLoadMore">
@@ -121,8 +158,6 @@ export default {
         pullupStatus: "default"
       },
 
-      gameList: [],
-      curPage: 0,
       isLoadMore: false,
       showNoData: false,
       isActive: false,
@@ -132,6 +167,11 @@ export default {
         gameProvider: "原石互娱"
       },
     };
+  },
+  computed:{
+    cpList() { 
+      return this.$store.getters['cp/list'];
+    },
   },
   mounted() {
     this.isActive = true;
@@ -144,8 +184,8 @@ export default {
       this.showNoData = false;
 
       //用户选择下拉刷新，清除本地数据，重新拉取
-      this.getCpList(1, true);
-      setTimeout(() => {
+      this.getContent(true);
+      setTimeout(()=>{
         this.showNoData = true;
         if(this.isActive) {
           this.$refs.scroller.donePulldown();
@@ -157,8 +197,8 @@ export default {
       this.showNoData = false;
 
       //用户选择上滑获取新数据，更新当前页码
-      this.getCpList(this.curPage+1);
-      setTimeout(() => {
+      this.getContent();
+      setTimeout(()=>{
         this.showNoData = true;
         if(this.isActive) {
           this.$refs.scroller.donePullup();
@@ -166,65 +206,22 @@ export default {
       }, 1000);
     },
     /**
-     * 获取列表, page 请求的页码 flash 强制更新
+     * 获取列表, flash 强制更新
      */
-    getCpList(page, flash) {
-      console.log(`query page: ${page}`);
+    getContent(flash) {
+      this.isLoadMore = false;
       if(!!flash) {
-        this.global.cplist = [];
-        this.gameList = [];
-        this.curPage = 0;
+        this.$store.dispatch('cp/clear');
       }
 
-      let curPage = (this.gameList.length/10)|0 + 1;
-      if(this.gameList.length%10==0) {
-        curPage--;
-      }
-      if(curPage < page) {
-        let totalPage = (this.global.cplist.length/10)|0 + 1;
-        if(this.global.cplist.length%10==0) {
-          totalPage--;
+      return this.$store.dispatch('cp/pull').then(ret => {
+        this.isLoadMore = true;
+
+        if(!ret) {
+          //没有新的数据了，禁止继续下拉
+          this.scrollerStatus.pullupStatus = 'disabled';
         }
-
-        if(totalPage > page) {
-          this.curPage++;
-
-          let idx = 0;
-          for(let element of this.global.cplist) {
-            if(idx < (page-1)*10) continue;
-            if(idx > page*10) break;
-
-            this.gameList.push(element);
-
-            idx++;
-          }
-          this.isLoadMore = true;
-        } else {
-          this.remote.fetching({
-            func: "cp.List", 
-            page: page,
-          }).then(res => {
-            if (res.code == 0) {
-              let qryPage = Math.min(res.data.cur, res.data.page); //数据修复：查询页数不能大于总页数
-              if(this.curPage < qryPage) {
-                this.curPage = qryPage;
-
-                res.data.list.forEach(cpItem => {
-                  this.global.cplist.push(cpItem);
-                  this.gameList.push(cpItem);
-                });
-              } else {
-                //没有新的数据了，禁止继续下拉
-                this.scrollerStatus.pullupStatus = 'disabled';
-              }
-
-              setTimeout(() => {
-                this.isLoadMore = true;
-              }, 500);
-            }
-          });
-        }
-      }
+      });
     },
     gotoCpInfo(item, index) {
       this.$router.push({
@@ -234,7 +231,7 @@ export default {
     },
   },
   created() {
-    this.getCpList(1);
+    this.getContent();
   }
 };
 </script>

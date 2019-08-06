@@ -160,6 +160,9 @@ export default {
       sendData: {}
     };
   },
+  computed:{
+    userBase() {return this.$store.state.user.auth},
+  },
   methods: {
     onTabClick(index) {
       this.tabIndex = index;
@@ -168,7 +171,7 @@ export default {
         this.remote.fetching({
           func: "ListRecord",
           control: "manyreceive",
-          receive_uid: this.global.userBase.uid,
+          receive_uid: this.userBase.uid,
         }).then(res => {
           this.receiveData = res.data.list;
         });
@@ -176,7 +179,7 @@ export default {
         this.remote.fetching({
           func: "ListRecord",
           control: "manysend",
-          send_uid: this.global.userBase.uid,
+          send_uid: this.userBase.uid,
         }).then(res => {
           this.sendData = res.data.list;
         });

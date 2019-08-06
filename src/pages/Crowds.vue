@@ -53,7 +53,7 @@
             <div class="flex-left" style="position: relative;top:45px;left:-5px">
               <img src="/static/img/stock/ren_qi.png" style="width:100px;height:27px">
             </div>
-            <div v-for="(item, index) in crowdItems" :key="index" class="crowdItem">
+            <div v-for="(item, index) in crowdList" :key="index" class="crowdItem">
               <div style="padding: 10px;" v-on:click="crowdDetail(item)">
                 <img :src="item.large_img_url" class="img-top">
                 <flexbox>
@@ -114,7 +114,7 @@
       </scroller>
     </div>
 
-    <div v-if="isLoadMore && crowdItems.length==0 && showNoData==true">
+    <div v-if="isLoadMore && crowdList.length==0 && showNoData==true">
       <no-data src="/static/img/default/no-games.png"></no-data>
     </div>
     <div v-if="!isLoadMore">
@@ -181,20 +181,23 @@ export default {
       scrollerStatus: {
         pullupStatus: "default"
       },
-      curPage: 0,
       isLoadMore: false,
       showNoData: false,
       isActive: false,
-
-      crowdItems: [],     //众筹项目列表
     };
+  },
+  computed: {
+    /**
+     * 众筹项目全局缓存
+     */
+    crowdList() { return this.$store.state.crowd.list},
   },
   methods: {
     selPullDown() {
       this.showNoData = false;
       
       //用户选择下拉刷新，清除本地数据，重新拉取
-      this.getcrowdlist(1, true);
+      this.getContent(true);
       setTimeout(() => {
         this.showNoData = true;
         if(this.isActive) {
@@ -207,7 +210,7 @@ export default {
       this.showNoData = false;
 
       //用户选择上滑获取新数据，更新当前页码
-      this.getcrowdlist(this.curPage+1);
+      this.getContent();
       setTimeout(() => {
         this.showNoData = true;
         if(this.isActive) {
@@ -215,76 +218,31 @@ export default {
         }
       }, 1000);
     },
-    //跳转至众筹详情
+    /**
+     * 跳转至众筹详情
+     */
     crowdDetail(item) {
       console.log('crowdDetail', item);
       this.$router.push({ name: "CrowdInfo", params: { item: item } });
     },
     /**
-     * 获取列表, page 请求的页码 flash 强制更新
+     * 获取列表, flash 强制更新
      */
-    getcrowdlist(page, flash) {
-      console.log(`query page: ${page}`);
-
+    getContent(flash) {
+      this.isLoadMore = false;
       if(!!flash) {
-        this.global.crowdlist = [];
-        this.crowdItems = [];
-        this.curPage = 0;
+        this.$store.dispatch('crowd/clear');
       }
 
-      let curPage = (this.crowdItems.length/10)|0 + 1;
-      if(this.crowdItems.length%10==0) {
-        curPage--;
-      }
-      if(curPage < page) {
-        let totalPage = (this.global.crowdlist.length/10)|0 + 1;
-        if(this.global.crowdlist.length%10==0) {
-          totalPage--;
+      return this.$store.dispatch('crowd/pull').then(ret => {
+        this.isLoadMore = true;
+
+        if(!ret) {
+          //没有新的数据了，禁止继续下拉
+          this.scrollerStatus.pullupStatus = 'disabled';
         }
-
-        if(totalPage > page) {
-          this.curPage++;
-
-          let idx = 0;
-          for(let element of this.global.crowdlist) {
-            if(idx < (page-1)*10) continue;
-            if(idx > page*10) break;
-
-            this.crowdItems.push(element);
-
-            idx++;
-          }
-          this.isLoadMore = true;
-        } else {
-          this.remote.fetching({
-            func: "stockMgr.getCrowdList", 
-            page: page,
-          }).then(res => {
-            if (res.code == 0) {
-              console.log('getCrowdList', res.data);
-              let qryPage = Math.min(res.data.page, res.data.total); //数据修复：查询页数不能大于总页数
-              if(this.curPage < qryPage) {
-                this.curPage = qryPage;
-
-                res.data.list.forEach(cpItem => {
-                  cpItem.percent2 = ((cpItem.sum -cpItem.sum_left) * 100 / cpItem.sum) | 0;
-                  cpItem.pic_urls = JSON.parse(cpItem.pic_urls);
-                  this.crowdItems.push(cpItem);
-                  this.global.crowdlist.push(cpItem);
-                });
-              } else {
-                //没有新的数据了，禁止继续下拉
-                this.scrollerStatus.pullupStatus = 'disabled';
-              }
-
-              setTimeout(() => {
-                this.isLoadMore = true;
-              }, 500);
-            }
-          });
-        }
-      }      
-    }
+      });
+    },
   },
 
   mounted() {
@@ -294,7 +252,7 @@ export default {
     this.isActive = false;
   },
   created() {
-    this.getcrowdlist(1);
+    this.getContent();
   },
 };
 </script>

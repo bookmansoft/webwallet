@@ -83,7 +83,7 @@
                     <p>&nbsp;<p>
                     <p>{{item.props_desc}}</p>
                     <a class="gp-btn" @click="buyProp(item)">购买</a>
-                    <p class="color-red">{{gamegold.toKg(item.props_price)}}千克</p>
+                    <p class="color-red">{{assistant.toKg(item.props_price)}}千克</p>
                 </div>
             </div>
         </div>
@@ -103,7 +103,7 @@
                     <p><span style="color:#888;">{{item.content}}</span></p>
                     <p>&nbsp;</p>
                     <a class="gp-btn" @click="buyProp(item)">体验</a>
-                    <p class="color-red">{{gamegold.toKg(item.props_price)}}千克</p>
+                    <p class="color-red">{{assistant.toKg(item.props_price)}}千克</p>
                     <p style="text-align:right; width:100%;"><span style="color:#888;">{{item.timestamp}}</span></p>
                 </div>
             </div>
@@ -153,6 +153,9 @@ export default {
           default: [],
         }
     };
+  },
+  computed:{
+    userBase() {return this.$store.state.user.auth},
   },
   methods: {
     onBack() {
@@ -211,12 +214,12 @@ export default {
       this.remote.fetching({
         func:'GameCommentAdd', 
         control: 'comments', 
-        openid: this.global.openid, 
-        uid: this.global.uid,
+        openid: this.userBase.openid, 
+        uid: this.userBase.uid,
         cid: this.cpInfo.cpid,
         reply_id: 0,
-        nick: this.global.userBase.nickname,
-        avatar_url: this.global.userBase.avatar_uri,
+        nick: this.userBase.nickname,
+        avatar_url: this.userBase.avatar_uri,
         title: '',
         content: this.msgInput
       }).then(res => {
@@ -268,21 +271,20 @@ export default {
       return;
 
       //跳转至鸡小德
-      //window.location.href = `http://chick.vallnet.cn/?openid=${this.remote.userInfo.openid}&openkey=${this.remote.userInfo.openkey}`;
+      //window.location.href = `http://chick.vallnet.cn/?openid=${this.userBase.openid}&openkey=${this.userBase.openkey}`;
 
       const url = `/pages/test/test?cid=${this.cpInfo.cpid}&addr=${this.cpAddr}&game=${this.cpInfo.game_title}&gameUrl=${this.cpInfo.game_resource_uri}`;
       this.$wechat.miniProgram.navigateTo({ url: url })
     },
 
     buyProp(item) {
-        if(this.cpAddr == '' || !this.global.userBase.uid) {
+        if(this.cpAddr == '' || !this.userBase.uid) {
             return;
         }
 
         /*
         let cid = this.cpInfo.cpid
-        let uid = this.global.openid
-        let notifyurl = this.global.apiUrl
+        let notifyurl = this.apiUrl
         let order_sn = item.id + '-new-' + this.randomString(16)
         let price = item.props_price
         var url = "/pages/order/order?cid=" + cid + "&uid=" + uid + "&sn=" + order_sn;
@@ -340,7 +342,7 @@ export default {
     },
 
     userToken() {
-        if(this.global.uid == 0) {
+        if(this.userBase.uid == 0) {
             return;
         }
         this.remote.fetching({func:'cp.UserToken', cid: this.cpInfo.cpid}).then(res => {

@@ -5,7 +5,7 @@
   {
     "height",      //交易高度
     "txid",        //交易哈希
-    "type",        //交易类型 global.RecordType
+    "type",        //交易类型
         {
           1: '发行凭证', sum 发行数量 addr 凭证发行者(交易发起者) to 没有意义   price 发行价格
           2: '购买凭证', sum 买入数量 addr 凭证买入者(交易发起者) to 凭证拥有者 price 无意义
@@ -38,7 +38,7 @@
                 <p>
                   <div style="font-size:15px;">{{crowdItem.title}}</div>
                   <div style="color: coral; font-size:14px;">持有 {{crowdItem.sum}} 个</div>
-                  <span style="color: coral; font-size:14px;">成本 {{parseFloat(crowdItem.price / gamegold.unit.kg).toFixed(3)}} 千克</span>
+                  <span style="color: coral; font-size:14px;">成本 {{parseFloat(crowdItem.price / assistant.unit.kg).toFixed(3)}} 千克</span>
                   <x-button mini :gradients="['#FF5E3A', '#FF9500']" style="margin-left:50px;" @click.native="sale()">挂单出售</x-button>
                 </p>
                 </div>
@@ -131,7 +131,7 @@ export default {
             this.userStockLogs.push(item);
           }
         }
-        this.bonus = parseFloat(bo/this.gamegold.unit.kg).toFixed(3);
+        this.bonus = parseFloat(bo/this.assistant.unit.kg).toFixed(3);
         console.log(this.bonus, this.userStockLogs);
       }
     });

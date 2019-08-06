@@ -1,17 +1,16 @@
 <!-- 余额查询组件，被多个页面直接引用
-
-2. 事件订阅
-911001
+数据来源：
+state.user.balance -> balance
 -->
 <template>
   <div>
-    <card :header="{title: gamegold.gameGoldAccount}">
+    <card :header="{title: assistant.gameGoldAccount}">
       <div slot="content" class="card-demo-flex card-demo-content01">
         <div class="vux-1px-r confirm">
-          已确认:{{balance.confirmed}}{{this.gamegold.gameGoldUnit}}
+          已确认:{{balance.confirmed}}{{this.assistant.gameGoldUnit}}
         </div>
         <div class="vux-1px-r unconfirm">
-          待确认:{{balance.unconfirmed}}</countup>{{this.gamegold.gameGoldUnit}}
+          待确认:{{balance.unconfirmed}}</countup>{{this.assistant.gameGoldUnit}}
         </div>
       </div>
     </card>
@@ -25,18 +24,8 @@ export default {
   components: {
     Card, Countup
   },
-  data () {
-    return {
-    }
-  },
   computed:{
-    balance() {return this.$store.state.gamegold.balance},
-  },
-  methods: {
-  },
-  mounted() {
-  },
-  beforeDestroy() {
+    balance() {return this.$store.state.user.balance},
   },
 }
 </script>

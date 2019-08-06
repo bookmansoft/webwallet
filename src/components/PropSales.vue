@@ -8,7 +8,7 @@
         <panel :header="panelTitle" :list="propList" :type="panelType" @on-click-item="propSaleInfo"></panel>
     </div>
     <div v-if="isLoadMore && propList.length == 0">
-        <no-data src="/static/img/default/no-product.png"></no-data>
+        <no-data src="static/img/default/no-product.png"></no-data>
     </div>
     <div v-if="!isLoadMore">
         <load-more tip="正在加载" style="position: relative; top:200px;" :show-loading="!isLoadMore"></load-more>

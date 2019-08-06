@@ -153,8 +153,10 @@ export default {
       msg2: "输入游戏金数量",
       address: "",
       number: "",
-      mine: {},
     };
+  },
+  computed:{
+    userBase() {return this.$store.state.user.auth},
   },
   methods: {
     onBack() {
@@ -191,12 +193,12 @@ export default {
       }});
     },
     checkSend() {
-      const confirmed = this.mine.confirmed;
+      const confirmed = this.userBase.confirmed;
       let sendGold = !!this.number ? this.number : 0;
       if (this.address == "") {
         this.utils.myAlert(this.$vux.alert, "请输入地址");
         return false;
-      } else if (this.global.checkAddr(this.address) == false) {
+      } else if (this.utils.checkAddr(this.address) == false) {
         this.utils.myAlert(this.$vux.alert, "无效接收地址");
         return false;
       }
@@ -211,7 +213,6 @@ export default {
     }
   },
   created() {
-    this.mine = this.global.userBase;
   }
 };
 </script>

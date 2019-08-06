@@ -39,6 +39,9 @@ export default {
       data: null
     }
   },
+  computed: {
+    userBase () { return this.$store.state.user.auth; },
+  },
   methods: {
     onBack() {
         this.$router.go(-1)
@@ -61,7 +64,7 @@ export default {
     },
 
     payNow() {
-      if(this.data == null || this.global.openid == '') {
+      if(this.data == null || this.userBase.openid == '') {
         return
       }
       let order = this.data.order
@@ -70,7 +73,6 @@ export default {
       }
 
       this.remote.fetching({func:'NotifyOrderPay', control: 'wallet',
-        openid: this.global.openid,
         sn: this.data.sn,
       }).then(res => {
           if(res.code == 0) {
@@ -102,7 +104,7 @@ export default {
         })
         this.data.list.push({
           label: '价格',
-          value: this.gamegold.toKg(obj.price) + '千克'
+          value: this.assistant.toKg(obj.price) + '千克'
         })
       } else {
         this.$router.push('/Message')

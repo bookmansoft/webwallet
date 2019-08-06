@@ -39,6 +39,9 @@ export default {
       number: 0.0
     }
   },
+  computed:{
+    userBase() {return this.$store.state.user.auth},
+  },
   methods: {
       onBack() {
         this.$router.push('/wallet')
@@ -68,10 +71,10 @@ export default {
       },
   },
   created() {
-    if(!this.global.userBase.uid) {
+    if(!this.userBase.uid) {
       this.$router.push('/login');
     } else {
-      this.address = this.global.userBase.block_addr;
+      this.address = this.userBase.block_addr;
     }
   }
 }

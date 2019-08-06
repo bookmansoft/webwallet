@@ -79,9 +79,11 @@ export default {
       redPackAct: null,
       userRedPackList: [],
       UserRedPackAct: null,
-      uid: 0,
       retMsg: null
     }
+  },
+  computed:{
+    userBase() {return this.$store.state.user.auth},
   },
   methods: {
       onBack() {
@@ -136,7 +138,7 @@ export default {
 
       userRedPackSend(item) {
           this.remote.fetching({func:'UserRedPackSend', control: 'redact', 
-            openid: this.global.userBase.openid, 
+            openid: this.userBase.openid, 
             id: item.id,
             act_id: item.act_id,
           }).then(res => {
@@ -162,7 +164,7 @@ export default {
       
   },
   created() {
-    if(!this.global.userBase.uid) {
+    if(!this.userBase.uid) {
         this.$router.push('/login');
     } else {
         this.getRedPackAct();

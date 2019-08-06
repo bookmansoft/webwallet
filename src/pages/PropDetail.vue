@@ -178,7 +178,7 @@ export default {
                 if(that.checkRate(value)==false) {
                     that.showPluginAuto('请输入一个有效的出售价格')
                 } else {
-                    let amount = that.gamegold.toAtom(value)
+                    let amount = that.assistant.toAtom(value)
                     that.propSale(amount)
                 }
             }

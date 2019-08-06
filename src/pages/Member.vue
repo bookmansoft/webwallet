@@ -3,8 +3,8 @@
 <template>
   <div>
     <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
-    <memberJoin v-if="!!mine && !mine.vl" @click.native="orderRePay"></memberJoin>
-    <memberGold v-if="!!mine && mine.vl > 0" :mine="mine" ></memberGold>
+    <memberJoin v-if="!!userBase && !userBase.vl" @click.native="orderRePay"></memberJoin>
+    <memberGold v-if="!!userBase && userBase.vl > 0" :mine="userBase" ></memberGold>
     
     <div><p class="memberMore"><span>会员方案</span></p></div>
     <div class="memberMoreDiv">
@@ -56,11 +56,13 @@ export default {
       vipDescItems: [],
       vipConfig: {},
       btnItems: {},
-      mine: null,
       btnTitle: '',
       btnTitleFee: '',
       btnEnable: true,
     }
+  },
+  computed:{
+    userBase() {return this.$store.state.user.auth},
   },
   methods: {
       onBack() {
@@ -79,15 +81,15 @@ export default {
 
         this.product = this.vipConfig[this.vipDescIndex+1];
         let select_vip = parseInt(this.product.value);
-        if(!!this.mine.vl) {
-          if(select_vip < this.mine.vl) {
+        if(!!this.userBase.vl) {
+          if(select_vip < this.userBase.vl) {
             this.btnTitle = '不可降级';
             this.btnEnable = false;
-          } else if(select_vip > this.mine.vl) {
+          } else if(select_vip > this.userBase.vl) {
             this.btnTitle = '升级VIP' + select_vip;
             this.btnEnable = true;
           } else {
-            this.btnTitle = 'VIP' + this.mine.vl + '续费';
+            this.btnTitle = 'VIP' + this.userBase.vl + '续费';
             this.btnEnable = true;
           }
         } else {
@@ -95,11 +97,11 @@ export default {
         }
 
         let current_time = Date.parse(new Date())/1000;
-        if(!this.mine.vl || current_time > this.mine.vet || this.mine.vl == select_vip) {
+        if(!this.userBase.vl || current_time > this.userBase.vet || this.userBase.vl == select_vip) {
           this.curPrice = parseFloat(this.vipConfig[select_vip].price/100).toFixed(2);
-        } else if(select_vip > this.mine.vl) {
-          let days = ((this.mine.vet - this.mine.vst) / (24 * 3600)) | 0;
-          this.curPrice = parseFloat((this.vipConfig[select_vip].price - this.vipConfig[this.mine.vl].price) * days / 30 / 100).toFixed(2);
+        } else if(select_vip > this.userBase.vl) {
+          let days = ((this.userBase.vet - this.userBase.vst) / (24 * 3600)) | 0;
+          this.curPrice = parseFloat((this.vipConfig[select_vip].price - this.vipConfig[this.userBase.vl].price) * days / 30 / 100).toFixed(2);
         } else {
           this.curPrice = 0;
         }
@@ -109,7 +111,7 @@ export default {
       orderRePay() {
         this.product = this.product || this.vipConfig[1];
         let val = parseInt(this.product.value);
-        if(!!this.mine.vl && val < this.mine.vl) {
+        if(!!this.userBase.vl && val < this.userBase.vl) {
             this.showPluginAuto('不能降级，当前已经是' + this.product.label);
             return;
         }
@@ -144,13 +146,8 @@ export default {
   },
   //#region 生命周期函数
   created() {
-    if(!this.global.userBase.uid) {
+    if(!this.userBase.uid) {
       this.$router.push('/login');
-    }
-
-    this.mine = this.global.userBase;
-    if(!this.mine.vl) {
-      this.mine.vl = 0;
     }
   },
   mounted() {
@@ -164,13 +161,13 @@ export default {
               index: key,
               src0: `static/img/member/v${key}_no.png`,
               src1: `static/img/member/v${key}_yes.png`,
-              status: this.mine.vl == key ? 1 : 0,
+              status: this.userBase.vl == key ? 1 : 0,
           };
           return item;
         });
 
-        if(!!this.mine.vl) {
-            this.vipSelect(this.btnItems[this.mine.vl-1]);
+        if(!!this.userBase.vl) {
+            this.vipSelect(this.btnItems[this.userBase.vl-1]);
         } else {
             this.vipSelect(this.btnItems[0]);
         }

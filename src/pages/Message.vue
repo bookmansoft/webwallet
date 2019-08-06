@@ -52,6 +52,9 @@ export default {
       isLoadMore: false,
     }
   },
+  computed: {
+    userBase() {return this.$store.state.user.auth},
+  },
   methods: {
     onBack() {
         this.$router.push("/mine")
@@ -62,10 +65,7 @@ export default {
     },
     getNotify() {
         this.remote.fetching({
-          func:'NotifyList',
-          control: 'wallet',
-          uid: this.global.uid,
-          openid: this.global.openid,
+          func:'wallet.NotifyList',
           last: 0,
         }).then(res => {
             if(res.code == 0) {
@@ -92,7 +92,7 @@ export default {
     }
   },
   created() {
-    if(!this.global.userBase.uid) {
+    if(!this.userBase.uid) {
       this.$router.push('/login');
     }
     this.getNotify();

@@ -208,8 +208,10 @@ export default {
       items0: getItems0(),
       items1: getItems1(),
       items2: getItems2(),
-      userBase: null,
     };
+  },
+  computed: {
+    userBase() {return this.$store.state.user.auth},
   },
   methods: {
     member() {
@@ -229,7 +231,7 @@ export default {
         this.items0[0].value = "产币加速中";
         this.items0[0].img = "/static/img/member/Vip" + this.userBase.vl + ".png";
         let current_time = parseInt(new Date().getTime() / 1000);
-        if (this.gamegold.toKg(this.userBase.vcur) >= 10) {
+        if (this.assistant.toKg(this.userBase.vcur) >= 10) {
           this.items0[0].showDot = true;
         } else {
           this.items0[0].showDot = false;
@@ -266,10 +268,9 @@ export default {
     }
   },
   created() {
-    if(!this.global.userBase.uid) {
+    if(!this.userBase.uid) {
       this.$router.push('/login');
     } else {
-      this.userBase = this.global.userBase;
       console.log(this.userBase.avatar_uri);
       this.getNotify();
     }

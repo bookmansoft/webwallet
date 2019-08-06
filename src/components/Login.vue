@@ -70,43 +70,37 @@ export default {
     async afterLogin() {
       if(this.remote.status.check(this.remote.CommStatus.logined)) {
         //#region 登录成功后，客户端缓存的、供客户端显性调用的认证信息对象
-        this.global.userBase = this.remote.userInfo;
-        this.global.userBase.uid = this.remote.userInfo.id;
-        this.global.userBase.user_name = this.remote.userInfo.name;
-        this.global.userBase.nickname = this.remote.userInfo.name;
-
-        this.$store.dispatch('changeBalance', {
-          confirmed: this.gamegold.toKg(this.global.userBase.confirmed), 
-          unconfirmed: this.gamegold.toKg(this.global.userBase.unconfirmed - this.global.userBase.confirmed),
-        })
-        //@note 也可以这样写: this.$store.commit('balanceChanged', {})
+        this.remote.userInfo.uid = this.remote.userInfo.id;
+        this.remote.userInfo.user_name = this.remote.userInfo.name;
+        this.remote.userInfo.nickname = this.remote.userInfo.name;
+        this.$store.dispatch('user/change', this.remote.userInfo);
         //#endregion
 
         this.ConfigMgr.get('base', (err, config)=>{ 
           if(!err) {
-            this.gamegold.unit = config;
+            this.assistant.unit = config;
           }
         });
 
         //监测账户余额变化
         this.remote.watch((info) => {
-          this.global.userBase.confirmed = info.confirmed;
-          this.global.userBase.unconfirmed = info.unconfirmed;
-          this.$store.dispatch('changeBalance', {
-            confirmed: this.gamegold.toKg(info.confirmed), 
-            unconfirmed: this.gamegold.toKg(info.unconfirmed - info.confirmed),
+          this.$store.dispatch('user/change', {
+            confirmed: info.confirmed,
+            unconfirmed: info.unconfirmed,
           });
         }, 911001);
         
         //监测VIP等级变化
         this.remote.watch(info => {
           console.log('vip changed:', info.vl, info.vcur);
-          if(!!this.global.userBase.uid) {
-            this.global.userBase.vl = info.vl;
-            this.global.userBase.vst = info.vst;
-            this.global.userBase.vet = info.vet;
-            this.global.userBase.vlg = info.vlg;
-            this.global.userBase.vcur = info.vcur || 0;
+          if(!!this.$store.state.user.auth.uid) {
+            this.$store.dispatch('user/change', {
+              vl: info.vl,
+              vst: info.vst,
+              vet: info.vet,
+              vlg: info.vlg,
+              vcur: info.vcur || 0,
+            });
           }
         }, 911002);
 
@@ -118,7 +112,7 @@ export default {
           throw new Error(`WechatConfig Error: ${res.code}`);
         }
         
-        console.log('after login', this.global.userBase);
+        console.log('after login', this.$store.state.user.auth);
         this.gotoHome();
       } else {
         throw(new Error('登录失败'));
@@ -134,8 +128,6 @@ export default {
    */
   async created() {
     this.urlParamPath = this.utils.getUrlKey('path');
-    let userAgent = this.checkUserAgent();
-    this.global.userBase.userAgent = userAgent;
 
     //#region Modified by liub 2019.06.13
     try {

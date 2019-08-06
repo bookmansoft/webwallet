@@ -27,7 +27,7 @@
           cid: this.item.cid,     //CP编码
           num: this.quantity,     //众筹加成数量
           price: this.realPay,    //实际价格，单位元
-          desc: this.crowdConfig[this.item.payType].desc,
+          desc: state.crowd.ConfigDict[this.item.payType].desc,
         },
         retPath: "/crowd/my"
       }
@@ -226,11 +226,13 @@ export default {
       showLoading: false,
       flagMore: false,
       item: {},     //CP对象
-      crowdConfig: {},
       payType: 0,   //支付类型
       quantity: 1,  //购买数量，预设为1
       realPay: 1,   //支付总额
     };
+  },
+  computed: {
+    crowdConfig () { return this.$store.state.crowd.configDict; },
   },
   methods: {
     viewMore() {
@@ -265,10 +267,10 @@ export default {
     calc() {
       if(this.crowdConfig[this.item.payType].stock > 0) {
         this.realPay = parseFloat(
-          this.item.price / this.gamegold.unit.kg         //atom化为KG
+          this.item.price / this.assistant.unit.kg         //atom化为KG
           * this.crowdConfig[this.item.payType].stock   //选项包含的凭证数量
           * this.quantity                               //选项数量
-          * this.gamegold.unit.kgprice                    //KG单价
+          * this.assistant.unit.kgprice                    //KG单价
         ).toFixed(2);
       } else {
         this.realPay = this.quantity;
@@ -281,9 +283,9 @@ export default {
       this.$router.push({ name: "Crowds" });
     } else {
       this.item = this.$route.params.item;
-      this.crowdConfig = this.global.crowdConfig;
-      console.log('CrowdOrder', this.item);
-      this.calc();
+      this.$store.dispatch('crowd/getConfig').then(config=>{
+        this.calc();
+      });
     }
   }
   //#endregion

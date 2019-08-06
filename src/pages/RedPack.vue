@@ -31,6 +31,9 @@ export default {
       retMsg: null
     }
   },
+  computed:{
+    userBase() {return this.$store.state.user.auth},
+  },
   methods: {
       onBack() {
         this.$router.go(-1);
@@ -47,7 +50,7 @@ export default {
       },
   },
   created() {
-    if(!this.global.userBase.uid) {
+    if(!this.userBase.uid) {
       this.$router.push('/login');
     }
   }

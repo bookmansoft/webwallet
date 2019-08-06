@@ -1,11 +1,11 @@
 /**
  * 游戏金辅助对象
  */
-class gamegoldAssistant
+class Assistant
 {
     static singleton() {
         if(!this.instance) {
-            this.instance = new gamegoldAssistant('singleton');
+            this.instance = new Assistant('singleton');
         }
         return this.instance;
     }
@@ -13,6 +13,10 @@ class gamegoldAssistant
     constructor(type) {
         this.gameGoldAccount = '游戏金账户';
         this.gameGoldUnit = '千克';
+        this.ResType = {
+            '99000': '众筹凭证',
+        }
+          
         this.$unit = {
             "ton": 100000000,
             "kg": 100000,
@@ -43,4 +47,4 @@ class gamegoldAssistant
     }
 }
 
-export default gamegoldAssistant.singleton();
+export default Assistant.singleton();
