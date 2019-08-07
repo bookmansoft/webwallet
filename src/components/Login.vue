@@ -60,11 +60,11 @@ export default {
     },
 
     gotoHome() {
-        if(this.urlParamPath == null) {
-          this.$router.push('/home')
-        } else {
-          this.$router.push(this.urlParamPath)
-        }
+      if(!!this.urlParamPath) {
+        this.$router.push(this.urlParamPath)
+      } else {
+        this.$router.push('/home')
+      }
     },
 
     async afterLogin() {
@@ -127,7 +127,7 @@ export default {
    * 3. 通过URL携带 openid token 执行登录，这种操作略过了微信授权和中台的远程校验，只要经过中台负载均衡即可直接登录
    */
   async created() {
-    this.urlParamPath = this.utils.getUrlKey('path');
+    this.urlParamPath = this.utils.getUrlKey('path') || this.$route.params.path;
 
     //#region Modified by liub 2019.06.13
     try {

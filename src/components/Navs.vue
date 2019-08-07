@@ -17,11 +17,11 @@
 import { Tabbar, TabbarItem} from 'vux'
 import { create } from 'domain';
 const getTabItems = () => [
-    { icon:'static/img/icon/home_no.png', iconActive: 'static/img/icon/home_yes.png', label:'首页', showDot: false, link:'/home', badge:''},
-    { icon:'static/img/icon/market_no.png', iconActive: 'static/img/icon/market_yes.png', label:'集市', showDot: false, link:'/market', badge:''},
-    { icon:'static/img/stock/menu1_no.png', iconActive: 'static/img/stock/menu1.png', label:'游戏众筹', showDot: false, link:'/crowds', badge:''},
-    { icon:'static/img/stock/menu2_no.png', iconActive: 'static/img/stock/menu2.png', label:'自由市场', showDot: false, link:'/stocks', badge:''},
-    { icon:'static/img/stock/menu3_no.png', iconActive: 'static/img/stock/menu3.png', label:'我的', showDot: false, link:'/mine', badge:''}
+    { icon:'/static/img/icon/home_no.png', iconActive: '/static/img/icon/home_yes.png', label:'首页', showDot: false, link:'/home', badge:''},
+    { icon:'/static/img/icon/market_no.png', iconActive: '/static/img/icon/market_yes.png', label:'集市', showDot: false, link:'/market', badge:''},
+    { icon:'/static/img/stock/menu1_no.png', iconActive: '/static/img/stock/menu1.png', label:'游戏众筹', showDot: false, link:'/crowds', badge:''},
+    { icon:'/static/img/stock/menu2_no.png', iconActive: '/static/img/stock/menu2.png', label:'自由市场', showDot: false, link:'/stocks', badge:''},
+    { icon:'/static/img/stock/menu3_no.png', iconActive: '/static/img/stock/menu3.png', label:'我的', showDot: false, link:'/mine', badge:''}
 ]
 
 export default {

@@ -34,15 +34,6 @@ const mod = {
                 value: "限时抽红包",
                 showDot: false
             },
-                {
-                title: "我的钱包",
-                is_link: true,
-                img: "/static/img/mine/wallet.png",
-                badge: 0,
-                link: { path: "/wallet" },
-                value: "",
-                showDot: false
-            },
             {
                 title: "我的道具",
                 is_link: true,
@@ -76,15 +67,6 @@ const mod = {
                 img: "/static/img/mine/game.png",
                 badge: 0,
                 link: { path: "/mygame" },
-                value: "",
-                showDot: false
-            },
-            {
-                title: "我的代练宝宝",
-                is_link: true,
-                img: "/static/img/mine/stock.png",
-                badge: 0,
-                link: { path: "/crowd/my" },
                 value: "",
                 showDot: false
             },

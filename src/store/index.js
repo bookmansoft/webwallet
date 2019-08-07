@@ -15,6 +15,9 @@ store.registerModule('cp', cp);
 import crowd from './crowd'
 store.registerModule('crowd', crowd);
 
+import mygame from './mygame'
+store.registerModule('mygame', mygame);
+
 import pocket from './pocket'
 store.registerModule('pocket', pocket);
 

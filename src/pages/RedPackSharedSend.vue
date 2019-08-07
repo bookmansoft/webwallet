@@ -86,8 +86,15 @@ export default {
         total_num: parseInt(this.total_num),
         wishing: this.wishing
       }).then(res => {
-        this.send_id = res.data;
-        this.$router.push("/redpackshared/justSend/" + this.send_id);
+        if(res.code == 0) {
+          this.send_id = res.data;
+          this.$router.push("/redpackshared/justSend/" + this.send_id);
+        } else {
+          throw new Error(`sharedredpack.Send${res.code}`);
+        }
+      }).catch(e=>{
+        console.log(e);
+        this.$router.push('/home');
       });
     }
   },

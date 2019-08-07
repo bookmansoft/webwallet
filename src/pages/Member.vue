@@ -159,8 +159,8 @@ export default {
         this.btnItems = Object.keys(config).map(key => {
           let item = {    
               index: key,
-              src0: `static/img/member/v${key}_no.png`,
-              src1: `static/img/member/v${key}_yes.png`,
+              src0: `/static/img/member/v${key}_no.png`,
+              src1: `/static/img/member/v${key}_yes.png`,
               status: this.userBase.vl == key ? 1 : 0,
           };
           return item;

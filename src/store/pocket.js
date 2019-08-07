@@ -25,6 +25,9 @@ const mod = {
         clear(state) {
             state.list = [];
         },
+        merge(state, list) {
+            state.list = state.list.concat(list);
+        },
         add(state, msg) {
             state.list.push(msg);
         }
@@ -70,16 +73,16 @@ const mod = {
                     let qryPage = Math.min(res.data.total, res.data.page); //数据修复：查询页数不能大于总页数
                     if(curPage < qryPage) { //说明获得了新的内容
                         console.log('packet.pull', res.data.list);
-                        res.data.list.forEach(item => {
+                        context.commit('merge', res.data.list.map(item => {
                             let tps = item.id.split('.');
-                            context.dispatch('add', {
+                            return {
                                 type: tps[0],
                                 id: tps[1],
                                 num: item.num,
                                 title: `${assistant.ResType[tps[0]]}`,
                                 desc: `类型: ${item.id} / 当前数量: ${item.num}`,
-                            });
-                        });
+                            };
+                        }))
                     }
                 }
             }

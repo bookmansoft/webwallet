@@ -1,18 +1,8 @@
 <!-- 游戏金发送确认界面
 -->
 <template>
-  <div class="root">
-    <div style="background-color:#f3f3f3">
-      <flexbox>
-        <flexbox-item :span="12">
-          <div style="height:6px;"></div>
-        </flexbox-item>
-      </flexbox>
-    </div>
-    <div style="background-color:white;">
+  <div>
       <flexbox class="content">
-        <flexbox-item :span="1">
-        </flexbox-item>
         <flexbox-item :span="10">
           <div style="display:block">
             <span style="font-size:16px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(50,58,69);">本次发送</span>
@@ -27,14 +17,10 @@
 
       <div style="background-color:#f3f3f3">
         <flexbox>
-          <flexbox-item :span="12">
-            <div style="height:6px;"></div>
-          </flexbox-item>
+          <flexbox-item :span="12"><div style="height:6px;"></div></flexbox-item>
         </flexbox>
       </div>
       <flexbox class="content">
-        <flexbox-item :span="1">
-        </flexbox-item>
         <flexbox-item :span="10">
           <div style="display:block">
             <span style="font-size:14px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(190,190,190);">本次手续费</span>
@@ -56,8 +42,6 @@
       </div>
 
       <flexbox class="content">
-        <flexbox-item :span="1">
-        </flexbox-item>
         <flexbox-item :span="10">
           <div style="display:block">
             <span style="font-size:16px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(50,58,69);">发送到</span>
@@ -87,7 +71,6 @@
           <flexbox-item :span="2"></flexbox-item>
         </flexbox>
       </div>
-    </div>
   </div>
 </template>
 <script>
@@ -172,24 +155,8 @@ export default {
 </script>
 
 <style scoped>
-.root {
-  overflow-x: hidden;
-  margin-left: 0px;
-  margin-right: 0px;
-}
 .content {
-  margin-left: 0px;
-  margin-right: 0px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-left: 5px;
   line-height: 35px;
-}
-.underline {
-  border-style: solid;
-  border-color: rgb(230, 230, 230);
-  border-bottom-width: 1px;
-  border-top-width: 0px;
-  border-left-width: 0px;
-  border-right-width: 0px;
 }
 </style>

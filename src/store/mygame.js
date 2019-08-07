@@ -69,7 +69,7 @@ const mod = {
 
             if(curPage < context.state.pageMax) {
                 let res = await remote.fetching({
-                    func: "cp.List", 
+                    func: "cp.Mine", 
                     category: category || 0,
                     page: curPage+1,
                 });

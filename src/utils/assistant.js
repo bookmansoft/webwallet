@@ -14,6 +14,9 @@ class Assistant
         this.gameGoldAccount = '游戏金账户';
         this.gameGoldUnit = '千克';
         this.ResType = {
+            '10000': '道具',
+            '20000': '场景',
+            '30000': '英雄',
             '99000': '众筹凭证',
         }
           
@@ -35,8 +38,7 @@ class Assistant
      * 尘转换为公斤
      */
     toKg(v) {
-        let k = v / 100000
-        return parseFloat(k.toFixed(3))
+        return parseFloat(v/100000).toFixed(3);
     }
     
     /**

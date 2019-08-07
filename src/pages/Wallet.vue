@@ -146,7 +146,7 @@ export default {
       this.$router.push({ name: "WalletSend" });
     },
     sendRedPack() {
-      this.$router.push('/redpack');
+      this.$router.push('/redpackshared/send');
     },
     receive() {
       this.$router.push('/wallet/receive');

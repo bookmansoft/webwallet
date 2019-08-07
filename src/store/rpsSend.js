@@ -1,3 +1,4 @@
+import moment from "moment";
 import assistant from "../utils/assistant"
 import remote from '../utils/remote'
 
@@ -27,6 +28,9 @@ const mod = {
         },
         add(state, msg) {
             state.list.push(msg);
+        },
+        merge(state, msg) {
+            state.list = state.list.concat(msg);
         }
     },  
     /**
@@ -42,9 +46,7 @@ const mod = {
             context.commit('add', item);
         },
         merge(context, list) {
-            for(let item of list) {
-                context.commit('add', item);
-            }
+            context.commit('merge', list);
         },
         /**
          * 从网络获取内容追加至列表
@@ -69,14 +71,12 @@ const mod = {
 
                     let qryPage = Math.min(res.data.total, res.data.page); //数据修复：查询页数不能大于总页数
                     if(curPage < qryPage) { //说明获得了新的内容
-                        console.log('rpsReceive.pull', res.data.list);
                         res.data.list.forEach(it => {
                             it.src= `/static/img/manyRed/redpacketsmall.jpg`;
-                            it.title = `游戏金红包${it.total_num}个`;
+                            it.title = `游戏金红包${it.total_num}个 ${moment(it.modify_date * 1000).format("MM-DD HH:mm")}`;
                             it.desc = `-${assistant.toKg(it.total_amount)}千克`;
-                
-                            context.dispatch('add', it);
                         });
+                        context.commit('merge', res.data.list);
                     }
                 }
             }

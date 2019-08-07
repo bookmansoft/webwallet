@@ -1,3 +1,5 @@
+import remote from './remote'
+
 /**
  * 配置信息管理
  */

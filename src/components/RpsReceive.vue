@@ -66,12 +66,12 @@ export default {
     FlexboxItem,
     LoadMore,
     XXProgress,
-    Box
+    Box,
   },
   data: function() {
     return {
-      type: '2',
-      Title: '背包一览',
+      type: '1',
+      Title: '',
       downobj: {
         content: "下拉刷新数据...",
         downContent: "下拉刷新数据...",
@@ -135,7 +135,7 @@ export default {
       }, 1000);
     },
     onItemClick(item) {
-      this.$router.push(`/redpackshared/receive/${item.id}`);
+      this.$router.push(`/redpackshared/receive/${item.send_id}`); //查看红包详情
     },
     /**
      * 获取列表, flash 强制更新

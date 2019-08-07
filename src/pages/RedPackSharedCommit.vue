@@ -15,7 +15,7 @@
       <flexbox>
         <flexbox-item :span="3"></flexbox-item>
         <flexbox-item :span="6">
-          <x-button class="xbutton" plain type="warn">复制链接</x-button>
+          <x-button class="xbutton" plain type="warn" @click.native="copyAddr(address, $event)">复制链接</x-button>
         </flexbox-item>
       </flexbox>
     </box>
@@ -41,6 +41,7 @@ import {
   Alert,
   TransferDomDirective as TransferDom
 } from "vux";
+import Clipboard from 'clipboard'
 
 export default {
   directives: {
@@ -64,6 +65,7 @@ export default {
     return {
       show: false,
       Title: '好的',
+      address: '',
       sendData: {},
       send_id: -1,
       that: {}
@@ -73,7 +75,23 @@ export default {
     //显示发送给朋友对话框
     showDialog() {
       this.show = true;
-    }
+    },
+    copyAddr(text, event){
+      const clipboard = new Clipboard(event.target, {
+        text: () => text
+      })
+      clipboard.on('success', e => {  
+        // 释放内存  
+        this.$vux.toast.show({text: '已复制到剪贴板'})
+        clipboard.destroy()  
+      })  
+      clipboard.on('error', e => {  
+        // 不支持复制  
+        // 释放内存  
+        this.$vux.toast.show({text: '浏览器不支持复制'})
+        clipboard.destroy()  
+      })  
+    },
   },
 
   created: function() {
@@ -85,27 +103,32 @@ export default {
       func: "sharedredpack.Retrieve",
       id: this.send_id
     }).then(res => {
-      this.sendData = res.data;
-      console.log("红包组信息:", this.sendData);
-      let sendDataWishing = this.sendData.wishing;
-      let sendDataSendNickName = this.sendData.send_nickname;
+      if(res.code == 0) {
+        this.sendData = res.data;
+        this.address = `${this.remote.appConfig.siteUri}?path=/redpackshared/unpack/${this.send_id}`;
 
-      this.$wechat.ready(function() {
-        //发送给朋友
-        that.$wechat.onMenuShareAppMessage({
-          title: "[游戏金红包]" + sendDataWishing + "！", // 分享标题
-          desc: "来自" + sendDataSendNickName + "的游戏金红包", // 分享描述
-          link: `${that.remote.appConfig.siteUri}?path=/redpackshared/unpack/${that.send_id}`, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-          imgUrl: `${that.remote.appConfig.siteUri}static/img/manyRed/redpacketsmall.jpg`, // 分享图标
-          success: function() {
-            console.log("微信分享设置成功");
-            // 设置成功
-          },
-          fail: function(res) {
-            console.log("失败了：" + JSON.stringify(res));
-          }
+        this.$wechat.ready(function() {
+          //发送给朋友
+          that.$wechat.onMenuShareAppMessage({
+            title: `[游戏金红包]${that.sendData.wishing}！`,                                   // 分享标题
+            desc: `来自${that.sendData.send_nickname}的游戏金红包`,                            // 分享描述
+            link: that.address,                                                               // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            imgUrl: `${that.remote.appConfig.siteUri}static/img/manyRed/redpacketsmall.jpg`,  // 分享图标
+            success: function() {
+              console.log("微信分享设置成功");
+              // 设置成功
+            },
+            fail: function(res) {
+              console.log("失败了：" + JSON.stringify(res));
+            }
+          });
         });
-      });
+      } else {
+        throw new Error(`sharedredpack.Retrieve: ${res.code}`);
+      }
+    }).catch(e=>{
+      console.log(e);
+      this.$router.push('/home')
     });
   }
 };

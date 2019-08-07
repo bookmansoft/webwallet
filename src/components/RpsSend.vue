@@ -70,8 +70,8 @@ export default {
   },
   data: function() {
     return {
-      type: '2',
-      Title: '背包一览',
+      type: '2', // 1 显示图片 2 不显示图片
+      Title: '',
       downobj: {
         content: "下拉刷新数据...",
         downContent: "下拉刷新数据...",
@@ -135,7 +135,7 @@ export default {
       }, 1000);
     },
     onItemClick(item) {
-      this.$router.push(`/redpackshared/send/${item.id}`);
+      this.$router.push(`/redpackshared/receive/${item.id}`);
     },
     /**
      * 获取列表, flash 强制更新

@@ -31,7 +31,6 @@ import Member from '@/pages/Member'
 import WeChatPay from '@/pages/WeChatPay'
 import Message from '@/pages/Message'
 import PropOrderPay from '@/pages/PropOrderPay'
-import RedPack from '@/pages/RedPack'
 import RedPackAct from '@/pages/RedPackAct'
 import MyGame from '@/pages/MyGame'
 import Login from '@/components/Login'
@@ -102,7 +101,6 @@ export default new Router({
     { path: '/wallet/trans', name: 'WalletTrans', component: WalletTrans ,meta:{title:'交易对'}},
     { path: '/wallet/detail', name: 'WalletDetail', component: WalletDetail ,meta:{title:'交易流水'}},
 
-    { path: '/redpack', name: 'RedPack', component: RedPack ,meta:{title:'红包'}},
     { path: '/redpack/act', name: 'RedPackAct', component: RedPackAct ,meta:{title:'红包Act'}},
     { path: '/redpackshared',name:'RedPackShared', component: RedPackShared, meta:{title:'多人红包管理'}},
     { path: '/redpackshared/send',name:'RedPackSharedSend', component:RedPackSharedSend, meta:{title:'多人红包发送'}},

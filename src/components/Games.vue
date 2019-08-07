@@ -97,7 +97,6 @@
           <br>
         </div>
       </scroller>
-      <br>
     </div>
     <div v-if="isLoadMore && cpList.length==0 && showNoData==true">
       <no-data src="/static/img/default/no-games.png"></no-data>
@@ -117,7 +116,6 @@ import {
   FlexboxItem,
   LoadMore
 } from "vux";
-import { setTimeout } from "timers";
 import NoData from "@/components/NoData.vue";
 
 export default {
@@ -145,7 +143,7 @@ export default {
         clsPrefix: "xs-plugin-pulldown-"
       },
       upobj: {
-        content: "向上滑动获取更多数据...",
+        content: "",
         upContent: "向上滑动获取更多数据...",
         downContent: "释放获取数据",
         loadingContent: "加载中...",

@@ -1,4 +1,4 @@
-<!-- 多人红包接收页面
+<!-- 多人红包详情展示页面
 -->
 <template>
   <div>
@@ -7,7 +7,7 @@
         <img class="topHeadImg" style="width:60px;height:60px;"  :src="this.sendData.send_headimg">
       </div>
       <div align="center">
-        <label id="label1">{{this.sendData.send_nickname}}的游戏金红包</label>
+        <label id="label1">来自{{this.sendData.send_nickname}}的红包</label>
       </div>
       <div align="center">
         <label id="label2">{{this.sendData.wishing}}</label>
@@ -18,75 +18,19 @@
         <label id="label3">{{this.sendData.state_id==1?(parseInt(this.sendData.real_amount/100)/1000+'千克'):this.sendData.state_name}}</label>
       </div>
       <div align="center">
-        <label id="label4">{{this.sendData.state_id==1?'已领取，进入钱包查看>':''}}</label>
+        <span @click="gotoWallet"><label id="label4">{{'进入钱包查看 >>'}}</label></span>
+        <span @click="gotoShare"><label id="label4">{{'分享给朋友 >>'}}</label></span>
       </div>
     </div>
 
-    <group class="group">
-      <group-title slot="title">
-        <span class="groupTitle">已领取 {{this.receiveData.length}}/{{this.sendData.total_num}} 个</span>
-      </group-title>
-    </group>
     <div v-show="true">
-      <box gap="10px 10px">
-        <template v-for="item in this.receiveData">
-          <card class="card" :key="item.id">
-            <div slot="content">
-              <flexbox>
-                <flexbox-item :span="2">
-                  <div class="imgDiv" align="center">
-                    <img style="width:60px;height:60px;" :src="item.receive_headimg">
-                  </div>
-                </flexbox-item>
-                <flexbox-item :span="6">
-                  <div class="text">
-                    {{item.receive_nickname}}
-                    <br>{{item.modify_date|dateFormat}}
-                  </div>
-                </flexbox-item>
-                <flexbox-item>
-                  <div class="text">+{{item.receive_amount|amountFomat}}千克</div>
-                </flexbox-item>
-              </flexbox>
-            </div>
-          </card>
-        </template>
-        <!-- <card class="card">
-          <div slot="content">
-            <flexbox>
-              <flexbox-item :span="2">
-                <div class="imgDiv" align="center">
-                  <img style="width:60px;height:60px;" :src="imgTest">
-                </div>
-              </flexbox-item>
-              <flexbox-item :span="6">
-                <div class="text">
-                  Sasuke
-                  <br>3-10 23:52
-                </div>
-              </flexbox-item>
-              <flexbox-item>
-                <div class="text">+0.500千克</div>
-              </flexbox-item>
-            </flexbox>
-          </div>
-        </card> -->
-      </box>
+        <panel :header="panelTitle" :list="receiveData" :type="panelType"></panel>
     </div>
   </div>
 </template>
 <script>
 import {
-  Flexbox,
-  FlexboxItem,
-  Divider,
-  XInput,
-  Group,
-  XButton,
-  Cell,
-  Box,
-  GroupTitle,
-  Card
+  Panel,
 } from "vux";
 import moment from "moment";
 const tabList = () => [
@@ -100,41 +44,69 @@ const tabList = () => [
 
 export default {
   components: {
-    Flexbox,
-    FlexboxItem,
-    Divider,
-    XInput,
-    Group,
-    XButton,
-    Cell,
-    Box,
-    GroupTitle,
-    Card
+    Panel,
   },
   data() {
     return {
-      receiveData: {},
+      panelTitle: '',
+      panelType: '1',
+      receiveData: [],
       sendData: {},
       // imgTest: require("../../static/img/manyRed/head2.png"),
     };
   },
-  methods: {},
-  filters: {
-    dateFormat: function(el) {
+  computed: {
+    userBase() {
+      return this.$store.state.user.auth;
+    }
+  },
+  methods: {
+    gotoWallet() {
+      this.$router.push('/redpackshared');
+    },
+    gotoShare() {
+      this.$router.push(`/redpackshared/justSend/${this.$route.params.send_id}`);
+    },
+    dateFormat(el) {
       return moment(el * 1000).format("MM-DD HH:mm");
     },
-    amountFomat: function(el) {
-      return parseInt(el / 100) / 1000;
+    amountFomat(el) {
+      return parseFloat(el/100000).toFixed(3);
     },
   },
   created: function() {
-    this.remote.fetching({
-      func: "sharedredpack_receive.Receive",
-      id: this.$route.params.send_id
-    }).then(res => {
-      this.sendData = res.data;
-    });
-  }
+    if(!this.$route.params.send_id) {
+      if(!this.userBase.uid) { 
+        this.$router.push({ name: 'Login'});
+      } else {
+        this.$router.push('/home');
+      }
+    } else if(!this.userBase.uid) {
+      this.$router.push({ name: 'Login', params: { path: `/redpackshared/unpack/${this.$route.params.send_id}` }});
+    } else {
+      this.remote.fetching({
+        func: "sharedredpack_receive.Receive",
+        id: this.$route.params.send_id
+      }).then(res => {
+        if(res.code == 0) {
+          this.sendData = res.data.send;
+          this.receiveData = res.data.receive.map(item=>{
+            item.src = item.recv_headimg;
+            item.title = `${item.recv_nickname} ${this.dateFormat(item.modify_date)}`;
+            item.desc = `+${this.amountFomat(item.receive_amount)}千克`;
+            return item;
+          });
+          this.panelTitle = `已领取 ${this.receiveData.length}/${this.sendData.total_num} 个`;
+          console.log('sharedredpack_receive.Receive', res.data);
+        } else {
+          throw new Error(`sharedredpack_receive.Receive: ${res.code}`);
+        }
+      }).catch(e=>{
+        console.error(e);
+        this.$router.push('/home');
+      });
+    }
+  },
 };
 </script>
 
@@ -160,10 +132,6 @@ export default {
   margin-bottom: 20px;
   margin-left: 15px;
   margin-right: 15px;
-}
-.groupTitle {
-  font-size: 16px;
-  margin-bottom: 20px;
 }
 .input {
   font-size: 20px;
