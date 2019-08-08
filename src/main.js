@@ -3,20 +3,9 @@
  * (runtime-only or standalone) has been set in webpack.base.conf with an alias.
  */
 import Vue from 'vue'
-import FastClick from 'fastclick'
 import { WechatPlugin, AjaxPlugin, AlertPlugin, ToastPlugin, ConfirmPlugin  } from 'vux'
 import VueWechatTitle from 'vue-wechat-title'
 
-import router from './router/index'
-import App from './App'
-import store from './store/index'
-
-import utils from './utils/func'
-import assistant from './utils/assistant'
-import remote from './utils/remote'
-import ConfigMgr from './utils/ConfigMgr'
-
-FastClick.attach(document.body)
 Vue.config.productionTip = false
 Vue.use(WechatPlugin)
 Vue.use(AjaxPlugin)
@@ -25,10 +14,22 @@ Vue.use(ToastPlugin)
 Vue.use(ConfirmPlugin)
 Vue.use(VueWechatTitle)
 
+import utils from './utils/func'
+import assistant from './utils/assistant'
+import remote from './utils/remote'
+import ConfigMgr from './utils/ConfigMgr'
+
 Vue.prototype.utils = utils;
 Vue.prototype.assistant = assistant;
-Vue.prototype.ConfigMgr = ConfigMgr;
 Vue.prototype.remote = remote;
+Vue.prototype.ConfigMgr = ConfigMgr;
+
+import FastClick from 'fastclick'
+FastClick.attach(document.body)
+
+import router from './router/index'
+import store from './store/index'
+import App from './App'
 
 /* eslint-disable no-new */
 new Vue({

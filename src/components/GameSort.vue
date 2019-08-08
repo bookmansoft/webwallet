@@ -10,12 +10,8 @@
         </grid-item>
       </grid>
     </div>
+    <x-button v-if="isLoadMore" plain style="border-radius:5px;color:rgb(255,113,101)" type="warn" @click.native="viewCategory()">返回目录</x-button>
     <div v-if="isLoadMore && !showCategory">
-      <x-button
-        plain
-        style="border-radius:5px;color:rgb(255,113,101)"
-        type="warn"
-        @click.native="viewCategory()">返回目录</x-button>
       <scroller
         v-model="scrollerStatus"
         height="-100"
@@ -177,7 +173,7 @@ export default {
         this.$store.dispatch('cp/clear');
       }
 
-      return this.$store.dispatch('cp/pull', this.category).then(ret => {
+      return this.$store.dispatch('cp/pull', {category:this.category}).then(ret => {
         this.isLoadMore = true;
 
         if(!ret) {

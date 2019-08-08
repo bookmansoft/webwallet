@@ -24,6 +24,9 @@ store.registerModule('pocket', pocket);
 import prop from './prop'
 store.registerModule('prop', prop);
 
+import propMarket from './propMarket'
+store.registerModule('propMarket', propMarket);
+
 import rpsReceive from './rpsReceive'
 store.registerModule('rpsReceive', rpsReceive);
 

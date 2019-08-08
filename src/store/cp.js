@@ -61,7 +61,7 @@ const mod = {
          * 从网络获取内容追加至列表
          * @param {*} context 
          */
-        async pull(context, category) {
+        async pull(context, selection) {
             let curPage = (context.state.list.length/10)|0 + 1;
             if(context.state.list.length%10==0) {
                 curPage--;
@@ -70,7 +70,7 @@ const mod = {
             if(curPage < context.state.pageMax) {
                 let res = await remote.fetching({
                     func: "cp.List", 
-                    category: category || 0,
+                    category: selection ? selection.category || 0 : 0,
                     page: curPage+1,
                 });
                 if (res.code == 0) {
