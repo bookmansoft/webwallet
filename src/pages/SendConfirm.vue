@@ -144,6 +144,10 @@ export default {
   },
 
   created() {
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
+        return;
+    }
     this.sender = {
       amount : this.$route.params.amount,
       actAmount: this.assistant.toAtom(this.$route.params.amount),

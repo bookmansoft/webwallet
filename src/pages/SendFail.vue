@@ -100,8 +100,12 @@ export default {
       this.$router.push("/wallet");
     }
   },
-
-  created() {}
+  created() {
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
+        return;
+    }
+  }
 };
 </script>
 

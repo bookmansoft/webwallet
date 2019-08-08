@@ -98,8 +98,12 @@ export default {
       });
     }
   },
-  filters: {
-  }
+  created() {
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
+        return;
+    }
+  },
 };
 </script>
 

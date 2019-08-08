@@ -21,8 +21,8 @@ Contract    游戏金交易市场
 <script>
 import { Tab, TabItem} from 'vux'
 import Navs from '@/components/Navs.vue'
-import PropSales from '@/components/PropSales.vue'
-import Contract from '@/components/Contract.vue'
+import PropSales from '@/pages/PropSales.vue'
+import Contract from '@/pages/Contract.vue'
 
 const tabList = () => [
   {
@@ -49,6 +49,11 @@ export default {
     onItemClick(index) {
       console.log(this.tabIndex)
     }
-  }
+  },
+  created() {
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
+    }
+  },
 }
 </script>

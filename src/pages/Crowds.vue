@@ -252,7 +252,11 @@ export default {
     this.isActive = false;
   },
   created() {
-    this.getContent();
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
+    } else {
+      this.getContent();
+    }
   },
 };
 </script>

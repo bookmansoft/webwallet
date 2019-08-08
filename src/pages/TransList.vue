@@ -204,8 +204,12 @@ export default {
       }
     }
   },
-
-  created() {}
+  created() {
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
+        return;
+    }
+  }
 };
 </script>
 

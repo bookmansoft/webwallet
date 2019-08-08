@@ -146,7 +146,6 @@ export default {
     if(!this.userBase.uid) {
       this.$router.push('/login');
     } else {
-      console.log(this.userBase.avatar_uri);
       this.getNotify();
     }
   }

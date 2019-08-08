@@ -19,8 +19,8 @@
 -->
 <template>
   <div>
-    <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
-    <balance></balance>
+    <!-- <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> -->
+    <balance :balance='balance'></balance>
     <div v-if="isLoadMore && items.length > 0">
       <box gap="8px 8px">
         <group title="交易流水">
@@ -62,6 +62,9 @@ export default {
       items: []
     }
   },
+  computed:{
+    balance() {return this.$store.state.user.balance},
+  },
   methods: {
       onBack() {
         this.$router.go(-1)
@@ -97,6 +100,10 @@ export default {
       }
   },
   created() {
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
+        return;
+    }
     this.getTxLogs();
   }
 }

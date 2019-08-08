@@ -2,7 +2,7 @@
 --> 
 <template>
   <div>
-    <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
+    <!-- <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> -->
     <memberJoin v-if="!!userBase && !userBase.vl" @click.native="orderRePay"></memberJoin>
     <memberGold v-if="!!userBase && userBase.vl > 0" :mine="userBase" ></memberGold>
     
@@ -38,8 +38,8 @@
 
 <script>
 import Balance from '@/components/Balance.vue'
-import MemberJoin from '@/components/MemberJoin.vue'
-import MemberGold from '@/components/MemberGold.vue'
+import MemberJoin from '@/pages/MemberJoin.vue'
+import MemberGold from '@/pages/MemberGold.vue'
 import { XHeader, Flexbox, FlexboxItem, Group, Divider, XButton, Swiper, SwiperItem  } from 'vux'
 
 export default {

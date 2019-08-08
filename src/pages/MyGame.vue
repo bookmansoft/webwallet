@@ -63,7 +63,7 @@ import {
 import NoData from "@/components/NoData.vue";
 
 export default {
-  name: "Games",
+  name: "MyGame",
   components: {
     Scroller,
     NoData,
@@ -173,7 +173,11 @@ export default {
     },
   },
   created() {
-    this.getContent();
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
+    } else {
+      this.getContent();
+    }
   }
 };
 </script>

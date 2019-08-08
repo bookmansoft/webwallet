@@ -2,7 +2,7 @@
 -->
 <template>
     <div>
-        <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> 
+        <!-- <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> -->
         <group>
             <flexbox>
                 <flexbox-item :span="3" style="padding:0.3rem;">
@@ -90,10 +90,15 @@ export default {
         
     },
     created() {
-        if(!this.$route.params.contract) {
-            this.$router.push('/mine');
+        if(!this.$store.state.user.auth.uid) {
+            this.$router.push('/login');
+        } else {
+            if(!this.$route.params.contract) {
+                this.$router.push('/mine');
+            } else {
+                this.contract = this.$route.params.contract
+            }
         }
-        this.contract = this.$route.params.contract
     }
 }
 </script>

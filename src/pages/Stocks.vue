@@ -96,7 +96,7 @@ import { setTimeout } from "timers";
 import NoData from "@/components/NoData.vue";
 
 export default {
-  name: 'Pocket',
+  name: 'Stocks',
   components: {
     Panel,
     Scroller,
@@ -206,6 +206,10 @@ export default {
     this.isActive = false;
   },
   created() {
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
+        return;
+    }
     this.getContent();
   },
 };

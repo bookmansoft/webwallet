@@ -44,7 +44,7 @@ import {
 import NoData from "@/components/NoData.vue";
 
 export default {
-  name: 'Pocket',
+  name: 'PanelList',
   components: {
     Panel,
     Scroller,

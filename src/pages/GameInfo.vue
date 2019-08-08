@@ -1,6 +1,6 @@
 <template>
   <div>
-    <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> 
+    <!-- <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> -->
     <div id="gameName">
         <div id="topImg">
             <img :src="cpInfo.game_resource_uri">
@@ -14,11 +14,9 @@
                 <li class="color-999-provider">发行商：{{cpInfo.developer}}</li>
                 <li>
                 <span class="color-999">射击</span>
-                  <!--
                   <a class="play-btn float-right">
                     <span style="font-size:11px;" @click="gotoGame">{{playGameLable}}</span>
                   </a>
-                  -->
                 </li>
                 <li>
                 <span class="color-999">128人玩过</span>
@@ -87,7 +85,6 @@
                 </div>
             </div>
         </div>
-        <!--
         <div id="gameProps" class="backcolor-white">
           <div class="no-comment-box" v-if="commentsList.length==0">暂无评论</div>
           <div v-if="commentsList.length > 0">
@@ -123,7 +120,6 @@
             </flexbox>
           </tabbar>
         </div>
-        -->
     </div>
   </div>
 </template> 
@@ -267,14 +263,11 @@ export default {
     },
 
     gotoGame() {
-      this.showPlugin('暂未开放，请稍后再来');
-      return;
-
       //跳转至鸡小德
+      // const url = `/pages/test/test?cid=${this.cpInfo.cpid}&addr=${this.cpAddr}&game=${this.cpInfo.game_title}&gameUrl=${this.cpInfo.game_resource_uri}`;
+      // this.$wechat.miniProgram.navigateTo({ url: url })
+      window.location.href = `http://wallet.vallnet.cn:9701/test?cpid=${this.cpInfo.cpid}openid=${this.userBase.openid}&openkey=${this.userBase.openkey}`;
       //window.location.href = `http://chick.vallnet.cn/?openid=${this.userBase.openid}&openkey=${this.userBase.openkey}`;
-
-      const url = `/pages/test/test?cid=${this.cpInfo.cpid}&addr=${this.cpAddr}&game=${this.cpInfo.game_title}&gameUrl=${this.cpInfo.game_resource_uri}`;
-      this.$wechat.miniProgram.navigateTo({ url: url })
     },
 
     buyProp(item) {
@@ -367,17 +360,21 @@ export default {
   },
 
   created() {
-    if(!!!this.$route.params.cpInfo) {
-      this.$router.push('/Home');
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
     } else {
-      this.cpInfo = this.$route.params.cpInfo;
-      this.cpInfo.update_time = this.getTime(this.cpInfo.update_time);
-      if(typeof this.cpInfo.game_screenshots == 'string') {
-        this.cpInfo.game_screenshots = this.cpInfo.game_screenshots.split(',');
+      if(!this.$route.params.cpInfo) {
+        this.$router.push('/Home');
+      } else {
+        this.cpInfo = this.$route.params.cpInfo;
+        this.cpInfo.update_time = this.getTime(this.cpInfo.update_time);
+        if(typeof this.cpInfo.game_screenshots == 'string') {
+          this.cpInfo.game_screenshots = this.cpInfo.game_screenshots.split(',');
+        }
+        this.getCpProps();
+        this.userToken();
+        this.getCommentList();
       }
-      this.getCpProps();
-      this.userToken();
-      this.getCommentList();
     }
   }
 };

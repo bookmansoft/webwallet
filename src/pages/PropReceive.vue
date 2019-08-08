@@ -2,7 +2,7 @@
 -->
 <template>
   <div>
-    <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> 
+    <!-- <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> -->
     <div id="gameName">
         <div id="topImg">
             <img :src="prop.imgUrl">
@@ -85,14 +85,15 @@ export default {
           }
       });
     }
-
   },
-
   created() {
-      let prop = this.utils.getUrlKey('prop')
-      console.log(prop)
-      this.prop = JSON.parse(prop)
-      console.log(this.prop)
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
+    } else {
+      let prop = this.utils.getUrlKey('prop');
+      this.prop = JSON.parse(prop);
+      console.log('PropReceive', this.prop);
+    }
   }
 };
 </script>

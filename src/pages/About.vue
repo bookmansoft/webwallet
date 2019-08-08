@@ -2,7 +2,7 @@
 -->
 <template>
   <div>
-    <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
+    <!-- <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> -->
     <group title="版本信息">
         <div style="padding:15px;"><p>{{version}}</p></div>
     </group>
@@ -25,6 +25,11 @@ export default {
       onBack() {
         this.$router.go(-1);
       }
+  },
+  created() {
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
+    }
   },
 }
 </script>

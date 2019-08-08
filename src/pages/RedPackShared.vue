@@ -18,8 +18,8 @@
   </div>
 </template>
 <script>
-import RpsReceive from '@/components/RpsReceive.vue'
-import RpsSend from '@/components/RpsSend.vue'
+import RpsReceive from '@/pages/RpsReceive.vue'
+import RpsSend from '@/pages/RpsSend.vue'
 
 import {
   Tab,
@@ -57,6 +57,9 @@ export default {
     },
   },
   created: function() {
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
+    }
   }
 };
 

@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 import Home from '@/pages/Home'
 import Market from '@/pages/Market'
 import Crowds from '@/pages/Crowds'
-import Pocket from '@/components/Pocket'
+import Pocket from '@/pages/Pocket'
 import ItemInfo from '@/pages/ItemInfo'
 import Stocks from '@/pages/Stocks'
 import CrowdInfo from '@/pages/CrowdInfo'
@@ -33,14 +34,13 @@ import Message from '@/pages/Message'
 import PropOrderPay from '@/pages/PropOrderPay'
 import RedPackAct from '@/pages/RedPackAct'
 import MyGame from '@/pages/MyGame'
-import Login from '@/components/Login'
-import LuckyWheel from '@/components/luckywheel'
+import Login from '@/pages/Login'
+import LuckyWheel from '@/pages/luckywheel'
 import RedPackShared from '@/pages/RedPackShared';
 import RedPackSharedSend from '@/pages/RedPackSharedSend';
 import RedPackSharedCommit from '@/pages/RedPackSharedCommit';
 import RedPackSharedReceive from '@/pages/RedPackSharedReceive';
 import RedPackSharedOpen from '@/pages/RedPackSharedOpen';
-
 import BuySuccess from '@/pages/BuySuccess';
 import BuyFail from '@/pages/BuyFail';
 import PaySuccess from '@/pages/PaySuccess';
@@ -49,9 +49,7 @@ import HouseAddressAdd from '@/pages/HouseAddressAdd';
 import SendSuccess from '@/pages/SendSuccess';
 import SendFail from '@/pages/SendFail';
 import SendConfirm from '@/pages/SendConfirm';
-
 import TransList from '@/pages/TransList';
-
 
 Vue.use(Router)
 

@@ -142,12 +142,16 @@ export default {
   },
   //#region 生命周期函数
   created() {
-    this.item = this.$route.params.item;
-    if(!this.item) {
-      this.$router.push("/crowds");
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
     } else {
-      this.factor = this.item.price / this.assistant.unit.kg * this.assistant.unit.kgprice;
-      this.$store.dispatch('crowd/getConfig');
+      this.item = this.$route.params.item;
+      if(!this.item) {
+        this.$router.push("/crowds");
+      } else {
+        this.factor = this.item.price / this.assistant.unit.kg * this.assistant.unit.kgprice;
+        this.$store.dispatch('crowd/getConfig');
+      }
     }
   }
   //#endregion

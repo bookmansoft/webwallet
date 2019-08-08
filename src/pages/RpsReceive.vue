@@ -12,7 +12,7 @@ import Navs from "@/components/Navs.vue";
 import PanelList from "@/components/PanelList.vue";
 
 export default {
-  name: 'Pocket',
+  name: 'RspReceive',
   components: {
     Navs,
     PanelList,
@@ -39,6 +39,10 @@ export default {
     }
   },
   created() {
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
+        return;
+    }
   },
 };
 </script>

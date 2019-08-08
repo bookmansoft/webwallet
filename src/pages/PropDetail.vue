@@ -3,7 +3,7 @@
 -->
 <template>
   <div>
-    <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> 
+    <!-- <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> -->
     <div id="gameName">
         <div id="topImg">
             <img :src="prop.large_icon">
@@ -240,14 +240,18 @@ export default {
   },
 
   created() {
-    if(!!!this.$route.params.item) {
-        this.$router.push('/props')
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
     } else {
-        this.prop = this.$route.params.item;
-        this.propShareIcon = this.prop.large_icon;
-        this.prop.more_icon.forEach( item => {
-             this.propIcons.push(item);
-        });
+      if(!this.$route.params.item) {
+          this.$router.push('/props')
+      } else {
+          this.prop = this.$route.params.item;
+          this.propShareIcon = this.prop.large_icon;
+          this.prop.more_icon.forEach( item => {
+              this.propIcons.push(item);
+          });
+      }
     }
   }
 };

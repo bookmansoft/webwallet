@@ -40,6 +40,9 @@ export default {
     }
   },
   created() {
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
+    }
   },
 };
 </script>

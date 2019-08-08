@@ -17,10 +17,7 @@
         </flexbox-item>
         <flexbox-item :span="1">
           <div style="display:block;padding-left:10px;" @click="wxScanCode">
-            <img
-              src="/static/img/stock/send/scan.png"
-              style="width:auto;height:auto;max-width:100%;max-height:100%; "
-            >
+            <img src="/static/img/stock/send/scan.png" style="width:auto;height:auto;max-width:100%;max-height:100%;">
           </div>
         </flexbox-item>
         <flexbox-item :span="1"></flexbox-item>
@@ -62,7 +59,7 @@
         <flexbox-item :span="1"></flexbox-item>
         <flexbox-item :span="10">
           <span style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(154,154,154);">可用余额</span>
-          <balance ref="balance"></balance>
+          <balance ref="balance" :balance="balance"></balance>
         </flexbox-item>
         <flexbox-item :span="1"></flexbox-item>
       </flexbox>
@@ -85,38 +82,6 @@
         <flexbox-item :span="2"></flexbox-item>
       </flexbox>
     </div>
-
-    <!-- <box gap="8px 8px">
-      <group label-width="4em" label-margin-right="1.5em" label-align="right" title="接收地址">
-        <x-textarea
-          :rows="2"
-          name="address"
-          ref="address"
-          placeholder="输入地址"
-          v-model="address"
-          required
-        ></x-textarea>
-      </group> -->
-      <!-- <group label-width="3.5em" label-margin-right="2em" label-align="right">
-        <x-button @click.native="wxScanCode">扫描二维码</x-button>
-      </group> -->
-      <!-- <br>
-      <group label-width="4em" label-margin-right="1.5em" label-align="right" title="游戏金(千克)">
-        <x-input
-          type="number"
-          name="number"
-          ref="number"
-          placeholder="输入游戏金数量"
-          v-model="number"
-          required
-        ></x-input>
-      </group>
-      <br>
-      <group label-width="3.5em" label-margin-right="2em" label-align="right">
-        <x-button type="primary" @click.native="sendGamegold">发送</x-button>
-      </group>
-    </box> -->
-    <!-- <balance ref="balance"></balance> -->
   </div>
 </template>
 
@@ -157,6 +122,7 @@ export default {
   },
   computed:{
     userBase() {return this.$store.state.user.auth},
+    balance() {return this.$store.state.user.balance},
   },
   methods: {
     onBack() {
@@ -213,6 +179,10 @@ export default {
     }
   },
   created() {
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
+        return;
+    }
   }
 };
 </script>

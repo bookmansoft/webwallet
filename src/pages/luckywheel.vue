@@ -3,7 +3,7 @@
 -->
 <template>
     <div>
-      <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
+      <!-- <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> -->
       <div class="container">
           <div class="lucky-wheel">
               <div class="lucky-title"></div>
@@ -133,14 +133,17 @@ export default {
     };
   },
   created() {
-    if(!!!this.$route.params.lotteryTicket) {
-       this.onBack()
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
     } else {
-      this.lottery_ticket = this.$route.params.lotteryTicket
-      this.redPackAct = this.$route.params.redPackAct
-      this.init_prize_list();
+      if(!this.$route.params.lotteryTicket) {
+        this.onBack()
+      } else {
+        this.lottery_ticket = this.$route.params.lotteryTicket
+        this.redPackAct = this.$route.params.redPackAct
+        this.init_prize_list();
+      }
     }
-    
   },
   computed: {
     toast_title() {
@@ -229,7 +232,6 @@ export default {
             }
         });
     },
-
   }
 };
 </script>

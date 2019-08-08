@@ -59,7 +59,7 @@
         <div>
           <div style="height:5px;"></div>
           <div style="background-color: white">
-            <div style="padding:10px 10px 0px 10px;">
+            <div style="padding:10px 10px 0px 10px;" @click="gotoGame">
               <img :src="recommendGame.src" class="img-top">
             </div>
             <div>
@@ -162,7 +162,8 @@ export default {
       recommendGame: {
         gameTitle: "奔跑的悟空",
         src: "/static/img/game/game-3.jpg",
-        gameProvider: "原石互娱"
+        gameProvider: "原石互娱",
+        cpid: 'chick',
       },
     };
   },
@@ -170,6 +171,7 @@ export default {
     cpList() { 
       return this.$store.getters['cp/list'];
     },
+    userBase() {return this.$store.state.user.auth},
   },
   mounted() {
     this.isActive = true;
@@ -227,9 +229,16 @@ export default {
         params: { cpInfo: item },
       });
     },
+    gotoGame() {
+      window.location.href = `http://wallet.vallnet.cn:9701/test?cpid=${this.recommendGame.cpid}openid=${this.userBase.openid}&openkey=${this.userBase.openkey}`;
+    },
   },
   created() {
-    this.getContent();
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
+    } else { 
+      this.getContent();
+    }
   }
 };
 </script>

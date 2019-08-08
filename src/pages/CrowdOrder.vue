@@ -279,13 +279,17 @@ export default {
   },
   //#region 生命周期函数
   created() {
-    if (!this.$route.params.item) {
-      this.$router.push({ name: "Crowds" });
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
     } else {
-      this.item = this.$route.params.item;
-      this.$store.dispatch('crowd/getConfig').then(config=>{
-        this.calc();
-      });
+      if (!this.$route.params.item) {
+        this.$router.push({ name: "Crowds" });
+      } else {
+        this.item = this.$route.params.item;
+        this.$store.dispatch('crowd/getConfig').then(config=>{
+          this.calc();
+        });
+      }
     }
   }
   //#endregion

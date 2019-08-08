@@ -26,7 +26,7 @@
 -->
 <template>
   <div>
-    <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
+    <!-- <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> -->
     <group>
         <flexbox class="crowdItem">
             <flexbox-item :span="2.5" style="padding:0.3rem;">
@@ -115,26 +115,30 @@ export default {
         },
   },
   created() {
-    this.crowdItem = this.$route.params.item;
-    console.log('MyStockInfo', this.crowdItem);
-    this.remote.fetching({func: 'stockMgr.UserStockLogs', cid: this.crowdItem.cid, addr: this.crowdItem.addr}).then(res => {
-      console.log('stockMgr.UserStockLogs', res);
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
+    } else { 
+      this.crowdItem = this.$route.params.item;
+      console.log('MyStockInfo', this.crowdItem);
+      this.remote.fetching({func: 'stockMgr.UserStockLogs', cid: this.crowdItem.cid, addr: this.crowdItem.addr}).then(res => {
+        console.log('stockMgr.UserStockLogs', res);
 
-      this.userStockLogs = [];
-      if(res.code == 0) {
-        let bo = 0;
-        for(let item of res.data.list) {
-          if(item.type == 4) {
-            bo += item.price;
-          } else if(item.type == 2 || item.type == 3 || item.type == 7) {
-            item.time = this.utils.formatDateStr(new Date(Date.parse(new Date()) - (res.data.height - item.height)*600*1000), 'yyyy-MM-dd HH:mm:ss');
-            this.userStockLogs.push(item);
+        this.userStockLogs = [];
+        if(res.code == 0) {
+          let bo = 0;
+          for(let item of res.data.list) {
+            if(item.type == 4) {
+              bo += item.price;
+            } else if(item.type == 2 || item.type == 3 || item.type == 7) {
+              item.time = this.utils.formatDateStr(new Date(Date.parse(new Date()) - (res.data.height - item.height)*600*1000), 'yyyy-MM-dd HH:mm:ss');
+              this.userStockLogs.push(item);
+            }
           }
+          this.bonus = parseFloat(bo/this.assistant.unit.kg).toFixed(3);
+          console.log(this.bonus, this.userStockLogs);
         }
-        this.bonus = parseFloat(bo/this.assistant.unit.kg).toFixed(3);
-        console.log(this.bonus, this.userStockLogs);
-      }
-    });
+      });
+    }
   }
 }
 </script>

@@ -63,7 +63,11 @@ export default {
         }
     },
     created() {
-        this.getContractList()
+        if(!this.$store.state.user.auth.uid) {
+            this.$router.push('/login');
+        } else {
+            this.getContractList();
+        }
     }
 }
 </script>

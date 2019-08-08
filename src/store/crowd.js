@@ -36,6 +36,9 @@ const mod = {
         },
         add(state, msg) {
             state.list.push(msg);
+        },
+        merge(state, list) {
+            state.list = state.list.concat(list);
         }
     },  
     /**
@@ -91,8 +94,11 @@ const mod = {
                     if(curPage < qryPage) { //说明获得了新的内容
                         console.log('crowd.pull', res.data.list);
                         res.data.list.forEach(item => {
-                            context.commit('add', item);
+                            if(typeof item.pic_urls == 'string') {
+                                item.pic_urls = JSON.parse(item.pic_urls);
+                            }
                         });
+                        context.commit('merge', res.data.list);
                     }
                 }
             }

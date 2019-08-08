@@ -184,8 +184,11 @@ export default {
     this.isActive = false;
   },
   created() {
-    console.log('showType', this.showType);
-    this.getContent();
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
+    } else { 
+      this.getContent();
+    }
   },
 };
 </script>

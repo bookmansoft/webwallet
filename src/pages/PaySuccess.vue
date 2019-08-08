@@ -116,10 +116,12 @@ export default {
     houseAddress() {
       this.$router.push({ name: "HouseAddress"});
     }
-
   },
-
-  created() {}
+  created() {
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
+    }
+  }
 };
 </script>
 

@@ -2,7 +2,7 @@
 -->
 <template>
   <div>
-    <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
+    <!-- <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> -->
     <MyStock :showType="1"></MyStock>
     <!-- 导航 -->
     <navs></navs>
@@ -12,7 +12,7 @@
 import { XHeader, XButton } from 'vux'
 import Navs from '@/components/Navs.vue'
 import NoData from '@/components/NoData.vue'
-import MyStock from '@/components/MyStock.vue'
+import MyStock from '@/pages/MyStock.vue'
 
 export default {
   components: {
@@ -30,6 +30,10 @@ export default {
         },
   },
   created() {
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
+        return;
+    }
   }
 }
 </script>

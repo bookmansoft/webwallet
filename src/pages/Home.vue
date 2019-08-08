@@ -19,8 +19,8 @@
 <script>
 import { Tab, TabItem} from 'vux'
 import Navs from '@/components/Navs.vue'
-import Games from '@/components/Games.vue'
-import GameSort from '@/components/GameSort.vue'
+import Games from '@/pages/Games.vue'
+import GameSort from '@/pages/GameSort.vue'
 
 const tabList = () => [
   {
@@ -43,12 +43,18 @@ export default {
       tabItems: tabList()
     }
   },
+  computed: {
+    userBase() { return this.$store.state.user.auth; }
+  },
   methods: {
     onItemClick(index) {
       console.log(this.tabIndex)
     }
   },
   created() {
+    if(!this.userBase.uid) {
+      this.$router.push('/login');
+    }
   },
 }
 </script>

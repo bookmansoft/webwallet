@@ -251,6 +251,11 @@ export default {
   },
 
   created() {
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
+        return;
+    }
+
     this.item = this.$route.params.item;
     if (!this.item) {
       this.$router.push({ name: "Crowds" });

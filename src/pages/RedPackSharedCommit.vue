@@ -95,6 +95,11 @@ export default {
   },
 
   created: function() {
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
+        return;
+    }
+    
     this.send_id = this.$route.params.send_id;
 
     let that = this;

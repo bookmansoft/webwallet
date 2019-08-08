@@ -10,7 +10,7 @@
         </grid-item>
       </grid>
     </div>
-    <x-button v-if="isLoadMore" plain style="border-radius:5px;color:rgb(255,113,101)" type="warn" @click.native="viewCategory()">返回目录</x-button>
+    <x-button v-if="!showCategory" plain style="border-radius:5px;color:rgb(255,113,101)" type="warn" @click.native="viewCategory()">返回目录</x-button>
     <div v-if="isLoadMore && !showCategory">
       <scroller
         v-model="scrollerStatus"
@@ -196,11 +196,17 @@ export default {
     this.isActive = false;
   },
   created() {
-    this.ConfigMgr.get('gameCategory', (err, config)=>{
-      if(!err) {
-        this.gameCategory = config;
-      }
-    });
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
+    } else { 
+      this.ConfigMgr.get('gameCategory', (err, config)=>{
+        if(!err) {
+          this.gameCategory = config;
+        } else {
+          this.$router.push('/home');
+        }
+      });
+    }
   },
 }
 </script>

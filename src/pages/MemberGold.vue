@@ -132,8 +132,7 @@ export default {
     vipDraw(draw_count) {
         this.timerBreak = true;
         this.remote.fetching({
-          func:'VipDraw',
-          control: 'profile',
+          func:'profile.VipDraw',
           draw_count: draw_count,
         }).then(res => {
             this.timerBreak = false;
@@ -174,19 +173,23 @@ export default {
   },
 
   created() {
-    this.mine.vcur = this.mine.vcur || 0;
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
+    } else {
+      this.mine.vcur = this.mine.vcur || 0;
 
-    this.ConfigMgr.get('vip', (err, config)=>{ 
-      this.cfg = config; 
+      this.ConfigMgr.get('vip', (err, config)=>{ 
+        this.cfg = config; 
 
-      this.gold = this.mine.vcur || 0;
-      let _now = Date.parse(new Date())/1000;
-      this.refreshTime = this.mine.vlg;
-      this.gold += (_now - this.refreshTime) * this.cfg[this.mine.vl].time_get_count;
-      this.refreshTime = _now;
+        this.gold = this.mine.vcur || 0;
+        let _now = Date.parse(new Date())/1000;
+        this.refreshTime = this.mine.vlg;
+        this.gold += (_now - this.refreshTime) * this.cfg[this.mine.vl].time_get_count;
+        this.refreshTime = _now;
 
-      this.doCircle();
-    });
+        this.doCircle();
+      });
+    }
   },
   //#endregion
 }

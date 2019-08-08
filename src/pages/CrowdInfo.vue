@@ -282,11 +282,15 @@ export default {
     },
   },
   created() {
-    this.item = this.$route.params.item;
-    if(!this.item) {
-      this.$router.push("/crowds")
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
     } else {
-      console.log('crowdInfo', this.item);
+      this.item = this.$route.params.item;
+      if(!this.item) {
+        this.$router.push("/crowds")
+      } else {
+        console.log('crowdInfo', this.item);
+      }
     }
   },
 };

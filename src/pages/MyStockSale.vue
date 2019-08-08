@@ -2,7 +2,7 @@
 -->
 <template>
   <div>
-    <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
+    <!-- <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> -->
     <group>
         <flexbox class="crowdItem">
             <flexbox-item :span="2.5" style="padding:0.3rem;">
@@ -103,7 +103,11 @@ export default {
         }
   },
   created() {
-    this.crowdItem = this.$route.params.item
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
+    } else { 
+      this.crowdItem = this.$route.params.item
+    }
   }
 }
 </script>

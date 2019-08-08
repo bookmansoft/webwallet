@@ -24,9 +24,7 @@ export default {
   components: {
     Card, Countup
   },
-  computed:{
-    balance() {return this.$store.state.user.balance},
-  },
+  props: ['balance'],
 }
 </script>
 
@@ -41,14 +39,11 @@ export default {
   font-size: 1.1em;
   color: #f74c31;
 }
-.card-demo-flex {
-  display: flex;
-}
 .card-demo-content01 {
   padding: 10px 0;
 }
-.card-padding {
-  padding: 15px;
+.card-demo-flex {
+  display: flex;
 }
 .card-demo-flex > div {
   flex: 1;

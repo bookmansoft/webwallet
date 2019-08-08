@@ -2,8 +2,8 @@
 -->
 <template>
   <div>
-    <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
-    <balance></balance>
+    <!-- <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> -->
+    <balance :balance="balance"></balance>
     <box gap="8px 8px">
         <group title="接收二维码">
             <div style="text-align:center;padding: 20px 0px 20px 0px">
@@ -41,6 +41,7 @@ export default {
   },
   computed:{
     userBase() {return this.$store.state.user.auth},
+    balance() {return this.$store.state.user.balance},
   },
   methods: {
       onBack() {

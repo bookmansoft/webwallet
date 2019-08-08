@@ -159,8 +159,6 @@ export default {
   },
   mounted() {
   },
-  beforeDestroy() {
-  },
 };
 </script>
 <style lang="less" scoped>

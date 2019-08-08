@@ -2,7 +2,7 @@
 -->
 <template>
   <div>
-    <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
+    <!-- <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> -->
     <div v-if="hasRedAct==true">
         <group :title=redPackAct.act_name>
             <div style="padding:15px;"><p>{{redPackAct.act_desc}}</p></div>

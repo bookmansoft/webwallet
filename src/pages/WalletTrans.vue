@@ -2,8 +2,8 @@
 -->
 <template>
   <div>
-    <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
-    <balance ref="balance"></balance>
+    <!-- <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> -->
+    <balance ref="balance" :balance="balance"></balance>
 
     <box gap="8px 8px">
       <group label-width="4em" label-margin-right="1.5em" label-align="right" title="出让的游戏金(千克)">
@@ -108,7 +108,10 @@ export default {
       }
   },
   created() {
-
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
+        return;
+    }
   }
 }
 </script>

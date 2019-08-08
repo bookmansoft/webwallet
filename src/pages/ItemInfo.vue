@@ -94,12 +94,14 @@ export default {
     },
   },
   created() {
-    this.item = this.$route.params.item;
-    if(!this.item) {
-      this.$router.push("/mine")
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
+    } else {
+      this.item = this.$route.params.item;
+      if(!this.item) {
+        this.$router.push("/mine");
+      }
     }
-
-    console.log('ItemInfo', this.item);
   }
 };
 </script>

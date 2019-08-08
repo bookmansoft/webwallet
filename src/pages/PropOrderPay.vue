@@ -2,7 +2,7 @@
 -->
 <template>
   <div>
-    <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> 
+    <!-- <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> -->
     <div v-if="data != null">
       <form-preview header-label="支付游戏金" header-value="" :body-items="data.list"></form-preview>
     </div>
@@ -89,25 +89,29 @@ export default {
   },
 
   created() {
-    if(!!!this.$route.params.data) {
-      this.$router.push('/Message')
+    if(!this.$store.state.user.auth.uid) {
+        this.$router.push('/login');
     } else {
-      this.data = this.$route.params.data;
-      let obj = JSON.parse(this.data.content);
-      if(!!obj && obj.hasOwnProperty('cid') && obj.hasOwnProperty('price') && obj.hasOwnProperty('sn')) { 
-        console.log(obj)
-        this.data.order = obj
-        this.data.list = new Array()
-        this.data.list.push({
-          label: '道具名称',
-          value: '屠龙刀'
-        })
-        this.data.list.push({
-          label: '价格',
-          value: this.assistant.toKg(obj.price) + '千克'
-        })
-      } else {
+      if(!this.$route.params.data) {
         this.$router.push('/Message')
+      } else {
+        this.data = this.$route.params.data;
+        let obj = JSON.parse(this.data.content);
+        if(!!obj && obj.hasOwnProperty('cid') && obj.hasOwnProperty('price') && obj.hasOwnProperty('sn')) { 
+          console.log(obj)
+          this.data.order = obj
+          this.data.list = new Array()
+          this.data.list.push({
+            label: '道具名称',
+            value: '屠龙刀'
+          })
+          this.data.list.push({
+            label: '价格',
+            value: this.assistant.toKg(obj.price) + '千克'
+          })
+        } else {
+          this.$router.push('/Message')
+        }
       }
     }
   }
