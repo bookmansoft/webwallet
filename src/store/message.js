@@ -63,11 +63,10 @@ const mod = {
 
             if(curPage < context.state.pageMax) {
                 let res = await remote.fetching({
-                    func:'wallet.GetNotify',
+                    func:'mail.getList',
                     page: curPage+1,
                 });
           
-                console.log('message.pull', res);
                 if (res.code == 0) {
                     //设定最大页数
                     if(context.state.pageMax != res.data.total) {
@@ -78,18 +77,19 @@ const mod = {
                     if(curPage < qryPage) { //说明获得了新的内容
                         console.log('message.pull', res.data.list);
                         context.commit('merge', res.data.list.map(item => {
-                            if(item.status != 3) {
+                            if(item.state == 0) {
                               item.statusLabel = '未处理';
-                              item.payEnable = 1;
                             } else {
                               item.statusLabel = '已处理';
-                              item.payEnable = 0;
                             }
-                            item.contentType = '订单支付请求'
 
+                            if(typeof item.content == 'string') {
+                                item.content = JSON.parse(item.content);
+                            }
+                            
                             item.src = ``;
-                            item.title = `${moment(item.create_time * 1000).format("MM-DD HH:mm")}`;
-                            item.desc = `${item.contentType} - ${item.statusLabel}`;
+                            item.title = `${moment(item.time * 1000).format("MM-DD HH:mm")}`;
+                            item.desc = `${item.content.info.content} - ${item.statusLabel}`;
 
                             return item;
                         }))
