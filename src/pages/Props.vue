@@ -1,6 +1,6 @@
 <!-- 我的道具列表
 数据接口：
-1. prop.PropList -> propList 
+1. prop.list -> propList 
 [
   {
     "pid",
@@ -41,7 +41,7 @@
 -->
 <template>
   <div class="root">
-    <PanelList :config="config" :content="propList" :selection="selection" v-on:panel_item_click="showPropDetail"></PanelList>
+    <PanelList :config="config" :selection="selection" v-on:panel_item_click="showPropDetail"></PanelList>
     <navs></navs>
   </div>
 </template>
@@ -65,9 +65,6 @@ export default {
       },
       selection: {},
     };
-  },
-  computed: {
-    propList () { return this.$store.state.prop.list; },
   },
   methods: {
     showPropDetail(item) {

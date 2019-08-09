@@ -2,7 +2,7 @@
 -->
 <template>
   <div class="root">
-    <PanelList :config="config" :content="pocketList" :selection="selection" v-on:panel_item_click="itemClick"></PanelList>
+    <PanelList :config="config" :selection="selection" v-on:panel_item_click="itemClick"></PanelList>
     <navs></navs>
   </div>
 </template>
@@ -29,7 +29,6 @@ export default {
     };
   },
   computed: {
-    pocketList () { return this.$store.state.pocket.list},
   },
   methods: {
     onImgError (item, $event) {

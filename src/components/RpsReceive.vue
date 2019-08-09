@@ -2,7 +2,7 @@
 -->
 <template>
   <div class="root">
-    <PanelList :config="config" :content="receiveData" v-on:panel_item_click="itemClick"></PanelList>
+    <PanelList :config="config" v-on:panel_item_click="itemClick"></PanelList>
     <navs></navs>
   </div>
 </template>
@@ -28,21 +28,12 @@ export default {
       selection: {},
     };
   },
-  computed: {
-    receiveData() { 
-      return this.$store.state.rpsReceive.list;
-    },
-  },
   methods: {
     itemClick(data) {
       this.$router.push(`/redpackshared/receive/${data.send_id}`);
     }
   },
   created() {
-    if(!this.$store.state.user.auth.uid) {
-        this.$router.push('/login');
-        return;
-    }
   },
 };
 </script>

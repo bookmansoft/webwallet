@@ -23,9 +23,13 @@ const mod = {
         },
         clear(state) {
             state.list = [];
+            state.pageMax = 1;
         },
         add(state, msg) {
             state.list.push(msg);
+        },
+        merge(state, list) {
+            state.list = state.list.concat(list);
         }
     },  
     /**
@@ -41,23 +45,21 @@ const mod = {
             context.commit('add', item);
         },
         merge(context, list) {
-            for(let item of list) {
-                context.commit('add', item);
-            }
+            context.commit('merge', list);
         },
         /**
          * 从网络获取内容追加至列表
          * @param {*} context 
          */
         async pull(context) {
-            let curPage = (context.state.list.length/10)|0 + 1;
+            let curPage = ((context.state.list.length/10)|0) + 1; //备注： `|` 的运算等级低于 `+`
             if(context.state.list.length%10==0) {
                 curPage--;
             }
 
             if(curPage < context.state.pageMax) {
                 let res = await remote.fetching({
-                    func: "prop.PropList", 
+                    func: "prop.list", 
                     page: curPage+1,
                 });
                 if (res.code == 0) {
@@ -68,17 +70,17 @@ const mod = {
 
                     let qryPage = Math.min(res.data.total, res.data.page); //数据修复：查询页数不能大于总页数
                     if(curPage < qryPage) { //说明获得了新的内容
-                        console.log('prop.pull', res.data.list);
                         res.data.list.forEach(prop => {
-                            remote.get(encodeURI(prop.cpurl + '/prop/' + prop.oid)).then(res => {
+                            let url = `${prop.cpurl}/prop/${prop.oid}`;
+                            remote.get(encodeURI(url)).then(res => {
                                 Object.assign(prop, res);
                                 prop.src = prop.icon;
                                 prop.title = prop.props_name;
                                 prop.desc = prop.props_desc;
-          
-                                context.dispatch('add', prop);
                             });
                       });
+                      console.log('prop.pull', res.data.list);
+                      context.commit('merge', res.data.list);
                     }
                 }
             }

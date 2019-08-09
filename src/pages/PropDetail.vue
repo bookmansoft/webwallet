@@ -45,8 +45,9 @@
         </div>
     </div>
     <footer>
-        <div class="smelt" @click="propFoundConfirm"><i>熔</i><p>熔炼</p></div>
+        <div class="smelt" @click="propFoundConfirm"><i>熔</i><p>熔铸</p></div>
         <div class="sell" @click="propSaleInput"><i>卖</i><p>出售</p></div>
+        <div class="present" @click="propSend"><i>转</i><p>转让</p></div>
         <div class="present" @click="propShare"><i>赠</i><p>赠送</p></div>
     </footer>
   </div>
@@ -76,7 +77,7 @@ export default {
      */
     propSale(amount) {
         this.remote.fetching({
-          func: 'prop.PropSale',
+          func: 'prop.sale',
           pid: this.prop.pid,
           fixedPrice: amount,
         }).then(res => {
@@ -94,12 +95,20 @@ export default {
     propFound() {
         this.remote.fetching({func: 'prop.PropFound', pid: this.prop.pid}).then(res => {
           if(res.code == 0) {
-              this.showPluginAuto('道具已被成功熔铸!')
-              this.$router.go(-1)
+            this.$store.dispatch('prop/clear');
+            this.showPluginAuto('道具已被成功熔铸!');
+            this.$router.go(-1);
           } else {
-              this.showPluginAuto('道具熔铸操作失败!')
+            this.showPluginAuto('道具熔铸操作失败!')
           }
         });
+    },
+
+    /**
+     * 转让道具
+     */
+    propSend() {
+      this.$router.push({name: 'PropSend', params: {prop: this.prop}});
     },
 
     /**
@@ -198,21 +207,20 @@ export default {
         console.log("url " + url);
         this.$wechat.miniProgram.navigateTo({ url: url });
       */
-      this.showPlugin('点击右上角分享');
       let that = this;
-      this.$wechat.ready(function () {   //需在用户可能点击分享按钮前就先调用
-          //分享给朋友
-          let title = '游戏金道具分享'
-          let desc = prop.props_name //'T10自行反坦克车'
-          let link = that.remote.appConfig.siteUri + '/?path=/prop/receive'
-          let imgUrl = prop.large_icon // 'http://114.116.148.48:9701/image/3/prop_large_icon.jpg' //prop.large_icon
+      this.$wechat.ready(function () {//进行相关的设定，在用户点击分享按钮前调用
+          let title = '游戏金道具分享';
+          let desc = that.prop.props_name;
+          let imgUrl = that.prop.large_icon;
           let params = JSON.stringify({
             title: title,
             desc: desc,
             imgUrl: imgUrl,
             raw: res.data.raw,
-          })
-          link = link + '&prop=' + params;
+          });
+          let link = `${that.remote.appConfig.siteUri}/?path=/prop/receive&prop=${params}`;
+
+          //设定分享给好友的信息
           that.$wechat.onMenuShareAppMessage({ 
               title: title, // 分享标题
               desc: desc, // 分享描述
@@ -220,22 +228,22 @@ export default {
               imgUrl: imgUrl, // 分享图标
               success: function () {
                 // 设置成功
-                //alert('设置成功')
               },
               fail: function() {
-                //alert('设置失败')
+                console.log('设置失败');
               }
-          })
-          //分享到朋友圈
+          });
+          //设定分享到朋友圈的信息
           that.$wechat.onMenuShareTimeline({
               title: title, // 分享标题
               link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
               imgUrl: imgUrl, // 分享图标
               success: function () {
-              // 用户点击了分享后执行的回调函数
+                // 用户点击了分享后执行的回调函数
               }
           })
       });      
+      this.showPlugin('请点击右上角微信按钮进行分享');
     }
   },
 

@@ -18,7 +18,7 @@
         @on-pullup-loading="selPullUp"
       >
         <div>
-          <panel :header="config.title" :list="content" :type="config.type" @on-click-item="itemDetail" @on-img-error="onImgError"></panel>        
+          <panel :header="panelTitle" :list="content" :type="config.type" @on-click-item="itemDetail" @on-img-error="onImgError"></panel>        
         </div>
       </scroller>
     </div>
@@ -83,7 +83,6 @@ export default {
   },
   props: [
     'config',
-    'content',
     'selection',
   ],
   methods: {
@@ -91,12 +90,9 @@ export default {
       console.log(item, $event)
     },
     selPullDown() {
-      this.showNoData = false;
-      
       //用户选择下拉刷新，清除本地数据，重新拉取
       this.getContent(true);
       setTimeout(() => {
-        this.showNoData = true;
         if(this.isActive) {
           this.$refs.scroller.donePulldown();
           this.$refs.scroller.reset({ top: 0 });
@@ -104,14 +100,11 @@ export default {
       }, 1000);
     },
     selPullUp() {
-      this.showNoData = false;
-
       //用户选择上滑获取新数据，更新当前页码
       this.getContent();
       setTimeout(() => {
-        this.showNoData = true;
         if(this.isActive) {
-        this.$refs.scroller.donePullup();
+          this.$refs.scroller.donePullup();
         }
       }, 1000);
     },
@@ -123,19 +116,28 @@ export default {
      */
     getContent(flash) {
       this.isLoadMore = false;
+      this.showNoData = false;
+
       if(!!flash) {
         this.$store.dispatch(`${this.config.store}/clear`);
       }
 
-      return this.$store.dispatch(`${this.config.store}/pull`, this.selection).then(ret => {
-        this.isLoadMore = true;
-
+      this.$store.dispatch(`${this.config.store}/pull`, this.selection).then(ret => {
         if(!ret) {
           //没有新的数据了，禁止继续下拉
           this.scrollerStatus.pullupStatus = 'disabled';
         }
       });
+
+      setTimeout(()=>{
+        this.showNoData = true;
+        this.isLoadMore = true;
+      }, 500);
     },
+  },
+  computed: {
+    content() { return this.$store.state[this.config.store].list; },
+    panelTitle() { return `${this.config.title}(${this.content.length})`; },
   },
   created() {
     this.getContent();

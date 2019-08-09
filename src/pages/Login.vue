@@ -83,24 +83,15 @@ export default {
         });
 
         //监测账户余额变化
-        this.remote.watch((info) => {
-          this.$store.dispatch('user/change', {
-            confirmed: info.confirmed,
-            unconfirmed: info.unconfirmed,
-          });
+        this.remote.watch(info => {
+          this.$store.dispatch('user/change', info);
         }, 911001);
         
         //监测VIP等级变化
         this.remote.watch(info => {
           console.log('vip changed:', info.vl, info.vcur);
           if(!!this.$store.state.user.auth.uid) {
-            this.$store.dispatch('user/change', {
-              vl: info.vl,
-              vst: info.vst,
-              vet: info.vet,
-              vlg: info.vlg,
-              vcur: info.vcur || 0,
-            });
+            this.$store.dispatch('user/change', info);
           }
         }, 911002);
 

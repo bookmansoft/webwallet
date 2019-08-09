@@ -1,47 +1,17 @@
-<!-- 游戏列表
-数据接口
-1. state.cp.list
-[
-  {
-    `category_id`  '游戏类别',
-    `category_title`  '类别名',
-    `provider_id`  '供应商ID',
-    `provider_name`  '供应商名',
-    `ad_title`  '推广标题',
-    `ranking`  '排名',
-    `star_level`  '星级',
-    `player_count`  '玩家人数',
-    `down_count`  '下载次数',
-    `comment_count`  '评论数',
-    `game_version`  '版本号',
-    `developer`  '开发者',
-    `create_time`  '创建时间',
-    `update_time`  '更新时间',
-    `store_status`  '状态',
-    `cpid`  'cpid',
-    `cpurl`  'cpurl',
-    `cp_addr`  'cp地址',
-    `cp_name`  'cp_name',
-    `game_title`  '标题',
-    `game_link_url`  '游戏链接'
-    `game_ico_uri`  '图标URI',
-    `update_desc`  '更新描述',
-    `game_resource_uri`  '资源URI, 展示大图',
-    `game_screenshots`  '游戏截图',
-    `game_desc`  '描述',
-    `small_img_url`  '展示小图',
-    `stock_price`  '当前资产价格',
-    `stock_sum`  '当前资产数量',
-    `grate`  '媒体分成',
-    `hHeight`  '初次高度',
-    `hBonus`  '历史分红',
-    `hAds`  '历史分成',
-  }
-]
+<!-- 游戏分类页面
+1. 数据接口 gameCategory: 获取服务端类别配置表
 -->
 <template>
   <div>
-    <div v-if="isLoadMore">
+    <div v-if="showCategory">
+      <grid :show-lr-borders="false" :show-vertical-dividers="true" :cols="3" style="top:5px;">
+        <grid-item v-for="(item, index) in gameCategory" :key="index" :label="item.label" @on-item-click="onItemClick(item)">
+          <img slot="icon" :src="item.icon">
+        </grid-item>
+      </grid>
+    </div>
+    <x-button v-if="!showCategory" plain style="border-radius:5px;color:rgb(255,113,101)" type="warn" @click.native="viewCategory()">返回目录</x-button>
+    <div v-if="isLoadMore && !showCategory">
       <scroller
         v-model="scrollerStatus"
         height="-100"
@@ -57,23 +27,6 @@
         @on-pullup-loading="selPullUp"
       >
         <div>
-          <div style="height:5px;"></div>
-          <div style="background-color: white">
-            <div style="padding:10px 10px 0px 10px;" @click="gotoGame">
-              <img :src="recommendGame.src" class="img-top">
-            </div>
-            <div>
-              <p style="font-size:15px;padding: 5px 0px 0px 10px;">
-                <span style="color:red;">推荐</span>
-                <span style="margin-left:5px;">{{recommendGame.gameTitle}}</span>
-              </p>
-            </div>
-            <div>
-              <p
-                style="font-size:13px; color: #888;padding: 5px 0px 10px 10px;"
-              >{{recommendGame.gameProvider}}</p>
-            </div>
-          </div>
           <div v-for="(item, index) in cpList" :key="index" class="gameItem">
             <flexbox @click.native="gotoCpInfo(item, index)">
               <flexbox-item :span="4" style="padding:0.3rem;">
@@ -94,7 +47,6 @@
               </flexbox-item>
             </flexbox>
           </div>
-          <br>
         </div>
       </scroller>
     </div>
@@ -106,32 +58,42 @@
     </div>
   </div>
 </template>
+
 <script>
 import {
+  XButton,
+  Grid, 
+  GridItem,
   Scroller,
   Swiper,
   Group,
   Panel,
   Flexbox,
   FlexboxItem,
-  LoadMore
+  LoadMore,
 } from "vux";
 import NoData from "@/components/NoData.vue";
 
 export default {
-  name: "Games",
+  name: 'GameSort',
   components: {
+    XButton,
+    Grid, 
+    GridItem,
     Scroller,
-    NoData,
     Swiper,
     Group,
-    LoadMore,
     Panel,
     Flexbox,
     FlexboxItem,
+    LoadMore,
+    NoData,
   },
-  data() {
+  data () {
     return {
+      showCategory: true,
+      category: 1,
+      gameCategory: [],
       downobj: {
         content: "下拉刷新数据...",
         downContent: "下拉刷新数据...",
@@ -159,27 +121,24 @@ export default {
       isLoadMore: false,
       showNoData: false,
       isActive: false,
-      recommendGame: {
-        gameTitle: "奔跑的悟空",
-        src: "/static/img/game/game-3.jpg",
-        gameProvider: "原石互娱",
-        cpid: 'chick',
-      },
-    };
+    }
   },
   computed:{
     cpList() { 
       return this.$store.getters['cp/list'];
     },
-    userBase() {return this.$store.state.user.auth},
-  },
-  mounted() {
-    this.isActive = true;
-  },
-  beforeDestroy() {
-    this.isActive = false;
   },
   methods: {
+    viewCategory() {
+      this.showCategory = true;
+      this.showNoData = false;
+    },
+    onItemClick(item) {
+        this.showCategory = false;  //隐藏分类列表，显示游戏列表
+        this.showNoData = false;
+        this.category = item.index; //设定当前游戏分类
+        this.getContent(true);
+    },
     selPullDown() {
       this.showNoData = false;
 
@@ -214,7 +173,7 @@ export default {
         this.$store.dispatch('cp/clear');
       }
 
-      return this.$store.dispatch('cp/pull').then(ret => {
+      return this.$store.dispatch('cp/pull', {category:this.category}).then(ret => {
         this.isLoadMore = true;
 
         if(!ret) {
@@ -228,45 +187,34 @@ export default {
         name: "GameInfo",
         params: { cpInfo: item },
       });
-    },
-    gotoGame() {
-      window.location.href = `http://wallet.vallnet.cn:9701/test?cpid=${this.recommendGame.cpid}openid=${this.userBase.openid}&openkey=${this.userBase.openkey}`;
-    },
+    },    
+  },
+  mounted() {
+    this.isActive = true;
+  },
+  beforeDestroy() {
+    this.isActive = false;
   },
   created() {
-    if(!this.$store.state.user.auth.uid) {
-        this.$router.push('/login');
-    } else { 
-      this.getContent();
+    if(!!this.$store.state.user.auth.uid) {
+      this.ConfigMgr.get('gameCategory', (err, config)=>{
+        if(!err) {
+          this.gameCategory = config;
+        } else {
+          this.$router.push('/home');
+        }
+      });
     }
-  }
-};
+  },
+}
 </script>
-<style lang="less" scoped>
-.gameItem {
-  background-color: white;
-  margin-top: 0.4rem;
-  padding: 0.2rem;
+<style scoped>
+.grid-center {
+  display: block;
+  text-align: center;
+  color: #666;
 }
-.img-game-list {
-  width: 110px;
-  height: 75px;
-  border-radius: 12%;
-  margin-left: 3px;
-}
-.img-top {
-  width: 100%;
-  height: 200px;
-  border-radius: 4%;
-}
-.xs-plugin-pulldown-container {
-  line-height: 40px;
-  font-size: 18px;
-  color: red;
-}
-.xs-plugin-pullup-container {
-  line-height: 40px;
-  font-size: 18px;
-  color: red;
+.weui-grids {
+  background-color: #fff;
 }
 </style>

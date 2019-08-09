@@ -33,6 +33,7 @@ const mod = {
         },
         clear(state) {
             state.list = [];
+            state.pageMax = 1;
         },
         add(state, msg) {
             state.list.push(msg);
@@ -64,7 +65,7 @@ const mod = {
         },
         merge(context, list) {
             for(let crowdItem of list) {
-                crowdItem.percent2 = ((crowdItem.sum - crowdItem.sum_left) * 100 / crowdItem.sum) | 0;
+                crowdItem.percent2 = (((crowdItem.sum - crowdItem.sum_left) * 100 / crowdItem.sum)|0);
                 crowdItem.pic_urls = JSON.parse(crowdItem.pic_urls);
                 context.commit('add', crowdItem);
             }
@@ -74,7 +75,7 @@ const mod = {
          * @param {*} context 
          */
         async pull(context) {
-            let curPage = (context.state.list.length/10)|0 + 1;
+            let curPage = ((context.state.list.length/10)|0) + 1;
             if(context.state.list.length%10==0) {
                 curPage--;
             }

@@ -2,7 +2,7 @@
 -->
 <template>
   <div class="root">
-    <PanelList :config="config" :content="sendData" v-on:panel_item_click="onItemClick"></PanelList>
+    <PanelList :config="config" v-on:panel_item_click="onItemClick"></PanelList>
     <navs></navs>
   </div>
 </template>
@@ -29,9 +29,6 @@ export default {
     };
   },
   computed: {
-    sendData() {
-      return this.$store.state.rpsSend.list;
-    },
   },
   methods: {
     onItemClick(item) {
@@ -39,10 +36,6 @@ export default {
     },
   },
   created() {
-    if(!this.$store.state.user.auth.uid) {
-        this.$router.push('/login');
-        return;
-    }
   },
 };
 </script>

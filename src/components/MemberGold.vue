@@ -20,7 +20,7 @@
         <flexbox>
           <flexbox-item :span="7">
               <div class="flex-demo2">
-                  <div>未提取: <span class="drawGold">{{this.assistant.toKg(gold)}}</span>千克</div>
+                  <div>未提取: <span class="drawGold">{{assistant.toKg(gold)}}</span>千克</div>
                   <div><p>满10千克可提到钱包</p></div>
               </div>
           </flexbox-item>
@@ -173,9 +173,7 @@ export default {
   },
 
   created() {
-    if(!this.$store.state.user.auth.uid) {
-        this.$router.push('/login');
-    } else {
+    if(!!this.$store.state.user.auth.uid) {
       this.mine.vcur = this.mine.vcur || 0;
 
       this.ConfigMgr.get('vip', (err, config)=>{ 

@@ -113,12 +113,11 @@ export default {
         }
       }
       if (this.userBase.current_prop_count > this.userBase.prop_count) {
-        this.items[3].badge = this.userBase.current_prop_count - this.userBase.prop_count;
+        this.items[2].badge = this.userBase.current_prop_count - this.userBase.prop_count;
       }
 
       this.remote.fetching({
-        func: "GetNotify",
-        control: "wallet",
+        func: "wallet.GetNotify",
       }).then(res => {
         if (res.code == 0) {
           if (res.data.count > 0) {

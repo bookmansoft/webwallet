@@ -19,8 +19,8 @@
 <script>
 import { Tab, TabItem} from 'vux'
 import Navs from '@/components/Navs.vue'
-import Games from '@/pages/Games.vue'
-import GameSort from '@/pages/GameSort.vue'
+import Games from '@/components/Games.vue'
+import GameSort from '@/components/GameSort.vue'
 
 const tabList = () => [
   {

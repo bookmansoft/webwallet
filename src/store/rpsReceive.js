@@ -25,6 +25,7 @@ const mod = {
         },
         clear(state) {
             state.list = [];
+            state.pageMax = 1;
         },
         add(state, msg) {
             state.list.push(msg);
@@ -53,7 +54,7 @@ const mod = {
          * @param {*} context 
          */
         async pull(context) {
-            let curPage = (context.state.list.length/10)|0 + 1;
+            let curPage = ((context.state.list.length/10)|0) + 1;
             if(context.state.list.length%10==0) {
                 curPage--;
             }

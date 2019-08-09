@@ -24,14 +24,15 @@ import WalletDetail from '@/pages/WalletDetail'
 import Props from '@/pages/Props'
 import GameInfo from '@/pages/GameInfo'
 import PropDetail from '@/pages/PropDetail'
-import ContractInfo from '@/pages/ContractInfo'
+import PropOrderPay from '@/pages/PropOrderPay'
+import PropSend from '@/pages/PropSend'
 import PropSaleInfo from '@/pages/PropSaleInfo'
 import PropReceive from '@/pages/PropReceive'
+import ContractInfo from '@/pages/ContractInfo'
 import About from '@/pages/About'
 import Member from '@/pages/Member'
 import WeChatPay from '@/pages/WeChatPay'
 import Message from '@/pages/Message'
-import PropOrderPay from '@/pages/PropOrderPay'
 import RedPackAct from '@/pages/RedPackAct'
 import MyGame from '@/pages/MyGame'
 import Login from '@/pages/Login'
@@ -109,6 +110,7 @@ export default new Router({
     { path: '/props', name: 'Props', component: Props ,meta:{title:'道具背包'}},
     { path: '/prop/detail', name: 'PropDetail', component: PropDetail ,meta:{title:'道具详情'}},
     { path: '/prop/receive', name: 'PropReceive', component: PropReceive ,meta:{title:'道具接收'}},
+    { path: '/prop/send', name: 'PropSend', component: PropSend ,meta:{title:'道具发送'}},
     { path: '/prop/order/pay', name: 'PropOrderPay', component: PropOrderPay ,meta:{title:'道具订单支付'}},
     { path: '/prop/sale/info', name: 'PropSaleInfo', component: PropSaleInfo ,meta:{title:'道具销售'}},
 

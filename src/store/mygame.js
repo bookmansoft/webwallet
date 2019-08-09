@@ -62,7 +62,7 @@ const mod = {
          * @param {*} context 
          */
         async pull(context, category) {
-            let curPage = (context.state.list.length/10)|0 + 1;
+            let curPage = ((context.state.list.length/10)|0) + 1;
             if(context.state.list.length%10==0) {
                 curPage--;
             }

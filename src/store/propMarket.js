@@ -1,4 +1,5 @@
 import remote from '../utils/remote'
+import assistant from "../utils/assistant"
 
 /**
  * 道具数据集合
@@ -23,6 +24,7 @@ const mod = {
         },
         clear(state) {
             state.list = [];
+            state.pageMax = 1;
         },
         add(state, msg) {
             state.list.push(msg);
@@ -53,14 +55,14 @@ const mod = {
          * @param {*} context 
          */
         async pull(context) {
-            let curPage = (context.state.list.length/10)|0 + 1;
+            let curPage = ((context.state.list.length/10)|0) + 1;
             if(context.state.list.length%10==0) {
                 curPage--;
             }
 
             if(curPage < context.state.pageMax) {
                 let res = await remote.fetching({
-                    func: "prop.PropListMarket", 
+                    func: "prop.listMarket", 
                     page: curPage+1,
                 });
                 if (res.code == 0) {
@@ -71,16 +73,13 @@ const mod = {
 
                     let qryPage = Math.min(res.data.total, res.data.page); //数据修复：查询页数不能大于总页数
                     if(curPage < qryPage) { //说明获得了新的内容
-                        console.log('prop.pull', res.data.list);
+                        console.log('propMarket.pull', res.data.list);
                         res.data.list.forEach(prop => {
-                            this.remote.get(encodeURI(prop.cpurl + '/prop/' + prop.oid)).then(res => {
-                            });
-
                             remote.get(encodeURI(prop.cpurl + '/prop/' + prop.oid)).then(res => {
                                 Object.assign(prop, res);
                                 prop.src = prop.icon;
                                 prop.title = prop.props_name;
-                                prop.desc = `出售价 ${this.gamegold.toKg(prop.bid.fixed)}千克, 含金量 ${this.gamegold.toKg(prop.bid.value)}千克`;
+                                prop.desc = `出售价 ${assistant.toKg(prop.bid.fixed)}千克, 含金量 ${assistant.toKg(prop.bid.value)}千克`;
                             });
                         });
                         context.commit('merge', res.data.list);

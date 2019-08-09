@@ -1,10 +1,10 @@
 <!-- 道具交易市场
 数据接口 
-1. prop.PropListMarket
+1. prop.listMarket
 -->
 <template>
   <div>
-    <PanelList :config="config" :content="propList" v-on:panel_item_click="propSaleInfo"></PanelList>
+    <PanelList :config="config" v-on:panel_item_click="propSaleInfo"></PanelList>
   </div>
 </template>
 <script>
@@ -26,19 +26,11 @@ export default {
             }
         }
     },
-    computed: {
-        propList() { return this.$store.state.propMarket.list; }
-    },
     methods: {
         propSaleInfo(item) {
             this.$router.push({ name: 'PropSaleInfo', params: { propSale: item }})
         },
     },
-    created() {
-        if(!this.$store.state.user.auth.uid) {
-            this.$router.push('/login');
-        }
-    }
 }
 </script>
 

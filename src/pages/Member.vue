@@ -38,8 +38,8 @@
 
 <script>
 import Balance from '@/components/Balance.vue'
-import MemberJoin from '@/pages/MemberJoin.vue'
-import MemberGold from '@/pages/MemberGold.vue'
+import MemberJoin from '@/components/MemberJoin.vue'
+import MemberGold from '@/components/MemberGold.vue'
 import { XHeader, Flexbox, FlexboxItem, Group, Divider, XButton, Swiper, SwiperItem  } from 'vux'
 
 export default {
@@ -100,7 +100,7 @@ export default {
         if(!this.userBase.vl || current_time > this.userBase.vet || this.userBase.vl == select_vip) {
           this.curPrice = parseFloat(this.vipConfig[select_vip].price/100).toFixed(2);
         } else if(select_vip > this.userBase.vl) {
-          let days = ((this.userBase.vet - this.userBase.vst) / (24 * 3600)) | 0;
+          let days = (((this.userBase.vet - this.userBase.vst) / (24 * 3600))|0);
           this.curPrice = parseFloat((this.vipConfig[select_vip].price - this.vipConfig[this.userBase.vl].price) * days / 30 / 100).toFixed(2);
         } else {
           this.curPrice = 0;

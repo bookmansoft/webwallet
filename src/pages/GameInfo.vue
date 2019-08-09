@@ -24,25 +24,15 @@
                 </li>
             </ul>
         </div> 
-        <!-- 
         <group title="长按二维码进入游戏">
-        <div style="text-align:center; padding:15px;">
-            <qrcode :value="gameWexQrcode" type="img" @touchstart.native="previewImage"></qrcode>
-            <img src="/static/img/grcode.png" @click="previewImage" style="width:200px; height:200px;" />
-          <img :src="image" :data-src="image" @click="previewImage" style="width:200px; height:200px;" />
-        </div>   
+          <div style="text-align:center; padding:15px;">
+              <qrcode :value="gameWexQrcode" type="img" @touchstart.native="previewImage"></qrcode>
+          </div>   
         </group>
-        -->
         <div id="botImage" class="backcolor-white">
-            <div @click="introduce">
-                <p id="inIntroduce" class="bottom-orange">详情</p>
-            </div>
-            <div @click="gameNameImg">
-                <p id="inGameNameImg">游戏截图</p>
-            </div>
-            <div @click="gameProps">
-                <p id="inGameProps">游戏道具</p>
-            </div>
+            <div @click="introduce"><p id="inIntroduce" class="bottom-orange">详情</p></div>
+            <div @click="gameNameImg"><p id="inGameNameImg">游戏截图</p></div>
+            <div @click="gameProps"><p id="inGameProps">游戏道具</p></div>
         </div>      
         <div id="introduce">
             <div class="backcolor-white padding-rem">
@@ -140,8 +130,8 @@ export default {
         msgInput: "",
         times: "",
         cpAddr: '',
-        image: 'https://mini.gamegold.xin/gg-wechat-client/static/img/grcode.png',
-        gameWexQrcode: 'http://mini.gamegold.xin/wxopen/test',
+        image: 'http://wallet.vallnet.cn/static/img/grcode.png',
+        gameWexQrcode: 'http://wallet.vallnet.cn:9701/test',
         // 游戏道具图标
         cpProps:[],
         imagelistbrowse: {
