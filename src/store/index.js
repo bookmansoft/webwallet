@@ -15,6 +15,9 @@ store.registerModule('cp', cp);
 import crowd from './crowd'
 store.registerModule('crowd', crowd);
 
+import message from './message'
+store.registerModule('message', message);
+
 import mygame from './mygame'
 store.registerModule('mygame', mygame);
 

@@ -116,15 +116,12 @@ export default {
         this.items[2].badge = this.userBase.current_prop_count - this.userBase.prop_count;
       }
 
-      this.remote.fetching({
-        func: "wallet.GetNotify",
-      }).then(res => {
-        if (res.code == 0) {
-          if (res.data.count > 0) {
-            this.items[4].badge = res.data.count;
+      this.$store.dispatch('message/clear');
+      this.$store.dispatch('message/pull').then(()=>{
+          if (this.$store.state.message.list.length > 0) {
+            this.items[4].badge = this.$store.state.message.list.length;
             this.items[4].value = "有待支付订单";
           }
-        }
       });
     },
     showPlugin(msg) {

@@ -28,8 +28,6 @@ export default {
       selection: {},
     };
   },
-  computed: {
-  },
   methods: {
     onImgError (item, $event) {
       console.log(item, $event)

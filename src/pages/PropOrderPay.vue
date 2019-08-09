@@ -4,7 +4,7 @@
   <div>
     <!-- <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> -->
     <div v-if="data != null">
-      <form-preview header-label="支付游戏金" header-value="" :body-items="data.list"></form-preview>
+      <form-preview header-label="用游戏金支付订单" header-value="" :body-items="data.list"></form-preview>
     </div>
     <br>
     <group label-width="3.5em" label-margin-right="2em" label-align="right">
@@ -25,18 +25,7 @@ export default {
   data () {
     return {
       headerTitle: '订单支付',
-      list: [{
-        label: '道具',
-        value: '电动打蛋机'
-      }],
-      buttons: [{
-        style: 'primary',
-        text: '点击事件',
-        onButtonClick: () => {
-          this.payOrder()
-        }
-      }],
-      data: null
+      data: {},
     }
   },
   computed: {
@@ -59,20 +48,8 @@ export default {
           }, 2000)
     },
 
-    payOrder() {
-      alert('ddd')
-    },
-
     payNow() {
-      if(this.data == null || this.userBase.openid == '') {
-        return
-      }
-      let order = this.data.order
-      if(order == null) {
-        return
-      }
-
-      this.remote.fetching({func:'NotifyOrderPay', control: 'wallet',
+      this.remote.fetching({func:'wallet.NotifyOrderPay',
         sn: this.data.sn,
       }).then(res => {
           if(res.code == 0) {
@@ -96,22 +73,17 @@ export default {
         this.$router.push('/Message')
       } else {
         this.data = this.$route.params.data;
-        let obj = JSON.parse(this.data.content);
-        if(!!obj && obj.hasOwnProperty('cid') && obj.hasOwnProperty('price') && obj.hasOwnProperty('sn')) { 
-          console.log(obj)
-          this.data.order = obj
-          this.data.list = new Array()
-          this.data.list.push({
-            label: '道具名称',
-            value: '屠龙刀'
-          })
-          this.data.list.push({
-            label: '价格',
-            value: this.assistant.toKg(obj.price) + '千克'
-          })
-        } else {
-          this.$router.push('/Message')
+
+        if(typeof this.data.body.content == 'string') {
+          this.data.body.content = JSON.parse(this.data.body.content);
         }
+        this.data.list = [
+          {label: '发起地址',value: 'tb1q85plul700aev4xasad0525a777y04wjkpwh74r'},
+          {label: '目标地址',value: 'tb1qy0rstn8egkgy3mu3hqs47dvk3ymtl4gd03ah9c'},
+          {label: '游戏编号',value: this.data.body.content.cid},
+          {label: '道具名称',value: this.data.body.content.props_name},
+          {label: '销售价格',value: `${this.assistant.toKg(this.data.body.content.price)}千克`},
+        ];
       }
     }
   }

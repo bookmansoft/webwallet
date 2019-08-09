@@ -3,114 +3,48 @@
 <template>
   <div>
     <!-- <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> -->
-
-    <div v-if="isLoadMore && notifys.length > 0">
-      <group :title="title">
-          <div class="notify-item">
-              <div v-for="(item, index) in notifys" :key="index"> 
-                  <div style="height:8px; width:100%; background-color:#FAFAFA"></div>
-                  <div style="padding:5px 0px 20px 15px">
-                      <p><span>时间：{{utils.formatDateStr(new Date(item.create_time*1000), 'yyyy-MM-dd HH:mm:ss')}}</span></p>
-                      <p><span>内容：{{item.contentType}}</span></p>
-                      <p><span>状态：{{item.statusLabel}}</span></p>
-                      <p v-if="item.status !=3" style="top:8px; position: relative;"><x-button mini style="width:70px;" @click.native="notifyPay(item)">处理</x-button></p>
-                  </div>
-              </div>
-          </div>
-      </group>
-    </div>
-
-    <div v-if="isLoadMore && notifys.length == 0">
-        <no-data src="/static/img/default/no-message.png"></no-data>
-    </div>
-
-    <div v-if="!isLoadMore">
-        <load-more tip="正在加载" style="position: relative; top:200px;" :show-loading="!isLoadMore"></load-more>
-    </div>
-
+    <PanelList :config="config" :selection="selection" v-on:panel_item_click="itemClick"></PanelList>
   </div>
 </template>
 
 <script>
-import { XHeader, XButton, Flexbox, FlexboxItem, Group, Panel, LoadMore } from 'vux'
-import NoData from '@/components/NoData.vue'
+import { XHeader, } from 'vux'
+import PanelList from "@/components/PanelList.vue";
 
 export default {
   name: 'Message',
   components: {
-    XHeader, XButton, Flexbox, FlexboxItem, Group, Panel, LoadMore, NoData
+    XHeader,PanelList,
   },
-    props: [
-    'mine'
-  ],
   data () {
     return {
       headerTitle: '历史消息',
-      title: '',
-      notifyCount: 0,
-      notifys: [],
-      isLoadMore: false,
+      config: {
+        type: '2',          //面板样式
+        title: '消息一览',   //面板标题
+        store: 'message',    //数据中心
+        nodata: '/static/img/default/no-games.png',
+      },
+      selection: {},
     }
   },
   computed: {
     userBase() {return this.$store.state.user.auth},
   },
   methods: {
+    itemClick(item) {
+      this.$router.push({ name: 'PropOrderPay', params: { data: item }})
+    },
     onBack() {
         this.$router.push("/mine")
     },
-    notifyPay(item) {
-      console.log(item)
-      this.$router.push({ name: 'PropOrderPay', params: { data: item }})
-    },
-    getNotify() {
-        this.remote.fetching({
-          func:'wallet.NotifyList',
-          last: 0,
-        }).then(res => {
-            if(res.code == 0) {
-                this.notifyCount = res.data.length;
-                this.title = '共' + this.notifyCount + '条消息'
-                res.data.forEach(element => {
-                  let item = element
-                  if(item.status != 3) {
-                    item.statusLabel = '未处理'
-                    item.payEnable = 1
-                  } else {
-                    item.statusLabel = '已处理'
-                    item.payEnable = 0
-                  }
-                  item.contentType = '订单支付请求'
-                  this.notifys.push(item);
-                });
-            }
-            this.isLoadMore = true
-        }).catch(e => {
-            console.log(e);
-            this.isLoadMore = true
-        });  
-    }
   },
   created() {
     if(!this.userBase.uid) {
       this.$router.push('/login');
     }
-    this.getNotify();
   }
 }
 </script>
 <style lang="less" scoped>
-.notify-item span {
-  font-size:13px;
-  line-height: 1rem;
-  height: 1rem;
-}
-.flex-demo {
-  text-align: left;
-  padding-left: 10px;
-  font-size: 15px;
-  background-clip: padding-box;
-  background-color:white;
-}
-
 </style>
