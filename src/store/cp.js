@@ -34,7 +34,14 @@ const mod = {
          * @param {*} arr 
          */
         merge(state, arr) {
-            state.list = state.list.concat(arr);
+            let ls = [];
+            for(let item of arr) {
+                state.dict[item.cpid] = item;
+                if(!state.list.includes(item.cpid)) {
+                    ls.push(item.cpid);
+                }
+            }
+            state.list = state.list.concat(ls);
         },
         setPage(state, page) {
             state.pageMax = page;

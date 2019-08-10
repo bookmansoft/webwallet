@@ -136,7 +136,9 @@ export default {
     },
   },
   computed: {
-    content() { return this.$store.state[this.config.store].list; },
+    content() { 
+      return this.$store.getters[`${this.config.store}/list`];
+    },
   },
   created() {
     this.getContent();

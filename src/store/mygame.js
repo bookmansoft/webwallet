@@ -34,9 +34,14 @@ const mod = {
          * @param {*} arr 
          */
         merge(state, arr) {
+            let ls = [];
             for(let item of arr) {
-                state.commit('add', item);
+                state.dict[item.cpid] = item;
+                if(!state.list.includes(item.cpid)) {
+                    ls.push(item.cpid);
+                }
             }
+            state.list = state.list.concat(ls);
         },
         setPage(state, page) {
             state.pageMax = page;
@@ -83,8 +88,8 @@ const mod = {
                     if(curPage < qryPage) { //说明获得了新的内容
                         console.log('cp.pull', res.data.list);
                         res.data.list.forEach(item => {
-                            context.dispatch('add', item);
                         });
+                        context.commit('merge', res.data.list);
                     }
                 }
             }

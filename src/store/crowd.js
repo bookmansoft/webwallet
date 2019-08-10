@@ -16,6 +16,11 @@ const mod = {
         configList: [],     //配置信息列表形式
         configDict: {},     //配置信息属性对象形式
     },
+    getters: {
+        list: (state) => {
+            return state.list;
+        },
+    },
     /**
      * 状态修改函数，必须是同步函数
      * @description 更改状态的唯一方法是提交 mutation: this.$store.commit
