@@ -84,7 +84,6 @@ export default {
   },
   props: [
     'config',
-    'selection',
   ],
   methods: {
     onImgError (item, $event) {
@@ -123,7 +122,7 @@ export default {
         this.$store.dispatch(`${this.config.store}/clear`);
       }
 
-      this.$store.dispatch(`${this.config.store}/pull`, this.selection).then(ret => {
+      this.$store.dispatch(`${this.config.store}/pull`, this.config.selection).then(ret => {
         if(!ret) {
           //没有新的数据了，禁止继续下拉
           this.scrollerStatus.pullupStatus = 'disabled';
