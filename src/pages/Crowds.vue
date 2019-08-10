@@ -1,6 +1,6 @@
 <!-- 众筹首页 
 数据接口：
-1. stockMgr.getCrowdList: 
+1. crowd/pull: 
 [
   {
     icon_url,           //游戏图标
