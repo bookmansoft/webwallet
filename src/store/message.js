@@ -2,6 +2,10 @@ import moment from "moment";
 import assistant from "../utils/assistant"
 import remote from '../utils/remote'
 
+const NotifyType = {
+    mail: 3,
+}
+
 /**
  * 背包数据集合
  */
@@ -31,7 +35,7 @@ const mod = {
             state.list = state.list.concat(list);
         },
         add(state, msg) {
-            state.list.push(msg);
+            state.list = state.list.concat([msg]);
         }
     },  
     /**
@@ -50,6 +54,14 @@ const mod = {
             for(let item of list) {
                 context.commit('add', item);
             }
+        },
+        read(context, id) {
+            remote.fetching({
+                func:'mail.read',
+                idx: id,
+            }).then(()=>{
+                context.commit('clear');
+            });
         },
         /**
          * 从网络获取内容追加至列表
@@ -77,21 +89,57 @@ const mod = {
                     if(curPage < qryPage) { //说明获得了新的内容
                         console.log('message.pull', res.data.list);
                         context.commit('merge', res.data.list.map(item => {
-                            if(item.state == 0) {
-                              item.statusLabel = '未处理';
-                            } else {
-                              item.statusLabel = '已处理';
-                            }
+                            /* 最初的数据格式: item = {
+                                from,
+                                dst,
+                                time,
+                                state,
+                                content: {
+                                    type: NotifyType.mail,
+                                    info: {
+                                        content: content,
+                                        bonus: bonus,
+                                    }
+                                },
+                                src,
+                                title,
+                                desc,
+                            } 
+                            */
 
                             if(typeof item.content == 'string') {
                                 item.content = JSON.parse(item.content);
                             }
-                            
-                            item.src = ``;
-                            item.title = `${moment(item.time * 1000).format("MM-DD HH:mm")}`;
-                            item.desc = `${item.content.info.content} - ${item.statusLabel}`;
+                            if(typeof item.content.info.content == 'string') {
+                                item.content.info.content = JSON.parse(item.content.info.content);
+                            }
+                            if(typeof item.content.info.bonus == 'string') {
+                                item.content.info.bonus = JSON.parse(item.content.info.bonus);
+                            }
 
-                            return item;
+                            let mail = {
+                                id: item.id,                            //邮件索引号
+                                from: item.src,                         //发件人
+                                dst: item.dst,                          //收件人
+                                time: item.time,                        //发送时间
+                                state: item.state,                      //状态 0 未读 1已读
+                                type: item.content.type,                //邮件类型
+                                content: item.content.info.content,     //邮件内容
+                                bonus: item.content.info.bonus,         //附加奖励
+                            };
+                            
+                            //#region 为显示控件 Panel 专门转换的字段
+                            switch(item.content.type) {
+                                default: {
+                                    mail.src = `/static/img/mine/msg.png`; //不同类型消息的代表图标
+                                    mail.title = `${moment(item.time * 1000).format("MM-DD HH:mm")}`; //标题
+                                    mail.desc = `${item.content.info.content} - ${(item.state == 0)?'未处理':'已处理'}`; //内容
+                                    break;
+                                }
+                            }
+                            //#endregion
+
+                            return mail;
                         }))
                     }
                 }

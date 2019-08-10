@@ -20,7 +20,7 @@ export default {
     return {
       headerTitle: '历史消息',
       config: {
-        type: '2',          //面板样式
+        type: '1',          //面板样式
         title: '消息一览',   //面板标题
         store: 'message',    //数据中心
         nodata: '/static/img/default/no-games.png',
@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     itemClick(item) {
-      this.$router.push({ name: 'PropOrderPay', params: { data: item }})
+      this.$router.push({ name: 'MailReader', params: { data: item }})
     },
     onBack() {
         this.$router.push("/mine")
