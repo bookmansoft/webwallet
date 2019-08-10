@@ -3,8 +3,9 @@
 -->
 <template>
   <div>
-    <div v-if="isLoadMore && contractList.length > 0">
-        <div v-for="(item, index) in contractList" :key="index" class="gameItem">
+    <ScrollList :config="config">
+      <template v-slot:default="props">
+        <div v-for="(item, index) in props.content" :key="index" class="gameItem">
             <flexbox @click.native="contracInfo(item, index)">
                 <flexbox-item :span="3" style="padding:0.3rem;">
                 <div class="flex-demo-left" style="text-align:center;">
@@ -19,53 +20,39 @@
                 </flexbox-item>
             </flexbox>
         </div>
-    </div>
-
-    <div v-if="isLoadMore && contractList.length == 0">
-        <no-data src="/static/img/default/no-product.png"></no-data>
-    </div>
-    <div v-if="!isLoadMore">
-        <load-more tip="正在加载" style="position: relative; top:200px;" :show-loading="!isLoadMore"></load-more>
-    </div>
-
+      </template>
+    </ScrollList>
   </div>
 </template>
 <script>
 
-import {Flexbox, FlexboxItem, LoadMore} from 'vux'
-import NoData from '@/components/NoData.vue'
+import {
+    Flexbox, 
+    FlexboxItem,
+} from 'vux'
+import ScrollList from "@/components/ScrollList.vue";
 
 export default {
     name: 'Contract',
     components: {
-        Flexbox, FlexboxItem, NoData, LoadMore
+        Flexbox, 
+        FlexboxItem, 
+        ScrollList,
     },   
     data () {
         return {
-            contractList:[],
-            isLoadMore: false
+            config: {
+                store: 'contract',                              //引用的数据仓库
+                nodata: '/static/img/default/no-product.png',   //列表为空时的占位图片
+            },
         }
     },
     methods: {
-        // 获取发布数据
-        getContractList() {
-            this.remote.fetching({func:'ContractList', control: 'contract',}).then(res => {
-                if(res.code == 0) {
-                    this.contractList = res.data;
-                    this.isLoadMore = true;
-                }
-            }).catch(e => {
-                this.isLoadMore = true;
-            })
-        },
         contracInfo(item, index) {
             this.$router.push({ name: 'ContractInfo', params: { contract: item }})
         }
     },
     created() {
-        if(!!this.$store.state.user.auth.uid) {
-            this.getContractList();
-        }
     }
 }
 </script>
