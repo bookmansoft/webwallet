@@ -87,13 +87,12 @@ export default {
        * 提交交易请求
        */
       contractCreate() {
-          this.remote.fetching({
-            func:'contract.ContractCreate', 
+        this.$store.dispatch('contract/create', {
             ntype: 1,
             num: this.assistant.toAtom(this.num), //转化为尘
             btc: this.btc * 100000000, //转化为聪
             addr: this.address,
-          }).then(res => {
+        }).then(res => {
             if (res.code == 0) {
                 this.utils.myAlert(this.$vux.alert, '交易发布成功', null, () => {
                   this.$router.push('/wallet/detail')

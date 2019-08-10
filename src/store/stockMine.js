@@ -1,5 +1,6 @@
 import remote from '../utils/remote'
 import utils from '../utils/func'
+import assistant from '../utils/assistant'
 
 /**
  * 我的凭证数据集合
@@ -12,6 +13,8 @@ const mod = {
      */
     state: {
         list: [],           //众筹条目缓存列表
+        logs: [],           //日志列表
+        bonus: 0,           //累计收益
         pageMax: 1,         //网络获取的最大页数
     },
     getters: {
@@ -36,7 +39,13 @@ const mod = {
         },
         add(state, msg) {
             state.list.push(msg);
-        }
+        },
+        mergeLog(state, arr) {
+            state.logs = state.logs.concat(arr);
+        },
+        setBonus(state, val) {
+            state.bonus = val;
+        },
     },  
     /**
      * 交互函数，可以是同步或者异步函数，可以完全封装状态修改函数(就像 React 的做法)
@@ -89,6 +98,40 @@ const mod = {
 
             return curPage < context.state.pageMax;
         },
+        async bid(context, params) {
+            let res = await remote.fetching({
+                func:'stockMgr.bidStock',
+                params: {
+                  addr: params.addr,
+                  cid: params.cid,
+                  price: params.price,
+                  num: params.num,
+                }
+            });
+            return res;
+        },
+        async UserStockLogs(context, params) {
+            let res = await remote.fetching({
+                func: 'stockMgr.UserStockLogs', 
+                cid: params.cid, 
+                addr: params.addr,
+            });
+
+            if(res.code == 0) {
+              let bo = 0;
+              for(let item of res.data.list) {
+                if(item.type == 4) {
+                  bo += item.price;
+                } else if(item.type == 2 || item.type == 3 || item.type == 7) {
+                  item.time = utils.formatDateStr(new Date(Date.parse(new Date()) - (res.data.height - item.height)*600*1000), 'yyyy-MM-dd HH:mm:ss');
+                }
+              }
+              context.commit('mergeLog', res.data.list);
+              context.commit('setBonus', parseFloat(bo/assistant.unit.kg).toFixed(3));
+            }
+    
+            return res;
+        }
     },     
 }
 

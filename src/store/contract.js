@@ -96,6 +96,21 @@ const mod = {
                 txid: params.txid,
             });
             return res;
+        },
+        /**
+         * 创建交易对
+         * @param {*} context 
+         * @param {*} params 
+         */
+        async create(context, params) {
+            let res = await remote.fetching({
+                func:'contract.ContractCreate', 
+                ntype: params.ntype,
+                num: params.num,
+                btc: params.btc,
+                addr: params.addr,
+            });
+            return res;
         }
     },     
 }

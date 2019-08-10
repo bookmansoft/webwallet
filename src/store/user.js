@@ -97,6 +97,13 @@ const mod = {
                 unconfirmed: assistant.toKg(msg.unconfirmed - msg.confirmed),
             });
         },
+        async vipdraw(context, params) {
+            let res = await remote.fetching({
+                func:'profile.VipDraw',
+                draw_count: params.draw_count,
+            });
+            return res;
+        }
     },     
 }
 

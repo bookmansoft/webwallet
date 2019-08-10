@@ -83,14 +83,12 @@ export default {
                 this.showPlugin("请输入出售价格")
                 return
             }
-            this.remote.fetching({
-                func:'stockMgr.bidStock',
-                params: {
+
+            this.$store.dispatch('stockMine/bid', {
                   addr: this.crowdItem.addr,
                   cid: this.crowdItem.cid,
                   price: this.price*this.assistant.unit.kg,
                   num: this.quantity,
-                }
             }).then(res => {
                 if(res.code == 0) {
                     setTimeout(() => {

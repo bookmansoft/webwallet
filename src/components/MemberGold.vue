@@ -131,8 +131,7 @@ export default {
 
     vipDraw(draw_count) {
         this.timerBreak = true;
-        this.remote.fetching({
-          func:'profile.VipDraw',
+        this.$store.dispatch('user/vipdraw', {
           draw_count: draw_count,
         }).then(res => {
             this.timerBreak = false;

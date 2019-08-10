@@ -98,11 +98,13 @@ export default {
       headerTitle: '我的代练宝宝',
       msg: '众筹',
       crowdItem: null,
-      bonus: 0,
       tabItems: tabList(),
-      userStockLogs: [],
       tabIndex: 0
     }
+  },
+  computed: {
+    userStockLogs() { return this.$store.state.stockMine.logs; },
+    bonus() { return this.$store.state.stockMine.bonus; },
   },
   methods: {
         onBack() {
@@ -120,23 +122,10 @@ export default {
     } else { 
       this.crowdItem = this.$route.params.item;
       console.log('MyStockInfo', this.crowdItem);
-      this.remote.fetching({func: 'stockMgr.UserStockLogs', cid: this.crowdItem.cid, addr: this.crowdItem.addr}).then(res => {
-        console.log('stockMgr.UserStockLogs', res);
 
-        this.userStockLogs = [];
-        if(res.code == 0) {
-          let bo = 0;
-          for(let item of res.data.list) {
-            if(item.type == 4) {
-              bo += item.price;
-            } else if(item.type == 2 || item.type == 3 || item.type == 7) {
-              item.time = this.utils.formatDateStr(new Date(Date.parse(new Date()) - (res.data.height - item.height)*600*1000), 'yyyy-MM-dd HH:mm:ss');
-              this.userStockLogs.push(item);
-            }
-          }
-          this.bonus = parseFloat(bo/this.assistant.unit.kg).toFixed(3);
-          console.log(this.bonus, this.userStockLogs);
-        }
+      this.$store.dispatch('stockMine/UserStockLogs', {
+        cid: this.crowdItem.cid, 
+        addr: this.crowdItem.addr
       });
     }
   }
