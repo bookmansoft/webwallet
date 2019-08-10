@@ -86,7 +86,7 @@ const mod = {
 
                     let qryPage = Math.min(res.data.total, res.data.page); //数据修复：查询页数不能大于总页数
                     if(curPage < qryPage) { //说明获得了新的内容
-                        console.log('cp.pull', res.data.list);
+                        console.log('cp.pull', res.data.list, selection);
                         res.data.list.forEach(item => {
                             //...如果需要进行数据调整，在这里书写
                         });
