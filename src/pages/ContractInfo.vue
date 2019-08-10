@@ -62,19 +62,17 @@ export default {
         }, 2000)
         },
         contractConfirm() {
-            let that = this
+            let that = this;
             this.$vux.confirm.show({
                 title: '操作提示',
                 content: '确定签署该笔交易?',
                 onConfirm () {
-                    that.contractPromise()
+                    that.contractPromise();
                 }
             })
         },
         contractPromise() {
-            this.remote.fetching({
-                func:'ContractPromise', 
-                control: 'contract',
+            this.$store.dispatch('contract/promise', {
                 txid: this.contract.current.hash,
             }).then(res => {
                 if(res.code == 0) {
@@ -87,7 +85,6 @@ export default {
                 console.log(e);
             });
         }
-        
     },
     created() {
         if(!this.$store.state.user.auth.uid) {

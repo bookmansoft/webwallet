@@ -92,15 +92,17 @@ export default {
      * 熔铸道具
      */
     propFound() {
-        this.remote.fetching({func: 'prop.PropFound', pid: this.prop.pid}).then(res => {
-          if(res.code == 0) {
-            this.$store.dispatch('prop/clear');
-            this.showPluginAuto('道具已被成功熔铸!');
-            this.$router.go(-1);
-          } else {
-            this.showPluginAuto('道具熔铸操作失败!')
-          }
-        });
+      this.$store.dispatch('prop/found', {
+        pid: this.prop.pid,
+      }).then(res => {
+        if(res.code == 0) {
+          this.$store.dispatch('prop/clear');
+          this.showPluginAuto('道具已被成功熔铸!');
+          this.$router.go(-1);
+        } else {
+          this.showPluginAuto('道具熔铸操作失败!')
+        }
+      });
     },
 
     /**
@@ -118,8 +120,7 @@ export default {
         return;
       }
       
-      this.remote.fetching({
-        func: 'prop.PropDonate',
+      this.$store.dispatch('prop/donate', {
         pid: this.prop.pid,
         txid: this.prop.current.hash,
         index: this.prop.current.index,

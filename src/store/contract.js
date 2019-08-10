@@ -85,6 +85,18 @@ const mod = {
 
             return curPage < context.state.pageMax;
         },
+        /**
+         * 签署交易对
+         * @param {*} context 
+         * @param {*} params 
+         */
+        async promise(context, params) {
+            let res = await remote.fetching({
+                func:'contract.ContractPromise', 
+                txid: params.txid,
+            });
+            return res;
+        }
     },     
 }
 

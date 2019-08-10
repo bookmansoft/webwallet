@@ -135,8 +135,7 @@ export default {
     },
 
     sendProp() {
-      this.remote.fetching({
-        func: 'prop.send',
+      this.$store.dispatch('prop/send', {
         addr: this.address,
         pid: this.prop.pid,
       }).then(res => {

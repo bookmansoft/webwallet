@@ -70,27 +70,25 @@ export default {
   },
   data() {
     return {
-      headerTitle: "众筹详情",
+      headerTitle: "物品详情",
       item: null,
     };
   },
   methods: {
     onBack() {
-      this.$router.push({ name: "Crowds" });
+      this.$router.push({ name: "Pocket" });
     },
     itemUse() {
       console.log("item.useItem", this.item);
-      this.remote.fetching({
-        func: "item.useItem", 
+      this.$store.dispatch('pocket/use', {
         type: this.item.type,
         id: this.item.id,
         num: this.item.num,
       }).then(res => {
-        console.log(`${res.code}`);
-        setTimeout(() => {
           this.$router.push({ name: "Pocket" });
-        }, 500);
-      });
+      }).catch(e=>{
+          this.$router.push({ name: "Pocket" });
+      })
     },
   },
   created() {

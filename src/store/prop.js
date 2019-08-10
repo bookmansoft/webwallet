@@ -104,6 +104,70 @@ const mod = {
                 fixedPrice: params.fixedPrice,
             });
             return res;
+        },
+        /**
+         * 赠送道具
+         * @param {*} context 
+         * @param {*} params 
+         */
+        async donate(context, params) {
+            let res = await remote.fetching({
+                func: 'prop.PropDonate',
+                pid: params.pid,
+                txid: params.txid,
+                index: params.index,
+            });
+            return res;
+        },
+        /**
+         * 熔铸道具
+         * @param {*} context 
+         * @param {*} params 
+         */
+        async found(context, params) {
+            let res = await remote.fetching({
+                func: 'prop.PropFound', 
+                pid: params.pid,
+            });
+            return res;
+        },
+        /**
+         * 购买道具
+         * @param {*} context 
+         * @param {*} params 
+         */
+        async buy(context, params) {
+            let res = await remote.fetching({
+                func:'prop.PropBuy', 
+                pid: params.pid,
+                price: params.price,
+            });
+            return res;
+        },
+        /**
+         * 领取他人赠送的道具
+         * @param {*} context 
+         * @param {*} params 
+         */
+        async receive(context, params) {
+            let res = await remote.fetching({
+                func: 'prop.PropReceive',
+                raw: params.raw,
+            });
+            return res;
+        },
+        /**
+         * 转移道具
+         * @param {*} context 
+         * @param {*} params 
+         */
+        async send(context, params) {
+            let res = await remote.fetching({
+                func: 'prop.send',
+                addr: params.addr,
+                pid: params.pid,
+            });
+            return res;
         }
     },     
 }

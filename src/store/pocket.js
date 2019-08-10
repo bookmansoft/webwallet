@@ -95,6 +95,22 @@ const mod = {
 
             return curPage < context.state.pageMax;
         },
+
+        /**
+         * 使用物品
+         * @param {*} context 
+         * @param {*} params 
+         */
+        async use(context, params) {
+            let res = await remote.fetching({
+                func: "item.useItem", 
+                type: params.type,
+                id: params.id,
+                num: params.num,
+            });
+
+            return res;
+        }
     },     
 }
 

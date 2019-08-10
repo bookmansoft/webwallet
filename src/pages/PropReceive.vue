@@ -72,8 +72,7 @@ export default {
         return;
       }
 
-      this.remote.fetching({
-        func: 'PropReceive', control: 'prop', 
+      this.$store.dispatch('prop/receive', {
         raw: this.prop.raw,
       }).then(res => {
           if(res.code == 0) { 

@@ -44,8 +44,7 @@ export default {
     },
     methods: {
         propBuy() {
-            this.remote.fetching({
-                func:'prop.PropBuy', 
+            this.$store.dispatch('prop/buy', {
                 pid: this.propSale.pid,
                 price: this.propSale.bid.fixed,
             }).then(res => {
