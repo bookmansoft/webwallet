@@ -25,7 +25,6 @@ export default {
         store: 'rpsReceive',    //数据中心
         nodata: '/static/img/default/no-games.png',
       },
-      selection: {},
     };
   },
   methods: {

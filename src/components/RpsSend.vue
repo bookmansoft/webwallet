@@ -25,7 +25,6 @@ export default {
         store: 'rpsSend',    //数据中心
         nodata: '/static/img/default/no-games.png',
       },
-      selection: {},
     };
   },
   computed: {

@@ -2,7 +2,7 @@
 -->
 <template>
   <div class="root">
-    <PanelList :config="config" :selection="selection" v-on:panel_item_click="itemClick"></PanelList>
+    <PanelList :config="config" v-on:panel_item_click="itemClick"></PanelList>
     <navs></navs>
   </div>
 </template>
@@ -25,7 +25,6 @@ export default {
         store: 'pocket',    //数据中心
         nodata: '/static/img/default/no-games.png',
       },
-      selection: {},
     };
   },
   methods: {

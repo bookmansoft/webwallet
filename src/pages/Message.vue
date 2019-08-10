@@ -3,7 +3,7 @@
 <template>
   <div>
     <!-- <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> -->
-    <PanelList :config="config" :selection="selection" v-on:panel_item_click="itemClick"></PanelList>
+    <PanelList :config="config" v-on:panel_item_click="itemClick"></PanelList>
   </div>
 </template>
 
@@ -25,7 +25,6 @@ export default {
         store: 'message',    //数据中心
         nodata: '/static/img/default/no-games.png',
       },
-      selection: {},
     }
   },
   computed: {

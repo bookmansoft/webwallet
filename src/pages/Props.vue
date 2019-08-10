@@ -41,7 +41,7 @@
 -->
 <template>
   <div class="root">
-    <PanelList :config="config" :selection="selection" v-on:panel_item_click="showPropDetail"></PanelList>
+    <PanelList :config="config" v-on:panel_item_click="showPropDetail"></PanelList>
     <navs></navs>
   </div>
 </template>
@@ -63,7 +63,6 @@ export default {
         store: 'prop',    //数据中心
         nodata: '/static/img/default/no-games.png',
       },
-      selection: {},
     };
   },
   methods: {
