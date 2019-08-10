@@ -1,6 +1,6 @@
 <!-- 我的凭证
 数据接口
-1. stockMgr.MyStock -> localItems
+1. stockMine/pull
 [
   {
     src,          //图片
@@ -14,23 +14,10 @@
 -->
 <template>
   <div class="root" style="background-color:white;margin-top:-8px">
-    <div v-if="isLoadMore">
-      <scroller
-        v-model="scrollerStatus"
-        height="-100"
-        lock-x
-        scrollbar-y
-        ref="scroller"
-        :bounce="true"
-        :use-pulldown="true"
-        :pulldown-config="downobj"
-        @on-pulldown-loading="selPullDown"
-        :use-pullup="true"
-        :pullup-config="upobj"
-        @on-pullup-loading="selPullUp"
-      >
+    <scrolllist :config="config">
+      <template v-slot:default="props">
         <div style="margin-top:10px">
-          <div v-for="(item, index) in localItems" :key="index" class="crowdItem">
+          <div v-for="(item, index) in props.content" :key="index" class="crowdItem">
             <group>
                 <flexbox class="crowdItem"  @click.native="showDetail(item, index)">
                     <flexbox-item :span="2.5" style="padding:0.3rem;">
@@ -52,105 +39,38 @@
             </group>
           </div>
         </div>
-      </scroller>
-    </div>
-
-    <div v-if="isLoadMore && localItems.length==0 && showNoData==true">
-      <no-data src="/static/img/default/no-walletdetail.png"></no-data>
-    </div>
-
-    <div v-if="!isLoadMore">
-      <load-more tip="正在加载" style="position: relative; top:250px;" :show-loading="!isLoadMore"></load-more>
-    </div>
+      </template>
+    </scrolllist>
   </div>
 </template>
 <script>
 import {
-  Scroller,
-  XButton,
   Flexbox,
   FlexboxItem,
-  LoadMore,
   Group,
 } from "vux";
-import { setTimeout } from "timers";
-import NoData from "@/components/NoData.vue";
+import scrolllist from "@/components/ScrollList.vue";
 
 export default {
-  name: 'Crowd',
+  name: 'MyStock',
   components: {
-    Scroller,
-    NoData,
-    XButton,
     Flexbox,
     FlexboxItem,
-    LoadMore,
     Group,
+    scrolllist,
   },
   props: [
     'showType',
   ],
   data: function() {
     return {
-      downobj: {
-        content: "下拉刷新数据...",
-        downContent: "下拉刷新数据...",
-        upContent: "释放刷新数据",
-        loadingContent: "加载中...",
-        pullUpHeight: 50,
-        height: 40,
-        autoRefresh: false,
-        clsPrefix: "xs-plugin-pulldown-"
+      config: {
+        store: 'stockMine',
+        nodata: '/static/img/default/no-product.png',   //列表为空时的占位图片
       },
-      upobj: {
-        content: "向上滑动获取更多数据...",
-        upContent: "向上滑动获取更多数据...",
-        downContent: "释放获取数据",
-        loadingContent: "加载中...",
-        pullUpHeight: 50,
-        height: 40,
-        autoRefresh: false,
-        clsPrefix: "xs-plugin-pullup-"
-      },
-      scrollerStatus: {
-        pullupStatus: "default"
-      },
-      isLoadMore: false,
-      showNoData: false,
-      isActive: false,
     };
   },
-  computed: {
-    localItems() {
-      return this.$store.state.stockMine.list;
-    }
-  },
   methods: {
-    selPullDown() {
-      this.showNoData = false;
-      
-      //用户选择下拉刷新，清除本地数据，重新拉取
-      this.getContent(true);
-      setTimeout(() => {
-        this.showNoData = true;
-        if(this.isActive) {
-          this.$refs.scroller.donePulldown();
-          this.$refs.scroller.reset({ top: 0 });
-        }
-      }, 1000);
-    },
-    selPullUp() {
-      this.showNoData = false;
-
-      //用户选择上滑获取新数据，更新当前页码
-      this.getContent();
-      setTimeout(() => {
-        this.showNoData = true;
-        if(this.isActive) {
-        this.$refs.scroller.donePullup();
-        }
-      }, 1000);
-    },
     /**
      * 跳转至详情页
      */
@@ -158,36 +78,10 @@ export default {
       console.log('showDetail', item);
       this.$router.push({ name: 'MyStockInfo', params: { item: item }});
     },
-    /**
-     * 获取列表, flash 强制更新
-     */
-    getContent(flash) {
-      this.isLoadMore = false;
-      if(!!flash) {
-        this.$store.dispatch('crowd/clear');
-      }
-
-      return this.$store.dispatch('crowd/pull').then(ret => {
-        this.isLoadMore = true;
-
-        if(!ret) {
-          //没有新的数据了，禁止继续下拉
-          this.scrollerStatus.pullupStatus = 'disabled';
-        }
-      });
-    },
-  },
-  mounted() {
-    this.isActive = true;
-  },
-  beforeDestroy() {
-    this.isActive = false;
   },
   created() {
     if(!this.$store.state.user.auth.uid) {
         this.$router.push('/login');
-    } else { 
-      this.getContent();
     }
   },
 };

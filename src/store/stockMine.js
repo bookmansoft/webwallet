@@ -14,6 +14,11 @@ const mod = {
         list: [],           //众筹条目缓存列表
         pageMax: 1,         //网络获取的最大页数
     },
+    getters: {
+        list: (state) => {
+            return state.list;
+        },
+    },
     /**
      * 状态修改函数，必须是同步函数
      * @description 更改状态的唯一方法是提交 mutation: this.$store.commit
@@ -25,6 +30,9 @@ const mod = {
         clear(state) {
             state.list = [];
             state.pageMax = 1;
+        },
+        merge(state, arr) {
+            state.list = state.list.concat(arr);
         },
         add(state, msg) {
             state.list.push(msg);
@@ -73,8 +81,8 @@ const mod = {
                         console.log('stockMine.pull', res.data.list);
                         res.data.list.forEach(item => {
                             item.validtime = utils.formatDateStr(new Date(Date.parse(new Date()) - (res.data.height - item.period)*600*1000), 'yyyy-MM-dd HH:mm:ss');
-                            context.dispatch('add', item);
-                      });
+                        });
+                        context.commit('merge', res.data.list);
                     }
                 }
             }

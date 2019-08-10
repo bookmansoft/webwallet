@@ -45,7 +45,7 @@ import {
 import NoData from "@/components/NoData.vue";
 
 export default {
-  name: 'PanelList',
+  name: 'ScrollList',
   components: {
     Panel,
     Scroller,
@@ -136,6 +136,9 @@ export default {
     },
   },
   computed: {
+    /**
+     * @warning 需要数据仓库在 getters 下设置 list 属性
+     */
     content() { 
       return this.$store.getters[`${this.config.store}/list`];
     },
