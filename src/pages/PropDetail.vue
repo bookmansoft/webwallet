@@ -76,17 +76,16 @@ export default {
      * @params {Number-KG} amount
      */
     propSale(amount) {
-        this.remote.fetching({
-          func: 'prop.sale',
-          pid: this.prop.pid,
-          fixedPrice: amount,
-        }).then(res => {
+      this.$store.dispatch('prop/sale', {
+        pid: this.prop.pid,
+        fixedPrice: amount,
+      }).then(res=>{
           if(res.code == 0) {
               this.showPluginAuto('道具已发布到交易市场!')
           } else {
               this.showPluginAuto('道具出售失败!')
           }
-        });
+      });
     },
 
     /**

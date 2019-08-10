@@ -92,6 +92,19 @@ const mod = {
 
             return curPage < context.state.pageMax;
         },
+        /**
+         * 出售道具
+         * @param {*} context 
+         * @param {*} params 
+         */
+        async sale(context, params) {
+            let res = await remote.fetching({
+                func: 'prop.sale',
+                pid: params.pid,
+                fixedPrice: params.fixedPrice,
+            });
+            return res;
+        }
     },     
 }
 
