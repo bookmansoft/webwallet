@@ -46,6 +46,11 @@ const mod = {
           },
         ],
     },
+    getters: {
+        list: (state) => {
+            return state.list;
+        },
+    },
     /**
      * 状态修改函数，必须是同步函数
      * @description 更改状态的唯一方法是提交 mutation: this.$store.commit

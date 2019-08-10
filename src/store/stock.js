@@ -13,6 +13,11 @@ const mod = {
         list: [],           //众筹条目缓存列表
         pageMax: 1,         //网络获取的最大页数
     },
+    getters: {
+        list: (state) => {
+            return state.list;
+        },
+    },
     /**
      * 状态修改函数，必须是同步函数
      * @description 更改状态的唯一方法是提交 mutation: this.$store.commit
