@@ -59,11 +59,11 @@ export default {
     return {
       headerTitle: '交易流水',
       isLoadMore: false,
-      items: []
     }
   },
   computed:{
-    balance() {return this.$store.state.user.balance},
+    balance() {return this.$store.state.user.balance;},
+    items() {return this.$store.state.wallet.logs;}
   },
   methods: {
       onBack() {
@@ -71,32 +71,12 @@ export default {
       },
       //获取交易记录
       getTxLogs() {
-          this.remote.fetching({func:'wallet.TxLogs',}).then(res => {
-            if(res.code == 0) {
-              console.log('TxLogs', res.data);
-              for(var i=0; i<res.data.list.length; i++) {
-                  var item = res.data.list[i];
-                  if(item.amount != 0) {
-                      item.is_link = false;
-                      item.link = {path:'/wallet'};
-                      item.badge = 0;
-                      item.title = this.utils.formatDateStr(new Date(item.time*1000), 'MM-dd HH:mm:ss');
-                      if(item.category=='receive') {
-                        item.img = '/static/img/wallet/rec.png'
-                        item.desc = '接收 ' + this.assistant.toKg(item.amount * 10000 * 10000) + '千克'
-                      } else {
-                        item.img = '/static/img/wallet/send.png'
-                        item.desc = '发送 ' + this.assistant.toKg(item.amount * 10000 * 10000) + '千克'
-                      }
-                      this.items.push(item);
-                  }
-              }
-            }
-            this.isLoadMore = true
-          }).catch(e => {
-              console.log(e);
-              this.isLoadMore = true
-          })
+        this.$store.dispatch('wallet/getLog', {}).then(res => {
+          this.isLoadMore = true;
+        }).catch(e => {
+            console.log(e);
+            this.isLoadMore = true;
+        })
       }
   },
   created() {

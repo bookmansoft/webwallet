@@ -11,6 +11,7 @@ const mod = {
      */
     state: {
         list: [],           //众筹条目缓存列表
+        logs: [],           //消费流水
         pageMax: 1,         //网络获取的最大页数
         menu: [
           {
@@ -65,6 +66,9 @@ const mod = {
         },
         add(state, msg) {
             state.list.push(msg);
+        },
+        mergeLog(state, arr) {
+            state.logs = state.logs.concat(arr);
         }
     },  
     /**
@@ -150,8 +154,46 @@ const mod = {
                 sn: params.sn,
             });
             return res;
-        }
-    },     
+        },
+        async prepay(context, params) {
+            let res = await remote.fetching({
+                func: 'order.prepay',
+                order: params.order,
+            });
+            return res;
+        },
+        async OrderPayResult(context, params) {
+            let res = await remote.fetching({
+                func: 'order.OrderPayResult',
+                tradeId: params.tradeId,
+                status: params.status,
+            });
+            return res;
+        },
+        async getLog(context, params) {
+            let res = await remote.fetching({func:'wallet.TxLogs',});
+            if(res.code == 0) {
+                for(let item of res.data.list) {
+                    if(item.amount != 0) {
+                        item.is_link = false;
+                        item.link = {path:'/wallet'};
+                        item.badge = 0;
+                        item.title = this.utils.formatDateStr(new Date(item.time*1000), 'MM-dd HH:mm:ss');
+                        if(item.category=='receive') {
+                            item.img = '/static/img/wallet/rec.png'
+                            item.desc = '接收 ' + this.assistant.toKg(item.amount * 10000 * 10000) + '千克'
+                        } else {
+                            item.img = '/static/img/wallet/send.png'
+                            item.desc = '发送 ' + this.assistant.toKg(item.amount * 10000 * 10000) + '千克'
+                        }
+                    }
+                }
+                context.commit('mergeLog', res.data.list);
+            }
+
+            return res;
+        },
+    }
 }
 
 export default mod;

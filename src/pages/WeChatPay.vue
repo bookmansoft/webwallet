@@ -65,8 +65,7 @@ export default {
      * 调用微信统一下单接口，获取prepay_id，这是调用微信支付接口的前置步骤
      */
     prepay() {
-        this.remote.fetching({
-            func:'order.prepay',
+        this.$store.dispatch('wallet/prepay', {
             order: this.order,
         }).then(res => {
             if(res.code == 0) {
@@ -88,8 +87,7 @@ export default {
         self.payTitle = '支付成功';
         self.payIcon = 'success';
         
-        self.remote.fetching({
-            func: 'order.OrderPayResult',
+        self.$store.dispatch('wallet/OrderPayResult', {
             tradeId: params.tradeId,
             status: 1,
         }).then(res => {
@@ -142,8 +140,7 @@ export default {
                     self.payTitle = '支付成功';
                     self.payIcon = 'success';
                     
-                    self.remote.fetching({
-                        func: 'order.OrderPayResult',
+                    self.$store.dispatch('wallet/OrderPayResult', {
                         tradeId: params.tradeId,
                         status: 1,
                     }).then(res => {
