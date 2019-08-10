@@ -67,10 +67,18 @@ export default {
       percent: 0,         //达到100时可以提取福利
       refreshTime: 0,     //计算福利增长的机师基准点
       gold: 0,            //当前可提取福利
-      cfg: {},            //VIP等级配置条目
       timer: null,        //定时器句柄
       timerBreak: false,  //控制定时器例程暂停执行
     }
+  },
+
+  computed: {
+    /**
+     * VIP等级配置条目
+     */
+    cfg () {
+      return this.$store.state.config.dict['vip'];
+    },
   },
 
   methods: {
@@ -175,15 +183,13 @@ export default {
     if(!!this.$store.state.user.auth.uid) {
       this.mine.vcur = this.mine.vcur || 0;
 
-      this.ConfigMgr.get('vip', (err, config)=>{ 
-        this.cfg = config; 
-
+      this.$store.dispatch('config/pull', {file: 'vip'}).then(res => {
         this.gold = this.mine.vcur || 0;
         let _now = Date.parse(new Date())/1000;
         this.refreshTime = this.mine.vlg;
         this.gold += (_now - this.refreshTime) * this.cfg[this.mine.vl].time_get_count;
         this.refreshTime = _now;
-
+        
         this.doCircle();
       });
     }

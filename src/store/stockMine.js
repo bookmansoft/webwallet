@@ -1,6 +1,5 @@
 import remote from '../utils/remote'
 import utils from '../utils/func'
-import assistant from '../utils/assistant'
 
 /**
  * 我的凭证数据集合
@@ -127,7 +126,7 @@ const mod = {
                 }
               }
               context.commit('mergeLog', res.data.list);
-              context.commit('setBonus', parseFloat(bo/assistant.unit.kg).toFixed(3));
+              context.commit('setBonus', parseFloat(bo/context.getters['config/files']('base').kg).toFixed(3));
             }
     
             return res;

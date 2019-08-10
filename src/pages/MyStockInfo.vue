@@ -38,7 +38,7 @@
                 <p>
                   <div style="font-size:15px;">{{crowdItem.title}}</div>
                   <div style="color: coral; font-size:14px;">持有 {{crowdItem.sum}} 个</div>
-                  <span style="color: coral; font-size:14px;">成本 {{parseFloat(crowdItem.price / assistant.unit.kg).toFixed(3)}} 千克</span>
+                  <span style="color: coral; font-size:14px;">成本 {{parseFloat(crowdItem.price / unit.kg).toFixed(3)}} 千克</span>
                   <x-button mini :gradients="['#FF5E3A', '#FF9500']" style="margin-left:50px;" @click.native="sale()">挂单出售</x-button>
                 </p>
                 </div>
@@ -105,6 +105,7 @@ export default {
   computed: {
     userStockLogs() { return this.$store.state.stockMine.logs; },
     bonus() { return this.$store.state.stockMine.bonus; },
+    unit() {return this.$store.state.config.dict['base'];},
   },
   methods: {
         onBack() {

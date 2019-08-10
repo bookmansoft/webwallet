@@ -28,10 +28,10 @@
                     <flexbox-item>
                         <div style="padding-left:6px;">
                           <p><span style="font-size:15px;">{{item.title}}</span></p>
-                          <p><span style="color: coral; font-size:14px;">持有 {{item.sum}} 个, 平均成本 {{parseFloat(item.price/assistant.unit.kg).toFixed(3)}} 千克</span></p>
+                          <p><span style="color: coral; font-size:14px;">持有 {{item.sum}} 个, 平均成本 {{parseFloat(item.price/unit.kg).toFixed(3)}} 千克</span></p>
                         </div>
                         <div style="padding-left:6px;" v-if="item.sell_sum>0">
-                          <p><span style="color: #888; font-size:13px;">挂单量 {{item.sell_sum}} 挂单价 {{parseFloat(item.sell_price/assistant.unit.kg).toFixed(3)}} 千克</span></p>
+                          <p><span style="color: #888; font-size:13px;">挂单量 {{item.sell_sum}} 挂单价 {{parseFloat(item.sell_price/unit.kg).toFixed(3)}} 千克</span></p>
                           <p><span style="color: #888; font-size:13px;">截止时间 {{item.validtime}}</span></p>
                         </div>
                     </flexbox-item>
@@ -69,6 +69,9 @@ export default {
         nodata: '/static/img/default/no-product.png',   //列表为空时的占位图片
       },
     };
+  },
+  computed: {
+    unit() {return this.$store.state.config.dict['base'];},
   },
   methods: {
     /**

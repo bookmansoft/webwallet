@@ -1,4 +1,3 @@
-import ConfigMgr from '../utils/ConfigMgr'
 import remote from '../utils/remote'
 
 /**
@@ -54,13 +53,13 @@ const mod = {
      */
     actions: {
         async getConfig (context) {
-            return new Promise((resolve, reject) =>{
-                ConfigMgr.get('crowd', (err, config) => {
-                    if(!err) {
-                        context.commit('configChanged', config);
-                        resolve(config);
+            return new Promise((resolve, reject) => {
+                context.dispatch('config/pull', {file:'crowd'}).thenc(res=>{
+                    if(res.code == 0) {
+                        context.commit('configChanged', res.data);
+                        resolve(res.data);
                     } else {
-                        reject(err);
+                        reject();
                     }
                 });
             });

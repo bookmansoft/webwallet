@@ -151,12 +151,12 @@ export default {
     }
   },
   mounted() {
-    this.ConfigMgr.get('vip', (err, config) => {
-      if(!err) {
+    this.$store.dispatch('config/pull', {file:'vip'}).then(res=>{
+      if(res.code == 0) {
         //将对象转化为客户端要求的数组
-        this.vipDescItems = Object.keys(config).map(key => config[key]);
-        this.vipConfig = config;
-        this.btnItems = Object.keys(config).map(key => {
+        this.vipDescItems = Object.keys(res.data).map(key => res.data[key]);
+        this.vipConfig = res.data;
+        this.btnItems = Object.keys(res.data).map(key => {
           let item = {    
               index: key,
               src0: `/static/img/member/v${key}_no.png`,
@@ -172,7 +172,7 @@ export default {
             this.vipSelect(this.btnItems[0]);
         }
       }
-    });
+    })
   },
   beforeDestroy() {
     //在此集中取消不再需要的监听事件，避免不当持有造成的内存泄漏

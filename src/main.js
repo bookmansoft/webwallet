@@ -17,12 +17,10 @@ Vue.use(VueWechatTitle)
 import utils from './utils/func'
 import assistant from './utils/assistant'
 import remote from './utils/remote'
-import ConfigMgr from './utils/ConfigMgr'
 
 Vue.prototype.utils = utils;
 Vue.prototype.assistant = assistant;
 Vue.prototype.remote = remote;
-Vue.prototype.ConfigMgr = ConfigMgr;
 
 import FastClick from 'fastclick'
 FastClick.attach(document.body)

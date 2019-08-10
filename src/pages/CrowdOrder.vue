@@ -233,6 +233,7 @@ export default {
   },
   computed: {
     crowdConfig () { return this.$store.state.crowd.configDict; },
+    unit() {return this.$store.state.config.dict['base'];},
   },
   methods: {
     viewMore() {
@@ -267,10 +268,10 @@ export default {
     calc() {
       if(this.crowdConfig[this.item.payType].stock > 0) {
         this.realPay = parseFloat(
-          this.item.price / this.assistant.unit.kg         //atom化为KG
+          this.item.price / this.unit.kg         //atom化为KG
           * this.crowdConfig[this.item.payType].stock   //选项包含的凭证数量
           * this.quantity                               //选项数量
-          * this.assistant.unit.kgprice                    //KG单价
+          * this.unit.kgprice                    //KG单价
         ).toFixed(2);
       } else {
         this.realPay = this.quantity;

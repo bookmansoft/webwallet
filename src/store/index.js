@@ -9,6 +9,9 @@ Vue.use(Vuex);
 // 创建store对象
 const store = new Vuex.Store({});
 
+import config from './config'
+store.registerModule('config', config);
+
 import contract from './contract'
 store.registerModule('contract', contract);
 

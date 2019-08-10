@@ -3,14 +3,14 @@
 -->
 <template>
   <div>
-    <div v-if="showCategory">
+    <div v-if="ready && showCategory">
       <grid :show-lr-borders="false" :show-vertical-dividers="true" :cols="3" style="top:5px;">
         <grid-item v-for="(item, index) in gameCategory" :key="index" :label="item.label" @on-item-click="onItemClick(item)">
           <img slot="icon" :src="item.icon">
         </grid-item>
       </grid>
     </div>
-    <x-button v-if="!showCategory" plain style="border-radius:5px;color:rgb(255,113,101)" type="warn" @click.native="viewCategory()">返回目录</x-button>
+    <x-button v-if="ready && !showCategory" plain style="border-radius:5px;color:rgb(255,113,101)" type="warn" @click.native="viewCategory()">返回目录</x-button>
     <scrolllist ref="sl001" :config="config(category)">
       <template v-slot:default="props">
           <div v-for="(item, index) in props.content" :key="index" class="gameItem">
@@ -60,12 +60,15 @@ export default {
   },
   data () {
     return {
+      ready: false,
       showCategory: true,
-      gameCategory: [],
       category: 1,
     }
   },
   computed: {
+    gameCategory() { 
+      return this.$store.state.config.dict['gameCategory'];
+    },
     userBase() {
       return this.$store.state.user.auth;
     },
@@ -103,12 +106,8 @@ export default {
   },
   created() {
     if(!!this.userBase.uid) {
-      this.ConfigMgr.get('gameCategory', (err, config) => {
-        if(!err) {
-          this.gameCategory = config;
-        } else {
-          this.$router.push('/home');
-        }
+      this.$store.dispatch('config/pull', {file: 'gameCategory'}).then(()=>{
+        this.ready = true;
       });
     }
   },

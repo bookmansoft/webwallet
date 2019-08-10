@@ -122,9 +122,7 @@ export default {
   },
   methods: {
     sendGamegold() {
-      this.remote.fetching({
-        func: "TxSend",
-        control: "wallet",
+      this.$store.dispatch('wallet/send', {
         addr: this.sender.address,
         amount: this.sender.actAmount,
       }).then(res => {

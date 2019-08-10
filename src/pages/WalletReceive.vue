@@ -64,7 +64,7 @@ export default {
         })  
       },
       getAddress() {
-        this.remote.fetching({func:'AddressCreate', control: 'wallet',}).then(res => {
+        this.$store.dispatch('wallet/createaddress').then(res => {
             if(res.code == 0) {
               this.address = res.data;
             }

@@ -61,12 +61,12 @@
         <flexbox>
           <flexbox-item :span="4">
             <div class="flex-left" style="margin-top:-10px">
-              <span style="color:coral; font-size:12px;">{{item.price/assistant.unit.kg*(item.sum-item.sum_left)}}千克</span>
+              <span style="color:coral; font-size:12px;">{{item.price/unit.kg*(item.sum-item.sum_left)}}千克</span>
             </div>
           </flexbox-item>
           <flexbox-item :span="4">
             <div class="flex-center" style="margin-top:-10px">
-              <span style="font-size:12px;">{{item.price/assistant.unit.kg*item.sum}}千克</span>
+              <span style="font-size:12px;">{{item.price/unit.kg*item.sum}}千克</span>
             </div>
           </flexbox-item>
           <flexbox-item :span="4">
@@ -268,6 +268,9 @@ export default {
         }
       }
     };
+  },
+  computed: {
+    unit() {return this.$store.state.config.dict['base'];},
   },
   methods: {
     onBack() {

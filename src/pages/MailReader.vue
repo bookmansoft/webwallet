@@ -54,7 +54,7 @@ export default {
     },
 
     payNow() {
-      this.remote.fetching({func:'wallet.NotifyOrderPay',
+      this.$store.dispatch('wallet/orderpay', {
         sn: this.data.content.sn,
       }).then(res => {
           if(res.code == 0) {

@@ -117,6 +117,40 @@ const mod = {
 
             return curPage < context.state.pageMax;
         },
+        /**
+         * 为当前用户创建一个新的地址
+         * @param {*} context 
+         * @param {*} params 
+         */
+        async createaddress(context, params) {
+            let res = await remote.fetching({func:'wallet.AddressCreate',});
+            return res;
+        },
+        /**
+         * 转账
+         * @param {*} context 
+         * @param {*} params 
+         */
+        async send(context, params) {
+            let res = await remote.fetching({
+                func: "wallet.TxSend",
+                addr: params.addr,
+                amount: params.amount,
+            });
+            return res;
+        },
+        /**
+         * 支付订单
+         * @param {*} context 
+         * @param {*} params 
+         */
+        async orderpay(context, params) {
+            let res = await remote.fetching({
+                func:'wallet.NotifyOrderPay',
+                sn: params.sn,
+            });
+            return res;
+        }
     },     
 }
 

@@ -76,11 +76,7 @@ export default {
         this.$store.dispatch('user/change', this.remote.userInfo);
         //#endregion
 
-        this.ConfigMgr.get('base', (err, config)=>{ 
-          if(!err) {
-            this.assistant.unit = config;
-          }
-        });
+        this.$store.dispatch('config/pull', {file: 'base'});
 
         //监测账户余额变化
         this.remote.watch(info => {

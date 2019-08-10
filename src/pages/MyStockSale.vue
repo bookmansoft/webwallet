@@ -14,7 +14,7 @@
                   <p>
                     <span style="font-size:15px;">{{crowdItem.title}}</span>
                     <div style="color: coral; font-size:14px;">持有 {{crowdItem.sum}} 个</div>
-                    <div style="color: coral; font-size:14px;">成本 {{parseFloat(crowdItem.price / assistant.unit.kg).toFixed(3)}} 千克</div>
+                    <div style="color: coral; font-size:14px;">成本 {{parseFloat(crowdItem.price / unit.kg).toFixed(3)}} 千克</div>
                   </p>
                 </div>
             </flexbox-item>
@@ -49,6 +49,9 @@ export default {
       price: '',
       showLoading: false
     }
+  },
+  computed: {
+    unit() {return this.$store.state.config.dict['base'];},
   },
   methods: {
         onBack() {
@@ -87,7 +90,7 @@ export default {
             this.$store.dispatch('stockMine/bid', {
                   addr: this.crowdItem.addr,
                   cid: this.crowdItem.cid,
-                  price: this.price*this.assistant.unit.kg,
+                  price: this.price*this.unit.kg,
                   num: this.quantity,
             }).then(res => {
                 if(res.code == 0) {

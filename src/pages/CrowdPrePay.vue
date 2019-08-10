@@ -126,6 +126,7 @@ export default {
   },
   computed: {
     crowdConfigList() {return this.$store.state.crowd.configList},
+    unit() {return this.$store.state.config.dict['base'];},
   },
   methods: {
     viewMore() {
@@ -149,7 +150,7 @@ export default {
       if(!this.item) {
         this.$router.push("/crowds");
       } else {
-        this.factor = this.item.price / this.assistant.unit.kg * this.assistant.unit.kgprice;
+        this.factor = this.item.price / this.unit.kg * this.unit.kgprice;
         this.$store.dispatch('crowd/getConfig');
       }
     }
