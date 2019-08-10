@@ -22,21 +22,10 @@
 -->
 <template>
   <div class="root" style="background-color:white;margin-top:-8px">
-    <div v-if="isLoadMore">
-      <scroller
-        v-model="scrollerStatus"
-        height="-100"
-        lock-x
-        scrollbar-y
-        ref="scroller"
-        :bounce="true"
-        :use-pulldown="true"
-        :pulldown-config="downobj"
-        @on-pulldown-loading="selPullDown"
-        :use-pullup="true"
-        :pullup-config="upobj"
-        @on-pullup-loading="selPullUp"
-      >
+    <!-- 使用滚动列表组件 -->
+    <ScrollList :config="config">
+      <!-- 为组件的具名插槽书写模板，并引入具名插槽的数据集 props.content -->
+      <template v-slot:default="props">
         <div>
           <div style="margin-top:15px;">
             <flexbox>
@@ -53,7 +42,8 @@
             <div class="flex-left" style="position: relative;top:45px;left:-5px">
               <img src="/static/img/stock/ren_qi.png" style="width:100px;height:27px">
             </div>
-            <div v-for="(item, index) in crowdList" :key="index" class="crowdItem">
+            <!-- 来自具名插槽的数据集 props.content -->
+            <div v-for="(item, index) in props.content" :key="index" class="crowdItem">
               <div style="padding: 10px;" v-on:click="crowdDetail(item)">
                 <img :src="item.large_img_url" class="img-top">
                 <flexbox>
@@ -111,113 +101,41 @@
             </div>
           </div>
         </div>
-      </scroller>
-    </div>
-
-    <div v-if="isLoadMore && crowdList.length==0 && showNoData==true">
-      <no-data src="/static/img/default/no-games.png"></no-data>
-    </div>
-    <div v-if="!isLoadMore">
-      <load-more tip="正在加载" style="position: relative; top:250px;" :show-loading="!isLoadMore"></load-more>
-    </div>
+      </template>
+    </ScrollList>
 
     <navs></navs>
   </div>
 </template>
 <script>
 import {
-  Scroller,
-  XButton,
-  Tab,
-  TabItem,
   Flexbox,
   FlexboxItem,
-  LoadMore,
-  XProgress,
-  Box
+  Box,
 } from "vux";
 import Navs from "@/components/Navs.vue";
 import XXProgress from "@/components/XXProgress.vue";
-import { setTimeout } from "timers";
-import NoData from "@/components/NoData.vue";
+import ScrollList from "@/components/ScrollList.vue";
 
 export default {
   name: 'Crowd',
   components: {
-    Scroller,
-    NoData,
-    Navs,
-    Tab,
-    XButton,
-    TabItem,
     Flexbox,
     FlexboxItem,
-    LoadMore,
+    Box,
+    Navs,
     XXProgress,
-    Box
+    ScrollList,
   },
   data: function() {
     return {
-      downobj: {
-        content: "下拉刷新数据...",
-        downContent: "下拉刷新数据...",
-        upContent: "释放刷新数据",
-        loadingContent: "加载中...",
-        pullUpHeight: 50,
-        height: 40,
-        autoRefresh: false,
-        clsPrefix: "xs-plugin-pulldown-"
+      config: {
+        store: 'crowd',                                 //引用的数据仓库
+        nodata: '/static/img/default/no-product.png',   //列表为空时的占位图片
       },
-      upobj: {
-        content: "向上滑动获取更多数据...",
-        upContent: "向上滑动获取更多数据...",
-        downContent: "释放获取数据",
-        loadingContent: "加载中...",
-        pullUpHeight: 50,
-        height: 40,
-        autoRefresh: false,
-        clsPrefix: "xs-plugin-pullup-"
-      },
-      scrollerStatus: {
-        pullupStatus: "default"
-      },
-      isLoadMore: false,
-      showNoData: false,
-      isActive: false,
     };
   },
-  computed: {
-    /**
-     * 众筹项目全局缓存
-     */
-    crowdList() { return this.$store.state.crowd.list},
-  },
   methods: {
-    selPullDown() {
-      this.showNoData = false;
-      
-      //用户选择下拉刷新，清除本地数据，重新拉取
-      this.getContent(true);
-      setTimeout(() => {
-        this.showNoData = true;
-        if(this.isActive) {
-          this.$refs.scroller.donePulldown();
-          this.$refs.scroller.reset({ top: 0 });
-        }
-      }, 1000);
-    },
-    selPullUp() {
-      this.showNoData = false;
-
-      //用户选择上滑获取新数据，更新当前页码
-      this.getContent();
-      setTimeout(() => {
-        this.showNoData = true;
-        if(this.isActive) {
-        this.$refs.scroller.donePullup();
-        }
-      }, 1000);
-    },
     /**
      * 跳转至众筹详情
      */
@@ -225,37 +143,10 @@ export default {
       console.log('crowdDetail', item);
       this.$router.push({ name: "CrowdInfo", params: { item: item } });
     },
-    /**
-     * 获取列表, flash 强制更新
-     */
-    getContent(flash) {
-      this.isLoadMore = false;
-      if(!!flash) {
-        this.$store.dispatch('crowd/clear');
-      }
-
-      return this.$store.dispatch('crowd/pull').then(ret => {
-        this.isLoadMore = true;
-
-        if(!ret) {
-          //没有新的数据了，禁止继续下拉
-          this.scrollerStatus.pullupStatus = 'disabled';
-        }
-      });
-    },
-  },
-
-  mounted() {
-    this.isActive = true;
-  },
-  beforeDestroy() {
-    this.isActive = false;
   },
   created() {
     if(!this.$store.state.user.auth.uid) {
         this.$router.push('/login');
-    } else {
-      this.getContent();
     }
   },
 };
