@@ -134,7 +134,7 @@ export default {
           );
         } else {
           this.utils.myAlert(this.$vux.alert, "发送成功", null, function() {
-            that.$router.push("/wallet/detail");
+            that.$router.push("/message");
           });
         }
       });

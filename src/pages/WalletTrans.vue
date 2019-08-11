@@ -95,7 +95,7 @@ export default {
         }).then(res => {
             if (res.code == 0) {
                 this.utils.myAlert(this.$vux.alert, '交易发布成功', null, () => {
-                  this.$router.push('/wallet/detail')
+                  this.$router.push('/message')
               })
             } else {
               throw new Error(`交易发布失败${res.code}`);

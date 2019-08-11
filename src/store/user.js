@@ -1,3 +1,4 @@
+import remote from '../utils/remote'
 import assistant from '../utils/assistant'
 
 /**

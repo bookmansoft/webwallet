@@ -11,7 +11,6 @@ const mod = {
      */
     state: {
         list: [],           //众筹条目缓存列表
-        logs: [],           //消费流水
         pageMax: 1,         //网络获取的最大页数
         menu: [
           {
@@ -26,12 +25,6 @@ const mod = {
             index: 1,
             icon: 'static/img/icon1/1.png',
             link: '/wallet/receive'
-          },{
-            label: '交易流水',
-            tag: 'detail',
-            index: 2,
-            icon: 'static/img/icon1/3.png',
-            link: '/wallet/detail'
           },{
             label: '发布交易对',
             tag: 'trans',
@@ -69,9 +62,6 @@ const mod = {
         },
         merge(state, arr) {
             state.list = state.list.concat(arr);
-        },
-        mergeLog(state, arr) {
-            state.logs = state.logs.concat(arr);
         },
     },  
     /**
@@ -171,28 +161,6 @@ const mod = {
                 tradeId: params.tradeId,
                 status: params.status,
             });
-            return res;
-        },
-        async getLog(context, params) {
-            let res = await remote.fetching({func:'wallet.TxLogs',});
-            if(res.code == 0) {
-                for(let item of res.data.list) {
-                    if(item.amount != 0) {
-                        item.is_link = false;
-                        item.link = {path:'/wallet'};
-                        item.badge = 0;
-                        item.title = this.utils.formatDateStr(new Date(item.time*1000), 'MM-dd HH:mm:ss');
-                        if(item.category=='receive') {
-                            item.img = '/static/img/wallet/rec.png'
-                            item.desc = '接收 ' + this.assistant.toKg(item.amount * 10000 * 10000) + '千克'
-                        } else {
-                            item.img = '/static/img/wallet/send.png'
-                            item.desc = '发送 ' + this.assistant.toKg(item.amount * 10000 * 10000) + '千克'
-                        }
-                    }
-                }
-                context.commit('mergeLog', res.data.list);
-            }
             return res;
         },
         /**
