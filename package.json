@@ -1,7 +1,7 @@
 {
-  "name": "vallnet_wallet_client",
-  "version": "2.0.0",
-  "description": "web wallet of gamegold",
+  "name": "vallnet_wallet_web",
+  "version": "2.1.0",
+  "description": "web wallet for vallnet",
   "author": "bookmansoft <ceo@920.cc>",
   "private": true,
   "scripts": {
