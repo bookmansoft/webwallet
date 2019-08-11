@@ -32,7 +32,10 @@ const mod = {
         },
         add(state, msg) {
             state.list.push(msg);
-        }
+        },
+        merge(state, arr) {
+            state.list = state.list.concat(arr);
+        },
     },  
     /**
      * 交互函数，可以是同步或者异步函数，可以完全封装状态修改函数(就像 React 的做法)
@@ -77,8 +80,8 @@ const mod = {
                     if(curPage < qryPage) { //说明获得了新的内容
                         console.log('stock.pull', res.data.list);
                         res.data.list.forEach(item => {
-                            context.dispatch('add', item);
                         });
+                        context.commit('merge', res.data.list);
                     }
                 }
             }
