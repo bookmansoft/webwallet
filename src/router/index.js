@@ -20,7 +20,6 @@ import Wallet from '@/pages/Wallet'
 import WalletSend from '@/pages/WalletSend'
 import WalletReceive from '@/pages/WalletReceive'
 import WalletTrans from '@/pages/WalletTrans'
-import WalletDetail from '@/pages/WalletDetail'
 import Props from '@/pages/Props'
 import GameInfo from '@/pages/GameInfo'
 import PropDetail from '@/pages/PropDetail'
@@ -99,7 +98,6 @@ export default new Router({
     { path: '/wallet/send', name: 'WalletSend', component: WalletSend ,meta:{title:'转账'}},
     { path: '/wallet/receive', name: 'WalletReceive', component: WalletReceive ,meta:{title:'接受转账'}},
     { path: '/wallet/trans', name: 'WalletTrans', component: WalletTrans ,meta:{title:'交易对'}},
-    { path: '/wallet/detail', name: 'WalletDetail', component: WalletDetail ,meta:{title:'交易流水'}},
 
     { path: '/redpack/act', name: 'RedPackAct', component: RedPackAct ,meta:{title:'红包Act'}},
     { path: '/redpackshared',name:'RedPackShared', component: RedPackShared, meta:{title:'多人红包管理'}},
