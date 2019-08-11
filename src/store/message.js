@@ -2,10 +2,6 @@ import moment from "moment";
 import assistant from "../utils/assistant"
 import remote from '../utils/remote'
 
-const NotifyType = {
-    mail: 3,
-}
-
 /**
  * 背包数据集合
  */
@@ -92,23 +88,20 @@ const mod = {
 
                     let qryPage = Math.min(res.data.total, res.data.page); //数据修复：查询页数不能大于总页数
                     if(curPage < qryPage) { //说明获得了新的内容
-                        console.log('message.pull', res.data.list);
-                        context.commit('merge', res.data.list.map(item => {
+                        let dt = res.data.list.map(item => {
                             /* 最初的数据格式: item = {
-                                from,
+                                id, 
+                                src,
                                 dst,
                                 time,
                                 state,
                                 content: {
-                                    type: NotifyType.mail,
+                                    type,
                                     info: {
                                         content: content,
                                         bonus: bonus,
                                     }
                                 },
-                                src,
-                                title,
-                                desc,
                             } 
                             */
 
@@ -133,19 +126,10 @@ const mod = {
                                 bonus: item.content.info.bonus,         //附加奖励
                             };
                             
-                            //#region 为显示控件 Panel 专门转换的字段
-                            switch(item.content.type) {
-                                default: {
-                                    mail.src = `/static/img/mine/msg.png`; //不同类型消息的代表图标
-                                    mail.title = `${moment(item.time * 1000).format("MM-DD HH:mm")}`; //标题
-                                    mail.desc = `${item.content.info.content} - ${(item.state == 0)?'未处理':'已处理'}`; //内容
-                                    break;
-                                }
-                            }
-                            //#endregion
-
                             return mail;
-                        }))
+                        })                        
+                        context.commit('merge', dt);
+                        console.log('message.pull', dt);
                     }
                 }
             }
