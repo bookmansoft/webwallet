@@ -133,18 +133,22 @@ export default {
      * 调用摄像头
      */
     wxScanCode() {
-      let that = this;
-      that.$wechat.scanQRCode({
-        needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
-        scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
-        success: function(res) {
-          console.log(res);
-          that.address = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-        },
-        fail: function(res) {
-          console.log(res);
-          that.utils.myAlert(that.$vux.alert, `地址扫描失败${JSON.stringify(res)}`);
-        }
+      let self = this;
+      console.log('set wxconfig before scanQRCode', this.remote.wxconfig);
+      this.$wechat.config(this.remote.wxconfig);
+      this.$wechat.ready(function(){
+        self.$wechat.scanQRCode({
+          needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+          scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+          success: function(res) {
+            console.log('scanQRCode', res);
+            self.address = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+          },
+          fail: function(res) {
+            console.log('scanQRCode', res);
+            self.utils.myAlert(self.$vux.alert, `地址扫描失败${JSON.stringify(res)}`);
+          }
+        });
       });
     },
 

@@ -97,7 +97,9 @@ export default {
         });
 
         if (res.code == 0) {
-          this.$wechat.config(res.data);
+          console.log('get wechat config', res.data);
+          this.remote.wxconfig = res.data;
+          this.$wechat.config(this.remote.wxconfig);
         } else {
           throw new Error(`WechatConfig Error: ${res.code}`);
         }
