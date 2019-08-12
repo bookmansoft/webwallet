@@ -331,7 +331,7 @@ export default {
         if(this.userBase.uid == 0) {
             return;
         }
-        this.store.dispatch('cp/UserToken', {
+        this.$store.dispatch('cp/UserToken', {
           cid: this.cpInfo.cpid,
         }).then(res => {
           if(res.code == 0) {
