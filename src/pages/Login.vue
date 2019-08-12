@@ -91,19 +91,6 @@ export default {
           }
         }, 911002);
 
-        //获取微信令牌
-        let res = await this.$store.dispatch('user/WechatConfig', {
-          uri: this.remote.appConfig.siteUri,
-        });
-
-        if (res.code == 0) {
-          console.log('get wechat config', res.data);
-          this.remote.wxconfig = res.data;
-          this.$wechat.config(this.remote.wxconfig);
-        } else {
-          throw new Error(`WechatConfig Error: ${res.code}`);
-        }
-        
         console.log('after login', this.$store.state.user.auth);
         this.gotoHome();
       } else {
