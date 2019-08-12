@@ -112,7 +112,8 @@ export default {
       });
     },
     gotoGame() {
-      window.location.href = `http://wallet.vallnet.cn:9701/test?cpid=${this.recommendGame.cpid}openid=${this.userBase.openid}&openkey=${this.userBase.openkey}`;
+      //跳转到模拟游戏服务
+      window.location.href = `${this.remote.appConfig.siteUri}:9701/test?cpid=${this.recommendGame.cpid}openid=${this.userBase.openid}&openkey=${this.userBase.openkey}`;
     },
   },
   created() {
