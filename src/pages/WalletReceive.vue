@@ -75,7 +75,7 @@ export default {
     if(!this.userBase.uid) {
       this.$router.push('/login');
     } else {
-      this.address = this.userBase.block_addr;
+      this.address = this.userBase.acaddr;
     }
   }
 }
