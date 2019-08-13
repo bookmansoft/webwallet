@@ -87,9 +87,9 @@ export default {
       }).then(res => {
         if(res.code == 0) {
           this.send_id = res.data;
-          this.$router.push("/redpackshared/justSend/" + this.send_id);
+          this.$router.push("/redpackshared/unpack/" + this.send_id);
         } else {
-          throw new Error(`sharedredpack.Send${res.code}`);
+          throw new Error(`sharedredpack.Send: ${res.code}`);
         }
       }).catch(e=>{
         console.log(e);

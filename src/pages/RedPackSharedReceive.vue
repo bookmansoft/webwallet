@@ -65,7 +65,7 @@ export default {
       this.$router.push('/redpackshared');
     },
     gotoShare() {
-      this.$router.push(`/redpackshared/justSend/${this.$route.params.send_id}`);
+      this.$router.push(`/redpackshared/unpack/${this.$route.params.send_id}`);
     },
     dateFormat(el) {
       return moment(el * 1000).format("MM-DD HH:mm");

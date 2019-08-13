@@ -52,8 +52,9 @@ export default {
     }
   },
   created() {
+    let urlParamPath = this.utils.getUrlKey('path') || this.$route.params.path;
     if(!this.userBase.uid) {
-      this.$router.push('/login');
+      this.$router.push({ name: 'Login', params: { path: urlParamPath, }});
     }
   },
 }

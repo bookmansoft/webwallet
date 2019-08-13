@@ -1,72 +1,40 @@
 <!-- 登录页面
-
 -->
 <template>
-  <div>
-    <div class="data-box">
-        <inline-loading></inline-loading>
+  <div v-if="refresh">
+    <box gap="10px 10px">
+      <flexbox>
+        <flexbox-item :span="3"></flexbox-item>
+        <flexbox-item :span="6">
+          <x-button class="xbutton" plain type="warn" @click.native="tryagain">再次登录</x-button>
+        </flexbox-item>
+      </flexbox>
+    </box>
     </div>
-  </div>
 </template>
 
 <script>
-import { InlineLoading   } from 'vux'
+import { 
+  Box,
+  XButton,
+  Flexbox,
+  FlexboxItem,
+} from 'vux'
 
 export default {
   components: {
-    InlineLoading 
+    Box,
+    XButton,
+    Flexbox,
+    FlexboxItem,
   },
   data () {
     return {
       urlParamPath: '',
+      refresh: false,
     }
   },
   methods: {
-   checkUserAgent() {
-      var browser = navigator.userAgent.toLowerCase();
-      if(browser.match(/MicroMessenger/i)=="micromessenger"){
-          return 1
-      }else if(browser.match(/Alipay/i)=="alipay"){
-          return 2
-      }else{
-          return 0
-      }
-    },
-
-    showPlugin(msg) {
-      this.$vux.alert.show({
-        title: '提示',
-        content: msg
-      })
-    },
-
-    getQueryString: function(name) {
-      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-      var r = window.location.search.substr(1).match(reg);
-      if (r != null) {
-        return decodeURIComponent(r[2]);
-      }
-      return null;
-    },
-
-    isValidPath(path) {
-      this.$router.options.routes.forEach(element => {
-        console.log(element.path)
-        if(element.path==path) {
-          return true
-        }
-      })
-      return false
-    },
-
-    gotoHome() {
-      if(!!this.urlParamPath) {
-        this.$router.push(this.urlParamPath)
-      } else {
-        this.$router.push('/home')
-      }
-    },
-
     async afterLogin() {
       if(this.remote.status.check(this.remote.CommStatus.logined)) {
         //#region 登录成功后，客户端缓存的、供客户端显性调用的认证信息对象
@@ -92,10 +60,21 @@ export default {
         }, 911002);
 
         console.log('after login', this.$store.state.user.auth);
-        this.gotoHome();
+        if(!!this.urlParamPath) {
+          this.$router.push(this.urlParamPath);
+        } else {
+          this.$router.push('/home');
+        }
       } else {
         throw(new Error('登录失败'));
       }
+    },
+
+    /**
+     * 手动刷新，再次尝试登录
+     */
+    tryagain() {
+      this.$router.push({ name: 'Home', params: { path: this.urlParamPath, }});
     },
   },
 
@@ -107,14 +86,15 @@ export default {
    */
   async created() {
     this.urlParamPath = this.utils.getUrlKey('path') || this.$route.params.path;
+    console.log('begin login, return path: ', this.urlParamPath);
 
     //#region Modified by liub 2019.06.13
     try {
       let appConfig = await this.remote.getRequest({file: 'app'}, 'config');
       if(appConfig.code == 0) {
         this.remote.appConfig = Object.assign(this.remote.appConfig, appConfig.data);
+        console.log('get app config', this.remote.appConfig);
       }
-      console.log('appConfig', this.remote.appConfig);
 
       let code = this.utils.getUrlKey('code');
       if(!!code) {
@@ -133,12 +113,13 @@ export default {
           //登录验证
           await this.remote.setUserInfo({openkey: openkey, token: token}).getToken();
         } else {
+          let redirect_uri = this.remote.appConfig.siteUri;
+          if(this.urlParamPath) {
+            redirect_uri = redirect_uri + `?path=${this.urlParamPath}`;
+          }
+          let url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${this.remote.appConfig.wx_appid}&redirect_uri=${encodeURIComponent(redirect_uri)}&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect`;
+
           setTimeout(()=>{ 
-            let redirect_uri = this.remote.appConfig.siteUri;
-            if (location.search.indexOf("?") == 0 && location.search.indexOf("=") > 1) {
-              redirect_uri = redirect_uri + location.search;
-            }
-            let url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${this.remote.appConfig.wx_appid}&redirect_uri=${encodeURIComponent(redirect_uri)}&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect`;
             window.location.href = url;
           }, 2000); //发生错误时，两秒后跳回微信授权页面，重新拉取授权码
           return;
@@ -149,6 +130,7 @@ export default {
       this.afterLogin();
     } catch(e) {
       console.log(e);
+      this.refresh = true;
     }
     //#endregion
   }

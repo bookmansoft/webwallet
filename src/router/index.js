@@ -38,7 +38,6 @@ import Login from '@/pages/Login'
 import LuckyWheel from '@/pages/luckywheel'
 import RedPackShared from '@/pages/RedPackShared';
 import RedPackSharedSend from '@/pages/RedPackSharedSend';
-import RedPackSharedCommit from '@/pages/RedPackSharedCommit';
 import RedPackSharedReceive from '@/pages/RedPackSharedReceive';
 import RedPackSharedOpen from '@/pages/RedPackSharedOpen';
 import BuySuccess from '@/pages/BuySuccess';
@@ -102,7 +101,6 @@ export default new Router({
     { path: '/redpack/act', name: 'RedPackAct', component: RedPackAct ,meta:{title:'红包Act'}},
     { path: '/redpackshared',name:'RedPackShared', component: RedPackShared, meta:{title:'多人红包管理'}},
     { path: '/redpackshared/send',name:'RedPackSharedSend', component:RedPackSharedSend, meta:{title:'多人红包发送'}},
-    { path: '/redpackshared/justSend/:send_id',name:'RedPackSharedCommit', component:RedPackSharedCommit, meta:{title:'多人红包-即将发送'}},
     { path: '/redpackshared/unpack/:send_id',name:'RedPackSharedOpen',component:RedPackSharedOpen, meta:{title:'打开多人红包'}},
     { path: '/redpackshared/receive/:send_id',name:'RedPackSharedReceive', component:RedPackSharedReceive, meta:{title:'多人红包接收'}},
 
