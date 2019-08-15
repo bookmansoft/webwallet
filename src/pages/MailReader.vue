@@ -78,10 +78,7 @@ export default {
           } else {
             this.showPluginAuto('支付异常');
           }
-          
-          setTimeout(() => {
-              this.$router.push('/Message')
-          }, 2000);
+          this.$router.push('/Message')
       });
     }
   },

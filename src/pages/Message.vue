@@ -61,7 +61,7 @@
 -->
 <template>
   <div>
-    <!-- <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> -->
+    <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
     <ScrollList :config="config">
       <template v-slot:default="props">
         <div v-for="(item, index) in props.content" :key="index" class="gameItem">
