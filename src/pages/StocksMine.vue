@@ -2,7 +2,7 @@
 -->
 <template>
   <div>
-    <!-- <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> -->
+    <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
     <MyStock :showType="1"></MyStock>
     <!-- 导航 -->
     <navs></navs>
