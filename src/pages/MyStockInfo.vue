@@ -30,17 +30,22 @@
     <group>
         <flexbox class="crowdItem">
             <flexbox-item :span="2.5" style="padding:0.3rem;">
-                <div class="flex-demo-left">
-                <img :src="crowdItem.src" class="img-game-list" />
-                </div></flexbox-item>
+                <div class="flex-demo-left"><img :src="crowdItem.src" class="img-game-list" /></div>
+            </flexbox-item>
             <flexbox-item>
                 <div style="padding-left:6px;">
-                <p>
-                  <div style="font-size:15px;">{{crowdItem.title}}</div>
-                  <div style="color: coral; font-size:14px;">持有 {{crowdItem.sum}} 个</div>
-                  <span style="color: coral; font-size:14px;">成本 {{parseFloat(crowdItem.price / unit.kg).toFixed(3)}} 千克</span>
-                  <x-button mini :gradients="['#FF5E3A', '#FF9500']" style="margin-left:50px;" @click.native="sale()">挂单出售</x-button>
-                </p>
+                  <p>
+                    <div style="font-size:15px;">{{crowdItem.title}}</div>
+                    <div style="color: coral; font-size:14px;">持有 {{crowdItem.sum}} 个</div>
+                    <span style="color: coral; font-size:14px;">成本 {{parseFloat(crowdItem.price / unit.kg).toFixed(3)}} 千克</span>
+                  </p>
+                </div>
+                <div v-if="crowdItem.sell_sum>0">
+                  <p><span style="color: #888; font-size:13px;">挂单量 {{crowdItem.sell_sum}} 挂单价 {{parseFloat(crowdItem.sell_price/unit.kg).toFixed(3)}} 千克</span></p>
+                  <p><span style="color: #888; font-size:13px;">截止时间 {{crowdItem.validtime}}</span></p>
+                </div>
+                <div v-if="crowdItem.sell_sum==0">
+                  <x-button mini :gradients="['#FF5E3A', '#FF9500']" @click.native="sale()">挂单出售</x-button>
                 </div>
             </flexbox-item>
         </flexbox>

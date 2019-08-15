@@ -250,6 +250,10 @@ export default {
       this.$router.push({ name: "CrowdInfo", params: { item: this.item } });
     },
     crowdPay() {
+      //强制刷新凭证信息
+      this.$store.dispatch('crowd/clear');
+      this.$store.dispatch('stockMine/clear');
+      
       this.$router.push({
         name: "WeChatPay",
         params: {

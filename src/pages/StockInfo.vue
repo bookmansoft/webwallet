@@ -159,7 +159,7 @@
         </flexbox-item>
         <flexbox-item :span="8">
           <div style="display:block;">
-            <span style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100);">{{parseFloat(stock_bulletin.bonus/100000).toFixed(3)}}千克</span>
+            <span style="font-size:13px;font-family:'黑体','Heiti SC','Droidsansfallback';color:rgb(255,113,100);">{{parseFloat((stock_bulletin.bonus||0)/100000).toFixed(3)}}千克</span>
           </div>
         </flexbox-item>
       </flexbox>

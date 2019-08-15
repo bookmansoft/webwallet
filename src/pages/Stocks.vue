@@ -36,7 +36,9 @@
                     <div style="height:24px;margin-top:10px;margin-bottom:-10px;">
                       <span style="color: #919191; font-size:12px;line-height:18px;">单价/份(千克)</span>
                     </div>
-                    <div style="margin-left:5px;display:block;margin-top:6px;border-radius: 5px;text-align:center;line-height:26px;width:60px;height:26px;background-color:#ff7164;font-size:13px;color:white">{{item.sell_price}}</div>
+                    <div style="margin-left:5px;display:block;margin-top:6px;border-radius: 5px;text-align:center;line-height:26px;width:60px;height:26px;background-color:#ff7164;font-size:13px;color:white">
+                      {{parseFloat(item.sell_price/100000).toFixed(3)}}
+                    </div>
                     <div style="display:block;height:12px"></div>
                   </div>
                 </flexbox-item>
