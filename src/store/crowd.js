@@ -54,7 +54,7 @@ const mod = {
     actions: {
         async getConfig (context) {
             return new Promise((resolve, reject) => {
-                context.dispatch('config/pull', {file:'crowd'}).thenc(res=>{
+                context.dispatch('config/pull', {file:'crowd'}, {root: true}).then(res=>{
                     if(res.code == 0) {
                         context.commit('configChanged', res.data);
                         resolve(res.data);
