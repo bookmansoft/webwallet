@@ -125,6 +125,12 @@ const mod = {
                                 content: item.content.info.content,     //邮件内容
                                 bonus: item.content.info.bonus,         //附加奖励
                             };
+
+                            if(!!mail.content.body) {
+                                if(typeof mail.content.body.content == 'string') {
+                                    mail.content.body.content = JSON.parse(mail.content.body.content);
+                                }
+                            }
                             
                             return mail;
                         })                        
