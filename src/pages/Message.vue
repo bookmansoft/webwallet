@@ -90,6 +90,20 @@
                     </flexbox-item>
                 </flexbox>
             </group>
+            <group v-if="item.type==10002">
+                <flexbox class="crowdItem"  @click.native="itemClick(item)">
+                    <flexbox-item>
+                      <div style="padding-left:6px;">
+                        <p><span style="font-size:15px;">{{`${moment(item.time * 1000).format('MM-DD HH:mm')} - 道具购买 - ${(item.state == 0 ? '未支付':'已支付')}`}}</span></p>
+                      </div>
+                        <div style="padding-left:6px;">
+                          <p><span style="color: coral; font-size:14px;">道具名称: {{`${(item.content.body.content.props_name)}`}}</span></p>
+                          <p><span style="color: coral; font-size:14px;">购买价格: {{`${parseFloat(item.content.body.content.price/unit.kg).toFixed(3)} 千克`}}</span></p>
+                          <p><span style="color: coral; font-size:14px;">订单编号: {{`${(item.content.sn)}`}}</span></p>
+                        </div>
+                    </flexbox-item>
+                </flexbox>
+            </group>
             <group v-if="item.type!=10001 && item.type!=10002">
                 <flexbox class="crowdItem"  @click.native="itemClick(item)">
                     <flexbox-item :span="5" style="padding:0.3rem;">
