@@ -68,11 +68,7 @@ const mod = {
             context.commit('clear');
         },
         merge(context, list) {
-            for(let crowdItem of list) {
-                crowdItem.percent2 = (((crowdItem.sum - crowdItem.sum_left) * 100 / crowdItem.sum)|0);
-                crowdItem.pic_urls = JSON.parse(crowdItem.pic_urls);
-                context.commit('add', crowdItem);
-            }
+            context.commit('merge', list);
         },
         /**
          * 从网络获取内容追加至列表
@@ -102,6 +98,7 @@ const mod = {
                             if(typeof item.pic_urls == 'string') {
                                 item.pic_urls = JSON.parse(item.pic_urls);
                             }
+                            item.percent2 = (((item.sum - item.sum_left) * 100 / item.sum)|0);
                         });
                         context.commit('merge', res.data.list);
                     }
