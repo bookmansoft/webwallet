@@ -93,10 +93,11 @@ const mod = {
     actions: {
         change (context, msg) {
             context.commit('authChanged', msg);
-            context.commit('balanceChanged', {
+            let m = {
                 confirmed: assistant.toKg(msg.confirmed), 
                 unconfirmed: assistant.toKg(msg.unconfirmed - msg.confirmed),
-            });
+            };
+            context.commit('balanceChanged', m);
         },
         async vipdraw(context, params) {
             let res = await remote.fetching({

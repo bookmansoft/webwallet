@@ -155,7 +155,7 @@ export default {
   created() {
     if(!this.userBase.uid) {
       this.$router.push('/login');
-    }
+    } 
   },
   mounted() {
   },
