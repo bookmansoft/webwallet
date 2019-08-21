@@ -128,7 +128,11 @@ const mod = {
 
                             if(!!mail.content.body) {
                                 if(typeof mail.content.body.content == 'string') {
-                                    mail.content.body.content = JSON.parse(mail.content.body.content);
+                                    try {
+                                        mail.content.body.content = JSON.parse(mail.content.body.content);
+                                    } catch(e) {
+                                        
+                                    }
                                 }
                             }
                             

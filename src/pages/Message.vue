@@ -90,7 +90,7 @@
                     </flexbox-item>
                 </flexbox>
             </group>
-            <group v-if="item.type==10002">
+            <group v-if="item.type==10002 && typeof item.content.body.content == 'object'">
                 <flexbox class="crowdItem"  @click.native="itemClick(item)">
                     <flexbox-item>
                       <div style="padding-left:6px;">
@@ -100,6 +100,18 @@
                           <p><span style="color: coral; font-size:14px;">道具名称: {{`${(item.content.body.content.props_name)}`}}</span></p>
                           <p><span style="color: coral; font-size:14px;">购买价格: {{`${parseFloat(item.content.body.content.price/unit.kg).toFixed(3)} 千克`}}</span></p>
                           <p><span style="color: coral; font-size:14px;">订单编号: {{`${(item.content.sn)}`}}</span></p>
+                        </div>
+                    </flexbox-item>
+                </flexbox>
+            </group>
+            <group v-if="item.type==10002 && typeof item.content.body.content == 'string'">
+                <flexbox class="crowdItem"  @click.native="itemClick(item)">
+                    <flexbox-item>
+                      <div style="padding-left:6px;">
+                        <p><span style="font-size:15px;">{{`${moment(item.time * 1000).format('MM-DD HH:mm')} - 通知 - ${(item.state == 0 ? '未读':'已读')}`}}</span></p>
+                      </div>
+                        <div style="padding-left:6px;">
+                          <p><span style="color: coral; font-size:14px;">消息内容: {{`${(item.content.body.content)}`}}</span></p>
                         </div>
                     </flexbox-item>
                 </flexbox>

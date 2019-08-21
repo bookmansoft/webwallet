@@ -19,7 +19,7 @@
       <div v-if="data.type == 10001">
         <form-preview header-label="账户变更通知" header-value="" :body-items="data.list"></form-preview>
       </div>
-      <div v-if="data.type == 10002">
+      <div v-if="data.type == 10002 && typeof data.content.body.content == 'object'">
         <form-preview header-label="用游戏金支付订单" header-value="" :body-items="data.list"></form-preview>
         <group label-width="3.5em" label-margin-right="2em" label-align="right">
           <div v-if="data.state==0" style="padding:15px;background-color:white;">
@@ -27,6 +27,9 @@
           </div>
           <div v-if="data.state==1" style="padding:15px;background-color:white;">已支付</div>
         </group>
+      </div>
+      <div v-if="data.type == 10002 && typeof data.content.body.content == 'string'">
+        <form-preview header-label="通告" header-value="" :body-items="data.list"></form-preview>
       </div>
       <div v-if="data.type!=10001 && data.type!=10002">
         <form-preview header-label="普通邮件" header-value="" :body-items="data.list"></form-preview>
@@ -113,13 +116,21 @@ export default {
             {label: '账户余额',value: `${this.assistant.toKg(order.balance.unconfirmed)}千克`}
           );
         } else if(this.data.type == 10002) { //道具订单
-          this.data.list = [
-            {label: '发起用户',value: this.data.from},
-            {label: '目标用户',value: this.data.dst},
-            {label: '游戏编号',value: order.body.content.cid},
-            {label: '道具名称',value: order.body.content.props_name},
-            {label: '销售价格',value: `${this.assistant.toKg(order.body.content.price)}千克`},
-          ];
+          if(typeof order.body.content == 'string') {
+            this.data.list = [
+              {label: '发起用户',value: this.data.from},
+              {label: '目标用户',value: this.data.dst},
+              {label: '消息内容',value: order.body.content},
+            ];
+          } else {
+            this.data.list = [
+              {label: '发起用户',value: this.data.from},
+              {label: '目标用户',value: this.data.dst},
+              {label: '游戏编号',value: order.body.content.cid},
+              {label: '道具名称',value: order.body.content.props_name},
+              {label: '销售价格',value: `${this.assistant.toKg(order.body.content.price)}千克`},
+            ];
+          }
         } else { //普通邮件
           this.data.list = [
             {label: '发起用户',value: this.data.from},
