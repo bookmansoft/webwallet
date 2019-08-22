@@ -1,6 +1,6 @@
 {
   "name": "vallnet_web_wallet",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "web wallet for vallnet",
   "author": "bookmansoft <ceo@920.cc>",
   "private": true,
