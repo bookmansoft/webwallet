@@ -51,7 +51,7 @@
           <img src="/static/img/stock/mywallet/red.png" style="width:30px;height:32px;">
         </div>
         <div style="display:block" align="center" @click='sendRedPack'>
-          <span style="font-size:12px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(51,51,51);">发红包</span>
+          <span style="font-size:12px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(51,51,51);">活动</span>
         </div>
       </flexbox-item>
       <flexbox-item :span="2">
@@ -146,7 +146,8 @@ export default {
       this.$router.push({ name: "WalletSend" });
     },
     sendRedPack() {
-      this.$router.push('/redpackshared/send');
+      //todo 
+      //this.$router.push('/redpackshared/send');
     },
     receive() {
       this.$router.push('/wallet/receive');

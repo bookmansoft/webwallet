@@ -14,7 +14,7 @@
                 <flexbox-item>
                 <div style="padding-left:0px;">
                     <p><span style="color: #888; font-size:15px;">游戏金：{{assistant.toKg(item.src)}}千克</span></p>
-                    <p><span style="color: red; font-size:14px;">比特币：{{item.dst/100000000}}</span></p>
+                    <p><span style="color: red; font-size:14px;">数字币：{{item.dst/100000000}}</span></p>
                     <!--<p><span style="color: #888; font-size:10px;">{{item.addr}}</span></p>-->
                 </div>
                 </flexbox-item>

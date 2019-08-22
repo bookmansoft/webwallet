@@ -1,7 +1,7 @@
 import remote from '../utils/remote'
 
 /**
- * 多人红包交互指令
+ * 多人利是交互指令
  */
 const mod = {
     namespaced: true, //独立命名空间
@@ -40,7 +40,7 @@ const mod = {
             return res;
         },
         /**
-         * 查询多人红包详情
+         * 查询多人利是详情
          * @param {*} context 
          * @param {*} params 
          */

@@ -1,4 +1,4 @@
-<!-- 多人红包详情展示页面
+<!-- 多人利是详情展示页面
 -->
 <template>
   <div>
@@ -7,7 +7,7 @@
         <img class="topHeadImg" style="width:60px;height:60px;"  :src="this.sendData.send_headimg">
       </div>
       <div align="center">
-        <label id="label1">来自{{this.sendData.send_nickname}}的红包</label>
+        <label id="label1">来自{{this.sendData.send_nickname}}的利是</label>
       </div>
       <div align="center">
         <label id="label2">{{this.sendData.wishing}}</label>
@@ -33,15 +33,6 @@ import {
   Panel,
 } from "vux";
 import moment from "moment";
-const tabList = () => [
-  {
-    label: "道具交易"
-  },
-  {
-    label: "比特币交易"
-  }
-];
-
 export default {
   components: {
     Panel,

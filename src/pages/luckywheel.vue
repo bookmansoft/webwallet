@@ -38,7 +38,7 @@
                   <div class="tip-title">活动规则</div>
                   <div class="tip-content">
                       <p> 1.游戏金抽奖，每10个游戏金可以兑换一次大转盘抽奖机会</p>
-                      <p> 2.所中奖品将以红包形式发送到微信</p>
+                      <p> 2.所中奖品将以利是形式发送到微信</p>
                   </div>
               </div>
           </div>
@@ -66,7 +66,7 @@ export default {
   },
   data() {
     return {
-      headerTitle: '红包抽奖',
+      headerTitle: '利是抽奖',
       easejoy_bean: 0, //金豆
       lottery_ticket: 0, //抽奖次数
       prize_list: [

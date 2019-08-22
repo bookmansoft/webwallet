@@ -79,7 +79,7 @@ const mod = {
                     if(curPage < qryPage) { //说明获得了新的内容
                         res.data.list.forEach(it => {
                             it.src= `/static/img/manyRed/redpacketsmall.jpg`;
-                            it.title = `游戏金红包${it.total_num}个 ${moment(it.modify_date * 1000).format("MM-DD HH:mm")}`;
+                            it.title = `游戏金利是${it.total_num}个 ${moment(it.modify_date * 1000).format("MM-DD HH:mm")}`;
                             it.desc = `-${assistant.toKg(it.total_amount)}千克`;
                         });
                         context.commit('merge', res.data.list);

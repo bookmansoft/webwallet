@@ -10,11 +10,11 @@
         <!-- todo x-input 这个控件使用 number 类型时就会报错，疑为控件本身缺陷，暂时以 text 取代 -->
         <x-input type="text" name="num" ref="num" placeholder="输入游戏金数量" v-model="num" required ></x-input>
       </group>
-      <group label-width="4em" label-margin-right="1.5em" label-align="right" title="比特币收款地址">
-        <x-input type="text" name="address" ref="address" placeholder="输入您的比特币地址" v-model="address" required ></x-input>
+      <group label-width="4em" label-margin-right="1.5em" label-align="right" title="数字币收款地址">
+        <x-input type="text" name="address" ref="address" placeholder="输入您的数字币地址" v-model="address" required ></x-input>
       </group>
-      <group label-width="4em" label-margin-right="1.5em" label-align="right" title="希望交换的比特币数量(BTC)">
-        <x-input type="text" name="btc" ref="btc" placeholder="输入比特币数量" v-model="btc" required ></x-input>
+      <group label-width="4em" label-margin-right="1.5em" label-align="right" title="希望交换的数字币数量">
+        <x-input type="text" name="btc" ref="btc" placeholder="输入数字币数量" v-model="btc" required ></x-input>
       </group>
       <group label-width="3.5em" label-margin-right="2em" label-align="right">
         <x-button type="primary" @click.native="transPub">发布</x-button>
@@ -67,7 +67,7 @@ export default {
         }
 
         if(!this.address) {
-          this.utils.myAlert(this.$vux.alert, '请输入比特币收款地址')
+          this.utils.myAlert(this.$vux.alert, '请输入数字币收款地址')
           return false
         }
         
@@ -77,7 +77,7 @@ export default {
         }
 
         if(btcGold == 0) {
-          this.utils.myAlert(this.$vux.alert, '请输入希望交换的比特币数量(BTC)')
+          this.utils.myAlert(this.$vux.alert, '请输入希望交换的数字币数量')
           return false
         } 
         

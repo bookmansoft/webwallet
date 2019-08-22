@@ -25,19 +25,20 @@ const mod = {
             index: 1,
             icon: 'static/img/icon1/1.png',
             link: '/wallet/receive'
-          },{
-            label: '发布交易对',
-            tag: 'trans',
-            index: 3,
-            icon: 'static/img/icon1/5.png',
-            link: '/wallet/trans'
-          },{
-            label: '多人红包',
-            tag: 'manyRedManage',
-            index: 4,
-            icon: 'static/img/icon1/5.png',
-            link: '/redpackshared'
           },
+        //   ,{
+        //     label: '发布交易对',
+        //     tag: 'trans',
+        //     index: 3,
+        //     icon: 'static/img/icon1/5.png',
+        //     link: '/wallet/trans'
+        //   },{
+        //     label: '多人利是',
+        //     tag: 'manyRedManage',
+        //     index: 4,
+        //     icon: 'static/img/icon1/5.png',
+        //     link: '/redpackshared'
+        //   },
         ],
     },
     getters: {

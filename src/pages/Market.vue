@@ -28,7 +28,7 @@ const tabList = () => [
   {
     label:'道具交易'
   },{
-    label:'比特币交易'
+    label:'游戏金交易'
   }]
 
 export default {

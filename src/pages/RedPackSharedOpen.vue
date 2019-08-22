@@ -1,4 +1,4 @@
-<!-- 多人红包打开页面
+<!-- 多人利是打开页面
 -->
 <template>
   <div>
@@ -21,7 +21,7 @@
     </box>
 
     <div v-transfer-dom>
-      <alert v-model="show" :title="Title">点击页面右上角-发送给好友，即可将该红包分享到微信好友/群。</alert>
+      <alert v-model="show" :title="Title">点击页面右上角-发送给好友，即可将该利是分享到微信好友/群。</alert>
     </div>
   </div>
 </template>
@@ -76,7 +76,7 @@ export default {
     }
   },
   methods: {
-    //点击图标打开红包
+    //点击图标打开利是
     openPack() {
       this.$router.push( `/redpackshared/receive/${this.send_id}`);
     },
@@ -132,8 +132,8 @@ export default {
                 self.$wechat.ready(function() {
                   //发送给朋友
                   self.$wechat.onMenuShareAppMessage({
-                    title: `[游戏金红包]${self.sendData.wishing}！`,                                   // 分享标题
-                    desc: `来自${self.sendData.send_nickname}的游戏金红包`,                            // 分享描述
+                    title: `[游戏金利是]${self.sendData.wishing}！`,                                   // 分享标题
+                    desc: `来自${self.sendData.send_nickname}的游戏金利是`,                            // 分享描述
                     link: self.address,                                                               // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                     imgUrl: `${self.remote.appConfig.siteUri}/static/img/manyRed/redpacketsmall.jpg`, // 分享图标
                     success: function() {

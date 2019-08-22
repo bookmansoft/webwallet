@@ -1,4 +1,4 @@
-<!-- 多人红包预发送页面
+<!-- 多人利是预发送页面
 -->
 <template>
   <div>
@@ -14,13 +14,13 @@
         </group-title>
       </group>-->
       <group class="group">
-        <x-input class="input" title="红包个数" placeholder="请填写个数" v-model="total_num">
+        <x-input class="input" title="利是个数" placeholder="请填写个数" v-model="total_num">
           <x-button slot="right">个</x-button>
         </x-input>
       </group>
       <group class="group">
         <group-title slot="title">
-          <span class="groupTitle">单个红包金额随机</span>
+          <span class="groupTitle">单个利是金额随机</span>
         </group-title>
       </group>
       <group>
@@ -37,7 +37,7 @@
         <flexbox-item :span="3"></flexbox-item>
         <flexbox-item :span="6">
           <div align="center" style="margin-top:35px;">
-            <x-button type="warn" @click.native="justSend">生成红包</x-button>
+            <x-button type="warn" @click.native="justSend">生成利是</x-button>
           </div>
         </flexbox-item>
       </flexbox>
@@ -73,7 +73,7 @@ export default {
     return {
       tabIndex: 0,
       total_amount: "1", //金额
-      total_num: "1", //红包个数
+      total_num: "1", //利是个数
       wishing: "恭喜发财，万事如意！", //祝福语
       send_id: -1
     };

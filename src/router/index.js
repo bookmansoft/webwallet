@@ -98,11 +98,11 @@ export default new Router({
     { path: '/wallet/receive', name: 'WalletReceive', component: WalletReceive ,meta:{title:'接受转账'}},
     { path: '/wallet/trans', name: 'WalletTrans', component: WalletTrans ,meta:{title:'交易对'}},
 
-    { path: '/redpack/act', name: 'RedPackAct', component: RedPackAct ,meta:{title:'红包Act'}},
-    { path: '/redpackshared',name:'RedPackShared', component: RedPackShared, meta:{title:'多人红包管理'}},
-    { path: '/redpackshared/send',name:'RedPackSharedSend', component:RedPackSharedSend, meta:{title:'多人红包发送'}},
-    { path: '/redpackshared/unpack/:send_id',name:'RedPackSharedOpen',component:RedPackSharedOpen, meta:{title:'打开多人红包'}},
-    { path: '/redpackshared/receive/:send_id',name:'RedPackSharedReceive', component:RedPackSharedReceive, meta:{title:'多人红包接收'}},
+    { path: '/redpack/act', name: 'RedPackAct', component: RedPackAct ,meta:{title:'利是Act'}},
+    { path: '/redpackshared',name:'RedPackShared', component: RedPackShared, meta:{title:'多人利是管理'}},
+    { path: '/redpackshared/send',name:'RedPackSharedSend', component:RedPackSharedSend, meta:{title:'多人利是发送'}},
+    { path: '/redpackshared/unpack/:send_id',name:'RedPackSharedOpen',component:RedPackSharedOpen, meta:{title:'打开多人利是'}},
+    { path: '/redpackshared/receive/:send_id',name:'RedPackSharedReceive', component:RedPackSharedReceive, meta:{title:'多人利是接收'}},
 
     { path: '/props', name: 'Props', component: Props ,meta:{title:'道具背包'}},
     { path: '/prop/detail', name: 'PropDetail', component: PropDetail ,meta:{title:'道具详情'}},

@@ -12,13 +12,13 @@
                 <flexbox-item>
                 <div style="padding-left:0px;">
                     <p><span style="color: #888; font-size:15px;">游戏金：{{assistant.toKg(contract.src)}}千克</span></p>
-                    <p><span style="color: red; font-size:14px;">比特币：{{contract.dst/100000000}}</span></p>
+                    <p><span style="color: red; font-size:14px;">数字币：{{contract.dst/100000000}}</span></p>
                     <!--<p><span style="color: #888; font-size:10px;">{{item.addr}}</span></p>-->
                 </div>
                 </flexbox-item>
             </flexbox>
         </group>
-        <group title="比特币接收地址" style="position: relative; top:10px;">
+        <group title="数字币接收地址" style="position: relative; top:10px;">
             <p style="padding:5px;">{{contract.addr}}</p>
         </group>
         <group label-width="3.5em" label-margin-right="2em" label-align="right" style="position: relative; top:20px;">

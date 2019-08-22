@@ -1,4 +1,4 @@
-<!-- 抽红包活动页面
+<!-- 活动页面
 -->
 <template>
   <div>
@@ -17,7 +17,7 @@
 
         <group label-width="3.5em" label-margin-right="2em" label-align="right">
             <div style="padding:15px;">
-            <x-button type="warn" @click.native="gotRedPack">去抽红包</x-button>
+            <x-button type="warn" @click.native="gotRedPack">去抽利是</x-button>
             </div>
         </group>
 
@@ -72,8 +72,7 @@ export default {
   },
   data () {
     return {
-      version: '领一个红包',
-      headerTitle: '红包活动',
+      headerTitle: '活动',
       hasRedAct: null,
       code: null,
       redPackAct: null,
@@ -147,7 +146,7 @@ export default {
             act_id: item.act_id,
           }).then(res => {
               if(res.code == 0) {
-                  this.showPlugin('红包已领取，请注意查收微信红包')
+                  this.showPlugin('利是已领取，请注意查收微信利是')
                   for(var i=0; i<this.userRedPackList.length; i++) {
                       if(this.userRedPackList[i].id == item.id) {
                           item.status = 1

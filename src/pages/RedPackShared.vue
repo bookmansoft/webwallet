@@ -1,11 +1,11 @@
-<!-- 多人红包管理页面
+<!-- 多人利是管理页面
 -->
 <template>
   <div>
     <tab>
-      <tab-item selected @on-item-click="onTabClick">领取的红包</tab-item>
-      <tab-item @on-item-click="onTabClick">发出的红包</tab-item>
-      <tab-item @on-item-click="onTabClick">发红包</tab-item>
+      <tab-item selected @on-item-click="onTabClick">领取的利是</tab-item>
+      <tab-item @on-item-click="onTabClick">发出的利是</tab-item>
+      <tab-item @on-item-click="onTabClick">发利是</tab-item>
     </tab>
     <div v-show="tabIndex==0">
       <RpsReceive></RpsReceive>
@@ -47,11 +47,11 @@ export default {
       this.tabIndex = index;
 
       if (index == 0) { 
-        //我领取的红包
+        //我领取的利是
       } else if (index == 1) { 
-        //我发出的红包
+        //我发出的利是
       } else if (index == 2) { 
-        //发红包
+        //发利是
         this.$router.push(`/redpackshared/send`);
       }
     },

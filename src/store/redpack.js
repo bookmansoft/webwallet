@@ -1,7 +1,7 @@
 import remote from '../utils/remote'
 
 /**
- * 红包交互指令
+ * 利是交互指令
  */
 const mod = {
     namespaced: true, //独立命名空间
