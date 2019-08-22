@@ -49,6 +49,7 @@ export default {
                 price: this.propSale.bid.fixed,
             }).then(res => {
                 if(res.code == 0) {
+                    this.$store.dispatch('prop/clear');
                     this.showPluginAuto('道具交易成功!')
                     this.$router.go(-1);
                 } else {
