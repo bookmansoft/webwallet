@@ -12,11 +12,11 @@
         </group>
         <group title="接收地址">
             <div style="text-align:center;padding: 20px 0px 20px 0px">
-                <p><span class="tag-read" id="recvAddr">{{address}}</span></p>
+                <p><span class="tag-read">{{address}}</span></p>
             </div>
         </group>
         <group label-width="3.5em" label-margin-right="2em" label-align="right">
-            <x-button class="xbtn" type="primary" data-clipboard-target="#recvAddr">复制地址</x-button>
+            <x-button class="xbtn" type="primary">复制地址</x-button>
         </group>
     </box>
   </div>
@@ -64,7 +64,9 @@ export default {
       this.$router.push('/login');
     } else {
       this.address = this.userBase.acaddr;
-      this.clipboard = new Clipboard('.xbtn');
+      this.clipboard = new Clipboard('.xbtn', {
+        text: () => {return this.address},
+      });
       this.clipboard.on('success', e => {  
         this.$vux.toast.show({text: '已复制到剪贴板'})
       })  

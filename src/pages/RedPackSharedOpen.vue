@@ -15,7 +15,7 @@
       <flexbox>
         <flexbox-item :span="3"></flexbox-item>
         <flexbox-item :span="6">
-          <x-button class="xbutton" plain type="warn" @click.native="copyAddr(address, $event)">复制链接</x-button>
+          <x-button class="xbtn" plain type="warn">复制链接</x-button>
         </flexbox-item>
       </flexbox>
     </box>
@@ -68,6 +68,7 @@ export default {
       Title: '好的',
       address: '',
       sendData: {},
+      clipboard: null,
     };
   },
   computed: {
@@ -83,22 +84,6 @@ export default {
     //显示发送给朋友对话框
     showDialog() {
       this.show = true;
-    },
-    copyAddr(text, event){
-      const clipboard = new Clipboard(event.target, {
-        text: () => text
-      })
-      clipboard.on('success', e => {  
-        // 释放内存  
-        this.$vux.toast.show({text: '已复制到剪贴板'})
-        clipboard.destroy()  
-      })  
-      clipboard.on('error', e => {  
-        // 不支持复制  
-        // 释放内存  
-        this.$vux.toast.show({text: '浏览器不支持复制'})
-        clipboard.destroy()  
-      })  
     },
   },
   created: function() {
@@ -148,6 +133,17 @@ export default {
               }
             });
           }
+
+          this.clipboard = new Clipboard('.xbtn', {
+            text: () => this.address,
+          })
+          this.clipboard.on('success', e => {  
+            this.$vux.toast.show({text: '已复制到剪贴板'})
+          })  
+          this.clipboard.on('error', e => {  
+            // 不支持复制  
+            this.$vux.toast.show({text: '浏览器不支持复制'})
+          })  
         } else {
           throw new Error(`sharedredpack.Retrieve: ${res.code}`);
         }
@@ -168,6 +164,9 @@ export default {
   margin-right: 50px;
 }
 .xbutton {
+  margin-top: 20px;
+}
+.xbtn {
   margin-top: 20px;
 }
 .space6 {
