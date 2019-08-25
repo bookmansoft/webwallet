@@ -25,7 +25,7 @@
     </div>
 
     <!-- 列表为空时替代显示 -->
-    <div v-if="isLoadMore && content.length==0 && showNoData==true">
+    <div v-if="isLoadMore && content.length==0 && showNoData==true && !!config.nodata">
       <no-data :src="config.nodata"></no-data>
     </div>
 

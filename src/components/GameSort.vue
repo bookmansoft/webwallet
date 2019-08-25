@@ -76,8 +76,8 @@ export default {
       //计算属性不能是函数形式，因此在内部返回带参函数
       return (cls) => {
         return {
-          store: 'cp',                                 //引用的数据仓库
-          nodata: '/static/img/default/no-product.png',   //列表为空时的占位图片
+          store: 'cp',              //引用的数据仓库
+          nodata: '',               //列表为空时的占位图片
           selection: {
             category: cls,
           }
