@@ -26,30 +26,12 @@ const mod = {
                 value: "",
                 showDot: false
             },
-            // {
-            //     title: "活动",
-            //     is_link: true,
-            //     img: "/static/img/icon3/market3.png",
-            //     badge: 0,
-            //     link: "/redpack/act",
-            //     value: "限时活动",
-            //     showDot: false
-            // },
             {
                 title: "我的道具",
                 is_link: true,
                 img: "/static/img/mine/prop.png",
                 badge: 0,
                 link: { path: "/props" },
-                value: "",
-                showDot: false
-            },
-            {
-                title: "我的背包",
-                is_link: true,
-                img: "/static/img/mine/prop.png",
-                badge: 0,
-                link: { path: "/pocket" },
                 value: "",
                 showDot: false
             },
@@ -71,6 +53,24 @@ const mod = {
                 value: "",
                 showDot: false
             },
+            // {
+            //     title: "活动",
+            //     is_link: true,
+            //     img: "/static/img/icon3/market3.png",
+            //     badge: 0,
+            //     link: "/redpack/act",
+            //     value: "限时活动",
+            //     showDot: false
+            // },
+            // {
+            //     title: "我的背包",
+            //     is_link: true,
+            //     img: "/static/img/mine/prop.png",
+            //     badge: 0,
+            //     link: { path: "/pocket" },
+            //     value: "",
+            //     showDot: false
+            // },
         ],
     },
     /**

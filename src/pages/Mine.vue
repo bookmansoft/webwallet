@@ -102,7 +102,7 @@ export default {
       this.$router.push({ name: "About" });
     },
     getNotify() {
-      //@note 当菜单项目数量、顺序发生变化时，红点标注需要同步调整 2019.08.22
+      //@warning 当菜单项目数量、顺序发生变化时，红点标注需要同步调整 2019.08.22
       if (!!this.userBase && this.userBase.vl > 0) {
         //标签0 - 会员
         this.items[0].value = "产币加速中";
@@ -118,13 +118,12 @@ export default {
         //标签1 - 我的道具
         this.items[1].badge = this.userBase.current_prop_count - this.userBase.prop_count;
       }
-
       this.$store.dispatch('message/clear');
       this.$store.dispatch('message/pull').then(()=>{
-        //标签3 - 我的消息
+        //标签2 - 我的消息
         if (this.$store.state.message.list.length > 0) {
-          this.items[3].badge = this.$store.state.message.list.length;
-          this.items[3].value = "有待支付订单";
+          this.items[2].badge = this.$store.state.message.list.length;
+          this.items[2].value = "有新的消息";
         }
       });
     },
