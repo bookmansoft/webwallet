@@ -134,8 +134,6 @@ export default {
      */
     wxScanCode() {
       let self = this;
-
-      //获取微信令牌
       this.$store.dispatch('user/WechatConfig', {
         uri: window.location.href.split('#')[0],
       }).then(res=>{
@@ -158,7 +156,7 @@ export default {
         } else {
           self.utils.myAlert(self.$vux.alert, `获取微信签名失败 ${res.code}`);
         }
-      })
+      });
     },
 
     sendGamegold() {

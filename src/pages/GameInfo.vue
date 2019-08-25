@@ -186,10 +186,6 @@ export default {
         var time = "" + a + "年" + b + "月" + c + "日";
         return time
     },
-    gotoLogin() {
-        const url = "/pages/login/login";
-        this.$wechat.miniProgram.navigateTo({ url: url })
-    },
 
     async commentPub() {
       if(this.msgInput == "") {

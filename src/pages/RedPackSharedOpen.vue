@@ -122,13 +122,11 @@ export default {
           } else if(res.data.state_id == 2) {
             this.$router.push(`/redpackshared/receive/${this.send_id}`);
           } else {
-            //获取微信令牌
             this.$store.dispatch('user/WechatConfig', {
               uri: window.location.href.split('#')[0],
             }).then(rs => {
               if (rs.code == 0) {
                 self.$wechat.config(rs.data);
-
                 self.$wechat.ready(function() {
                   //发送给朋友
                   self.$wechat.onMenuShareAppMessage({

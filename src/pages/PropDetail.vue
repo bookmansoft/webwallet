@@ -166,29 +166,29 @@ export default {
     },
 
     propFoundConfirm() {
-        let that = this
+        let self = this
         this.$vux.confirm.show({
             title: '操作提示',
             content: '确定将该道具熔铸?',
             onConfirm () {
-                that.propFound()
+                self.propFound()
             }
         })
     },
 
     // 出售
     propSaleInput() {
-        let that = this
+        let self = this
         this.$vux.confirm.show({
             title: '输入出售价格，单位为千克',
             content: '输入出售价格，单位为千克',
             showInput: true,
             onConfirm (value) {
-                if(that.checkRate(value)==false) {
-                    that.showPluginAuto('请输入一个有效的出售价格')
+                if(self.checkRate(value)==false) {
+                    self.showPluginAuto('请输入一个有效的出售价格')
                 } else {
-                    let amount = that.assistant.toAtom(value)
-                    that.propSale(amount)
+                    let amount = self.assistant.toAtom(value)
+                    self.propSale(amount)
                 }
             }
         })
@@ -201,48 +201,51 @@ export default {
 
     // 分享好友
     wxshare(res) {
-      /*
-        var url = "/pages/prop/index?openid=" + data.openid + "&pid=" + prop.pid + "&prop_name=" + prop.props_name;
-        url += "&txid=" + prop.current.rev + "&prop_icon=" + prop.large_icon + "&act=send&raw=" + rep.ret.raw;
-        console.log("url " + url);
-        this.$wechat.miniProgram.navigateTo({ url: url });
-      */
-      let that = this;
-      this.$wechat.ready(function () {//进行相关的设定，在用户点击分享按钮前调用
-          let title = '游戏金道具分享';
-          let desc = that.prop.props_name;
-          let imgUrl = that.prop.large_icon;
-          let params = JSON.stringify({
-            title: title,
-            desc: desc,
-            imgUrl: imgUrl,
-            raw: res.data.raw,
-          });
-          let link = `${that.remote.appConfig.siteUri}/?path=/prop/receive&prop=${params}`;
+      let self = this;
+      this.$store.dispatch('user/WechatConfig', {
+        uri: window.location.href.split('#')[0],
+      }).then(res=>{
+        if (res.code == 0) {
+          self.$wechat.config(res.data);
+          self.$wechat.ready(function(){
+            let title = '游戏金道具分享';
+            let desc = self.prop.props_name;
+            let imgUrl = self.prop.large_icon;
+            let params = JSON.stringify({
+              title: title,
+              desc: desc,
+              imgUrl: imgUrl,
+              raw: res.data.raw,
+            });
+            let link = `${self.remote.appConfig.siteUri}/?path=/prop/receive&prop=${params}`;
 
-          //设定分享给好友的信息
-          that.$wechat.onMenuShareAppMessage({ 
-              title: title, // 分享标题
-              desc: desc, // 分享描述
-              link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-              imgUrl: imgUrl, // 分享图标
-              success: function () {
-                // 设置成功
-              },
-              fail: function() {
-                console.log('设置失败');
-              }
+            //设定分享给好友的信息
+            self.$wechat.onMenuShareAppMessage({ 
+                title: title, // 分享标题
+                desc: desc, // 分享描述
+                link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                imgUrl: imgUrl, // 分享图标
+                success: function () {
+                  // 设置成功
+                },
+                fail: function() {
+                  console.log('设置失败');
+                }
+            });
+            //设定分享到朋友圈的信息
+            self.$wechat.onMenuShareTimeline({
+                title: title, // 分享标题
+                link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                imgUrl: imgUrl, // 分享图标
+                success: function () {
+                  // 用户点击了分享后执行的回调函数
+                }
+            })
           });
-          //设定分享到朋友圈的信息
-          that.$wechat.onMenuShareTimeline({
-              title: title, // 分享标题
-              link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-              imgUrl: imgUrl, // 分享图标
-              success: function () {
-                // 用户点击了分享后执行的回调函数
-              }
-          })
-      });      
+        } else {
+          self.utils.myAlert(self.$vux.alert, `获取微信签名失败 ${res.code}`);
+        }
+      });
       this.showPlugin('请点击右上角微信按钮进行分享');
     }
   },
