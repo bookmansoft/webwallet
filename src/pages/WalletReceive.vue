@@ -12,11 +12,11 @@
         </group>
         <group title="接收地址">
             <div style="text-align:center;padding: 20px 0px 20px 0px">
-                <p><span class="tag-read">{{address}}</span></p>
+                <p><span class="tag-read" id="recvAddr">{{address}}</span></p>
             </div>
         </group>
         <group label-width="3.5em" label-margin-right="2em" label-align="right">
-            <x-button type="primary" @click.native="copyAddr(address, $event)">复制地址</x-button>
+            <x-button class="xbtn" type="primary" data-clipboard-target="#recvAddr">复制地址</x-button>
         </group>
     </box>
   </div>
@@ -36,7 +36,8 @@ export default {
       headerTitle: '接收游戏金',
       gameGold: '游戏金',
       address: '',
-      number: 0.0
+      number: 0.0,
+      clipboard: null,
     }
   },
   computed:{
@@ -47,22 +48,6 @@ export default {
       onBack() {
         this.$router.push('/wallet')
       },
-      copyAddr(text, event){
-        const clipboard = new Clipboard(event.target, {
-          text: () => text
-        })
-        clipboard.on('success', e => {  
-          // 释放内存  
-          this.$vux.toast.show({text: '已复制到剪贴板'})
-          clipboard.destroy()  
-        })  
-        clipboard.on('error', e => {  
-          // 不支持复制  
-          // 释放内存  
-          this.$vux.toast.show({text: '浏览器不支持复制'})
-          clipboard.destroy()  
-        })  
-      },
       getAddress() {
         this.$store.dispatch('wallet/createaddress').then(res => {
             if(res.code == 0) {
@@ -71,11 +56,22 @@ export default {
         })
       },
   },
+  beforeDestroy() {
+    this.clipboard.destroy();
+  },
   created() {
     if(!this.userBase.uid) {
       this.$router.push('/login');
     } else {
       this.address = this.userBase.acaddr;
+      this.clipboard = new Clipboard('.xbtn');
+      this.clipboard.on('success', e => {  
+        this.$vux.toast.show({text: '已复制到剪贴板'})
+      })  
+      this.clipboard.on('error', e => {  
+        // 不支持复制  
+        this.$vux.toast.show({text: '浏览器不支持复制'})
+      })  
     }
   }
 }
