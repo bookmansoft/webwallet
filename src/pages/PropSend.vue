@@ -119,17 +119,28 @@ export default {
      * 调用摄像头
      */
     wxScanCode() {
-      let that = this;
-      that.$wechat.scanQRCode({
-        needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
-        scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
-        success: function(res) {
-          console.log(res);
-          that.address = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-        },
-        fail: function(res) {
-          console.log(res);
-          that.utils.myAlert(that.$vux.alert, `地址扫描失败${JSON.stringify(res)}`);
+      let self = this;
+      this.$store.dispatch('user/WechatConfig', {
+        uri: window.location.href.split('#')[0],
+      }).then(res=>{
+        if (res.code == 0) {
+          self.$wechat.config(res.data);
+          self.$wechat.ready(function(){
+            self.$wechat.scanQRCode({
+              needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+              scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+              success: function(r) {
+                console.log('scanQRCode', r);
+                self.address = r.resultStr; // 当needResult 为 1 时，扫码返回的结果
+              },
+              fail: function(r) {
+                console.log('scanQRCode', r);
+                self.utils.myAlert(self.$vux.alert, `地址扫描失败${JSON.stringify(r)}`);
+              }
+            });
+          });
+        } else {
+          self.utils.myAlert(self.$vux.alert, `获取微信签名失败 ${res.code}`);
         }
       });
     },
