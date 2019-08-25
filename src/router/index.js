@@ -6,16 +6,13 @@ import Market from '@/pages/Market'
 import Crowds from '@/pages/Crowds'
 import Pocket from '@/pages/Pocket'
 import ItemInfo from '@/pages/ItemInfo'
-import Stocks from '@/pages/Stocks'
 import CrowdInfo from '@/pages/CrowdInfo'
 import CrowdOrder from '@/pages/CrowdOrder'
-import StockInfo from '@/pages/StockInfo'
 import StocksMine from '@/pages/StocksMine'
 import MyStockInfo from '@/pages/MyStockInfo'
 import MyStockSale from '@/pages/MyStockSale'
 import MyStockSend from '@/pages/MyStockSend'
 import CrowdPrePay from '@/pages/CrowdPrePay'
-import StockOrder from '@/pages/StockOrder'
 import Mine from '@/pages/Mine'
 import Wallet from '@/pages/Wallet'
 import WalletSend from '@/pages/WalletSend'
@@ -90,10 +87,6 @@ export default new Router({
     { path: '/crowd/PaySuccess', name: 'PaySuccess', component: PaySuccess ,meta:{title:'支付成功'}},
     { path: '/crowd/HouseAddress', name: 'HouseAddress', component: HouseAddress ,meta:{title:'收货地址'}},
     { path: '/crowd/HouseAddressAdd', name: 'HouseAddressAdd', component: HouseAddressAdd ,meta:{title:'添加收货地址'}},
-
-    { path: '/stocks', name: 'Stocks', component: Stocks, meta:{title:'自由市场'} },
-    { path: '/stocks/order', name: 'StockOrder', component: StockOrder ,meta:{title:'自由市场-确认订单'}},
-    { path: '/stocks/info', name: 'StockInfo', component: StockInfo ,meta:{title:'游戏元宝信息-百谷王游戏金链'}},
 
     { path: '/wallet', name: 'Wallet', component: Wallet ,meta:{title:'我的钱包'}},
     { path: '/wallet/send', name: 'WalletSend', component: WalletSend ,meta:{title:'转账'}},

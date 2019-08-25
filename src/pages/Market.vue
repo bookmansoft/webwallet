@@ -1,5 +1,6 @@
 <!-- 集市
 PropSales   道具交易市场
+Stocks      凭证交易市场
 Contract    游戏金交易市场
 -->
 <template>
@@ -12,6 +13,9 @@ Contract    游戏金交易市场
     <div v-if="tabIndex==0">
       <PropSales></PropSales>
     </div>
+    <div v-else-if="tabIndex==1">
+      <Stocks></Stocks>
+    </div>
     <div v-else>
       <Contract></Contract>
     </div>
@@ -23,13 +27,19 @@ import { Tab, TabItem} from 'vux'
 import Navs from '@/components/Navs.vue'
 import PropSales from '@/components/PropSales.vue'
 import Contract from '@/components/Contract.vue'
+import Stocks from '@/pages/Stocks.vue'
 
 const tabList = () => [
   {
     label:'道具交易'
-  },{
+  }
+  ,{
+    label:'凭证交易'
+  }
+  ,{
     label:'游戏金交易'
-  }]
+  }
+]
 
 export default {
   components: {
@@ -37,7 +47,8 @@ export default {
     TabItem,
     Navs,
     Contract,
-    PropSales
+    PropSales,
+    Stocks,
   },
   data () {
     return {
