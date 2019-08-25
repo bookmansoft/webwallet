@@ -13,6 +13,7 @@ import StockInfo from '@/pages/StockInfo'
 import StocksMine from '@/pages/StocksMine'
 import MyStockInfo from '@/pages/MyStockInfo'
 import MyStockSale from '@/pages/MyStockSale'
+import MyStockSend from '@/pages/MyStockSend'
 import CrowdPrePay from '@/pages/CrowdPrePay'
 import StockOrder from '@/pages/StockOrder'
 import Mine from '@/pages/Mine'
@@ -76,6 +77,7 @@ export default new Router({
     { path: '/crowd/my', name: 'StocksMine', component: StocksMine ,meta:{title:'StocksMine'}},
     { path: '/crowd/my/info', name: 'MyStockInfo', component: MyStockInfo ,meta:{title:'代练宝宝'}},
     { path: '/crowd/my/sale', name: 'MyStockSale', component: MyStockSale ,meta:{title:'挂单出售中'}},
+    { path: '/crowd/my/send', name: 'MyStockSend', component: MyStockSend ,meta:{title:'凭证转让'}},
     { path: '/crowd/info', name: 'CrowdInfo', component: CrowdInfo ,meta:{title:'众筹详情-百谷王游戏金链'}},
     { path: '/crowd/order', name: 'CrowdOrder', component: CrowdOrder ,meta:{title:'确认订单'}},
     { path: '/crowd/prePay', name: 'CrowdPrePay', component: CrowdPrePay ,meta:{title:'选择回报'}},

@@ -46,6 +46,7 @@
                 </div>
                 <div v-if="crowdItem.sell_sum==0">
                   <x-button mini :gradients="['#FF5E3A', '#FF9500']" @click.native="sale()">挂单出售</x-button>
+                  <x-button mini :gradients="['#FF5E3A', '#FF9500']" @click.native="stocksend()">无偿转让</x-button>
                 </div>
             </flexbox-item>
         </flexbox>
@@ -119,8 +120,11 @@ export default {
         onItemClick() {
         },
         sale() {
-          this.$router.push({ name: 'MyStockSale', params: { item: this.crowdItem }})
+          this.$router.push({ name: 'MyStockSale', params: { item: this.crowdItem }});
         },
+        stocksend() {
+          this.$router.push({ name: 'MyStockSend', params: { item: this.crowdItem }});
+        }
   },
   created() {
     if(!this.$store.state.user.auth.uid) {

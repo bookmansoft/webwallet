@@ -109,6 +109,18 @@ const mod = {
             });
             return res;
         },
+        async send(context, params) {
+            let res = await remote.fetching({
+                func:'stockMgr.sendStock',
+                params: {
+                  srcAddr: params.addr,
+                  cid: params.cid,
+                  address: params.address,
+                  num: params.num,
+                }
+            });
+            return res;
+        },
         async UserStockLogs(context, params) {
             let res = await remote.fetching({
                 func: 'stockMgr.UserStockLogs', 
@@ -126,7 +138,7 @@ const mod = {
                 }
               }
               context.commit('mergeLog', res.data.list);
-              context.commit('setBonus', parseFloat(bo/context.getters['config/files']('base').kg).toFixed(3));
+              context.commit('setBonus', parseFloat(bo/context.rootState.config.dict['base'].kg).toFixed(3));
             }
     
             return res;
