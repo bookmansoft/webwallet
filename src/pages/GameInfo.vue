@@ -131,7 +131,7 @@ export default {
         times: "",
         cpAddr: '',
         image: `${this.remote.appConfig.siteUri}/static/img/grcode.png`,
-        gameWexQrcode: `${this.remote.appConfig.siteUri}:9701/test`,
+        gameWexQrcode: `${this.remote.appConfig.siteUri}/test`,
         // 游戏道具图标
         cpProps:[],
         imagelistbrowse: {
@@ -251,7 +251,7 @@ export default {
       // const url = `/pages/test/test?cid=${this.cpInfo.cpid}&addr=${this.cpAddr}&game=${this.cpInfo.game_title}&gameUrl=${this.cpInfo.game_resource_uri}`;
       // this.$wechat.miniProgram.navigateTo({ url: url })
       //跳转至模拟游戏
-      window.location.href = `${this.remote.appConfig.siteUri}:9701/test/?cp_name=${this.cpInfo.cp_name}&cpid=${this.cpInfo.cpid}&uid=${this.userBase.domain}.${this.userBase.openid}&openid=${this.userBase.openid}&openkey=${this.userBase.openkey}&token=${this.userBase.token}`;
+      window.location.href = `${this.remote.appConfig.siteUri}/test/?cp_name=${this.cpInfo.cp_name}&cpid=${this.cpInfo.cpid}&uid=${this.userBase.domain}.${this.userBase.openid}&openid=${this.userBase.openid}&openkey=${this.userBase.openkey}&token=${this.userBase.token}`;
     },
 
     buyProp(item) {

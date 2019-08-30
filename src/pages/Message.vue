@@ -48,7 +48,7 @@
       \"cid\":\"f97d38e0-bea7-11e9-b0cb-398f3f2fd876\",
       \"oid\":\"cp010061_prop_3\",
       \"price\":\"400000\",
-      \"url\":\"http://127.0.0.1:9701/image/1/prop_icon.jpg\",
+      \"url\":\"http://h5.gamegold.xin/image/1/prop_icon.jpg\",
       \"props_name\":\"北极50地狱行者-3\",
       \"sn\":\"42513d60-beb1-11e9-b110-01bd2392138e\",
       \"address\":\"tb1q6u64889906kyrss5ymhnh8n02x55xvf5ehsa8h\"
