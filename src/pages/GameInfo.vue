@@ -248,12 +248,12 @@ export default {
 
     gotoGame() {
       //跳转至鸡小德
-      //window.location.href = `http://chick.vallnet.cn/?openid=${this.userBase.openid}&openkey=${this.userBase.openkey}`;
+      window.location.href = `http://chick.gamegold.xin/?openid=${this.userBase.openid}&openkey=${this.userBase.openkey}`;
       //跳转至微信小游戏
       // const url = `/pages/test/test?cid=${this.cpInfo.cpid}&addr=${this.cpAddr}&game=${this.cpInfo.game_title}&gameUrl=${this.cpInfo.game_resource_uri}`;
       // this.$wechat.miniProgram.navigateTo({ url: url })
       //跳转至模拟游戏
-      window.location.href = `${this.remote.appConfig.siteUri}:9701/test/?cp_name=${this.cpInfo.cp_name}&cpid=${this.cpInfo.cpid}&uid=${this.userBase.domain}.${this.userBase.openid}&openid=${this.userBase.openid}&openkey=${this.userBase.openkey}&token=${this.userBase.token}`;
+      //window.location.href = `${this.remote.appConfig.siteUri}:9701/test/?cp_name=${this.cpInfo.cp_name}&cpid=${this.cpInfo.cpid}&uid=${this.userBase.domain}.${this.userBase.openid}&openid=${this.userBase.openid}&openkey=${this.userBase.openkey}&token=${this.userBase.token}`;
     },
 
     buyProp(item) {
