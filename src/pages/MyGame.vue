@@ -48,11 +48,6 @@ export default {
         store: 'mygame',                                 //引用的数据仓库
         nodata: '/static/img/default/no-product.png',   //列表为空时的占位图片
       },
-      recommendGame: {
-        gameTitle: "奔跑的悟空",
-        src: "/static/img/game/game-3.jpg",
-        gameProvider: "原石互娱"
-      },
     };
   },
   methods: {

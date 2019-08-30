@@ -112,8 +112,8 @@ export default {
       });
     },
     gotoGame() {
-      //跳转到模拟游戏服务
-      window.location.href = `${this.remote.appConfig.siteUri}:9701/test?cpid=${this.recommendGame.cpid}openid=${this.userBase.openid}&openkey=${this.userBase.openkey}`;
+      //跳转至鸡小德
+      window.location.href = `http://chick.gamegold.xin/?openid=${this.userBase.openid}&openkey=${this.userBase.openkey}`;
     },
   },
   created() {
