@@ -99,7 +99,7 @@ export default {
       let code = this.utils.getUrlKey('code');
       if(!!code) {
         //以下流程采用 code 登录模式进行登录(OAUTH2.0)，登录细节(验证码转换、负载均衡、发送登录请求并处理应答)封装于 remote 组件中
-        await this.remote.login({domain: 'authwx', openkey: code});
+        await this.remote.login({domain: 'authwx.Wallet', openkey: code});
       } else  {
         //以下流程采用 openid/token 登录模式进行登录
         let openid = this.utils.getUrlKey('openid');
@@ -109,7 +109,7 @@ export default {
           //设置并使用负载均衡
           this.remote.loginMode.set(this.remote.CommStatus.reqLb);
           this.remote.status.unSet(this.remote.CommStatus.lb);
-          await this.remote.setUserInfo({domain: 'authwx', openid: openid}).setLB(true);
+          await this.remote.setUserInfo({domain: 'authwx.Wallet', openid: openid}).setLB(true);
           //登录验证
           await this.remote.setUserInfo({openkey: openkey, token: token}).getToken();
         } else {
