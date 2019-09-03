@@ -1,3 +1,40 @@
+<!--
+cpInfo {
+  `category_id`  '游戏类别',
+  `category_title`  '类别名',
+  `provider_id`  '供应商ID',
+  `provider_name`  '供应商名',
+  `ad_title`  '推广标题',
+  `ranking`  '排名',
+  `star_level`  '星级',
+  `player_count`  '玩家人数',
+  `down_count`  '下载次数',
+  `comment_count`  '评论数',
+  `game_version`  '版本号',
+  `developer`  '开发者',
+  `create_time`  '创建时间',
+  `update_time`  '更新时间',
+  `store_status`  '状态',
+  `cpid`  'cpid',
+  `cpurl`  'cpurl',
+  `cp_addr`  'cp地址',
+  `cp_name`  'cp_name',
+  `game_title`  '标题',
+  `game_link_url`  '游戏链接'
+  `game_ico_uri`  '图标URI',
+  `update_desc`  '更新描述',
+  `game_resource_uri`  '资源URI, 展示大图',
+  `game_screenshots`  '游戏截图',
+  `game_desc`  '描述',
+  `small_img_url`  '展示小图',
+  `stock_price`  '当前资产价格',
+  `stock_sum`  '当前资产数量',
+  `grate`  '媒体分成',
+  `hHeight`  '初次高度',
+  `hBonus`  '历史分红',
+  `hAds`  '历史分成',
+}
+-->
 <template>
   <div>
     <!-- <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header> -->
@@ -129,7 +166,7 @@ export default {
         cpInfo: [],
         msgInput: "",
         times: "",
-        cpAddr: '',
+        vData: null,
         image: `${this.remote.appConfig.siteUri}/static/img/grcode.png`,
         gameWexQrcode: `${this.remote.appConfig.siteUri}/test`,
         // 游戏道具图标
@@ -246,28 +283,19 @@ export default {
       return str;
     },
 
+    /**
+     * 跳转至模拟游戏
+     */
     gotoGame() {
-      //跳转至微信小游戏
-      // const url = `/pages/test/test?cid=${this.cpInfo.cpid}&addr=${this.cpAddr}&game=${this.cpInfo.game_title}&gameUrl=${this.cpInfo.game_resource_uri}`;
-      // this.$wechat.miniProgram.navigateTo({ url: url })
-      //跳转至模拟游戏
-      window.location.href = `${this.remote.appConfig.siteUri}/test/?cp_name=${this.cpInfo.cp_name}&cpid=${this.cpInfo.cpid}&uid=${this.userBase.domain}.${this.userBase.openid}&openid=${this.userBase.openid}&openkey=${this.userBase.openkey}&token=${this.userBase.token}`;
+      let url = `${this.cpInfo.cpurl}/?data=${JSON.stringify(this.vData)}`;
+      window.location.href = url;
     },
 
     buyProp(item) {
-        if(this.cpAddr == '' || !this.userBase.uid) {
+        if(!this.vData || !this.userBase.uid) {
             return;
         }
 
-        /*
-        let cid = this.cpInfo.cpid
-        let notifyurl = this.apiUrl
-        let order_sn = item.id + '-new-' + this.randomString(16)
-        let price = item.props_price
-        var url = "/pages/order/order?cid=" + cid + "&uid=" + uid + "&sn=" + order_sn;
-        url += "&price=" + price + '&notifyurl=' + encodeURI(notifyurl) + '&returl=' + encodeURI(window.location.href) ;
-        this.$wechat.miniProgram.navigateTo({ url: url });
-        */
         this.$store.dispatch('wallet/pay', {
           cid: this.cpInfo.cpid,
           sn: `${item.id}-new-${this.randomString(16)}`,
@@ -321,19 +349,6 @@ export default {
       })
     },
 
-    userToken() {
-        if(this.userBase.uid == 0) {
-            return;
-        }
-        this.$store.dispatch('cp/UserToken', {
-          cid: this.cpInfo.cpid,
-        }).then(res => {
-          if(res.code == 0) {
-            this.cpAddr = res.data;
-          }
-        });
-    },
-
     test2() {
       this.$wechat.getLocation({
           type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
@@ -360,8 +375,16 @@ export default {
         if(typeof this.cpInfo.game_screenshots == 'string') {
           this.cpInfo.game_screenshots = this.cpInfo.game_screenshots.split(',');
         }
+
+        this.$store.dispatch('cp/UserToken', {
+          cid: this.cpInfo.cpid,
+        }).then(res => {
+          if(res.code == 0) {
+            this.vData = res.data;
+          }
+        });
+
         this.getCpProps();
-        this.userToken();
         this.getCommentList();
       }
     }
