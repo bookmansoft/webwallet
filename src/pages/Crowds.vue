@@ -81,7 +81,7 @@
                   <flexbox-item :span="4">
                     <div class="flex-left">
                       <img src="/static/img/stock/stock_jiner.png" style="width:15px;hegith:15px">
-                      <span style="color:coral; font-size:12px;">{{parseFloat(item.price/100000).toFix(3)}}千克/个</span>
+                      <span style="color:coral; font-size:12px;">{{parseFloat(item.price/100000).toFixed(3)}}千克/个</span>
                     </div>
                   </flexbox-item>
                   <flexbox-item :span="4">
