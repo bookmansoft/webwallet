@@ -298,7 +298,7 @@ export default {
 
         this.$store.dispatch('wallet/pay', {
           cid: this.cpInfo.cpid,
-          sn: `${item.id}-new-${this.randomString(16)}`,
+          oid: item.id,
           price: item.props_price,
         }).then(res => {
             if(res.code == 0) {
