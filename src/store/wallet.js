@@ -172,9 +172,7 @@ const mod = {
         async pay(context, params) {
             let res = await remote.fetching({
                 func:'wallet.OrderPay',
-                cid: params.cid,
-                sn: params.sn,
-                price: params.price,
+                ...params,
             });
             return res;
         }
