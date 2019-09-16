@@ -38,6 +38,14 @@
     `hAds`  '历史分成',
   }
 ]
+
+    recommendGame: {
+      gameTitle: "奔跑的悟空",
+      src: "/static/img/game/game-3.jpg",
+      gameProvider: "原石互娱",
+      cpid: 'chick',
+      cpurl: 'http://chick.gamegold.xin',
+    },
 -->
 <template>
   <div>
@@ -45,15 +53,15 @@
       <template v-slot:default="props">
         <div>
           <div style="height:5px;"></div>
-          <div style="background-color: white">
-            <div style="padding:10px 10px 0px 10px;" @click="gotoGame"><img :src="recommendGame.src" class="img-top"></div>
+          <div style="background-color: white" v-if="props.tops.length>0">
+            <div style="padding:10px 10px 0px 10px;" @click="gotoCpInfo(props.tops[0])"><img :src="props.tops[0].game_resource_uri" class="img-top"></div>
             <div>
               <p style="font-size:15px;padding: 5px 0px 0px 10px;">
                 <span style="color:red;">推荐</span>
-                <span style="margin-left:5px;">{{recommendGame.gameTitle}}</span>
+                <span style="margin-left:5px;">{{props.tops[0].game_title}}</span>
               </p>
             </div>
-            <div><p style="font-size:13px; color: #888;padding: 5px 0px 10px 10px;">{{recommendGame.gameProvider}}</p></div>
+            <div><p style="font-size:13px; color: #888;padding: 5px 0px 10px 10px;">{{props.tops[0].provider_name}}</p></div>
           </div>
           <div v-for="(item, index) in props.content" :key="index" class="gameItem">
             <flexbox @click.native="gotoCpInfo(item, index)">
@@ -93,12 +101,6 @@ export default {
         store: 'cp',                                 //引用的数据仓库
         nodata: '/static/img/default/no-product.png',   //列表为空时的占位图片
       },
-      recommendGame: {
-        gameTitle: "奔跑的悟空",
-        src: "/static/img/game/game-3.jpg",
-        gameProvider: "原石互娱",
-        cpid: 'chick',
-      },
     };
   },
   computed:{
@@ -110,10 +112,6 @@ export default {
         name: "GameInfo",
         params: { cpInfo: item },
       });
-    },
-    gotoGame() {
-      //跳转至鸡小德
-      window.location.href = `http://chick.gamegold.xin/?openid=${this.userBase.openid}&openkey=${this.userBase.openkey}`;
     },
   },
   created() {
