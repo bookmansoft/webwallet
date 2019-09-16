@@ -1,19 +1,29 @@
 import remote from '../utils/remote'
 
 /**
- * 游戏数据集合
+ * CP集合
  */
 const mod = {
     namespaced: true, //独立命名空间
 
     state: {
-        list: [],   //CP列表，用于分页显示，注意为了节省空间，只存放CP编码
+        list: [],   //分页列表，用于分页显示，注意为了节省空间，只存放CP编码
+        tops: [],   //置顶列表，注意为了节省空间，只存放CP编码
         dict: {},   //CP字典，以CP编码为索引，用于快速索引CP对象
         pageMax: 1, //网络获取的最大页数
     },
     getters: {
+        /**
+         * 为可视控件提供访问分页列表的接口
+         */
         list: (state) => {
             return state.list.map(id=>state.dict[id]);
+        },
+        /**
+         * 为可视控件提供访问置顶数据的接口
+         */
+        tops: (state) => {
+            return state.tops.map(id=>state.dict[id]);
         },
     },
     mutations: {
@@ -43,11 +53,21 @@ const mod = {
             }
             state.list = state.list.concat(ls);
         },
+        setTops(state, arr) {
+            state.tops = [];
+            for(let item of arr) {
+                state.dict[item.cpid] = item;
+                if(!state.tops.includes(item.cpid)) {
+                    state.tops.push(item.cpid);
+                }
+            }
+        },
         setPage(state, page) {
             state.pageMax = page;
         },
         clear(state) {
             state.list = [];
+            state.tops = [];
             state.dict = {};
             state.pageMax = 1;
         },
@@ -79,6 +99,9 @@ const mod = {
                     page: curPage+1,
                 });
                 if (res.code == 0) {
+                    console.log('cp.list, curPage:', curPage, res);
+                    context.commit('setTops', res.data.tops);
+
                     //设定最大页数
                     if(context.state.pageMax != res.data.total) {
                         context.commit('setPage', res.data.total);
