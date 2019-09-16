@@ -18,8 +18,8 @@
         @on-pullup-loading="selPullUp"
       >
         <div>
-          <!-- 具名插槽，其内容由父组件提供 -->
-          <slot v-bind:content="content"></slot>
+          <!-- 具名插槽，其内容由父组件提供 同时绑定了两个数据组件 -->
+          <slot v-bind:content="content" v-bind:tops="tops"></slot>
         </div>
       </scroller>
     </div>
@@ -137,10 +137,17 @@ export default {
   },
   computed: {
     /**
+     * 分页列表数据
      * @warning 需要数据仓库在 getters 下设置 list 属性
      */
     content() { 
-      return this.$store.getters[`${this.config.store}/list`];
+      return this.$store.getters[`${this.config.store}/list`] || [];
+    },
+    /**
+     * 置顶数据
+     */
+    tops() { 
+      return this.$store.getters[`${this.config.store}/tops`] || [];
     },
   },
   created() {
