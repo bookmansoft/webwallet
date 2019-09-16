@@ -34,6 +34,25 @@ cpInfo {
   `hBonus`  '历史分红',
   `hAds`  '历史分成',
 }
+
+    <group title="长按二维码进入游戏">
+      <div style="text-align:center; padding:15px;">
+          <qrcode :value="gameWexQrcode" type="img" @touchstart.native="previewImage"></qrcode>
+      </div>   
+    </group>
+    
+    previewImage: function(e) {
+        let that = this
+        let current = this.image
+        that.$wechat.previewImage({
+          current: current, // 当前显示图片的http链接
+          urls: [current], // 需要预览的图片http链接列表
+          success: function(res) {
+          },
+          fail: function(res) {
+          }
+        })
+    },
 -->
 <template>
   <div>
@@ -61,11 +80,6 @@ cpInfo {
                 </li>
             </ul>
         </div> 
-        <group title="长按二维码进入游戏">
-          <div style="text-align:center; padding:15px;">
-              <qrcode :value="gameWexQrcode" type="img" @touchstart.native="previewImage"></qrcode>
-          </div>   
-        </group>
         <div id="botImage" class="backcolor-white">
             <div @click="introduce"><p id="inIntroduce" class="bottom-orange">详情</p></div>
             <div @click="gameNameImg"><p id="inGameNameImg">游戏截图</p></div>
@@ -255,19 +269,6 @@ export default {
             this.$vux.toast.show({text: '评论发布失败'})
           }
       })
-    },
-
-    previewImage: function(e) {
-        let that = this
-        let current = this.image
-        that.$wechat.previewImage({
-          current: current, // 当前显示图片的http链接
-          urls: [current], // 需要预览的图片http链接列表
-          success: function(res) {
-          },
-          fail: function(res) {
-          }
-        })
     },
 
     //生成随机字符串
