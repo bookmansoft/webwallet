@@ -38,14 +38,6 @@
     `hAds`  '历史分成',
   }
 ]
-
-    recommendGame: {
-      gameTitle: "奔跑的悟空",
-      src: "/static/img/game/game-3.jpg",
-      gameProvider: "原石互娱",
-      cpid: 'chick',
-      cpurl: 'http://chick.gamegold.xin',
-    },
 -->
 <template>
   <div>
