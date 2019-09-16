@@ -81,9 +81,9 @@ cpInfo {
             </ul>
         </div> 
         <div id="botImage" class="backcolor-white">
-            <div @click="introduce"><p id="inIntroduce" class="bottom-orange">详情</p></div>
+            <div @click="introduce"><p id="inIntroduce" class="bottom-orange">游戏详情</p></div>
+            <div @click="gameProps"><p id="inGameProps">道具商城</p></div>
             <div @click="gameNameImg"><p id="inGameNameImg">游戏截图</p></div>
-            <div @click="gameProps"><p id="inGameProps">游戏道具</p></div>
         </div>      
         <div id="introduce">
             <div class="backcolor-white padding-rem">
