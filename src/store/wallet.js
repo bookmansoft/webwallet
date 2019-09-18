@@ -151,14 +151,14 @@ const mod = {
         },
         async prepay(context, params) {
             let res = await remote.fetching({
-                func: 'order.prepay',
+                func: 'wallet.prepay',
                 order: params.order,
             });
             return res;
         },
         async OrderPayResult(context, params) {
             let res = await remote.fetching({
-                func: 'order.OrderPayResult',
+                func: 'wallet.OrderPayResult',
                 tradeId: params.tradeId,
                 status: params.status,
             });
