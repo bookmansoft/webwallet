@@ -288,7 +288,11 @@ export default {
      * 跳转至模拟游戏
      */
     gotoGame() {
-      let url = `${this.cpInfo.cpurl}/?data=${JSON.stringify(this.vData)}`;
+      if(!this.vData || !this.userBase.uid) {
+          return;
+      }
+
+      let url = `${this.cpInfo.cpurl}/?kyc=${encodeURIComponent(JSON.stringify(this.vData))}`;
       window.location.href = url;
     },
 
