@@ -83,6 +83,23 @@ const mod = {
             context.commit('add', item);
         },
         /**
+         * 访问具体对象
+         */
+        async getItem (context, id) {
+            console.log('cp/getItem',id);
+            let it = context.state.dict[id];
+            if(!it) {
+                let res = await remote.fetching({
+                    func: "cp.ById", 
+                    id: id,
+                });
+                if (res.code == 0) {
+                    it = res.data;
+                }
+            }
+            return it;
+        },
+        /**
          * 从网络获取内容追加至列表
          * @param {*} context 
          */
