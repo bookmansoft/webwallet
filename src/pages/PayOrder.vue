@@ -146,8 +146,16 @@ export default {
             })
           }
 
-          //支付完成，跳转回第三方应用
-          window.location.href = this.item.url;
+          this.$store.dispatch('cp/getItem', this.item.cid).then(dt => {
+            let url = dt.cpurl;
+            this.$store.dispatch('cp/UserToken', {
+              cid: this.item.cid,
+            }).then(res => {
+              if(res.code == 0) {
+                window.location.href = `${url}?kyc=${encodeURIComponent(JSON.stringify(res.data))}`;
+              }
+            });
+          });
       }).catch(e => {
         console.log(e);
       });  
@@ -168,7 +176,6 @@ export default {
       if(typeof this.item == 'string') {
         this.item = JSON.parse(decodeURIComponent(this.item));
       }
-      console.log('PayOrder', this.item);
     }
   }
 };
