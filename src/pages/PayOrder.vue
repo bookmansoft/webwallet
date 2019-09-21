@@ -164,7 +164,11 @@ export default {
     } else if(!this.userBase.uid) {
         this.$router.push({ name: 'Login', params: { path: `/wallet/pay/${this.$route.params.order}` }});
     }
+
     this.item = this.$route.params.order;
+    if(typeof this.item == 'string') {
+      this.item = JSON.parse(decodeURIComponent(this.item));
+    }
   }
 };
 </script>
