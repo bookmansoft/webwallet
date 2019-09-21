@@ -90,7 +90,7 @@ export default new Router({
     { path: '/crowd/HouseAddressAdd', name: 'HouseAddressAdd', component: HouseAddressAdd ,meta:{title:'添加收货地址'}},
 
     { path: '/wallet', name: 'Wallet', component: Wallet ,meta:{title:'我的钱包'}},
-    { path: '/wallet/pay', name: 'PayOrder', component: PayOrder ,meta:{title:'支付'}},
+    { path: '/wallet/pay/:order', name: 'PayOrder', component: PayOrder ,meta:{title:'支付'}},
     { path: '/wallet/send', name: 'WalletSend', component: WalletSend ,meta:{title:'转账'}},
     { path: '/wallet/receive', name: 'WalletReceive', component: WalletReceive ,meta:{title:'接受转账'}},
     { path: '/wallet/trans', name: 'WalletTrans', component: WalletTrans ,meta:{title:'交易对'}},
