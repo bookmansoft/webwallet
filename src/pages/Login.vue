@@ -115,7 +115,7 @@ export default {
         } else {
           let redirect_uri = this.remote.appConfig.siteUri;
           if(this.urlParamPath) {
-            redirect_uri = redirect_uri + `?path=${this.urlParamPath}`;
+            redirect_uri = redirect_uri + `?path=${encodeURIComponent(this.urlParamPath)}`;
           }
           let url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${this.remote.appConfig.wx_appid}&redirect_uri=${encodeURIComponent(redirect_uri)}&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect`;
 
