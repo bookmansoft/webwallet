@@ -292,7 +292,7 @@ export default {
           return;
       }
 
-      let url = `${this.cpInfo.cpurl}/?kyc=${encodeURIComponent(JSON.stringify(this.vData))}`;
+      let url = `${this.cpInfo.cpurl}?kyc=${encodeURIComponent(JSON.stringify(this.vData))}`;
       window.location.href = url;
     },
 
