@@ -17,21 +17,14 @@
         // }
     "gold",
     "height",
-    "large_icon",
-    "more_icon": [],
-    "props_type",
-    "props_price",
-    "props_createtime",
-    "props_rank",
-    "props_status",
-    "state":,
-    "props_extra": {
-            "attr1": "属性1",
-            "attr2": "属性2",
-    },
-    "icon",
     "props_name",
     "props_desc",
+    "props_type",
+    "props_price",
+    "props_rank",
+    "icon",
+    "large_icon",
+    "more_icon": [],
   }
 ]
 
