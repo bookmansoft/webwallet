@@ -13,8 +13,8 @@
                 <img :src="prop.icon">
             </div>
             <ul class="center-ul" style="position:relative; top:-80px;">
-                <li><span class="prop-name">{{prop.props_name}}</span></li>
-                <li class="color-999-provider">道具名称：{{prop.props_name}}</li>
+                <li><span class="prop-name">{{prop.prop_name}}</span></li>
+                <li class="color-999-provider">道具名称：{{prop.prop_name}}</li>
                 <li>
                 <span class="color-999">装备</span>
                 <!--
@@ -32,7 +32,7 @@
         </div>      
         <div id="introduce">
             <div class="backcolor-white padding-rem">
-                <p style="color: #888; font-size:14px;">{{prop.props_desc}}</p>
+                <p style="color: #888; font-size:14px;">{{prop.prop_desc}}</p>
             </div>
         </div>
         <div id="gameNameImg" class="backcolor-white">
@@ -209,7 +209,7 @@ export default {
           self.$wechat.config(res.data);
           self.$wechat.ready(function(){
             let title = '游戏金道具分享';
-            let desc = self.prop.props_name;
+            let desc = self.prop.prop_name;
             let imgUrl = self.prop.large_icon;
             let params = JSON.stringify({
               title: title,
