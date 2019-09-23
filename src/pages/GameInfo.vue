@@ -118,11 +118,11 @@ cpInfo {
                     <img :src="item.icon">
                 </div>
                 <div>
-                    <p>{{item.props_name}}</p>
+                    <p>{{item.prop_name}}</p>
                     <p>&nbsp;<p>
-                    <p>{{item.props_desc}}</p>
+                    <p>{{item.prop_desc}}</p>
                     <a class="gp-btn" @click="buyProp(item)">购买</a>
-                    <p class="color-red">{{assistant.toKg(item.props_price)}}千克</p>
+                    <p class="color-red">{{assistant.toKg(item.prop_price)}}千克</p>
                 </div>
             </div>
         </div>
@@ -141,7 +141,7 @@ cpInfo {
                     <p><span style="color:#888;">{{item.content}}</span></p>
                     <p>&nbsp;</p>
                     <a class="gp-btn" @click="buyProp(item)">体验</a>
-                    <p class="color-red">{{assistant.toKg(item.props_price)}}千克</p>
+                    <p class="color-red">{{assistant.toKg(item.prop_price)}}千克</p>
                     <p style="text-align:right; width:100%;"><span style="color:#888;">{{item.timestamp}}</span></p>
                 </div>
             </div>
@@ -304,7 +304,7 @@ export default {
         this.$store.dispatch('wallet/pay', {
           cid: this.cpInfo.cpid,
           oid: item.id,
-          price: item.props_price,
+          price: item.prop_price,
         }).then(res => {
             if(res.code == 0) {
               this.showPlugin('道具已购买成功')
