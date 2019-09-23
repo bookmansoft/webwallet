@@ -83,7 +83,7 @@ const mod = {
                             remote.get(encodeURI(prop.cpurl + '/prop/' + prop.oid)).then(res => {
                                 Object.assign(prop, res);
                                 prop.src = prop.icon;
-                                prop.title = prop.props_name;
+                                prop.title = prop.prop_name;
                                 prop.desc = `出售价 ${assistant.toKg(prop.bid.fixed)}千克, 含金量 ${assistant.toKg(prop.bid.value)}千克`;
                             });
                         });
