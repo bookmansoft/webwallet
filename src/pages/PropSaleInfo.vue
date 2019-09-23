@@ -14,8 +14,8 @@
                 </div></flexbox-item>
                 <flexbox-item>
                 <div style="padding-left:0px;">
-                    <p><span style="color: #888; font-size:15px;">{{propSale.props_name}}</span></p>
-                    <p><span style="color: #888; font-size:15px;">{{propSale.props_desc}}</span></p>
+                    <p><span style="color: #888; font-size:15px;">{{propSale.prop_name}}</span></p>
+                    <p><span style="color: #888; font-size:15px;">{{propSale.prop_desc}}</span></p>
                     <p><span style="color: red; font-size:15px;">出售价 {{assistant.toKg(propSale.bid.fixed)}}千克(含金量{{assistant.toKg(propSale.bid.value)}}千克)</span></p>
                 </div>
                 </flexbox-item>
