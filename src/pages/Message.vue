@@ -49,7 +49,7 @@
       \"oid\":\"cp010061_prop_3\",
       \"price\":\"400000\",
       \"url\":\"http://h5.gamegold.xin/image/1/prop_icon.jpg\",
-      \"props_name\":\"北极50地狱行者-3\",
+      \"prop_name\":\"北极50地狱行者-3\",
       \"sn\":\"42513d60-beb1-11e9-b110-01bd2392138e\",
       \"address\":\"tb1q6u64889906kyrss5ymhnh8n02x55xvf5ehsa8h\"
     }",
@@ -97,7 +97,7 @@
                         <p><span style="font-size:15px;">{{`${moment(item.time * 1000).format('MM-DD HH:mm')} - 道具购买 - ${(item.state == 0 ? '未支付':'已支付')}`}}</span></p>
                       </div>
                         <div style="padding-left:6px;">
-                          <p><span style="color: coral; font-size:14px;">道具名称: {{`${(item.content.body.content.props_name)}`}}</span></p>
+                          <p><span style="color: coral; font-size:14px;">道具名称: {{`${(item.content.body.content.prop_name)}`}}</span></p>
                           <p><span style="color: coral; font-size:14px;">购买价格: {{`${parseFloat(item.content.body.content.price/unit.kg).toFixed(3)} 千克`}}</span></p>
                           <p><span style="color: coral; font-size:14px;">订单编号: {{`${(item.content.sn)}`}}</span></p>
                         </div>
