@@ -80,8 +80,8 @@ const mod = {
                             remote.get(encodeURI(url)).then(res => {
                                 Object.assign(prop, res);
                                 prop.src = prop.icon;
-                                prop.title = prop.props_name;
-                                prop.desc = prop.props_desc;
+                                prop.title = prop.prop_name;
+                                prop.desc = prop.prop_desc;
                             });
                       });
                       console.log('prop.pull', res.data.list);
