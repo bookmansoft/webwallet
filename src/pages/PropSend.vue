@@ -50,7 +50,7 @@
       <flexbox :gutter="0" class="content">
         <flexbox-item :span="1"></flexbox-item>
         <flexbox-item :span="11">
-          <span style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(50,58,69);">{{prop.props_name}}</span>
+          <span style="font-size:15px;font-family:'黑体','Heiti SC','Droidsansfallback';font-weight:bold;color:rgb(50,58,69);">{{prop.prop_name}}</span>
         </flexbox-item>
         <flexbox-item :span="1"></flexbox-item>
       </flexbox>
