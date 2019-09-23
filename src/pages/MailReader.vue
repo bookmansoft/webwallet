@@ -127,7 +127,7 @@ export default {
               {label: '发起用户',value: this.data.from},
               {label: '目标用户',value: this.data.dst},
               {label: '游戏编号',value: order.body.content.cid},
-              {label: '道具名称',value: order.body.content.props_name},
+              {label: '道具名称',value: order.body.content.prop_name},
               {label: '销售价格',value: `${this.assistant.toKg(order.body.content.price)}千克`},
             ];
           }
