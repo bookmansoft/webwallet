@@ -11,7 +11,7 @@
       </grid>
     </div>
     <x-button v-if="ready && !showCategory" plain style="border-radius:5px;color:rgb(255,113,101)" type="warn" @click.native="viewCategory()">返回目录</x-button>
-    <scrolllist ref="sl001" :config="config(category)">
+    <ScrollViewer ref="sl001" :config="config(category)">
       <template v-slot:default="props">
           <div v-for="(item, index) in props.content" :key="index" class="gameItem">
             <flexbox @click.native="gotoCpInfo(item, index)">
@@ -34,7 +34,7 @@
             </flexbox>
           </div>
       </template>
-    </scrolllist>
+    </ScrollViewer>
   </div>
 </template>
 
@@ -46,7 +46,7 @@ import {
   Flexbox,
   FlexboxItem,
 } from "vux";
-import scrolllist from "@/components/ScrollList.vue";
+import ScrollViewer from "@/components/ScrollViewer.vue";
 
 export default {
   name: 'GameSort',
@@ -56,7 +56,7 @@ export default {
     XButton,
     Flexbox,
     FlexboxItem,
-    scrolllist,
+    ScrollViewer,
   },
   data () {
     return {
