@@ -23,7 +23,7 @@
 <template>
   <div class="root" style="background-color:white;margin-top:-8px">
     <!-- 使用滚动列表组件 -->
-    <ScrollList :config="config">
+    <ScrollViewer :config="config">
       <!-- 为组件的具名插槽书写模板，并引入具名插槽的数据集 props.content -->
       <template v-slot:default="props">
         <div>
@@ -102,7 +102,7 @@
           </div>
         </div>
       </template>
-    </ScrollList>
+    </ScrollViewer>
 
     <navs></navs>
   </div>
@@ -115,7 +115,7 @@ import {
 } from "vux";
 import Navs from "@/components/Navs.vue";
 import XXProgress from "@/components/XXProgress.vue";
-import ScrollList from "@/components/ScrollList.vue";
+import ScrollViewer from "@/components/ScrollViewer.vue";
 
 export default {
   name: 'Crowd',
@@ -125,7 +125,7 @@ export default {
     Box,
     Navs,
     XXProgress,
-    ScrollList,
+    ScrollViewer,
   },
   data: function() {
     return {
