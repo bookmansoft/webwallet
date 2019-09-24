@@ -62,7 +62,7 @@
 <template>
   <div>
     <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
-    <ScrollList :config="config">
+    <ScrollViewer :config="config">
       <template v-slot:default="props">
         <div v-for="(item, index) in props.content" :key="index" class="gameItem">
             <group v-if="item.type==10001">
@@ -131,7 +131,7 @@
             </group>
         </div>
       </template>
-    </ScrollList>
+    </ScrollViewer>
   </div>
 </template>
 
@@ -142,7 +142,7 @@ import {
   Flexbox,
   FlexboxItem,
 } from 'vux'
-import ScrollList from "@/components/ScrollList.vue";
+import ScrollViewer from "@/components/ScrollViewer.vue";
 import moment from "moment";
 
 export default {
@@ -152,7 +152,7 @@ export default {
     Group,
     Flexbox,
     FlexboxItem,
-    ScrollList,
+    ScrollViewer,
   },
   data () {
     return {
