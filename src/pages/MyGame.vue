@@ -2,7 +2,7 @@
 -->
 <template>
   <div>
-    <ScrollList :config="config">
+    <ScrollViewer :config="config">
       <template v-slot:default="props">
           <div v-for="(item, index) in props.content" :key="index" class="gameItem">
             <flexbox @click.native="gotoCpInfo(item, index)">
@@ -25,7 +25,7 @@
             </flexbox>
           </div>
       </template>
-    </ScrollList>
+    </ScrollViewer>
   </div>
 </template>
 <script>
@@ -33,14 +33,14 @@ import {
   Flexbox,
   FlexboxItem,
 } from "vux";
-import ScrollList from "@/components/ScrollList.vue";
+import ScrollViewer from "@/components/ScrollViewer.vue";
 
 export default {
   name: "MyGame",
   components: {
     Flexbox,
     FlexboxItem,
-    ScrollList,
+    ScrollViewer,
   },
   data() {
     return {
