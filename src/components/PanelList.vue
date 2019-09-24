@@ -2,11 +2,11 @@
 -->
 <template>
   <div>
-    <scrolllist :config="config">
+    <ScrollViewer :config="config">
       <template v-slot:default="props">
           <panel :header="panelTitle" :list="props.content" :type="config.type" @on-click-item="itemDetail" @on-img-error="onImgError"></panel>        
       </template>
-    </scrolllist>
+    </ScrollViewer>
   </div>
 </template>
 
@@ -14,13 +14,13 @@
 import {
   Panel,
 } from "vux";
-import scrolllist from "@/components/ScrollList.vue";
+import ScrollViewer from "@/components/ScrollViewer.vue";
 
 export default {
   name: 'PanelList',
   components: {
     Panel,
-    scrolllist,
+    ScrollViewer,
   },
   data: function() {
     return {
