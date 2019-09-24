@@ -14,7 +14,7 @@
 -->
 <template>
   <div class="root" style="background-color:white;margin-top:-8px">
-    <scrolllist :config="config">
+    <ScrollViewer :config="config">
       <template v-slot:default="props">
         <div style="margin-top:10px">
           <div v-for="(item, index) in props.content" :key="index" class="crowdItem">
@@ -40,7 +40,7 @@
           </div>
         </div>
       </template>
-    </scrolllist>
+    </ScrollViewer>
   </div>
 </template>
 <script>
@@ -49,7 +49,7 @@ import {
   FlexboxItem,
   Group,
 } from "vux";
-import scrolllist from "@/components/ScrollList.vue";
+import ScrollViewer from "@/components/ScrollViewer.vue";
 
 export default {
   name: 'MyStock',
@@ -57,7 +57,7 @@ export default {
     Flexbox,
     FlexboxItem,
     Group,
-    scrolllist,
+    ScrollViewer,
   },
   props: [
     'showType',

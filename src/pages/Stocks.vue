@@ -15,7 +15,7 @@
 -->
 <template>
   <div class="root" style="background-color:white;margin-top:-8px">
-    <scrolllist :config="config">
+    <ScrollViewer :config="config">
       <template v-slot:default="props">
           <div v-for="(item, index) in props.content" :key="index">
             <div style="display:block;margin-top:8px;margin-bottom:8px">
@@ -51,7 +51,7 @@
             </flexbox>
           </div>
       </template>
-    </scrolllist>
+    </ScrollViewer>
 
     <navs></navs>
   </div>
@@ -63,7 +63,7 @@ import {
   Flexbox,
   FlexboxItem,
 } from "vux";
-import scrolllist from "@/components/ScrollList.vue";
+import ScrollViewer from "@/components/ScrollViewer.vue";
 import Navs from "@/components/Navs.vue";
 
 export default {
@@ -72,7 +72,7 @@ export default {
     XButton,
     Flexbox,
     FlexboxItem,
-    scrolllist,
+    ScrollViewer,
     Navs,
   },
   data: function() {
