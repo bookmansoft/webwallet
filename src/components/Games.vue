@@ -41,7 +41,7 @@
 -->
 <template>
   <div>
-    <ScrollList :config="config">
+    <ScrollViewer :config="config">
       <template v-slot:default="props">
         <div>
           <div style="height:5px;"></div>
@@ -70,7 +70,7 @@
           </div>
         </div>
       </template>
-    </ScrollList>
+    </ScrollViewer>
   </div>
 </template>
 <script>
@@ -78,14 +78,14 @@ import {
   Flexbox,
   FlexboxItem,
 } from "vux";
-import ScrollList from "@/components/ScrollList.vue";
+import ScrollViewer from "@/components/ScrollViewer.vue";
 
 export default {
   name: "Games",
   components: {
     Flexbox,
     FlexboxItem,
-    ScrollList,
+    ScrollViewer,
   },
   data() {
     return {
