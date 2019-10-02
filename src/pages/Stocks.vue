@@ -53,7 +53,7 @@
       </template>
     </ScrollViewer>
 
-    <navs></navs>
+    <nav></nav>
   </div>
 </template>
 
@@ -64,7 +64,7 @@ import {
   FlexboxItem,
 } from "vux";
 import ScrollViewer from "@/components/ScrollViewer.vue";
-import Navs from "@/components/Navs.vue";
+import Nav from "@/components/Nav.vue";
 
 export default {
   name: 'Stocks',
@@ -73,7 +73,7 @@ export default {
     Flexbox,
     FlexboxItem,
     ScrollViewer,
-    Navs,
+    Nav,
   },
   data: function() {
     return {
