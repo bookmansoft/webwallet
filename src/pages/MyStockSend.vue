@@ -48,12 +48,12 @@
 </template>
 <script>
 import { XHeader, XButton, Tab, TabItem, XInput, Flexbox, Group, FlexboxItem, LoadMore, } from 'vux'
-import Navs from '@/components/Navs.vue'
+import Nav from '@/components/Nav.vue'
 import NoData from '@/components/NoData.vue'
 
 export default {
   components: {
-    Navs, XHeader, Tab, XButton, XInput, TabItem, Flexbox, FlexboxItem, NoData, Group, LoadMore,
+    Nav, XHeader, Tab, XButton, XInput, TabItem, Flexbox, FlexboxItem, NoData, Group, LoadMore,
   },
   data () {
     return {
