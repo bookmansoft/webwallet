@@ -20,6 +20,7 @@ import PayOrder from '@/pages/PayOrder'
 import WalletReceive from '@/pages/WalletReceive'
 import WalletTrans from '@/pages/WalletTrans'
 import Props from '@/pages/Props'
+import Guider from '@/pages/Guider'
 import GameInfo from '@/pages/GameInfo'
 import PropDetail from '@/pages/PropDetail'
 import MailReader from '@/pages/MailReader'
@@ -114,5 +115,7 @@ export default new Router({
     { path: '/wechat/pay', name: 'WeChatPay', component: WeChatPay ,meta:{title:'微信支付'}},
 
     { path: '/lucky', name: 'LuckyWheel', component: LuckyWheel ,meta:{title:'幸运大转盘'}},
+
+    { path: '/guider/:guider', name: 'Guider', component: Guider, meta: {title:'推广员系统'}},
   ]
 })
