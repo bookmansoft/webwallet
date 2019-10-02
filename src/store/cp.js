@@ -144,6 +144,13 @@ const mod = {
             });
             return res;
         },
+        async setGuider(context, params) {
+            let res = await remote.fetching({
+                func:'cp.setGuider', 
+                ...params,
+            });
+            return res;
+        },
         async getProps(context, params) {
             let res = await remote.fetching({
                 func:'cp.getProps', 
