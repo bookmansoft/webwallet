@@ -19,12 +19,12 @@ Contract    游戏金交易市场
     <div v-else>
       <Contract></Contract>
     </div>
-    <navs></navs>
+    <nav></nav>
   </div>
 </template>
 <script>
 import { Tab, TabItem} from 'vux'
-import Navs from '@/components/Navs.vue'
+import Nav from '@/components/Nav.vue'
 import PropSales from '@/components/PropSales.vue'
 import Contract from '@/components/Contract.vue'
 import Stocks from '@/pages/Stocks.vue'
@@ -45,7 +45,7 @@ export default {
   components: {
     Tab,
     TabItem,
-    Navs,
+    Nav,
     Contract,
     PropSales,
     Stocks,
