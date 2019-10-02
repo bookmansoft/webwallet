@@ -24,7 +24,7 @@ const getTabItems = () => [
 ]
 
 export default {
-  name: 'navs',
+  name: 'nav',
   data() {
     return {
       items: getTabItems(),
