@@ -5,18 +5,18 @@
     <x-header :left-options="{preventGoBack: true}" @on-click-back="onBack">{{headerTitle}}</x-header>
     <MyStock :showType="1"></MyStock>
     <!-- 导航 -->
-    <navs></navs>
+    <nav></nav>
   </div>
 </template>
 <script>
 import { XHeader, XButton } from 'vux'
-import Navs from '@/components/Navs.vue'
+import Nav from '@/components/Nav.vue'
 import NoData from '@/components/NoData.vue'
 import MyStock from '@/pages/MyStock.vue'
 
 export default {
   components: {
-    Navs, XHeader, XButton, NoData, MyStock,
+    Nav, XHeader, XButton, NoData, MyStock,
   },
   data () {
     return {
