@@ -3,18 +3,18 @@
 <template>
   <div class="root">
     <PanelList :config="config" v-on:panel_item_click="itemClick"></PanelList>
-    <navs></navs>
+    <nav></nav>
   </div>
 </template>
 
 <script>
-import Navs from "@/components/Navs.vue";
+import Nav from "@/components/Nav.vue";
 import PanelList from "@/components/PanelList.vue";
 
 export default {
   name: 'Pocket',
   components: {
-    Navs,
+    Nav,
     PanelList,
   },
   data: function() {
