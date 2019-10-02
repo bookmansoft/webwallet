@@ -171,11 +171,11 @@ import {
   CellFormPreview,
   Badge
 } from "vux";
-import Navs from "@/components/Navs.vue";
+import Nav from "@/components/Nav.vue";
 
 export default {
   components: {
-    Navs,
+    Nav,
     Tab,
     XButton,
     XHeader,
