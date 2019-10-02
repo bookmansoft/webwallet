@@ -97,12 +97,9 @@
       </flexbox>
       <!-- 内容区 -->
     </div>
-
-    <!-- <navs></navs> -->
   </div>
 </template>
 <script>
-import Navs from "@/components/Navs.vue";
 import {
   Grid, GridItem,
   Scroller,
@@ -119,7 +116,6 @@ export default {
   components: {
     Grid, GridItem,
     Scroller,
-    Navs,
     Cell,
     CellBox,
     CellFormPreview,
