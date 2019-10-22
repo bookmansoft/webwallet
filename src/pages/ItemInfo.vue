@@ -47,14 +47,14 @@ import {
   Divider,
   Box
 } from "vux";
-import Nav from "@/components/Nav.vue";
+import Navi from "@/components/Navi.vue";
 import XXProgress from "@/components/XXProgress.vue";
 import { swiper, swiperSlide } from "vue-awesome-swiper";
 import "swiper/dist/css/swiper.css";
 
 export default {
   components: {
-    Nav,
+    Navi,
     Tab,
     XHeader,
     XButton,
