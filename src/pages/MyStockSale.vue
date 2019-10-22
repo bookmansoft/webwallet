@@ -33,12 +33,12 @@
 </template>
 <script>
 import { XHeader, XButton, Tab, TabItem, XInput, Flexbox, Group, FlexboxItem, LoadMore, } from 'vux'
-import Nav from '@/components/Nav.vue'
+import Navi from '@/components/Navi.vue'
 import NoData from '@/components/NoData.vue'
 
 export default {
   components: {
-    Nav, XHeader, Tab, XButton, XInput, TabItem, Flexbox, FlexboxItem, NoData, Group, LoadMore,
+    Navi, XHeader, Tab, XButton, XInput, TabItem, Flexbox, FlexboxItem, NoData, Group, LoadMore,
   },
   data () {
     return {
