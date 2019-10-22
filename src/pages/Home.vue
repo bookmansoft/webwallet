@@ -14,13 +14,13 @@
     <div v-else>
       <GameSort></GameSort>
     </div>
-    <Nav></Nav>
+    <Navi></Navi>
   </div>
 </template>
 
 <script>
 import { Tab, TabItem} from 'vux'
-import Nav from '@/components/Nav.vue'
+import Navi from '@/components/Navi.vue'
 import Games from '@/components/Games.vue'
 import GameSort from '@/components/GameSort.vue'
 
@@ -35,7 +35,7 @@ export default {
   components: {
     Tab,
     TabItem,
-    Nav,
+    Navi,
     Games,
     GameSort
   },
