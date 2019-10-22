@@ -104,7 +104,7 @@
       </template>
     </ScrollViewer>
 
-    <Nav></Nav>
+    <Navi></Navi>
   </div>
 </template>
 <script>
@@ -113,7 +113,7 @@ import {
   FlexboxItem,
   Box,
 } from "vux";
-import Nav from "@/components/Nav.vue";
+import Navi from "@/components/Navi.vue";
 import XXProgress from "@/components/XXProgress.vue";
 import ScrollViewer from "@/components/ScrollViewer.vue";
 
@@ -123,7 +123,7 @@ export default {
     Flexbox,
     FlexboxItem,
     Box,
-    Nav,
+    Navi,
     XXProgress,
     ScrollViewer,
   },
