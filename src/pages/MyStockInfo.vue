@@ -85,7 +85,7 @@
 <script>
 //import { XHeader, Group, Cell } from 'vux'
 import { XHeader, XButton, Tab, TabItem, Flexbox, Group, FlexboxItem, LoadMore, Cell } from 'vux'
-import Nav from '@/components/Nav.vue'
+import Navi from '@/components/Navi.vue'
 import NoData from '@/components/NoData.vue'
 
 const tabList = () => [
@@ -97,7 +97,7 @@ const tabList = () => [
 
 export default {
   components: {
-    Nav, XHeader, Tab, XButton, TabItem, Flexbox, FlexboxItem, NoData, Group, LoadMore, Cell
+    Navi, XHeader, Tab, XButton, TabItem, Flexbox, FlexboxItem, NoData, Group, LoadMore, Cell
   },
   data () {
     return {
