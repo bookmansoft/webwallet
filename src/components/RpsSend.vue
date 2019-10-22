@@ -3,18 +3,18 @@
 <template>
   <div class="root">
     <PanelList :config="config" v-on:panel_item_click="onItemClick"></PanelList>
-    <Nav></Nav>
+    <Navi></Navi>
   </div>
 </template>
 
 <script>
-import Nav from "@/components/Nav.vue";
+import Navi from "@/components/Navi.vue";
 import PanelList from "@/components/PanelList.vue";
 
 export default {
   name: 'RspSend',
   components: {
-    Nav,
+    Navi,
     PanelList,
   },
   data: function() {
