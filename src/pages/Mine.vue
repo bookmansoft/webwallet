@@ -51,7 +51,7 @@
       </group>    
     </div>
 
-    <nav></nav>
+    <Nav></Nav>
   </div>
 </template>
 <script>

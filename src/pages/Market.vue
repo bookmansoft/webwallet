@@ -19,7 +19,7 @@ Contract    游戏金交易市场
     <div v-else>
       <Contract></Contract>
     </div>
-    <nav></nav>
+    <Nav></Nav>
   </div>
 </template>
 <script>

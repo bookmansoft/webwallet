@@ -104,7 +104,7 @@
       </template>
     </ScrollViewer>
 
-    <nav></nav>
+    <Nav></Nav>
   </div>
 </template>
 <script>

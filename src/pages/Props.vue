@@ -35,7 +35,7 @@
 <template>
   <div class="root">
     <PanelList :config="config" v-on:panel_item_click="showPropDetail"></PanelList>
-    <nav></nav>
+    <Nav></Nav>
   </div>
 </template>
 <script>

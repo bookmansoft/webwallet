@@ -1,5 +1,6 @@
 <!-- 钱包首页
 -->
+
 <template>
   <div>
     <tab :line-width="3" custom-bar-width="60px" v-model="tabIndex">
@@ -13,9 +14,10 @@
     <div v-else>
       <GameSort></GameSort>
     </div>
-    <nav></nav>
+    <Nav></Nav>
   </div>
 </template>
+
 <script>
 import { Tab, TabItem} from 'vux'
 import Nav from '@/components/Nav.vue'

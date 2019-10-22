@@ -3,7 +3,7 @@
 <template>
   <div class="root">
     <PanelList :config="config" v-on:panel_item_click="onItemClick"></PanelList>
-    <nav></nav>
+    <Nav></Nav>
   </div>
 </template>
 
