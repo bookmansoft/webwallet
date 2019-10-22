@@ -105,11 +105,11 @@
 </template>
 <script>
 import { XButton, Tab, TabItem, Group, Flexbox, FlexboxItem } from "vux";
-import Nav from "@/components/Nav.vue";
+import Navi from "@/components/Navi.vue";
 
 export default {
   components: {
-    Nav,
+    Navi,
     Tab,
     XButton,
     TabItem,
