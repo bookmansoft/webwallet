@@ -171,11 +171,9 @@ import {
   CellFormPreview,
   Badge
 } from "vux";
-import Navi from "@/components/Navi.vue";
 
 export default {
   components: {
-    Navi,
     Tab,
     XButton,
     XHeader,
