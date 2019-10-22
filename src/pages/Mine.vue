@@ -51,11 +51,11 @@
       </group>    
     </div>
 
-    <Nav></Nav>
+    <Navi></Navi>
   </div>
 </template>
 <script>
-import Nav from "@/components/Nav.vue";
+import Navi from "@/components/Navi.vue";
 import {
   Scroller,
   Cell,
@@ -70,7 +70,7 @@ import {
 export default {
   components: {
     Scroller,
-    Nav,
+    Navi,
     Cell,
     CellBox,
     CellFormPreview,
